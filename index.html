@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta property="og:title" content="明王殿因緣記：靈性覺醒之旅">
+	<meta property="og:description" content="明法大師兄略傳：從陰陽眼童年到東密傳承的靈性覺醒互動體驗。">
+	<meta property="og:image" content="og-image.jpg">
+	<meta property="og:type" content="website">	
+    <title>明王殿因緣記：靈性覺醒之旅</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #44403c; /* stone-700 */
+        }
+        
+        h1, h2, h3, .serif {
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        /* Chart Container Styling - MANDATORY PER REQUIREMENTS */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Tailwind max-w-3xl approx */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Custom Scrollbar for text areas */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #e7e5e4;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #a8a29e;
+            border-radius: 3px;
+        }
+        
+        .active-tab {
+            border-bottom: 3px solid #b45309; /* amber-700 */
+            color: #78350f; /* amber-900 */
+            font-weight: 700;
+        }
+        
+        .timeline-dot {
+            transition: all 0.3s ease;
+        }
+        .timeline-dot.active {
+            background-color: #b45309;
+            transform: scale(1.25);
+            border-color: #fff;
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutrals (Stone) with Amber/Gold Accents representing Divinity and Deep Red for Esoteric Buddhism -->
+    <!-- Application Structure Plan: 
+         1. Hero Section: Title and core thesis.
+         2. Interactive Journey Chart: A line chart visualizing the protagonist's "Fear vs. Clarity" levels over age, acting as a top-level navigator.
+         3. Main Narrative Dashboard: Split view. 
+            - Left: Chapter Selection (Accordion/List).
+            - Center: Reading pane with dynamic highlighting.
+            - Right: Contextual Info Panel (Key Entities, Lessons, Statistics for the current phase).
+         4. Thematic Analysis: Interactive comparison of "Worldly Management" vs "Dharma Cultivation".
+         5. Synthesis: Visual summary of the "Exoteric Foundation, Esoteric Practice" doctrine.
+         Rationale: The story is a linear biography but complex in spiritual concepts. The chart provides an emotional roadmap, while the split view allows deep reading without losing context of the "meta" lessons (entities/deities involved).
+    -->
+    <!-- Visualization & Content Choices:
+         1. Journey Chart (Chart.js): Goals -> Visualize internal state changes. Interaction -> Click points to load chapters. NO SVG.
+         2. Entity Cards (HTML/Tailwind): Goal -> Catalog the supernatural/divine figures. Interaction -> Hover/Click for details.
+         3. Comparison Toggle (HTML/JS): Goal -> Show the contrast between Taoist bureaucracy and Buddhist introspection.
+         4. Key Stats (DOM updates): Goal -> Quantify the unquantifiable (e.g., "Years of Service", "Encounters") to gamify engagement slightly.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-stone-800 text-stone-100 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold tracking-wider text-amber-500">明王殿因緣記</h1>
+                <p class="text-sm text-stone-400 mt-1">明法大師兄略傳：從陰陽眼童年到東密傳承</p>
+            </div>
+            <div class="mt-4 md:mt-0 flex gap-4 text-sm">
+                <span class="px-3 py-1 bg-stone-700 rounded-full border border-stone-600">單頁互動體驗</span>
+                <span id="reading-progress" class="px-3 py-1 bg-amber-900/50 rounded-full border border-amber-700 text-amber-200">進度：0%</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-grow container mx-auto px-4 py-8 space-y-8">
+
+        <!-- Intro Section -->
+        <section class="bg-white rounded-xl shadow-sm p-6 md:p-8 border-l-4 border-amber-600">
+            <h2 class="text-xl font-bold text-stone-800 mb-4 serif">序｜門：世界不只一層</h2>
+            <p class="text-stone-600 leading-relaxed mb-4">
+                有些人的一生像直線，但我很早就明白，世界並不只有一層。它像玻璃，又像夜裡的水面。
+                我看見的，別人看不見。這是一個關於恐懼、沉默、護法與最終找到「法尺」的故事。
+                <br><br>
+                <em class="text-stone-500">請透過下方的「生命心境圖表」或點擊章節，探索這段橫跨道教、顯教與密教的奇緣。</em>
+            </p>
+        </section>
+
+        <!-- Visualization 1: Spiritual Journey Chart -->
+        <section class="bg-white rounded-xl shadow-md p-4 md:p-6">
+            <div class="mb-4">
+                <h3 class="text-lg font-bold text-stone-700 flex items-center gap-2">
+                    <span class="text-amber-600 text-xl">●</span> 生命心境軌跡圖
+                </h3>
+                <p class="text-sm text-stone-500">點擊圖表上的節點可直接跳轉至該時期。X軸：年齡，Y軸：心境強度。</p>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="journeyChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Main Narrative Dashboard (Split View) -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[600px]">
+            
+            <!-- Left: Navigation (Table of Contents) -->
+            <aside class="lg:col-span-3 space-y-4">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-stone-200 sticky top-24">
+                    <div class="bg-stone-100 p-4 border-b border-stone-200">
+                        <h3 class="font-bold text-stone-700">章節導覽</h3>
+                    </div>
+                    <div class="h-[500px] overflow-y-auto custom-scroll p-2 space-y-1" id="chapter-list">
+                        <!-- JS generated chapters -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Center: Reading Area -->
+            <article class="lg:col-span-6 bg-white rounded-xl shadow-md border border-stone-100 flex flex-col">
+                <div class="p-6 border-b border-stone-100 bg-amber-50/50">
+                    <div class="flex justify-between items-center mb-2">
+                        <span id="part-label" class="text-xs font-bold tracking-widest text-amber-700 uppercase">第一部</span>
+                        <span id="age-label" class="text-xs bg-stone-200 text-stone-600 px-2 py-1 rounded">7–12 歲</span>
+                    </div>
+                    <h2 id="chapter-title" class="text-2xl font-bold text-stone-800 serif mb-2">第1章｜兩個世界</h2>
+                    <blockquote id="chapter-quote" class="border-l-4 border-stone-400 pl-4 italic text-stone-600 bg-stone-50 py-2 rounded-r">
+                        我怕的不是上學，是我又會看見他們。
+                    </blockquote>
+                </div>
+                
+                <div class="p-6 md:p-8 flex-grow overflow-y-auto custom-scroll max-h-[600px]" id="content-area">
+                    <!-- Dynamic Content Here -->
+                    <p class="text-stone-700 leading-loose text-lg">
+                        載入中...
+                    </p>
+                </div>
+
+                <div class="p-4 border-t border-stone-100 flex justify-between bg-stone-50 rounded-b-xl">
+                    <button id="prev-btn" class="px-4 py-2 bg-white border border-stone-300 rounded hover:bg-stone-100 text-stone-600 transition disabled:opacity-50">← 上一章</button>
+                    <button id="next-btn" class="px-4 py-2 bg-amber-600 text-white rounded hover:bg-amber-700 shadow transition">下一章 →</button>
+                </div>
+            </article>
+
+            <!-- Right: Context & Analysis Panel -->
+            <aside class="lg:col-span-3 space-y-6">
+                
+                <!-- Dynamic Stats -->
+                <div class="bg-stone-800 text-stone-100 rounded-xl p-5 shadow-lg">
+                    <h4 class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-3">當前時期修持狀態</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-2 bg-stone-700 rounded-lg">
+                            <div class="text-xs text-stone-400 mb-1">內心恐懼</div>
+                            <div id="fear-meter" class="text-xl font-bold text-red-400">80%</div>
+                        </div>
+                        <div class="text-center p-2 bg-stone-700 rounded-lg">
+                            <div class="text-xs text-stone-400 mb-1">智慧/法喜</div>
+                            <div id="clarity-meter" class="text-xl font-bold text-amber-400">10%</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-stone-600">
+                        <div class="text-xs text-stone-400 mb-1">關鍵修法/作為</div>
+                        <div id="action-tag" class="text-sm font-medium text-white">躲藏與逃避</div>
+                    </div>
+                </div>
+
+                <!-- Key Entity Card -->
+                <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-5">
+                    <h4 class="text-sm font-bold text-stone-700 mb-3 border-b pb-2">關鍵人物/神祇</h4>
+                    <div id="entity-container" class="space-y-3">
+                        <!-- Dynamic Entities -->
+                    </div>
+                </div>
+
+                <!-- Insight/Concept Box -->
+                <div class="bg-amber-50 rounded-xl p-5 border border-amber-100">
+                    <h4 class="text-sm font-bold text-amber-800 mb-2">💡 悟境筆記</h4>
+                    <p id="insight-text" class="text-sm text-amber-900 leading-relaxed">
+                        這是一個孩子對抗未知世界的開始。
+                    </p>
+                </div>
+
+            </aside>
+        </section>
+
+        <!-- Section 4: Thematic Analysis - Interactive Comparison -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-8 rounded-xl shadow-md my-8">
+            <div class="flex flex-col justify-center space-y-4">
+                <h3 class="text-2xl font-bold text-stone-800 serif">修行轉折：從「人治」到「法治」</h3>
+                <p class="text-stone-600">
+                    大師兄的歷程中有一個關鍵轉折點：從道教宮廟的管理委員會鬥爭，轉向佛教經典的自我修持。
+                    試著切換下方的開關，感受兩種心境的差異。
+                </p>
+                
+                <!-- Toggle Interaction -->
+                <div class="flex items-center gap-4 p-4 bg-stone-100 rounded-lg w-fit">
+                    <span class="text-sm font-bold text-stone-500" id="mode-label-left">宮務權力 (人意)</span>
+                    <button id="toggle-path" class="w-16 h-8 bg-stone-400 rounded-full p-1 transition-colors duration-300 relative">
+                        <div id="toggle-circle" class="w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300"></div>
+                    </button>
+                    <span class="text-sm font-bold text-stone-500" id="mode-label-right">般若智慧 (法意)</span>
+                </div>
+            </div>
+
+            <div id="comparison-display" class="bg-stone-100 p-6 rounded-lg border-2 border-stone-200 transition-all duration-500 flex flex-col justify-center items-center text-center">
+                <div class="text-6xl mb-4 transition-transform duration-500 transform hover:scale-110" id="comp-icon">🗳️</div>
+                <h4 class="text-xl font-bold mb-2 text-stone-800" id="comp-title">董事會與投票</h4>
+                <p class="text-stone-600 text-sm" id="comp-desc">
+                    「當票能買，投票就只剩形式。」<br>
+                    在人的組織裡，神意往往被財團與權力扭曲。即使下跪兩小時，也喚不回真實。
+                </p>
+            </div>
+        </section>
+
+        <!-- Final Synthesis: Ming Wang Dian -->
+        <section class="bg-stone-800 text-stone-200 rounded-xl p-8 md:p-12 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-600 via-amber-500 to-blue-600"></div>
+            
+            <h2 class="text-3xl font-bold text-amber-400 serif mb-6">東密・明王殿</h2>
+            <p class="max-w-2xl mx-auto text-lg text-stone-300 mb-8">
+                「以顯為基，以密救世」
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="p-6 bg-stone-700/50 rounded-lg border border-stone-600">
+                    <div class="text-amber-500 text-xl font-bold mb-2">顯教</div>
+                    <p class="text-sm text-stone-400">為根、為尺<br>四聖諦、八正道、心經、金剛經</p>
+                </div>
+                <div class="p-6 bg-stone-700/50 rounded-lg border border-stone-600">
+                    <div class="text-red-500 text-xl font-bold mb-2">密教</div>
+                    <p class="text-sm text-stone-400">為行、為願<br>不動明王、火供、三藏度陰陽</p>
+                </div>
+                <div class="p-6 bg-stone-700/50 rounded-lg border border-stone-600">
+                    <div class="text-blue-400 text-xl font-bold mb-2">圓滿</div>
+                    <p class="text-sm text-stone-400">恆順眾生<br>不執法對立，從道教到東密的一體性</p>
+                </div>
+            </div>
+
+            <div class="mt-10 p-6 bg-stone-900/50 rounded-xl inline-block border border-stone-700">
+                <p class="font-serif italic text-lg leading-loose text-amber-100">
+                    明以三藏度陰陽<br>
+                    法以佛道解六界<br>
+                    定以蓮師揚佛法<br>
+                    靜以待之度眾生
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-500 py-8 text-center text-sm border-t border-stone-800">
+        <p>© 2026 明王殿因緣記 互動體驗 | 基於明法大師兄略傳製作</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Data Store
+        const storyData = [
+            {
+                part: "第一部",
+                title: "兩個世界",
+                age: "7–12",
+                chapters: [
+                    { id: 1, title: "兩個世界", text: "那年我七歲，母親牽著我的手，帶我去國小附設的幼稚園。她的手很溫暖，可我的掌心一直冒汗。校門口的鐵欄杆像一排排牙齒，操場的紅土帶著雨後的腥味，風把樹葉吹得沙沙響，像有人在背地裡議論。<br><br>我怕的不是陌生教室，也不是新同學。我怕的是——我會在那裡，再一次看見「另一群人」。<br><br>自我有記憶以來，我總覺得自己同時活在兩個世界：一個是眼前的家人、同學、桌椅、課本；另一個則是偶爾浮現的陌生臉孔——有時穿著古裝，衣角拖得很長；有時像從未見過的路人，從人群裡一閃就不見。<br><br>我曾把這件事告訴父親，以為大人會懂。父親皺著眉，聲音像板子敲下來：「不要胡說八道。」久了，我就不敢再說。<br><br>到了學校，我有很多同學。也有一些——別人看不到的同學。<br><br>我偶爾會發呆，旁人以為我不專心，其實我只是被那個世界拉住了視線。那世界不一定恐怖，有時只是安靜、只是站著、只是看著你，像等你先承認它存在。<br><br>我把頭低得很低，像要把自己藏進課桌的陰影裡。我以為只要我裝作沒事，那些東西就會放過我。<br><br>但它們沒有走。它們只是開始靠近。", quote: "我怕的不是上學，是我又會看見他們。" },
+                    { id: 2, title: "阿吉", text: "阿吉第一次出現的時候，我以為那只是我太孤單。<br><br>他站在我視線稍微偏左的位置，不會突然貼得太近，像怕嚇到我。他的聲音很輕，輕得像你把耳朵貼在門上偷聽到的那種音量。<br><br>「你不用怕。」他說。「只有你聽得到我。」<br><br>我問他叫什麼名字。他說：「阿吉。」<br><br>從那天起，他開始跟著我。不是每天，也不是每分每秒，但只要我覺得快撐不住——被同學用眼神隔離、被老師誤會在自言自語、被世界推到角落——他就會出現，像一個只有我能看見的同伴。<br><br>我和阿吉說話的時候，旁人只看見我對著空氣點頭、微笑、皺眉。於是有人笑我怪，有人說我神經。我明明在回答一個人，卻被所有人當成在對空氣胡言亂語。<br><br>我越來越沉默。不是因為我沒有話，而是因為我不知道要把話放在哪裡才安全。<br><br>阿吉卻像早就習慣被忽略的人。他不在乎別人的眼光，只在我耳邊輕聲說：「你不用理他們。」<br><br>我當時其實很矛盾。一方面，我害怕自己是不是真的「不正常」；另一方面，阿吉又像是我唯一能抓住的理解。<br><br>我開始把世界切成兩半：一半給大家看到的我，乖、安靜、少說話；一半給阿吉看到的我，還能呼吸、還能哭、還能說出那些不能說的事。", quote: "只有你聽得到我。" },
+                    { id: 3, title: "黑板的手", text: "上了小學一年級，我還是無法專心。黑板上的粉筆字像一群小蟲爬來爬去，老師的聲音忽遠忽近，我的注意力總被教室某個角落牽走。<br><br>那一次，恐懼從牆裡伸出來。<br><br>我看見黑板旁的牆面伸出一隻手。不是「眼花」那種模糊，而是一隻真的手——指節突出，爪尖發亮，皮膚黑褐，帶著像蛇皮一樣的花紋。牆壁被它撐開一道縫，像裂開的嘴。<br><br>我全身發抖，牙齒咬得喀喀響，卻不敢哭。因為我知道：只要我一喊，所有人都會回頭，而他們什麼也看不到。他們只會看見一個孩子在發瘋。<br><br>老師走過來，手按在我肩上：「你怎麼了？不舒服嗎？」我張了張嘴，喉嚨像被什麼掐住，只吐得出一個字：「沒……」<br><br>阿吉站在我旁邊，他的臉比平常更沉。他低聲說：「那是壞的。他常欺負人。」<br><br>壞的。那兩個字像一顆小石頭掉進我心裡，沉到最深處，沉到你以後每次想起都會發冷。<br><br>那隻手在牆面邊緣停著，像在試探，像在找一個能把你拖走的縫。我僵在座位上，連呼吸都不敢太大聲。<br><br>就在那時，我腦海忽然閃過一個畫面——家裡的香案、燭火、供杯、母親合掌的背影。像有人在我胸口點亮一盞燈。", quote: "牆裂開的那一瞬間，我知道恐懼有形狀。" },
+                    { id: 4, title: "金光", text: "我不確定那是不是祈求。那一瞬間的我只是在心裡喊了一下：<strong>「家裡的神明……」</strong><br><br>然後，光出現了。<br><br>不是刺眼的那種光，更像一條乾淨、堅定的光線，從某個我說不清的地方落下來。它沒有聲音，卻有力量，像把一段不該存在的影像直接抽離。<br><br>那隻手被捲住的瞬間，我看見它像被抓住的黑布，扭曲、退縮、想逃。但光沒有猶豫。它把那隻手——連同牆面裂開的那種不祥——一併帶走。<br><br>牆壁恢復原樣，粉筆字仍在黑板上，老師的聲音仍在教室裡，其他同學甚至連頭都沒抬一下。世界回到它原本的樣子，彷彿剛才的一切從未發生。<br><br>只有我還在抖，像剛從水裡撈起來的魚。我把手藏在桌子底下，指尖冰冷得不像自己的。<br><br>阿吉盯著空空的牆面，聲音很小，卻像一個宣判：「他走了。」他停了一下，又補一句：「自從那次，我就再也沒見過那個壞人了。」<br><br>我想問更多——那道光是誰？為什麼會來？它跟阿吉一樣嗎？但我終究沒問出口。<br><br>因為我忽然明白：有些答案不是用問的。它會在你更長大、更撐得住、更不再只想逃的時候，自己回來找你。", quote: "我只是想起家裡的神明，光就來了。" },
+                    { id: 5, title: "獎品", text: "九歲那年，我終於有了一個「在人間」可以站在我旁邊的人。<br><br>他叫阿超，坐在我旁邊。全班同學仍覺得我怪，覺得我眼神飄、覺得我常常像在跟空氣說話；只有阿超不太在意。他會把橡皮擦推回我桌上，會在我被起鬨時假裝沒聽見，像用一種很笨、卻很實在的方式替我擋掉那些刺。<br><br>有一次我鼓起勇氣，把阿吉的事告訴他。<br><br>阿超聽完愣住，像是聽到一個不該存在的故事。他的表情不是嘲笑，而是一種不知道該怎麼反應的空白。他問我：「你真的……看得到？」我點頭。<br><br>那天老師辦摸彩活動。第一名是雙面磁鐵、無敵鐵金鋼的鉛筆盒。那個名字在當時像一串神祕咒語，越唸越亮。獎品放在講桌上，塑膠外殼反著光，我盯著它，覺得它像一座閃亮的小城堡——如果我拿到它，也許我就能像別人一樣「正常」一點，至少在這一刻被看見。<br><br>阿吉在我旁邊說：「我幫你拿到。」<br><br>我不太敢信，但那句話像一根針，刺破了我心裡某種很久以前的渴望：我想要一件屬於自己的東西，來證明我不是永遠只能躲在陰影裡。<br><br>我把阿吉說的話，低聲轉述給阿超聽。阿超笑了一下，笑得很勉強：「你不要鬧了啦。」<br><br>結果獎品真的落在我手上。<br><br>老師叫到我的名字時，我整個人像被推到光底下。大家拍手，我抱著鉛筆盒走回座位，手指在外殼上輕輕摩挲。那一刻我不是只有開心，還有一種更深的發冷——原來有些事，真的會發生。原來我不能再用「想像」來安慰自己。<br><br>阿超看著我，眼神變得很安靜。他沒有再笑，也沒有再問，只是把椅子往我這邊挪了一點點，像在用那一點點的距離告訴我：我信你，但我也怕。<br><br>從那以後阿吉的事，我只跟阿超說。因為我開始明白：秘密不是浪漫，它是保命。", quote: "那個鉛筆盒讓我明白：有些事不是想像。" },
+                    { id: 6, title: "榕樹伯伯", text: "十歲那年，我說我想學小提琴。<br><br>父親沒有多說什麼，只是買了一把一百五十元的胡琴給我。他說那是「中國小提琴」。我到現在仍記得那把琴的重量：不只是木頭的重量，還有父親把日子省下來的重量。<br><br>我背著胡琴去學校，加入國樂社。中午或放學後，我常在校園的榕樹下拉琴。榕樹很大，葉子密密匝匝，陽光從縫隙漏下來，一格一格像碎金。琴聲拉得生疏，常跑音，但我拉得很認真——像只要把每個音拉準，我就能把自己拉回一個「可以被理解」的世界。<br><br>有一天，我在榕樹下練到手指發酸，忽然聽到一個聲音，很靠近，像從樹幹裡傳出來：「好好學，你有天份。」<br><br>我猛地回頭。身後沒有任何人。風穿過葉縫，沙沙作響，像在笑我太緊張。<br><br>我問阿吉：「剛剛那是誰？」阿吉抬頭看著榕樹，像在跟一個長輩打招呼：「是榕樹伯伯啦。他兩百多歲了。」<br><br>我仰頭看那棵榕樹，樹幹粗得像一段老人的臂膀。它站在那裡，看過無數小孩跑過、跌倒、長大、離開。那一刻我忽然覺得：世界雖然可怕，卻也有些東西一直在——不需要你證明，也不需要你辯解，只是安靜地陪著你。<br><br>那聲「你有天份」，不像命令，也不像誘惑。更像一盞很小的燈，讓我在被誤解的日子裡，還能往前走一步。", quote: "聲音從樹幹裡出來，像一位老人在鼓勵我。" },
+                    { id: 7, title: "山與號角", text: "十一歲那年，我記得很清楚：放學回家，我守著那台黑白電視機。那時只有三台節目，我最愛看《海王子》。卡通開始之前，廣告一段段接著來，我坐在地上，背靠著木櫃，眼睛盯著畫面不放。<br><br>忽然，電視畫面切到一座很高很高的山。山的輪廓像神的脊背，沉默而巨大。<br><br>接著，有人從山上放下一幅神明的畫像。有人吹起很長很長的號角，號角聲像從遠古的胸腔裡拖出來。也有人戴著面具跳舞，舞步奇異卻莊嚴，像在替某種看不見的秩序行禮。<br><br>我突然大哭。<br><br>不是傷心，也不是害怕。是一種莫名的親切感——像你在陌生的人海裡忽然看見一雙認得你的眼睛。我不知道我在哭什麼。我不想哭，但眼淚像被打開的閘門，一直流不停。<br><br>母親回家看到我嚇了一跳，以為我生病，載我去看醫生。醫生看不出原因，藥也沒效果。那天我哭到頭痛，哭到胸口發熱，像身體裡有什麼東西找不到出口，只能用眼淚往外跑。<br><br>後來有人跟母親說：「帶去廟裡收驚看看。」<br><br>廟裡香煙繚繞，像一條條灰白色的蛇緩慢爬行。收驚婆婆看了我一眼，忽然說：「這孩子不一樣。」她給我一杯水，說是大悲水。<br><br>我喝下去的瞬間，胸口像被某種溫柔的東西輕輕撫過。那股狂亂忽然退去，眼淚停了，身體也鬆了。那不是戲劇性的奇蹟，更像你在暴風裡被人拉回屋簷下：你不知道他從哪裡來，但你知道你暫時安全了。<br><br>我當時還不懂「大悲」兩個字。我只記得那杯水的溫度，和它把我從某個看不見的浪裡拎回來的方式。", quote: "我突然大哭，卻不知道自己在哭什麼。" },
+                    { id: 8, title: "一口茶", text: "十二歲那年，慶安宮廟會。母親帶我去拜拜。廟裡人很多，香火很旺，鼓聲、鞭炮聲、喧鬧聲混在一起，像整個城鎮的心跳都集中在這裡。<br><br>我們走到後殿右側，那裡供奉著觀世音菩薩。<br><br>我站在菩薩前抬頭看，才突然明白：原來我家裡供奉的神明，跟廟裡是一樣的。那種「原來我不是孤島」的感覺剛冒出來，眼淚就跟著湧上來。<br><br>我又哭了。<br><br>母親急了，一直叫我：「不要再哭了！」她越叫，我哭得越大聲，像有一股潮水從心底湧上來，不讓我停。<br><br>旁邊的廟公走過來，沒有責備，只端起神桌上的茶遞給我：「喝一口。」<br><br>茶很溫，帶著淡淡的香。我喝下去的那一刻，像有人把我從混亂裡輕輕抱起來，安放回自己的身體裡。哭聲停了，呼吸也回到該有的節奏。母親鬆了一口氣，我卻心裡發怔：怎麼會這樣？為什麼一口茶就能把我拉回來？<br><br>回家的路上，我問母親：「觀世音菩薩是做什麼的？」母親說：「保護好人的神明。」<br><br>隔天上學，我問阿吉：「觀世音菩薩跟鬼有什麼不一樣？」阿吉抓抓頭：「我也不知道。」<br><br>我又問：「那為什麼我看得到你，卻看不見觀世音菩薩？」阿吉沉默了很久，像第一次發現自己也有不知道的事。<br><br>最後他只說了一句——一句像把很多年以前那道光，直接取了名字的話：「觀世音菩薩，就是那天抓走壞人的那道金光。」<br><br>我站在走廊上，手裡握著課本，卻覺得整個身體被那句話照了一下。原來那道光不是偶然。原來它一直在，只是你不一定看得見。<br><br>那天傍晚，我回家望著神明廳的燭火，心裡像埋下一粒種子。我不知道它會在什麼時候發芽。<br><br>我更不知道，多年後它會長成一片火焰般的影——火焰背後站著不動尊明王，手持利劍，眼神像鐵，卻讓我熟悉得像回家。", quote: "喝下去的那一刻，我被安放回自己身體裡。" }
+                ],
+                stats: { fear: 90, clarity: 15, action: "被動承受 / 恐懼" },
+                entities: [
+                    { name: "阿吉", type: "靈界友人", desc: "童年的守護者與陪伴，唯一能對話的對象。" },
+                    { name: "黑板鬼手", type: "惡靈", desc: "具象化的恐懼來源，試圖侵擾主角。" },
+                    { name: "觀世音菩薩", type: "神祇", desc: "以金光、大悲水顯化，提供最早的安全感。" }
+                ],
+                insight: "童年時期，主角處於被動狀態。「陰陽眼」帶來的是恐懼與孤立，唯一的慰藉來自看不見的朋友與神明的暗中保護。"
+            },
+            {
+                part: "第二部",
+                title: "明王之劍",
+                age: "17–23",
+                chapters: [
+                    { id: 9, title: "灰塵與腳", text: "十七歲那年，家裡搬進新房。父親像終於把日子擱在一個穩當的地方，抬頭看著頂樓神明廳，神情難得鬆了一點。母親忙著張羅供品，像把一個家最柔軟的部分搬上去。<br><br>佛顓寺的師父來安座不動尊明王。<br><br>我第一次看見祂，是在香煙尚未散去的瞬間。祂站立的身形很高，背後火焰翻騰，明明是金身木雕，我卻覺得祂像一座有溫度的山。右眼大、左眼小——那不是缺憾，而像兩種注視：一種看外界的動盪，一種看內心的波瀾。右手持劍，劍不是威嚇，是斷；左手執繩，繩不是綑綁，是攝。<br><br>母親帶我去佛顓寺拜見老師父。老師父手裡拿著《般若心經》，翻頁聲很輕，像在掀起某種久遠的宿緣。他看著我，只說：「現在你不懂，以後你會明白。把你的記憶找回來。」<br><br>我當時只覺得莫名。什麼記憶？我以為我已經記得夠多——那些別人看不到的人、那道金光、那些莫名的眼淚。難道還有更深的東西，藏在我不知道的地方？<br><br>我逛到二樓，看見兩公尺高的不動尊明王。祂的臉很兇，可我沒有害怕。那種感覺很怪，像你在陌生城市突然聽見有人喊你的乳名——熟悉得讓你差點想回頭答應。<br><br>我走到祂面前，注意到祂的腳邊積著灰塵。灰塵薄薄一層，卻讓我心裡一酸，像看見一個長年站在原地護人的人，卻沒人替祂拂去鞋尖的疲憊。<br><br>我去找抹布、提水桶，蹲在祂腳前，慢慢擦。<br><br>那一刻我沒有宏願，也沒有豪語。我只是很確定：以後只要我有空，我會再來。像還一筆我說不清的債。", quote: "祂的臉很兇，可我只想替祂洗腳。" },
+                    { id: 10, title: "雨夜白袍", text: "十八歲，血氣方剛。偏偏那天是農曆七月初一。<br><br>母親不讓我外出，說七月忌。她的語氣不是威嚇，是怕。可我那時候哪裡懂怕？我只覺得「不能出去」像被關在一個看不見的籠子裡。<br><br>我還是騎機車出門了。<br><br>外面下著小雨，路燈稀疏，夜色像墨慢慢滲進街道縫隙。回家的路有一段特別暗，我放慢車速，耳邊只剩雨點打在安全帽上的聲音，像有人用指節輕敲。<br><br>就在那片黑裡，我看見路旁站著一個人。<br><br>我靠近，車燈照過去的瞬間，整個世界像被一隻冰冷的手抓住——那是一個女生，白袍，長髮濕黏在臉邊。眼白大得不合理，布滿紅血絲。她手裡撐著油傘，傘面低垂，像刻意遮住某種不該被看見的表情。<br><br>最令我恐懼的，是她拉長的舌頭。那不是誇張，而是一種違背常理的延伸，像把「不是人」三個字硬生生掛在你眼前。更可怕的是，她的腳離地——像站在空氣裡。<br><br>我全身麻掉，腦子只剩一個念頭：走。我扭油門，機車像逃命的獸衝出去，雨風從兩側劈開我。<br><br>我以為我甩掉了她。<br><br>直到我忽然感覺——後座多了一個重量。很輕，卻像一張濕冷的布貼在背上。我不敢回頭。<br><br>我只聽見自己呼吸的聲音，急促、破碎，像有人在胸口追趕我。", quote: "車燈照過去，我的血像被抽空。" },
+                    { id: 11, title: "明王之劍", text: "到了家門口，我整個人像被拆散。手軟腳軟，機車一歪倒下去，我也跟著跌。我用爬的，想爬進家門。<br><br>我爬不進去。<br><br>像有什麼力量拉著我，從背後把我往外拖。指甲刮著地面，發出刺耳的聲音。我一邊敲門，一邊喊，喊得喉嚨都破了——那不是求救，是求一個「界線」：只要門打開，我就能回到人間。<br><br>母親開門那刻，臉色瞬間白掉。她看見我趴在門口，像被什麼壓著。她愣了一秒，下一秒轉身衝上頂樓神明廳。<br><br>我聽見她翻找的聲音，像在黑暗裡抓一根救命的繩。然後她下來了，手裡握著不動明王的劍。<br><br>那把劍其實是法器，不是兵器。但在那一刻，它像一道決絕的雷。母親沒有猶豫，往我頭上一敲了一下。<br><br>「啪」的一聲。<br><br>我只覺得世界瞬間斷電。眼前黑下去，像有人把我從那片濕冷的背影裡硬生生拽回來。我倒下去，失去意識。<br><br>醒來已是隔天清晨。窗外鳥叫，光線乾淨得像什麼都沒發生。母親坐在床邊，眼圈很深，像一夜沒睡。她沒有多問我看見什麼，只說：「以後七月不要亂跑。」<br><br>我點頭。<br><br>但我心裡知道，有些門已經被敲開了。而門後的東西，不會因為你說「不想」就退回去。", quote: "那一下敲下來，世界像被斷電。" },
+                    { id: 12, title: "顏色", text: "從那次之後，我的身體像多了一條新的感官。不是更清楚的視力，也不是更敏銳的聽力，而是一種很難描述的「看見」——我看見人身周的顏色。<br><br>有的人頭頂偏綠，有的人身上浮著紫，有的人像被粉紅色的光輕輕罩著；也有人整個人灰暗，像一團陰天擱在肩膀上。有些人同時有兩三種顏色，像命運正在同一個身體裡打結。<br><br>我起初以為是幻覺，直到那次倒垃圾。<br><br>巷口的阿伯跟我聊天，笑得客氣。可我看見他整個人被黑霧罩住，像從水底浮起的影子。我心裡一震，卻不敢說。我只陪他多聊幾句，像在拖延什麼，又像在替他留住一點人間的溫度。<br><br>隔天，阿伯過世。心肌梗塞。<br><br>那一刻我手腳冰冷，像有人把「死亡」兩個字直接蓋在我眼前。我開始觀察更多人，卻越看越怕：如果我看見了，卻改變不了，那看見有什麼用？如果我說出來，就會被當成瘋子，那我該把這些放哪裡？<br><br>我嘗試跟人提起，結果頭痛得像有人在腦裡扭緊一圈圈鐵絲——痛到四分五裂，像金箍咒勒住你，提醒你：不要越界。<br><br>於是我又學會沉默一次。<br><br>沉默像一扇門，把我鎖在裡面；也把外面的世界隔在外面。只是這一次，我知道門不是為了安全，而是為了讓我學會分辨：什麼該說，什麼只能修。", quote: "我開始看見人身上的霧，像命運的預告。" },
+                    { id: 13, title: "心經的速度", text: "二十歲那年，我高中畢業，整理家裡沒用到的書籍，準備要丟了。整理時從角落看到了老師父送我的《心經》。<br><br>我翻著看，頭好暈，身體發麻，似曾發生此情況。我念著心經，速度越唸越快，感覺不是我在唸一樣。這一天我就把心經給背起來了。<br><br>對於那時候不可能看經書的我，自己都覺得怎會莫名其妙地背起來。<br><br>我看著書頁，指尖還在麻，心裡卻第一次升起一種不帶恐懼的確定：也許我這一路的「看見」，不是要我變得特別，而是要我回到某個更正、更穩的地方。", quote: "不是我在念，是某種力量借我開口。" },
+                    { id: 14, title: "伙房與槍", text: "二十一歲那年我入伍當兵，面對未來很徬徨。但有另外的一個聲音一直跟我說：別擔心，你會被長官編制當伙房軍。<br><br>入伍的第一個晚上，連長問說：要去廚房當伙房兵的舉手。當時約有一百多個人都舉手，只有我沒舉，結果連長居然選我，我真的被分配到廚房！<br><br>還有一次凌晨，我在廚房裡揉著麵團，又聽到一個聲音跟我說：有人想逃兵，會把槍械丟在豬舍圍牆旁。我好奇著，真的跑去看看，真的有一把步槍、跟刺刀、裝備，被丟在那。<br><br>我把它拿回連上給長官，之後告訴長官此事，他竟然相信了還讓我放了三天榮譽假！自己都覺得很玄～很奇。", quote: "我沒舉手，卻被點名；我沒找，卻找到了。" },
+                    { id: 15, title: "戰甲之人", text: "二十二歲，下了部隊，軍營裡的床是上下鋪。睡我旁邊的隊友身上帶了一個香火袋，我不以為意，但我常在睡夢中，夢見一個穿戰甲的人來找我。<br><br><strong>【夢境】</strong>他說他來台灣很久了，任務是來此救世，希望以後我能幫忙。我也不知道我能幫什麼忙。<br><br>我醒來後問隊友是否有聽過或看過此神明。他跟我說：應該是他香火袋上的神明！他的香火袋是他的父親當年在大陸、蔣公來台時，祖先放在他父親身上保平安的，現在他父親再送給他，希望他軍途能平安！<br><br><strong>【夢醒】</strong>夢散了，軍營仍在。可那句「希望以後我能幫忙」像一根刺，留在我心裡，不肯拔出來。", quote: "他說要救世，卻叫我以後幫忙。" },
+                    { id: 16, title: "亮光與字", text: "二十三歲退伍後，經常與隊友聯繫。有一次去他家拜訪，我見到一道亮光閃過，結果看他弟弟全身突然抖起來，一直顫抖，當場他的家人都傻掉不知道怎麼辦？他弟弟也變得口齒不清，一直用手寫字。<br><br>他寫著：某某王爺、福建縣甚麼村的、玉旨降示來此、開宮救世。寫完之後就暈倒了！<br><br>那支筆的刮聲像一個句點，替我過去那些零散的「看見」收了尾，又替我下一段人生開了頭。", quote: "筆尖刮過紙的聲音，像命運在寫下地址。" }
+                ],
+                stats: { fear: 60, clarity: 40, action: "初探 / 結緣" },
+                entities: [
+                    { name: "不動明王", type: "本尊", desc: "初次相見即感熟悉，以法劍斬斷陰氣糾纏。" },
+                    { name: "戰甲神人", type: "神祇", desc: "預告救世任務，開啟未來的宮廟因緣。" }
+                ],
+                insight: "青年時期，能力開始穩定，從單純的「看見」轉為「感應」。不動明王的出現是關鍵伏筆，象徵著更有力的護法力量介入。"
+            },
+            {
+                part: "第三部",
+                title: "宮務八年",
+                age: "24–32",
+                chapters: [
+                    { id: 17, title: "紅布與石碑", text: "二十四歲那年，我從未參與過神明事，但又覺得很奇怪：之前夢中的某某王爺，一直都會來我的夢中希望我能協助祂。<br><br>當年正逢大陸開放探親，我與同梯軍中隊友為了證實夢中事情是否屬實，決定一起回他的福建老家巡問看看。<br><br>去到那邊，問當地的人，確實有這間廟及這尊某某王爺，但因文革期間，廟宇神像均被燒毀，僅剩廟前大樹綁著紅布，前面有一石碑，上面寫著某某宮某某王爺。<br><br>看到時我跟隊友都嚇了一跳。真的太不可思議！", quote: "我為了夢跨海，卻在碑前失語。" },
+                    { id: 18, title: "開光點眼", text: "既然受了王爺的指示，我和軍中隊友趕緊籌錢到佛像店雕刻王爺金身法相，也請佛像店老闆幫忙至玉皇宮開光。<br><br>一切科儀、法事，我親身全程參與，也看在眼裡、記在腦裡：如何入神、入寶、入臟、開光點眼……慢慢地，我開始進入道教的世界。<br><br>點眼那一瞬間，朱砂落下，我背脊一涼，像有一道目光真的從那裡醒來。我忽然明白：從今以後，不是你在拜祂，是你在扛祂。", quote: "朱砂落下時，我感覺目光醒了。" },
+                    { id: 19, title: "降駕", text: "慢慢的某某王爺經常都會來降駕在隊友的弟弟身上。隊友弟弟經過一段時間，降駕越來越穩，也受禁過108天，過後已能夠開口講話。<br><br>王爺開始辦事。我那時心想：我家裡有供奉不動明王，而明王怎麼都沒來我夢中說要度世，反而變成是朋友家的王爺在辦事。<br><br>信眾帶著病痛、官司、家務紛爭而來。那一刻你會明白：人間的苦其實很沉，沉到一個人不得不把希望交出去。", quote: "人間的苦其實很沉。" },
+                    { id: 20, title: "八年", text: "王爺那時的興起，我開始忙於組織轎班，並聘請名師來訓練進香的腳步、涼傘、頭旗等陣頭，也慢慢與其他宮壇交流。<br><br>我開始忙於宮務，組織管理委員會，辦理各項法事：動土、謝土、入厝、拜天公、祭天香案、安神位、看厝體、開光入神、祭改化煞、安山海鎮、八卦鏡等等。<br><br>我也籌備買地建廟，接洽各公商團體、政治團體。宮務一旦忙起來，沒有「下班」這回事。<br><br>或許是年少、衝力足，我受王爺聘任當了副主委，主委是隊友的父親。我把王爺委託的事務在八年中完成：從買地、動土、上樑、完工、謝土、安座，都在這段因緣中一一走過。", quote: "忙起來就沒有下班，只有更深的責任。" },
+                    { id: 21, title: "凌霄寶殿", text: "這年，參與一場整個鄉鎮所有廟宇祈福大典繞境活動。團隊各組忙碌，出巡前晚因神尊已安坐於神轎，必須要有人守夜顧轎，那時我自願留下，不知不覺中我在神轎前的地上睡著了。<br><br><strong>【夢境】</strong>突然間有聲音說著：方家子弟，跟我前來。我在夢中張開雙眼竟發現我在雲層上面騰雲駕霧，飛到一平台。我看見數以千萬的兵將、軍隊，操練各兵器。我站在王爺旁有如閱兵。<br><br>之後王爺帶我進入凌霄寶殿，我親眼見到文武百官。那時我想到《天堂遊記》所寫的，心裡一震：原來那種「傳說」並非全是虛構。<br><br><strong>【夢醒】</strong>我醒來時已卯時，精神飽滿，不覺昏累，像被某種秩序安放過。", quote: "雲層之上，有千萬兵將操練如雷。" },
+                    { id: 22, title: "御令與龍杖", text: "<strong>【夢境】</strong>我那時親眼看見玉皇大帝，玄靈高上帝玉皇大帝並詔曰：方卿～不動明王賜你參與法事～歷事練心！是你累世的宏願，如今某某宮已成立，在這當中你所學道術將有助你救拔眾生，切記！！<br><br>玉皇並賜御令（只要有祭天普渡法事、對天上稟、必有所願），另賜龍杖予我～並曰（賜你上打昏君～下打奸臣）。<br><br>我曰：稟玉皇大帝～現在是法治時代～昏君也打不到～奸臣也打不到啊！玉皇曰：吾指的是神道中的昏君與奸臣。我曰：謝皇恩……<br><br><strong>【夢醒】</strong>就從夢中醒來。（註：以上為個人夢境，僅供參考。）", quote: "玉皇說要打昏君奸臣，我卻想到人間法律。" },
+                    { id: 23, title: "董事會", text: "王爺的宮廟已穩固發展，而開始有企業團體及選舉政治的團體介入。我深感不妥：為何救世會被財團勢力給操控？<br><br>我成立的管理委員會卻變成董事會。我反對，但沒效果，因為所有的事務都是投票表決，而財團會買票操控。<br><br>爾後我自動請辭副主委一職，而後由某企業董事長與民意代表高票當選，主委跟副主委。", quote: "當票能買，投票就只剩形式。" },
+                    { id: 24, title: "考試", text: "有一天我向王爺上稟：我會向王爺代言人即乩身考試，要考驗是不是王爺的旨意，還是個人的意識假借王爺旨意。<br><br>某日王爺聖誕前夕，我邀約代言人外出吃飯。我私底下透露假訊息，說我某日去酒店飲酒作樂喝得很高興，並有吃牛肉。", quote: "我撒了一句假話，想逼出真相。" },
+                    { id: 25, title: "兩小時", text: "在王爺聖誕當日，宮內席開六十桌，後請王爺降駕。結果王爺一降駕，就大聲責罵：「方家子弟，馬上跪下！」<br><br>當下我在五百人的信眾面前跪下，心想：我若抗拒，會有損王爺的威嚴；但若服從，王爺應該知道我並沒有去酒店作樂，為何代言人會大發雷霆並辱我顏面？這是神意，亦或是人意？<br><br>那時我選擇罰跪兩小時。保王爺威信。<br><br>那天之後，我知道我必須回去找一把更準確的尺，來量這一切。那把尺，只能在佛法裡。", quote: "我跪下不是認錯，是不忍信眾的心碎。" }
+                ],
+                stats: { fear: 20, clarity: 50, action: "入世 / 迷惘" },
+                entities: [
+                    { name: "某某王爺", type: "神祇", desc: "道教系統的主神，帶領主角歷練宮務與濟世。" },
+                    { name: "玉皇大帝", type: "天界至尊", desc: "夢中賜予權柄，象徵天命的確認。" },
+                    { name: "董事會", type: "人為障礙", desc: "象徵貪婪與權力鬥爭，是修行的反面教材。" }
+                ],
+                insight: "壯年時期，主角深入道教宮廟體系。雖然神蹟顯赫，但「人」的問題浮現。制度的腐敗讓他意識到，僅靠神通無法解決人心的貪婪。"
+            },
+            {
+                part: "第四部",
+                title: "以法為尺",
+                age: "33–36",
+                chapters: [
+                    { id: 26, title: "一把尺", text: "三十三歲那年，我回佛顓寺，請示釋正妙老師父。<br><br>老師父告訴我：每位神職代言人都必須要進修四聖諦、八正道、十二因緣法，要了解五蘊、六根、六塵、六識，並要勤學聞思修，身口意、戒定慧具足。若心存妄念、私念，即是入魔道。<br><br>我問：那王爺會允許祂的神職代言人如此大膽放肆嗎？老師父曰：每個道場一定會經過八大考驗，這只是其中一考。而這也並非王爺旨意！<br><br>那一刻我明白：我需要的不是更多奇事，而是一把尺。那把尺，叫佛法。", quote: "我不是要更多神蹟，我要一個判準。" },
+                    { id: 27, title: "回照", text: "我開始接觸佛教經書與老師父開示，回到新化佛顓寺在不動明王菩薩壇前持誦唸經。雖不解其義，但經過老師父教導，慢慢略懂一些佛經，也讓我慢慢了解一切殊勝法義。<br><br>我知道世尊釋迦牟尼佛心法真是智慧如海：三學、三業、三輪體空、三轉法輪、四聖諦、四無量心、四弘願、五戒、五蘊、六度般若、八正道、十二因緣……<br><br>老師父跟我說：「你僅懂文字，並未實修觀照，難達究竟。」<br><br>安靜會痛，因為妄念會在靜裡抬頭。看見不是順著走，放下不是壓著不理——看見是明，放下是勇。", quote: "看見是明，放下是勇。" },
+                    { id: 28, title: "放下", text: "我開始閱讀星雲法師、聖嚴法師、證嚴法師、淨空法師的書，也參讀禪宗公案、《六祖壇經》。<br><br>之後老師父卻教我放下所有經文，說：流覽過後要專修一門深入。教我專修《心經》一年，往內觀照，都攝六根，淨念相繼。<br><br>去我執、去法執，勤修身口意，去除貪嗔癡。", quote: "老師父要我把讀過的都放下，只留一部心經。" },
+                    { id: 29, title: "金剛三十二分", text: "三十六歲這年老師父教我勤讀《金剛經》。此經共記三十二分，我每日反覆閱讀，慢慢理解覺、正、淨。<br><br>我也慢慢明白：字是浪，浪底才有沉靜。尺要先量自己，才量得了世界。", quote: "尺要先量自己，才量得了世界。" },
+                    { id: 30, title: "那一句話", text: "一日，我請求釋正妙老師父，我想皈依三寶，拜於老師父門下。老師父靜默不發一語，後交代我說：你必須皈依在師父的直傳大弟子釋會坤法師門下。<br><br>我雖疑惑，但無多言。老師父還說：你記住，你屬東密～明王殿。<br><br>那句話像印蓋在命裡，短，卻足以讓方向清楚。", quote: "「你屬東密——明王殿。」像印蓋在命裡。" }
+                ],
+                stats: { fear: 10, clarity: 85, action: "內觀 / 扎根" },
+                entities: [
+                    { name: "釋正妙老師父", type: "恩師", desc: "指引方向的關鍵導師，教導以戒定慧為尺。" },
+                    { name: "釋迦牟尼佛", type: "法源", desc: "透過經典（心經、金剛經）開啟智慧之門。" }
+                ],
+                insight: "這是轉捩點。從向外求神蹟，轉為向內求智慧。佛教經典提供了「檢驗真理的標準」，解決了他在宮廟時期的困惑。"
+            },
+            {
+                part: "第五部",
+                title: "明王殿",
+                age: "37–40",
+                chapters: [
+                    { id: 31, title: "撞擊", text: "三十七歲某日在上班途中，我出車禍了。被某客運撞倒，飛得甚高、彈得很遠。這一摔，全身瘀血，內傷五臟六腑震到說不出的痛，住進醫院快十天。<br><br>就這十天後，我身體又有奇怪的變化，又開始幻聽、幻覺。我看得到另一空間的世界，比小時候看的更清楚，甚至可以用意念跟他們溝通。<br><br>出院後，我和往常一樣早課、晚課和打坐，即打妄念～座見本性。", quote: "那一撞，像命運用力把我按倒在地。" },
+                    { id: 32, title: "壇城碎片", text: "不動尊明王菩薩出現在我眼前，接著好幾尊菩薩皆都慢慢出現。我似乎打開了阿賴耶識累世記憶壇城：法衣、法器、天馬旗、唐卡、佛像，一一串聯起來。<br><br>我開始收集這幾尊菩薩的資料：不動明王、金剛薩埵、四臂觀音、文殊、藥師佛、白度母、綠度母、蓮花生大士、地藏、黃財神……因此在眾多菩薩辛勤的教導下，創立了東密～明王殿。", quote: "影像一片片亮起，像星星回到夜裡。" },
+                    { id: 33, title: "火供", text: "在有形師父釋正妙老師父的教導，以及無形師父不動尊明王、蓮花生大士、金剛薩埵、藥師佛、四臂觀音、二十一度母等的因緣中，我學「火供護摩儀軌」、次第與行持。<br><br>我明白：密法不是奇，是把心扣回戒定慧。頓悟是亮，漸修是守。", quote: "密法不是奇，是把心扣回戒定慧。" },
+                    { id: 34, title: "以顯為基", text: "我頓悟漸修，內觀，重新往回再修各部經典諸法要義。直指人心、放下塵緣、一心不亂即達佛境。<br><br>這時我了解菩薩們的用心：一路走來，從道教、淨土宗、禪宗、東密、藏密，應驗了「法門無量誓願學」。眾生根基不同、信仰不同，為弘法利生，必須以眾生的信仰去度化，恆順眾生，才不至於執法對立。<br><br>因此我立名：以顯為基，以密救世——東密・明王殿。", quote: "顯教是根，是尺；密法是行，是願。" },
+                    { id: 35, title: "交代", text: "三十九歲這年，釋正妙老師父告訴我，他時日將至，不久將圓寂。釋會坤師父是代傳衣缽，普陀山觀世音菩薩第六十四代直傳弟子。<br><br>老師父交代我：要慈悲為懷、隨緣度化、誠心修持、眾生為利、以顯為基、以密救世。<br><br>二個月後，釋正妙老師父入定圓寂。之後我帶領明王殿弟子及眾大德於佛顓寺大雄寶殿皈依三寶：佛、法、僧，成為釋會坤師父門下弟子，即為普陀山觀世音菩薩第六十五代在家弟子。", quote: "鐘聲很慢，卻每一下都沉到骨頭裡。" },
+                    { id: 36, title: "偈", text: "四十歲，明法帶領所有弟子廣修供養、懺悔業障，誠心設立法會道場，以顯為基、以密救世，修持各個菩薩心法儀軌，弘法利眾。<br><br>應驗了蓮花生大士降示：<br><br><strong>明以三藏度陰陽<br>法以佛道解六界<br>定以蓮師揚佛法<br>靜以待之度眾生</strong><br><br>我知道路還長，但方向終於清楚。", quote: "路還長，但方向終於清楚。" }
+                ],
+                stats: { fear: 0, clarity: 100, action: "圓滿 / 救世" },
+                entities: [
+                    { name: "蓮花生大士", type: "祖師", desc: "密教祖師，降示偈語，指引方向。" },
+                    { name: "諸佛菩薩", type: "團隊", desc: "不動明王、金剛薩埵、度母等組成的無形指導團。" }
+                ],
+                insight: "最終章是整合。顯教的理與密教的事圓融結合。車禍像是最後的啟動儀式，喚醒了累世的記憶，成立明王殿成為必然的使命。"
+            }
+        ];
+
+        // Chart.js Setup
+        const ctx = document.getElementById('journeyChart').getContext('2d');
+        const journeyChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['7歲', '9歲', '17歲', '22歲', '24歲', '30歲', '33歲', '36歲', '37歲', '40歲'],
+                datasets: [
+                    {
+                        label: '內心恐懼 / 迷惘',
+                        data: [90, 80, 70, 50, 40, 60, 30, 10, 5, 0],
+                        borderColor: '#ef4444', // red-500
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: '智慧 / 清明',
+                        data: [10, 20, 30, 40, 50, 40, 70, 85, 95, 100],
+                        borderColor: '#f59e0b', // amber-500
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y + '%';
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: { display: true, text: '心境強度' }
+                    },
+                    x: {
+                        title: { display: true, text: '年齡歷程' }
+                    }
+                },
+                onClick: (e, elements) => {
+                    if (elements.length > 0) {
+                        const index = elements[0].index;
+                        // Map chart index to approx part index (simplified mapping)
+                        let partIndex = 0;
+                        if (index < 2) partIndex = 0; // 7-9 -> Part 1
+                        else if (index < 4) partIndex = 1; // 17-22 -> Part 2
+                        else if (index < 6) partIndex = 2; // 24-30 -> Part 3
+                        else if (index < 8) partIndex = 3; // 33-36 -> Part 4
+                        else partIndex = 4; // 37-40 -> Part 5
+                        loadPart(partIndex);
+                    }
+                }
+            }
+        });
+
+        // Application State
+        let currentPartIndex = 0;
+        let currentChapterIndex = 0;
+
+        // DOM Elements
+        const chapterListEl = document.getElementById('chapter-list');
+        const contentAreaEl = document.getElementById('content-area');
+        const chapterTitleEl = document.getElementById('chapter-title');
+        const chapterQuoteEl = document.getElementById('chapter-quote');
+        const partLabelEl = document.getElementById('part-label');
+        const ageLabelEl = document.getElementById('age-label');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        
+        // Context Elements
+        const fearMeterEl = document.getElementById('fear-meter');
+        const clarityMeterEl = document.getElementById('clarity-meter');
+        const actionTagEl = document.getElementById('action-tag');
+        const entityContainerEl = document.getElementById('entity-container');
+        const insightTextEl = document.getElementById('insight-text');
+        const readingProgressEl = document.getElementById('reading-progress');
+
+        // Toggle Logic for Comparison Section
+        const togglePath = document.getElementById('toggle-path');
+        const toggleCircle = document.getElementById('toggle-circle');
+        const compDisplay = document.getElementById('comparison-display');
+        const compIcon = document.getElementById('comp-icon');
+        const compTitle = document.getElementById('comp-title');
+        const compDesc = document.getElementById('comp-desc');
+        let isDharmaMode = false;
+
+        togglePath.addEventListener('click', () => {
+            isDharmaMode = !isDharmaMode;
+            
+            // Toggle Switch Visuals
+            if (isDharmaMode) {
+                togglePath.classList.remove('bg-stone-400');
+                togglePath.classList.add('bg-amber-500');
+                toggleCircle.classList.add('translate-x-8');
+                
+                // Content Change
+                compDisplay.classList.remove('bg-stone-100', 'border-stone-200');
+                compDisplay.classList.add('bg-amber-50', 'border-amber-200');
+                compIcon.textContent = '🧘';
+                compTitle.textContent = '般若智慧 (法意)';
+                compTitle.classList.remove('text-stone-800');
+                compTitle.classList.add('text-amber-900');
+                compDesc.textContent = '「尺要先量自己，才量得了世界。」\n四聖諦、八正道、戒定慧。向內觀照，去除貪嗔癡。';
+            } else {
+                togglePath.classList.add('bg-stone-400');
+                togglePath.classList.remove('bg-amber-500');
+                toggleCircle.classList.remove('translate-x-8');
+                
+                // Content Change
+                compDisplay.classList.add('bg-stone-100', 'border-stone-200');
+                compDisplay.classList.remove('bg-amber-50', 'border-amber-200');
+                compIcon.textContent = '🗳️';
+                compTitle.textContent = '董事會與投票 (人意)';
+                compTitle.classList.add('text-stone-800');
+                compTitle.classList.remove('text-amber-900');
+                compDesc.textContent = '「當票能買，投票就只剩形式。」\n在人的組織裡，神意往往被財團與權力扭曲。即使下跪兩小時，也喚不回真實。';
+            }
+        });
+
+        // Initialize App
+        function init() {
+            renderChapterList();
+            loadPart(0);
+            updatePaginationButtons();
+        }
+
+        function renderChapterList() {
+            chapterListEl.innerHTML = '';
+            storyData.forEach((part, index) => {
+                const partHeader = document.createElement('div');
+                partHeader.className = `p-2 text-xs font-bold text-stone-500 bg-stone-50 border-t border-stone-200 mt-2 cursor-pointer hover:bg-stone-100 ${index === currentPartIndex ? 'text-amber-600' : ''}`;
+                partHeader.textContent = `${part.part} (${part.age}歲)`;
+                partHeader.onclick = () => loadPart(index);
+                chapterListEl.appendChild(partHeader);
+
+                part.chapters.forEach((chap, cIndex) => {
+                    const btn = document.createElement('button');
+                    btn.className = `w-full text-left px-4 py-2 text-sm rounded transition-colors ${
+                        index === currentPartIndex && cIndex === currentChapterIndex 
+                        ? 'bg-amber-100 text-amber-900 font-bold border-l-4 border-amber-600' 
+                        : 'text-stone-600 hover:bg-stone-50'
+                    }`;
+                    btn.textContent = `第${chap.id}章：${chap.title}`;
+                    btn.onclick = () => {
+                        loadPart(index, cIndex);
+                    };
+                    chapterListEl.appendChild(btn);
+                });
+            });
+        }
+
+        function loadPart(pIndex, cIndex = 0) {
+            currentPartIndex = pIndex;
+            currentChapterIndex = cIndex;
+            const partData = storyData[pIndex];
+            const chapterData = partData.chapters[cIndex];
+
+            // 1. Update Reading Area
+            partLabelEl.textContent = partData.part;
+            ageLabelEl.textContent = `${partData.age} 歲`;
+            chapterTitleEl.textContent = `第${chapterData.id}章｜${chapterData.title}`;
+            chapterQuoteEl.textContent = chapterData.quote;
+            
+            // Animate Text Content
+            contentAreaEl.style.opacity = 0;
+            setTimeout(() => {
+                contentAreaEl.innerHTML = `<p class="text-stone-700 leading-loose text-lg">${chapterData.text}</p>`;
+                contentAreaEl.style.opacity = 1;
+            }, 200);
+
+            // 2. Update Context Stats
+            fearMeterEl.textContent = `${partData.stats.fear}%`;
+            clarityMeterEl.textContent = `${partData.stats.clarity}%`;
+            actionTagEl.textContent = partData.stats.action;
+            insightTextEl.textContent = partData.insight;
+
+            // 3. Update Entities
+            entityContainerEl.innerHTML = '';
+            partData.entities.forEach(ent => {
+                const entDiv = document.createElement('div');
+                entDiv.className = 'p-3 bg-stone-50 rounded border border-stone-100 card-hover cursor-help';
+                entDiv.innerHTML = `
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-bold text-stone-800">${ent.name}</span>
+                        <span class="text-xs px-2 py-0.5 bg-stone-200 text-stone-600 rounded-full">${ent.type}</span>
+                    </div>
+                    <p class="text-xs text-stone-500">${ent.desc}</p>
+                `;
+                entityContainerEl.appendChild(entDiv);
+            });
+
+            // 4. Update Navigation UI
+            renderChapterList();
+            updatePaginationButtons();
+            
+            // Calculate Progress
+            const totalParts = storyData.length;
+            const progress = Math.round(((pIndex + 1) / totalParts) * 100);
+            readingProgressEl.textContent = `進度：${progress}%`;
+            
+            // Scroll selected chapter into view in list
+            // (Simple implementation, can be improved)
+        }
+
+        function updatePaginationButtons() {
+            // Previous Logic
+            if (currentPartIndex === 0 && currentChapterIndex === 0) {
+                prevBtn.disabled = true;
+                prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                prevBtn.disabled = false;
+                prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+
+            // Next Logic
+            const lastPartIndex = storyData.length - 1;
+            const lastChapterIndex = storyData[lastPartIndex].chapters.length - 1;
+            
+            if (currentPartIndex === lastPartIndex && currentChapterIndex === lastChapterIndex) {
+                nextBtn.textContent = "已完結";
+                nextBtn.disabled = true;
+                nextBtn.classList.add('bg-stone-400');
+                nextBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700');
+            } else {
+                nextBtn.textContent = "下一章 →";
+                nextBtn.disabled = false;
+                nextBtn.classList.remove('bg-stone-400');
+                nextBtn.classList.add('bg-amber-600', 'hover:bg-amber-700');
+            }
+        }
+
+        prevBtn.addEventListener('click', () => {
+            const currentPart = storyData[currentPartIndex];
+            if (currentChapterIndex > 0) {
+                loadPart(currentPartIndex, currentChapterIndex - 1);
+            } else if (currentPartIndex > 0) {
+                const prevPartIndex = currentPartIndex - 1;
+                const prevPartLastChap = storyData[prevPartIndex].chapters.length - 1;
+                loadPart(prevPartIndex, prevPartLastChap);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const currentPart = storyData[currentPartIndex];
+            if (currentChapterIndex < currentPart.chapters.length - 1) {
+                loadPart(currentPartIndex, currentChapterIndex + 1);
+            } else if (currentPartIndex < storyData.length - 1) {
+                loadPart(currentPartIndex + 1, 0);
+            }
+        });
+
+        // Start
+        init();
+
+    </script>
+</body>
+</html>
