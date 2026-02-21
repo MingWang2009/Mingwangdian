@@ -1,1 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浴佛朝聖大典</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700;900&display=swap');
 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    /* 全新浴佛節配色：清淨、光明、莊嚴 */
+    --gold-pure: #D4AF37;       /* 純金 */
+    --gold-dark: #997A00;       /* 暗金 */
+    --temple-red: #8E2323;      /* 廟宇莊嚴紅 */
+    --temple-red-dark: #6B1616; /* 深紅 */
+    --bg-pure: #FDFCF9;         /* 清淨白底 */
+    --lotus-pink: #E91E63;      /* 蓮花粉 */
+    --water-blue: #0288D1;      /* 琉璃水藍 */
+    --text-main: #3E2723;       /* 深沉棕 黑*/
+  }
+
+  body {
+    background: var(--bg-pure);
+    font-family: 'Noto Serif TC', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    color: var(--text-main);
+  }
+
+  /* 背景改為純淨的柔和晨光感，象徵佛陀降誕的光明 */
+  .starfield {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, #FFFDF5 0%, #FFF7E6 30%, #FDFCF9 70%, #FDFCF9 100%);
+    z-index: 0;
+  }
+  .starfield::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(3px 3px at 20% 30%, rgba(212,175,55,0.2) 0%, transparent 100%),
+      radial-gradient(4px 4px at 50% 10%, rgba(255,215,0,0.25) 0%, transparent 100%),
+      radial-gradient(2px 2px at 75% 25%, rgba(212,175,55,0.15) 0%, transparent 100%),
+      radial-gradient(2px 2px at 35% 55%, rgba(255,215,0,0.15) 0%, transparent 100%),
+      radial-gradient(3px 3px at 85% 45%, rgba(212,175,55,0.2) 0%, transparent 100%),
+      radial-gradient(2px 2px at 10% 70%, rgba(255,180,50,0.1) 0%, transparent 100%),
+      radial-gradient(2px 2px at 60% 80%, rgba(212,175,55,0.15) 0%, transparent 100%),
+      radial-gradient(3px 3px at 90% 15%, rgba(255,215,0,0.25) 0%, transparent 100%);
+    background-size: 300px 300px, 250px 250px, 400px 400px, 350px 350px,
+                     200px 200px, 450px 450px, 320px 320px, 280px 280px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .header-decoration {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+    animation: fadeDown 1.2s ease both;
+  }
+  .header-line {
+    width: 80px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, var(--gold-pure));
+  }
+  .header-line.right { background: linear-gradient(90deg, var(--gold-pure), transparent); }
+  .header-symbol {
+    color: var(--temple-red);
+    font-size: 22px;
+    letter-spacing: 4px;
+    text-shadow: 0 0 8px rgba(212,175,55,0.3);
+  }
+
+  .main-title {
+    font-size: clamp(32px, 7vw, 58px);
+    font-weight: 900;
+    color: var(--temple-red);
+    letter-spacing: 8px;
+    text-align: center;
+    line-height: 1.2;
+    animation: fadeDown 1.2s ease 0.1s both;
+    text-shadow: 0 2px 10px rgba(142,35,35,0.15), 0 1px 2px rgba(255,255,255,0.9);
+  }
+  .sub-title {
+    font-size: clamp(14px, 3vw, 20px);
+    color: var(--gold-dark);
+    letter-spacing: 12px;
+    text-align: center;
+    margin-top: 6px;
+    animation: fadeDown 1.2s ease 0.2s both;
+    opacity: 0.95;
+    font-weight: 700;
+  }
+
+  .scene {
+    width: 100%;
+    max-width: 680px;
+    margin: 30px 0 0;
+    position: relative;
+    animation: fadeIn 2s ease 0.5s both;
+  }
+  .scene svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 8px 32px rgba(212,175,55,0.12));
+  }
+
+  .meaning-section {
+    width: 100%;
+    max-width: 680px;
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    animation: fadeUp 1.2s ease 1s both;
+  }
+
+  .meaning-card {
+    /* 改為純潔白透著淡淡金光，更顯清淨 */
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 8px;
+    padding: 24px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.03), 0 1px 4px rgba(212,175,55,0.05);
+    backdrop-filter: blur(4px);
+  }
+  .meaning-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold-pure), transparent);
+  }
+  .meaning-card:hover {
+    border-color: rgba(212, 175, 55, 0.8);
+    box-shadow: 0 8px 24px rgba(212,175,55,0.15);
+    transform: translateY(-2px);
+  }
+  .meaning-icon { font-size: 28px; margin-bottom: 12px; display: block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05)); }
+  .meaning-title { font-size: 16px; font-weight: 700; color: var(--temple-red); letter-spacing: 3px; margin-bottom: 8px; }
+  .meaning-text { font-size: 12px; color: #5D4037; line-height: 1.8; letter-spacing: 1px; }
+
+  .date-banner {
+    width: 100%;
+    max-width: 680px;
+    margin-top: 24px;
+    border: 1.5px solid rgba(212,175,55,0.4);
+    /* 融入莊嚴的廟宇紅與純金漸層 */
+    background: linear-gradient(135deg, rgba(255,252,245,0.9) 0%, rgba(255,245,225,0.9) 100%);
+    border-radius: 8px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    animation: fadeUp 1.2s ease 1.2s both;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 20px rgba(142,35,35,0.05);
+    position: relative;
+  }
+  .date-banner::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px dashed rgba(212,175,55,0.3);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  .date-text { color: var(--text-main); font-size: clamp(13px, 2.5vw, 16px); letter-spacing: 3px; text-align: center; line-height: 1.8; font-weight: 700; }
+  .date-highlight { color: var(--temple-red); font-size: clamp(22px, 4vw, 32px); font-weight: 900; letter-spacing: 4px; text-shadow: 0 2px 8px rgba(142,35,35,0.15); }
+
+  .footer { margin-top: 40px; color: rgba(142,35,35,0.6); font-size: 13px; letter-spacing: 6px; animation: fadeUp 1.2s ease 1.4s both; text-align: center; font-weight: 700; }
+
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes float-lotus { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+</style>
+</head>
+<body>
+<div class="starfield"></div>
+<div class="container">
+
+  <div class="header-decoration">
+    <div class="header-line"></div>
+    <span class="header-symbol">卍 佛顓寺 卍</span>
+    <div class="header-line right"></div>
+  </div>
+
+  <h1 class="main-title">浴佛朝聖大典</h1>
+  <p class="sub-title">浴佛節 · 紀念釋迦牟尼佛誕辰</p>
+
+  <div class="scene">
+    <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- 更純淨、明亮的金色漸層 -->
+        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#FFE066"/>
+          <stop offset="50%" stop-color="#D4AF37"/>
+          <stop offset="100%" stop-color="#997A00"/>
+        </linearGradient>
+        
+        <!-- 清透的香湯/琉璃水色 -->
+        <linearGradient id="waterGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#81D4FA" stop-opacity="0.95"/>
+          <stop offset="100%" stop-color="#0288D1" stop-opacity="0.75"/>
+        </linearGradient>
+        
+        <!-- 莊嚴的青銅/純金浴佛盆 -->
+        <linearGradient id="basinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#F9CE54"/>
+          <stop offset="40%" stop-color="#D4AF37"/>
+          <stop offset="100%" stop-color="#856214"/>
+        </linearGradient>
+        <linearGradient id="basinInner" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#E1F5FE" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#29B6F6" stop-opacity="0.7"/>
+        </linearGradient>
+        
+        <!-- 佛陀背後的純淨神聖背光 -->
+        <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+          <stop offset="40%" stop-color="#FFF59D" stop-opacity="0.4"/>
+          <stop offset="70%" stop-color="#FFD54F" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#FFCA28" stop-opacity="0.0"/>
+        </radialGradient>
+        <radialGradient id="glowGrad" cx="50%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+          <stop offset="50%" stop-color="#FFFDE7" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#FFFDE7" stop-opacity="0"/>
+        </radialGradient>
+        
+        <!-- 出淤泥而不染的蓮花粉 -->
+        <linearGradient id="petalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#F8BBD0"/>
+          <stop offset="100%" stop-color="#D81B60"/>
+        </linearGradient>
+        <linearGradient id="petalGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#FCE4EC"/>
+          <stop offset="100%" stop-color="#E91E63"/>
+        </linearGradient>
+        
+        <!-- 純淨的背景天色 -->
+        <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#FFFDF8"/>
+          <stop offset="100%" stop-color="#FFFFFF"/>
+        </linearGradient>
+        
+        <filter id="blur-sm"><feGaussianBlur stdDeviation="2"/></filter>
+        <filter id="glow-filter">
+          <feGaussianBlur stdDeviation="5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- SVG background -->
+      <rect x="0" y="0" width="680" height="420" fill="url(#skyGrad)" rx="12"/>
+
+      <!-- Arch (改為清淡的金邊，增加莊嚴感) -->
+      <rect x="180" y="30" width="320" height="370" rx="160" fill="rgba(212,175,55,0.03)" stroke="rgba(212,175,55,0.25)" stroke-width="1.5"/>
+      <rect x="210" y="50" width="260" height="330" rx="130" fill="rgba(212,175,55,0.02)" stroke="rgba(212,175,55,0.15)" stroke-width="0.8"/>
+
+      <!-- Bright center glow -->
+      <ellipse cx="340" cy="190" rx="180" ry="180" fill="url(#glowGrad)" filter="url(#blur-sm)"/>
+
+      <!-- LOTUS BASE (蓮花座顏色提亮，增加神聖感) -->
+      <g style="animation: float-lotus 4s ease-in-out infinite">
+        <ellipse cx="250" cy="375" rx="35" ry="16" fill="url(#petalGrad)" opacity="0.9" transform="rotate(-25,250,375)"/>
+        <ellipse cx="290" cy="385" rx="35" ry="16" fill="url(#petalGrad2)" opacity="0.9" transform="rotate(-10,290,385)"/>
+        <ellipse cx="340" cy="390" rx="38" ry="16" fill="url(#petalGrad)" opacity="1.0"/>
+        <ellipse cx="390" cy="385" rx="35" ry="16" fill="url(#petalGrad2)" opacity="0.9" transform="rotate(10,390,385)"/>
+        <ellipse cx="430" cy="375" rx="35" ry="16" fill="url(#petalGrad)" opacity="0.9" transform="rotate(25,430,375)"/>
+        <ellipse cx="270" cy="378" rx="28" ry="13" fill="#EC407A" opacity="0.85" transform="rotate(-15,270,378)"/>
+        <ellipse cx="312" cy="387" rx="28" ry="13" fill="#F06292" opacity="0.8" transform="rotate(-5,312,387)"/>
+        <ellipse cx="340" cy="389" rx="30" ry="13" fill="#E91E63" opacity="0.9"/>
+        <ellipse cx="368" cy="387" rx="28" ry="13" fill="#F06292" opacity="0.8" transform="rotate(5,368,387)"/>
+        <ellipse cx="410" cy="378" rx="28" ry="13" fill="#EC407A" opacity="0.85" transform="rotate(15,410,378)"/>
+      </g>
+
+      <!-- BASIN (浴佛盆) -->
+      <rect x="325" y="345" width="30" height="30" rx="4" fill="url(#basinGrad)"/>
+      <ellipse cx="340" cy="375" rx="35" ry="8" fill="#856214" opacity="0.7"/>
+      <ellipse cx="340" cy="345" rx="100" ry="20" fill="url(#basinGrad)"/>
+      <path d="M240,345 Q230,310 250,295 L430,295 Q450,310 440,345 Z" fill="url(#basinGrad)" opacity="0.95"/>
+      <ellipse cx="340" cy="295" rx="85" ry="14" fill="url(#basinInner)"/>
+      <!-- 水波紋特效 -->
+      <ellipse cx="340" cy="295" rx="80" ry="10" fill="none" stroke="rgba(129,212,250,0.8)" stroke-width="1.5">
+        <animate attributeName="rx" values="80;84;80" dur="2.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="2.5s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="340" cy="295" rx="40" ry="6" fill="none" stroke="rgba(179,229,252,0.8)" stroke-width="1">
+        <animate attributeName="rx" values="30;50;30" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="4;8;4" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+      </ellipse>
+
+      <!-- BABY BUDDHA (太子佛像，改用更明亮純淨的金黃色) -->
+      <circle cx="340" cy="195" r="76" fill="url(#haloGrad)" filter="url(#glow-filter)">
+        <animate attributeName="r" values="72;80;72" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="340" cy="195" r="60" fill="none" stroke="#FFD54F" stroke-width="2" stroke-dasharray="5 3" opacity="0.9">
+        <animateTransform attributeName="transform" type="rotate" from="0 340 195" to="360 340 195" dur="18s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="340" cy="195" r="52" fill="none" stroke="#FFE082" stroke-width="1" stroke-dasharray="2 6" opacity="0.7">
+        <animateTransform attributeName="transform" type="rotate" from="360 340 195" to="0 340 195" dur="12s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- 佛像本體金身 -->
+      <ellipse cx="340" cy="260" rx="38" ry="20" fill="#FFC107" opacity="0.95"/>
+      <path d="M305,265 Q310,285 315,295 L365,295 Q370,285 375,265 Z" fill="#FFA000" opacity="0.9"/>
+      <path d="M315,248 Q295,240 288,218 Q285,210 290,206" fill="none" stroke="#FFC107" stroke-width="10" stroke-linecap="round"/>
+      <path d="M365,248 Q385,252 388,268 Q390,276 386,280" fill="none" stroke="#FFC107" stroke-width="10" stroke-linecap="round"/>
+      <circle cx="291" cy="204" r="8" fill="#FFCA28"/>
+      <circle cx="385" cy="282" r="8" fill="#FFCA28"/>
+      <ellipse cx="340" cy="245" rx="35" ry="28" fill="#FFCA28"/>
+      <path d="M325,232 Q330,255 328,270" fill="none" stroke="rgba(212,175,55,0.6)" stroke-width="1.5"/>
+      <path d="M355,232 Q350,255 352,270" fill="none" stroke="rgba(212,175,55,0.6)" stroke-width="1.5"/>
+      <ellipse cx="340" cy="205" rx="28" ry="30" fill="#FFCA28"/>
+      <ellipse cx="340" cy="178" rx="12" ry="10" fill="#FFA000"/>
+      <ellipse cx="340" cy="172" rx="7" ry="7" fill="#FFCA28"/>
+      <!-- 佛像五官細節 -->
+      <path d="M330,205 Q333,208 337,205" fill="none" stroke="#A67C00" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M343,205 Q347,208 351,205" fill="none" stroke="#A67C00" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M334,213 Q340,218 346,213" fill="none" stroke="#A67C00" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="340" cy="200" r="2" fill="#FFA000"/>
+      <ellipse cx="313" cy="210" rx="5" ry="7" fill="#FFCA28"/>
+      <ellipse cx="367" cy="210" rx="5" ry="7" fill="#FFCA28"/>
+
+      <!-- WATER STREAMS (香湯水流 - 藍色更清澈) -->
+      <path d="M291 204 Q285 235 295 255 Q300 268 310 280 Q320 290 325 293"
+            fill="none" stroke="url(#waterGrad2)" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="10 5" opacity="0.95">
+        <animate attributeName="stroke-dashoffset" values="0;-45" dur="1.2s" repeatCount="indefinite"/>
+      </path>
+      <path d="M291 204 Q283 238 291 258 Q297 272 308 282 Q318 291 323 293"
+            fill="none" stroke="rgba(179,229,252,0.8)" stroke-width="2.5" stroke-linecap="round"
+            stroke-dasharray="6 8" opacity="0.9">
+        <animate attributeName="stroke-dashoffset" values="0;-40" dur="1s" repeatCount="indefinite"/>
+      </path>
+      <path d="M385 282 Q390 288 380 293 Q365 296 352 295"
+            fill="none" stroke="url(#waterGrad2)" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="10 5" opacity="0.95">
+        <animate attributeName="stroke-dashoffset" values="0;-35" dur="1s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- INCENSE (清香) -->
+      <rect x="178" y="290" width="3" height="60" rx="1" fill="#D4AF37"/>
+      <circle cx="179.5" cy="288" r="5" fill="#E53935" opacity="0.9">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <!-- 煙霧改為清淨的白灰霧 -->
+      <path d="M179,285 Q183,270 177,255 Q173,242 179,228" fill="none" stroke="rgba(220,220,220,0.7)" stroke-width="2.5" filter="url(#blur-sm)">
+        <animate attributeName="d" values="M179,285 Q183,270 177,255 Q173,242 179,228;M179,285 Q175,270 181,255 Q185,242 179,228;M179,285 Q183,270 177,255 Q173,242 179,228" dur="3s" repeatCount="indefinite"/>
+      </path>
+      
+      <rect x="499" y="290" width="3" height="60" rx="1" fill="#D4AF37"/>
+      <circle cx="500.5" cy="288" r="5" fill="#E53935" opacity="0.9">
+        <animate attributeName="opacity" values="0.8;1;0.8" dur="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <path d="M500,285 Q496,270 502,255 Q506,242 500,228" fill="none" stroke="rgba(220,220,220,0.7)" stroke-width="2.5" filter="url(#blur-sm)">
+        <animate attributeName="d" values="M500,285 Q496,270 502,255 Q506,242 500,228;M500,285 Q504,270 498,255 Q494,242 500,228;M500,285 Q496,270 502,255 Q506,242 500,228" dur="2.5s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- FLOATING PETALS (飄落的粉蓮花瓣) -->
+      <ellipse cx="160" cy="320" rx="12" ry="5" fill="#F48FB1" opacity="0.85" transform="rotate(-30,160,320)">
+        <animate attributeName="cy" values="320;310;320" dur="3s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="520" cy="340" rx="10" ry="5" fill="#F06292" opacity="0.8" transform="rotate(20,520,340)">
+        <animate attributeName="cy" values="340;330;340" dur="3.5s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="200" cy="240" rx="8" ry="4" fill="#F48FB1" opacity="0.7" transform="rotate(-15,200,240)">
+        <animate attributeName="cy" values="240;232;240" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="490" cy="250" rx="9" ry="4" fill="#F06292" opacity="0.7" transform="rotate(10,490,250)">
+        <animate attributeName="cy" values="250;242;250" dur="3.8s" repeatCount="indefinite"/>
+      </ellipse>
+      <!-- 金色光點 -->
+      <ellipse cx="140" cy="180" rx="8" ry="3" fill="#FFE082" opacity="0.6" transform="rotate(-10,140,180)">
+        <animate attributeName="cy" values="180;172;180" dur="4.5s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="540" cy="200" rx="7" ry="3" fill="#FFE082" opacity="0.6" transform="rotate(12,540,200)">
+        <animate attributeName="cy" values="200;192;200" dur="3.2s" repeatCount="indefinite"/>
+      </ellipse>
+
+      <!-- DECORATIVE BORDERS (莊嚴的紅金邊框) -->
+      <path d="M80,22 L600,22" stroke="rgba(142,35,35,0.4)" stroke-width="1.5"/>
+      <path d="M80,26 L600,26" stroke="rgba(212,175,55,0.4)" stroke-width="0.5"/>
+      <path d="M80,22 L80,60 Q80,70 90,70 L130,70" fill="none" stroke="rgba(212,175,55,0.6)" stroke-width="1.5"/>
+      <path d="M600,22 L600,60 Q600,70 590,70 L550,70" fill="none" stroke="rgba(212,175,55,0.6)" stroke-width="1.5"/>
+      <polygon points="340,10 345,18 340,26 335,18" fill="#8E2323" opacity="0.9"/>
+      <polygon points="80,12 84,18 80,24 76,18" fill="#D4AF37" opacity="0.8"/>
+      <polygon points="600,12 604,18 600,24 596,18" fill="#D4AF37" opacity="0.8"/>
+      
+      <path d="M80,408 L600,408" stroke="rgba(142,35,35,0.4)" stroke-width="1.5"/>
+      <path d="M80,412 L600,412" stroke="rgba(212,175,55,0.4)" stroke-width="0.5"/>
+      <polygon points="340,416 345,408 340,400 335,408" fill="#8E2323" opacity="0.9"/>
+
+      <!-- TEXT -->
+      <text x="340" y="50" text-anchor="middle" font-family="Noto Serif TC, serif" font-weight="700" font-size="12" fill="rgba(142,35,35,0.85)" letter-spacing="5">佛光普照　法雨均霑</text>
+      <text x="340" y="412" text-anchor="middle" font-family="Noto Serif TC, serif" font-weight="700" font-size="11" fill="rgba(142,35,35,0.85)" letter-spacing="8">阿彌陀佛</text>
+    </svg>
+  </div>
+
+  <div class="meaning-section">
+    <div class="meaning-card">
+      <span class="meaning-icon">🙏</span>
+      <div class="meaning-title">洗滌身心</div>
+      <div class="meaning-text">以香湯灌沐佛身，象徵洗淨自身煩惱塵垢，淨化身、口、意三業</div>
+    </div>
+    <div class="meaning-card">
+      <span class="meaning-icon">🌸</span>
+      <div class="meaning-title">紀念聖誕</div>
+      <div class="meaning-text">慶祝釋迦牟尼佛降誕，感恩佛陀教化眾生，開示解脫之道</div>
+    </div>
+    <div class="meaning-card">
+      <span class="meaning-icon">☀️</span>
+      <div class="meaning-title">發願修行</div>
+      <div class="meaning-text">效法佛陀慈悲智慧，發菩提心，廣度有情，利益一切眾生</div>
+    </div>
+  </div>
+
+  <div class="date-banner">
+    <div class="date-text">佛顓寺 一一五年<br>浴佛朝聖大典</div>
+    <div class="date-highlight">5月17日</div>
+    <div class="date-text">國曆上午<br>敬請共襄盛舉</div>
+  </div>
+
+  <div class="footer">卍 · 南無本師釋迦牟尼佛 · 卍</div>
+
+</div>
+</body>
+</html>
