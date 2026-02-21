@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta property="og:title" content="明王殿因緣記：靈性覺醒之旅">
-	<meta property="og:description" content="明法大師兄略傳：從陰陽眼童年到東密傳承的靈性覺醒互動體驗。">
+	<meta property="og:description" content="明法大師兄略傳：從陰陽眼童年到東密傳承的靈性覺醒。">
 	<meta property="og:image" content="og-image.jpg">
 	<meta property="og:type" content="website">	
     <title>明王殿因緣記：靈性覺醒之旅</title>
@@ -105,8 +105,7 @@
                 <p class="text-sm text-stone-400 mt-1">明法大師兄略傳：從陰陽眼童年到東密傳承</p>
             </div>
             <div class="mt-4 md:mt-0 flex gap-4 text-sm">
-                <span class="px-3 py-1 bg-stone-700 rounded-full border border-stone-600">單頁互動體驗</span>
-                <span id="reading-progress" class="px-3 py-1 bg-amber-900/50 rounded-full border border-amber-700 text-amber-200">進度：0%</span>
+                <span id="reading-progress" class="px-3 py-1 bg-amber-900/50 rounded-full border border-amber-700 text-amber-200">閱讀進度：0%</span>
             </div>
         </div>
     </header>
@@ -141,21 +140,19 @@
 
         <!-- Main Narrative Dashboard (Split View) -->
         <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[600px]">
-            
-            <!-- Left: Navigation (Table of Contents) -->
-            <aside class="lg:col-span-3 space-y-4">
-                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-stone-200 sticky top-24">
-                    <div class="bg-stone-100 p-4 border-b border-stone-200">
-                        <h3 class="font-bold text-stone-700">章節導覽</h3>
-                    </div>
-                    <div class="h-[500px] overflow-y-auto custom-scroll p-2 space-y-1" id="chapter-list">
-                        <!-- JS generated chapters -->
-                    </div>
-                </div>
-            </aside>
 
             <!-- Center: Reading Area -->
-            <article class="lg:col-span-6 bg-white rounded-xl shadow-md border border-stone-100 flex flex-col">
+            <article class="lg:col-span-8 bg-white rounded-xl shadow-md border border-stone-100 flex flex-col">
+                <!-- Navigation Dropdown Moved Here -->
+                <div class="p-4 border-b border-stone-200 bg-stone-50 rounded-t-xl flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <h3 class="font-bold text-stone-700 whitespace-nowrap flex items-center gap-2">
+                        <span class="text-amber-600">☰</span> 章節導覽
+                    </h3>
+                    <select id="chapter-select" class="w-full sm:w-auto flex-grow max-w-xl p-2.5 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white text-stone-700 cursor-pointer shadow-sm">
+                        <!-- JS generated options -->
+                    </select>
+                </div>
+
                 <div class="p-6 border-b border-stone-100 bg-amber-50/50">
                     <div class="flex justify-between items-center mb-2">
                         <span id="part-label" class="text-xs font-bold tracking-widest text-amber-700 uppercase">第一部</span>
@@ -165,23 +162,24 @@
                     <blockquote id="chapter-quote" class="border-l-4 border-stone-400 pl-4 italic text-stone-600 bg-stone-50 py-2 rounded-r">
                         我怕的不是上學，是我又會看見他們。
                     </blockquote>
+                    
+                    <!-- Moved Navigation Buttons to Top -->
+                    <div class="mt-5 pt-4 border-t border-amber-200/50 flex justify-between">
+                        <button id="prev-btn" class="px-4 py-1.5 text-sm bg-white border border-stone-300 rounded hover:bg-stone-100 text-stone-600 transition disabled:opacity-50">← 上一章</button>
+                        <button id="next-btn" class="px-4 py-1.5 text-sm bg-amber-600 text-white rounded hover:bg-amber-700 shadow transition disabled:opacity-50">下一章 →</button>
+                    </div>
                 </div>
                 
-                <div class="p-6 md:p-8 flex-grow overflow-y-auto custom-scroll max-h-[600px]" id="content-area">
+                <div class="p-6 md:p-8 flex-grow overflow-y-auto custom-scroll max-h-[600px] rounded-b-xl" id="content-area">
                     <!-- Dynamic Content Here -->
                     <p class="text-stone-700 leading-loose text-lg">
                         載入中...
                     </p>
                 </div>
-
-                <div class="p-4 border-t border-stone-100 flex justify-between bg-stone-50 rounded-b-xl">
-                    <button id="prev-btn" class="px-4 py-2 bg-white border border-stone-300 rounded hover:bg-stone-100 text-stone-600 transition disabled:opacity-50">← 上一章</button>
-                    <button id="next-btn" class="px-4 py-2 bg-amber-600 text-white rounded hover:bg-amber-700 shadow transition">下一章 →</button>
-                </div>
             </article>
 
             <!-- Right: Context & Analysis Panel -->
-            <aside class="lg:col-span-3 space-y-6">
+            <aside class="lg:col-span-4 space-y-6">
                 
                 <!-- Dynamic Stats -->
                 <div class="bg-stone-800 text-stone-100 rounded-xl p-5 shadow-lg">
@@ -475,7 +473,7 @@
         let currentChapterIndex = 0;
 
         // DOM Elements
-        const chapterListEl = document.getElementById('chapter-list');
+        const chapterSelectEl = document.getElementById('chapter-select');
         const contentAreaEl = document.getElementById('content-area');
         const chapterTitleEl = document.getElementById('chapter-title');
         const chapterQuoteEl = document.getElementById('chapter-quote');
@@ -536,33 +534,30 @@
 
         // Initialize App
         function init() {
-            renderChapterList();
+            initDropdown();
             loadPart(0);
             updatePaginationButtons();
         }
 
-        function renderChapterList() {
-            chapterListEl.innerHTML = '';
-            storyData.forEach((part, index) => {
-                const partHeader = document.createElement('div');
-                partHeader.className = `p-2 text-xs font-bold text-stone-500 bg-stone-50 border-t border-stone-200 mt-2 cursor-pointer hover:bg-stone-100 ${index === currentPartIndex ? 'text-amber-600' : ''}`;
-                partHeader.textContent = `${part.part} (${part.age}歲)`;
-                partHeader.onclick = () => loadPart(index);
-                chapterListEl.appendChild(partHeader);
-
+        function initDropdown() {
+            chapterSelectEl.innerHTML = '';
+            storyData.forEach((part, pIndex) => {
+                const optGroup = document.createElement('optgroup');
+                optGroup.label = `${part.part} (${part.age}歲)`;
+                
                 part.chapters.forEach((chap, cIndex) => {
-                    const btn = document.createElement('button');
-                    btn.className = `w-full text-left px-4 py-2 text-sm rounded transition-colors ${
-                        index === currentPartIndex && cIndex === currentChapterIndex 
-                        ? 'bg-amber-100 text-amber-900 font-bold border-l-4 border-amber-600' 
-                        : 'text-stone-600 hover:bg-stone-50'
-                    }`;
-                    btn.textContent = `第${chap.id}章：${chap.title}`;
-                    btn.onclick = () => {
-                        loadPart(index, cIndex);
-                    };
-                    chapterListEl.appendChild(btn);
+                    const option = document.createElement('option');
+                    option.value = `${pIndex}-${cIndex}`;
+                    option.textContent = `第${chap.id}章：${chap.title}`;
+                    optGroup.appendChild(option);
                 });
+                chapterSelectEl.appendChild(optGroup);
+            });
+
+            // Add Event Listener
+            chapterSelectEl.addEventListener('change', (e) => {
+                const [pIndex, cIndex] = e.target.value.split('-').map(Number);
+                loadPart(pIndex, cIndex);
             });
         }
 
@@ -607,16 +602,16 @@
             });
 
             // 4. Update Navigation UI
-            renderChapterList();
+            chapterSelectEl.value = `${pIndex}-${cIndex}`;
             updatePaginationButtons();
             
             // Calculate Progress
             const totalParts = storyData.length;
             const progress = Math.round(((pIndex + 1) / totalParts) * 100);
-            readingProgressEl.textContent = `進度：${progress}%`;
+            readingProgressEl.textContent = `閱讀進度：${progress}%`;
             
-            // Scroll selected chapter into view in list
-            // (Simple implementation, can be improved)
+            // Scroll reading area to top
+            contentAreaEl.scrollTop = 0;
         }
 
         function updatePaginationButtons() {
