@@ -188,6 +188,127 @@
 
   .footer { margin-top: 40px; color: rgba(74,20,140,0.6); font-size: 13px; letter-spacing: 6px; animation: fadeUp 1.2s ease 1.4s both; text-align: center; font-weight: 700; }
 
+  /* 香湯浴佛按鈕區塊 */
+  .bathing-section {
+    width: 100%;
+    max-width: 680px;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    animation: fadeUp 1.2s ease 1.1s both;
+  }
+
+  .bathing-btn {
+    position: relative;
+    padding: 16px 52px;
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(16px, 3vw, 22px);
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: #fff;
+    background: linear-gradient(135deg, #4A148C 0%, #7E57C2 50%, #4A148C 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 24px rgba(74,20,140,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+    transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+    outline: none;
+    overflow: hidden;
+  }
+  .bathing-btn::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 48px;
+    border: 1.5px solid rgba(212,175,55,0.6);
+    pointer-events: none;
+  }
+  .bathing-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -75%;
+    width: 50%;
+    height: 200%;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+    transition: left 0.55s ease;
+  }
+  .bathing-btn:hover::after { left: 130%; }
+  .bathing-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 32px rgba(74,20,140,0.5), 0 0 0 3px rgba(212,175,55,0.3);
+  }
+  .bathing-btn:active { transform: translateY(0) scale(0.98); }
+  .bathing-btn-icon { margin-right: 8px; font-size: 1.1em; }
+
+  .blessing-box {
+    width: 100%;
+    background: linear-gradient(135deg, rgba(246,242,255,0.95) 0%, rgba(255,248,230,0.95) 100%);
+    border: 1.5px solid rgba(212,175,55,0.5);
+    border-radius: 12px;
+    padding: 28px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(74,20,140,0.1);
+    display: none;
+    animation: blessingAppear 0.6s cubic-bezier(0.4,0,0.2,1) both;
+  }
+  .blessing-box.show { display: block; }
+  .blessing-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold-pure), transparent);
+  }
+  .blessing-box::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px dashed rgba(212,175,55,0.3);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+  .blessing-label {
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: rgba(126,87,194,0.7);
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .blessing-text {
+    font-size: clamp(16px, 3.5vw, 24px);
+    font-weight: 700;
+    color: var(--sacred-purple-dark);
+    letter-spacing: 4px;
+    line-height: 1.8;
+    text-shadow: 0 1px 4px rgba(74,20,140,0.1);
+  }
+  .blessing-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-pure), transparent);
+    margin: 14px auto 12px;
+  }
+  .blessing-sub {
+    font-size: 12px;
+    color: rgba(74,58,89,0.75);
+    letter-spacing: 3px;
+    line-height: 2;
+  }
+
+  @keyframes blessingAppear {
+    from { opacity: 0; transform: translateY(10px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
   /* 音樂控制按鈕樣式 */
   .music-control {
     position: fixed;
@@ -487,6 +608,19 @@
     </div>
   </div>
 
+  <!-- 香湯浴佛互動區塊 -->
+  <div class="bathing-section">
+    <button class="bathing-btn" id="bathingBtn" onclick="showBlessing()">
+      <span class="bathing-btn-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px"><path d="M12 21c0 0-7-5.5-7-11a7 7 0 0 1 7-7 7 7 0 0 1 7 7c0 5.5-7 11-7 11z" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.9)" stroke-width="1.2"/><path d="M12 21c0 0-4-4-4-8.5A4 4 0 0 1 12 9a4 4 0 0 1 4 3.5C16 17 12 21 12 21z" fill="rgba(255,255,255,0.4)" stroke="rgba(255,255,255,0.95)" stroke-width="1.2"/><path d="M12 21V9" stroke="rgba(255,255,255,0.7)" stroke-width="1" stroke-dasharray="2 2"/><path d="M8 14c-2-1-4-3-3.5-6" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round" fill="none"/><path d="M16 14c2-1 4-3 3.5-6" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round" fill="none"/></svg></span>香湯浴佛
+    </button>
+    <div class="blessing-box" id="blessingBox">
+      <div class="blessing-label">☸ 佛陀賜予您的祝福 ☸</div>
+      <div class="blessing-text" id="blessingText"></div>
+      <div class="blessing-divider"></div>
+      <div class="blessing-sub" id="blessingSub"></div>
+    </div>
+  </div>
+
   <div class="date-banner">
     <div class="date-text">佛顓寺 一一五年<br>浴佛朝聖大典</div>
     <div class="date-highlight">5月17日</div>
@@ -496,6 +630,148 @@
   <div class="footer">卍 · 南無本師釋迦牟尼佛 · 卍</div>
 
 </div>
+
+<script>
+  const blessings = [
+    { text: "南無本師釋迦牟尼佛", sub: "佛光普照，慈悲無量，福慧雙修，法喜充滿" },
+    { text: "願您六時吉祥，萬事如意", sub: "身心清淨，業障消除，善緣廣結，福德增長" },
+    { text: "菩提心生，煩惱自滅", sub: "智慧明朗，慈悲廣大，諸事圓滿，吉祥如意" },
+    { text: "佛光普照，法喜充滿", sub: "心開意解，業障消散，福慧增長，萬事皆順" },
+    { text: "福慧雙修，圓滿無缺", sub: "身心自在，六塵不染，善根增長，菩提成就" },
+    { text: "願您身心安樂，諸事圓滿", sub: "佛菩薩加持，業障消除，善緣廣結，福德無量" },
+    { text: "慈悲喜捨，廣度眾生", sub: "菩薩行願，功德無量，智慧圓明，普利有情" },
+    { text: "心清淨則國土清淨", sub: "自性光明，本來清淨，煩惱即菩提，生死即涅槃" },
+    { text: "願您法喜充滿，吉祥安康", sub: "善業增長，惡業消除，福慧雙修，圓成佛道" },
+    { text: "一切眾生皆有佛性", sub: "悟得自性，煩惱自除，智慧現前，解脫自在" },
+    { text: "南無觀世音菩薩，慈悲救苦", sub: "有求必應，慈悲無量，護佑眾生，消災解厄" },
+    { text: "願您廣結善緣，福德無量", sub: "菩薩加持，業障消散，諸願圓滿，吉祥如意" },
+    { text: "心存善念，福自天來", sub: "善因善果，惡因惡果，種善因者，得善果報" },
+    { text: "萬般帶不去，唯有業隨身", sub: "修善積德，廣結善緣，福慧雙增，法喜充滿" },
+    { text: "放下屠刀，立地成佛", sub: "回頭是岸，善念一起，佛性現前，轉迷為覺" },
+    { text: "願您禪心常在，智慧開朗", sub: "定慧等持，身心自在，六根清淨，萬緣放下" },
+    { text: "阿彌陀佛，接引往生極樂", sub: "信願行三，念佛成就，花開見佛，悟無生忍" },
+    { text: "佛法無邊，慈航普渡", sub: "眾生有緣，皆蒙度化，苦海無邊，回頭是岸" },
+    { text: "願您諸惡莫作，眾善奉行", sub: "自淨其意，是諸佛教，身語意業，清淨圓滿" },
+    { text: "心平則天下平，氣和則萬事和", sub: "內心安定，外境隨之，慈悲待人，和樂相處" },
+    { text: "南無地藏王菩薩，大願無邊", sub: "地獄不空，誓不成佛，度盡眾生，方證菩提" },
+    { text: "願您智慧增長，業障消除", sub: "般若光明，照破無明，諸佛加持，善根增長" },
+    { text: "三寶加持，萬事如意", sub: "佛法僧三寶，護佑眾生，信受奉行，福慧雙圓" },
+    { text: "願您廣行菩薩道，利益眾生", sub: "上求佛道，下化眾生，悲智雙運，圓成大願" },
+    { text: "一念清淨，諸佛歡喜", sub: "心淨佛土淨，念念向善，菩提心生，煩惱自滅" },
+    { text: "善惡到頭終有報，只爭來早與來遲", sub: "修善積福，廣結善緣，三世因果，絲毫不爽" },
+    { text: "願您吉祥平安，萬事順遂", sub: "諸佛護念，龍天擁護，善緣廣結，福德無量" },
+    { text: "心中有佛，處處蓮花", sub: "念念不離佛，佛即在心中，行住坐臥，皆是修行" },
+    { text: "南無文殊師利菩薩，智慧第一", sub: "般若智慧，破除無明，廣學多聞，弘法利生" },
+    { text: "願您修行精進，道業增長", sub: "戒定慧三學，勤修不懈，菩提大道，步步向前" },
+    { text: "因果不空，種善因得善果", sub: "廣種福田，廣結善緣，善業增長，福報現前" },
+    { text: "願您身心健康，福壽無量", sub: "三業清淨，龍天護佑，諸佛加持，壽比南山" },
+    { text: "菩薩低眉，是慈悲相", sub: "金剛怒目，是智慧相，慈悲與智慧，並行不悖" },
+    { text: "願您廣發菩提心，利益一切眾生", sub: "上求下化，悲智圓滿，菩薩行願，功德無邊" },
+    { text: "空即是色，色即是空", sub: "萬法皆空，緣起性空，不執著相，自在解脫" },
+    { text: "願您心開意解，法喜充滿", sub: "善根增長，業障消散，智慧朗現，菩提現前" },
+    { text: "南無普賢菩薩，行願無邊", sub: "十大行願，廣度眾生，功德無量，圓成佛道" },
+    { text: "願您廣結法緣，弘法利生", sub: "以法布施，功德最大，眾生受益，自身亦增福慧" },
+    { text: "忍辱波羅蜜，成就大菩提", sub: "忍一時之辱，修萬世之福，心如虛空，含容一切" },
+    { text: "願您六根清淨，萬緣放下", sub: "不住色聲香味觸法，自性光明，解脫自在" },
+    { text: "隨緣了業，莫再造新業", sub: "業障消除，善根增長，清淨修行，早證菩提" },
+    { text: "願您廣行布施，福德增長", sub: "財布施，法布施，無畏布施，三種布施，功德無量" },
+    { text: "念念不離菩提心，步步踏向解脫路", sub: "上求佛道，下化眾生，圓成無上正等正覺" },
+    { text: "南無藥師琉璃光如來，消災延壽", sub: "十二大願，救度眾生，消除病苦，健康長壽" },
+    { text: "願您諸事吉祥，家庭和樂", sub: "龍天護佑，諸佛加持，六親眷屬，和諧圓滿" },
+    { text: "戒定慧，斷貪瞋癡", sub: "三學增上，六度圓滿，煩惱自滅，菩提現前" },
+    { text: "願您廣行十善，遠離十惡", sub: "身口意三業清淨，善業增長，福德無量" },
+    { text: "平常心是道，自在即菩提", sub: "不執不著，隨緣自在，心境如如，即是解脫" },
+    { text: "願您信願行三，念佛成就", sub: "信心堅固，願力宏深，持名念佛，花開見佛" },
+    { text: "布施得福，持戒得定，忍辱增慧", sub: "六波羅蜜，廣修勤行，功德增長，菩提成就" },
+    { text: "願您廣結善緣，廣積功德", sub: "善因善果，如影隨形，功德無量，福報現前" },
+    { text: "南無大勢至菩薩，接引眾生", sub: "都攝六根，淨念相繼，不假方便，自得心開" },
+    { text: "願您禪定深厚，智慧增長", sub: "止觀雙運，定慧等持，心境明朗，般若現前" },
+    { text: "惡業消散如雪見陽光", sub: "善念一起，萬邪自退，佛光普照，業障自除" },
+    { text: "願您廣度有情，圓成大願", sub: "菩薩行願，廣被法界，一切眾生，皆蒙救度" },
+    { text: "諸行無常，是生滅法", sub: "生滅滅已，寂滅為樂，涅槃寂靜，究竟解脫" },
+    { text: "願您心淨如蓮，出污泥而不染", sub: "自性清淨，六塵不染，蓮花德行，清淨莊嚴" },
+    { text: "萬法唯心造，心善則萬善", sub: "心中有善，善緣廣結，福德增長，萬事圓滿" },
+    { text: "願您廣弘正法，利益無量眾生", sub: "法輪常轉，眾生得益，功德無量，佛菩薩歡喜" },
+    { text: "放下萬緣，一心念佛", sub: "深信切願，持名念佛，臨命終時，蒙佛接引" },
+    { text: "願您佛緣深厚，道心堅固", sub: "菩提大道，步步向前，三寶加持，永不退轉" },
+    { text: "悲智雙運，自利利他", sub: "慈悲利他，智慧自利，悲智圓滿，成就佛道" },
+    { text: "願您廣作佛事，功德無量", sub: "供養三寶，護持正法，廣度眾生，福慧雙增" },
+    { text: "千江有水千江月，萬里無雲萬里天", sub: "自性如月，遍照法界，心淨智明，隨緣應化" },
+    { text: "願您早日覺悟，成就菩提", sub: "勤修三學，廣行六度，無上菩提，指日可期" },
+    { text: "佛在靈山莫遠求，靈山只在汝心頭", sub: "自性是佛，莫向外求，反觀自照，頓悟成佛" },
+    { text: "願您廣植福田，收穫豐盛", sub: "善因善果，勤修功德，福報無量，受用不盡" },
+    { text: "不忘初心，方得始終", sub: "菩提初心，永不退失，行願圓滿，圓成佛道" },
+    { text: "願您萬事如意，諸願圓滿", sub: "三寶加持，龍天護佑，善緣廣結，吉祥如意" },
+    { text: "上報四重恩，下濟三途苦", sub: "知恩報恩，廣度眾生，功德無量，福慧增長" },
+    { text: "願您廣學多聞，深入經藏", sub: "智慧如海，辯才無礙，弘法利生，廣度眾生" },
+    { text: "隨喜功德，功德同等", sub: "見人行善，隨喜讚嘆，功德不減，善根增長" },
+    { text: "願您吉星高照，好運連連", sub: "諸佛護念，善神擁護，事事如意，時時吉祥" },
+    { text: "清淨三業，廣積資糧", sub: "身口意清淨，福慧資糧具足，菩提大道現前" },
+    { text: "願您法緣殊勝，修行有成", sub: "親近善知識，聞思修三慧，道業增長，早證菩提" },
+    { text: "三界唯心，萬法唯識", sub: "心外無法，法外無心，識得自心，即見如來" },
+    { text: "願您廣結菩薩緣，圓滿菩薩行", sub: "上求下化，悲智雙運，圓成大願，利益眾生" },
+    { text: "轉煩惱為菩提，轉業障為功德", sub: "智慧觀照，煩惱即菩提，業障即資糧，轉化有術" },
+    { text: "願您心定如山，智慧如海", sub: "禪定深厚，智慧廣大，心境如如，自在解脫" },
+    { text: "廣行善事，福報自來", sub: "善業積累，福德增長，善因善果，絲毫不爽" },
+    { text: "願您廣度冤親債主，消業增福", sub: "以慈化怨，以善化業，業障消散，福慧增長" },
+    { text: "觀自在，照見五蘊皆空", sub: "色受想行識，空無自性，度一切苦厄，自在解脫" },
+    { text: "願您諸惑永斷，法身圓滿", sub: "見思惑斷，塵沙惑盡，無明滅盡，法身現前" },
+    { text: "緣起性空，性空緣起", sub: "萬法緣起，自性本空，不執有無，中道圓融" },
+    { text: "願您廣行供養，廣積功德", sub: "供養三寶，功德無量，諸佛歡喜，龍天護佑" },
+    { text: "回向功德，法界眾生共享", sub: "一切功德，普皆回向，眾生受益，自身亦增福慧" },
+    { text: "願您早證無上正等正覺", sub: "勤修戒定慧，廣行六波羅蜜，菩提大道，早日圓成" },
+    { text: "莫輕小善，以為無益", sub: "滴水成河，積沙成塔，小善積累，大福自來" },
+    { text: "願您六度萬行，圓滿無缺", sub: "布施持戒忍辱精進禪定般若，六度齊修，菩提成就" },
+    { text: "應無所住而生其心", sub: "不住六塵，清淨心生，不執一法，自在解脫" },
+    { text: "願您廣行懺悔，業障消除", sub: "至誠懺悔，業障消散，清淨身心，善根增長" },
+    { text: "一即一切，一切即一", sub: "萬法圓融，事事無礙，法界一如，自在無礙" },
+    { text: "願您常憶念佛，臨終正念", sub: "念念不忘阿彌陀佛，臨命終時，蒙佛接引，往生極樂" },
+    { text: "修行不在山林，鬧市亦可修行", sub: "心清則處處清淨，心定則處處禪定，隨緣修行，功德無量" },
+    { text: "願您廣行孝道，感恩報恩", sub: "孝順父母，恭敬師長，廣結善緣，福德增長" },
+    { text: "無緣大慈，同體大悲", sub: "慈悲無量，普及法界，眾生苦樂，如己苦樂" },
+    { text: "願您精進修行，不退初心", sub: "勇猛精進，永不退轉，菩提大道，步步前進" },
+    { text: "見賢思齊，見不賢而內自省", sub: "學習善知識，遠離惡因緣，善根增長，道業精進" },
+    { text: "願您廣種菩提因，早收菩提果", sub: "因地修行，果地圓滿，菩提大道，圓成在即" },
+    { text: "禍福無門，唯人自召", sub: "善惡因果，自作自受，廣修善業，福報自來" },
+    { text: "願您心如蓮花，清淨無染", sub: "出污泥而不染，濯清漣而不妖，清淨德行，圓滿莊嚴" },
+    { text: "萬物並育而不相害", sub: "慈悲愛護，一切眾生，和諧共處，世界和平" },
+    { text: "願您廣弘佛法，化益眾生", sub: "以身作則，以法化人，功德無量，諸佛歡喜" },
+    { text: "知足常樂，少欲知足", sub: "欲少事少，欲多苦多，知足自在，心常快樂" },
+    { text: "願您福慧具足，萬德莊嚴", sub: "福報充足，智慧圓滿，功德莊嚴，相好光明" },
+    { text: "一花一世界，一葉一菩提", sub: "萬法皆是佛法，處處皆是道場，時時皆在修行" },
+    { text: "願您廣度有緣，共成佛道", sub: "廣結善緣，廣度眾生，共同發菩提心，共成無上佛道" },
+    { text: "念念清淨，步步蓮花", sub: "清淨念佛，念念向善，每一步都是蓮花，每一念都是菩提" },
+    { text: "願您法喜禪悅，吉祥如意", sub: "修行法喜，禪定禪悅，身心自在，吉祥圓滿" },
+    { text: "南無阿彌陀佛，接引往生", sub: "信願持名，臨終正念，蒙佛接引，往生極樂世界" },
+    { text: "願您廣積陰德，福蔭子孫", sub: "陰德廣積，善果豐盛，子孫蒙福，世代吉祥" },
+    { text: "佛種從緣起，廣結菩提緣", sub: "善緣廣結，佛種廣播，眾生受益，功德無量" },
+    { text: "願您身心康泰，萬壽無疆", sub: "三業清淨，身心健康，福壽綿長，壽比南山" },
+  ];
+
+  let lastIndex = -1;
+
+  function showBlessing() {
+    let idx;
+    do { idx = Math.floor(Math.random() * blessings.length); } while (idx === lastIndex && blessings.length > 1);
+    lastIndex = idx;
+
+    const b = blessings[idx];
+    const box = document.getElementById('blessingBox');
+    const textEl = document.getElementById('blessingText');
+    const subEl = document.getElementById('blessingSub');
+
+    box.classList.remove('show');
+    void box.offsetWidth; // reflow to restart animation
+    textEl.textContent = b.text;
+    subEl.textContent = b.sub;
+    box.classList.add('show');
+
+    // ripple effect on button
+    const btn = document.getElementById('bathingBtn');
+    btn.style.transform = 'scale(0.96)';
+    setTimeout(() => { btn.style.transform = ''; }, 200);
+  }
+</script>
 
 <script>
   window.onload = function() {
