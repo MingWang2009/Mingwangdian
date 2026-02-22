@@ -188,6 +188,29 @@
 
   .footer { margin-top: 40px; color: rgba(74,20,140,0.6); font-size: 13px; letter-spacing: 6px; animation: fadeUp 1.2s ease 1.4s both; text-align: center; font-weight: 700; }
 
+  /* 音樂控制按鈕樣式 */
+  .music-control {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    width: 44px;
+    height: 44px;
+    background: white;
+    border: 1px solid var(--gold-pure);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(74,20,140,0.15);
+    transition: all 0.3s ease;
+  }
+  .music-control:hover { transform: scale(1.1); }
+  .music-control.playing { animation: rotate-music 4s linear infinite; }
+  .music-icon { font-size: 20px; }
+
+  @keyframes rotate-music { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -196,6 +219,17 @@
 </head>
 <body>
 <div class="starfield"></div>
+
+<!-- 背景音樂元素 -->
+<audio id="bg-music" loop>
+  <source src="bathing-buddha.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 音樂控制按鈕 -->
+<div id="music-btn" class="music-control">
+  <span class="music-icon">🎵</span>
+</div>
+
 <div class="container">
 
   <div class="header-decoration">
@@ -462,5 +496,48 @@
   <div class="footer">卍 · 南無本師釋迦牟尼佛 · 卍</div>
 
 </div>
+
+<script>
+  window.onload = function() {
+    const music = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-btn');
+    
+    // 設定音量為 50%
+    music.volume = 0.5;
+
+    // 播放音樂函式
+    function playMusic() {
+      const playPromise = music.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          musicBtn.classList.add('playing');
+        }).catch(error => {
+          console.log("瀏覽器阻擋自動播放，等待使用者互動...");
+          // 如果被阻擋，當使用者第一次點擊頁面任何地方時播放
+          document.addEventListener('click', () => {
+            music.play();
+            musicBtn.classList.add('playing');
+          }, { once: true });
+        });
+      }
+    }
+
+    // 啟動嘗試播放
+    playMusic();
+
+    // 手動開關控制
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // 防止觸發上面的 document click
+      if (music.paused) {
+        music.play();
+        musicBtn.classList.add('playing');
+      } else {
+        music.pause();
+        musicBtn.classList.remove('playing');
+      }
+    });
+  };
+</script>
+
 </body>
 </html>
