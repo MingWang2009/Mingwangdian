@@ -11,13 +11,13 @@
 
   :root {
     /* 紫金聖典配色：尊貴、神聖、極致光明 */
-    --gold-pure: #D4AF37;         /* 純金 */
-    --gold-bright: #FFD700;       /* 亮金 */
-    --sacred-purple: #4A148C;     /* 聖典紫 (深邃皇家紫) */
-    --sacred-purple-dark: #311B92;/* 極深紫 */
-    --sacred-purple-light: #7E57C2;/* 祥瑞淺紫 */
-    --bg-pure: #FCFBFF;           /* 帶有極淡紫色的清淨白底 */
-    --text-main: #2A1B38;         /* 偏紫的深棕黑 */
+    --gold-pure: #D4AF37;         
+    --gold-bright: #FFD700;       
+    --sacred-purple: #4A148C;     
+    --sacred-purple-dark: #311B92;
+    --sacred-purple-light: #7E57C2;
+    --bg-pure: #FCFBFF;           
+    --text-main: #2A1B38;         
   }
 
   body {
@@ -97,7 +97,7 @@
   }
   .sub-title {
     font-size: clamp(14px, 3vw, 20px);
-    color: var(--gold-dark);
+    color: #997A00;
     letter-spacing: 12px;
     text-align: center;
     margin-top: 6px;
@@ -304,10 +304,6 @@
     from { opacity: 0; transform: translateY(10px) scale(0.97); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
   }
-  @keyframes shimmer {
-    0%   { background-position: -200% center; }
-    100% { background-position: 200% center; }
-  }
 
   /* 音樂控制按鈕樣式 */
   .music-control {
@@ -365,14 +361,12 @@
   <div class="scene">
     <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- 紫金聖典：金光漸層 -->
         <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#FFE066"/>
           <stop offset="50%" stop-color="#D4AF37"/>
           <stop offset="100%" stop-color="#997A00"/>
         </linearGradient>
         
-        <!-- 新增：純淨白蓮花漸層 (呼應圖片) -->
         <linearGradient id="whitePetal" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#FFFFFF"/>
           <stop offset="80%" stop-color="#F5F5F5"/>
@@ -384,13 +378,6 @@
           <stop offset="100%" stop-color="#AED581"/>
         </linearGradient>
 
-        <!-- 甘露水色：帶有紫氣的聖水 -->
-        <linearGradient id="waterGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#C5CAE9" stop-opacity="0.95"/>
-          <stop offset="100%" stop-color="#7E57C2" stop-opacity="0.85"/>
-        </linearGradient>
-        
-        <!-- 莊嚴純金浴佛盆 -->
         <linearGradient id="basinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#F9CE54"/>
           <stop offset="40%" stop-color="#D4AF37"/>
@@ -401,7 +388,6 @@
           <stop offset="100%" stop-color="#9FA8DA" stop-opacity="0.8"/>
         </linearGradient>
         
-        <!-- 佛陀背後的紫金神聖背光 -->
         <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
           <stop offset="40%" stop-color="#FFF59D" stop-opacity="0.6"/>
@@ -414,28 +400,9 @@
           <stop offset="100%" stop-color="#EDE5F9" stop-opacity="0"/>
         </radialGradient>
         
-        <!-- 神聖紫蓮花漸層 -->
-        <linearGradient id="petalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#CE93D8"/>
-          <stop offset="100%" stop-color="#8E24AA"/>
-        </linearGradient>
-        <linearGradient id="petalGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#E1BEE7"/>
-          <stop offset="100%" stop-color="#6A1B9A"/>
-        </linearGradient>
-        
-        <!-- 祥瑞背景天色 -->
         <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#FDFBFF"/>
           <stop offset="100%" stop-color="#FFFFFF"/>
-        </linearGradient>
-
-        <!-- 新增：佛身立體金光漸層 -->
-        <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#E5B80B"/>
-          <stop offset="25%" stop-color="#F9D71C"/>
-          <stop offset="75%" stop-color="#F9D71C"/>
-          <stop offset="100%" stop-color="#D4AF37"/>
         </linearGradient>
         
         <filter id="blur-sm"><feGaussianBlur stdDeviation="2"/></filter>
@@ -448,14 +415,13 @@
       <!-- SVG background -->
       <rect x="0" y="0" width="680" height="420" fill="url(#skyGrad)" rx="12"/>
 
-      <!-- Arch (紫金邊框，增添聖典莊嚴感) -->
+      <!-- Arch -->
       <rect x="180" y="30" width="320" height="370" rx="160" fill="rgba(126,87,194,0.02)" stroke="rgba(212,175,55,0.3)" stroke-width="1.5"/>
       <rect x="210" y="50" width="260" height="330" rx="130" fill="rgba(212,175,55,0.02)" stroke="rgba(126,87,194,0.2)" stroke-width="0.8"/>
 
-      <!-- Bright center glow -->
       <ellipse cx="340" cy="190" rx="180" ry="180" fill="url(#glowGrad)" filter="url(#blur-sm)"/>
 
-      <!-- LOTUS BASE (改為圖片中的純白/翠綠相間蓮花座) -->
+      <!-- LOTUS BASE -->
       <g style="animation: float-lotus 4s ease-in-out infinite">
         <ellipse cx="250" cy="375" rx="35" ry="16" fill="url(#whitePetal)" opacity="0.95" transform="rotate(-25,250,375)"/>
         <ellipse cx="290" cy="385" rx="35" ry="16" fill="url(#whitePetalGreen)" opacity="0.95" transform="rotate(-10,290,385)"/>
@@ -469,30 +435,17 @@
         <ellipse cx="410" cy="378" rx="28" ry="13" fill="#FFFFFF" opacity="0.9" transform="rotate(15,410,378)"/>
       </g>
 
-      <!-- BASIN (浴佛盆) -->
+      <!-- BASIN -->
       <rect x="325" y="345" width="30" height="30" rx="4" fill="url(#basinGrad)"/>
       <ellipse cx="340" cy="375" rx="35" ry="8" fill="#856214" opacity="0.7"/>
       <ellipse cx="340" cy="345" rx="100" ry="20" fill="url(#basinGrad)"/>
       <path d="M240,345 Q230,310 250,295 L430,295 Q450,310 440,345 Z" fill="url(#basinGrad)" opacity="0.95"/>
       <ellipse cx="340" cy="295" rx="85" ry="14" fill="url(#basinInner)"/>
-      <!-- 水波紋特效 (帶有紫氣的聖水波動) -->
-      <ellipse cx="340" cy="295" rx="80" ry="10" fill="none" stroke="rgba(179,157,219,0.8)" stroke-width="1.5">
-        <animate attributeName="rx" values="80;84;80" dur="2.5s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.7;1;0.7" dur="2.5s" repeatCount="indefinite"/>
-      </ellipse>
-      <ellipse cx="340" cy="295" rx="40" ry="6" fill="none" stroke="rgba(209,196,233,0.8)" stroke-width="1">
-        <animate attributeName="rx" values="30;50;30" dur="2s" repeatCount="indefinite"/>
-        <animate attributeName="ry" values="4;8;4" dur="2s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
-      </ellipse>
 
-      <!-- 完全還原 GIF 圖片的小孩佛陀身像與細密光環、大白蓮臺 -->
-      
-      <!-- 點狀光環 (參照圖片的細密白點光暈) -->
+      <!-- Halo -->
       <circle cx="340" cy="165" r="130" fill="url(#haloGrad)" filter="url(#glow-filter)">
         <animate attributeName="opacity" values="0.85;1;0.85" dur="3s" repeatCount="indefinite"/>
       </circle>
-      <!-- 多層虛線模擬 GIF 中的細密白點光暈 -->
       <circle cx="340" cy="165" r="85" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="1 5" opacity="0.9">
         <animateTransform attributeName="transform" type="rotate" from="0 340 165" to="360 340 165" dur="25s" repeatCount="indefinite"/>
       </circle>
@@ -502,42 +455,15 @@
       <circle cx="340" cy="165" r="115" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-dasharray="1 4" opacity="0.6">
         <animateTransform attributeName="transform" type="rotate" from="0 340 165" to="360 340 165" dur="30s" repeatCount="indefinite"/>
       </circle>
-      <circle cx="340" cy="165" r="130" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="1 7" opacity="0.4">
-        <animateTransform attributeName="transform" type="rotate" from="360 340 165" to="0 340 165" dur="15s" repeatCount="indefinite"/>
-      </circle>
 
-      <!-- 佛像與大白蓮臺 (直接套用上傳原圖，保留原比例不轉數化) -->
+      <!-- 佛像 -->
       <image href="bathing-buddha.png" x="220" y="55" width="240" height="260" preserveAspectRatio="xMidYMid meet" />
 
-      <!-- WATER STREAMS (紫金香湯 - 兩側注入) -->
-      <path d="M260,150 Q290,130 320,175 Q310,240 325,293"
-            fill="none" stroke="url(#waterGrad2)" stroke-width="5" stroke-linecap="round"
-            stroke-dasharray="8 6" opacity="0.95">
-        <animate attributeName="stroke-dashoffset" values="0;-42" dur="1.2s" repeatCount="indefinite"/>
-      </path>
-      <path d="M260,150 Q285,135 315,178 Q305,235 320,293"
-            fill="none" stroke="rgba(179,157,219,0.8)" stroke-width="2.5" stroke-linecap="round"
-            stroke-dasharray="5 7" opacity="0.9">
-        <animate attributeName="stroke-dashoffset" values="0;-36" dur="1s" repeatCount="indefinite"/>
-      </path>
-
-      <path d="M420,150 Q390,130 360,175 Q370,240 355,293"
-            fill="none" stroke="url(#waterGrad2)" stroke-width="5" stroke-linecap="round"
-            stroke-dasharray="8 6" opacity="0.95">
-        <animate attributeName="stroke-dashoffset" values="0;-42" dur="1.2s" repeatCount="indefinite"/>
-      </path>
-      <path d="M420,150 Q395,135 365,178 Q375,235 360,293"
-            fill="none" stroke="rgba(179,157,219,0.8)" stroke-width="2.5" stroke-linecap="round"
-            stroke-dasharray="5 7" opacity="0.9">
-        <animate attributeName="stroke-dashoffset" values="0;-36" dur="1s" repeatCount="indefinite"/>
-      </path>
-
-      <!-- INCENSE (清香) -->
+      <!-- INCENSE -->
       <rect x="178" y="290" width="3" height="60" rx="1" fill="#D4AF37"/>
       <circle cx="179.5" cy="288" r="5" fill="#FF5252" opacity="0.9">
         <animate attributeName="opacity" values="0.7;1;0.7" dur="1.5s" repeatCount="indefinite"/>
       </circle>
-      <!-- 煙霧 -->
       <path d="M179,285 Q183,270 177,255 Q173,242 179,228" fill="none" stroke="rgba(220,220,230,0.8)" stroke-width="2.5" filter="url(#blur-sm)">
         <animate attributeName="d" values="M179,285 Q183,270 177,255 Q173,242 179,228;M179,285 Q175,270 181,255 Q185,242 179,228;M179,285 Q183,270 177,255 Q173,242 179,228" dur="3s" repeatCount="indefinite"/>
       </path>
@@ -550,7 +476,7 @@
         <animate attributeName="d" values="M500,285 Q496,270 502,255 Q506,242 500,228;M500,285 Q504,270 498,255 Q494,242 500,228;M500,285 Q496,270 502,255 Q506,242 500,228" dur="2.5s" repeatCount="indefinite"/>
       </path>
 
-      <!-- FLOATING PETALS (改為純潔白與翠綠光點相間) -->
+      <!-- FLOATING PETALS -->
       <ellipse cx="160" cy="320" rx="12" ry="5" fill="url(#whitePetal)" opacity="0.85" transform="rotate(-30,160,320)">
         <animate attributeName="cy" values="320;310;320" dur="3s" repeatCount="indefinite"/>
       </ellipse>
@@ -563,15 +489,8 @@
       <ellipse cx="490" cy="250" rx="9" ry="4" fill="url(#whitePetal)" opacity="0.7" transform="rotate(10,490,250)">
         <animate attributeName="cy" values="250;242;250" dur="3.8s" repeatCount="indefinite"/>
       </ellipse>
-      <!-- 金色光點 -->
-      <ellipse cx="140" cy="180" rx="8" ry="3" fill="#FFE082" opacity="0.7" transform="rotate(-10,140,180)">
-        <animate attributeName="cy" values="180;172;180" dur="4.5s" repeatCount="indefinite"/>
-      </ellipse>
-      <ellipse cx="540" cy="200" rx="7" ry="3" fill="#FFD54F" opacity="0.7" transform="rotate(12,540,200)">
-        <animate attributeName="cy" values="200;192;200" dur="3.2s" repeatCount="indefinite"/>
-      </ellipse>
 
-      <!-- DECORATIVE BORDERS (紫金邊框) -->
+      <!-- DECORATIVE BORDERS -->
       <path d="M80,22 L600,22" stroke="rgba(74,20,140,0.5)" stroke-width="1.5"/>
       <path d="M80,26 L600,26" stroke="rgba(212,175,55,0.5)" stroke-width="0.5"/>
       <path d="M80,22 L80,60 Q80,70 90,70 L130,70" fill="none" stroke="rgba(212,175,55,0.7)" stroke-width="1.5"/>
@@ -579,95 +498,13 @@
       <polygon points="340,10 345,18 340,26 335,18" fill="#4A148C" opacity="0.9"/>
       <polygon points="80,12 84,18 80,24 76,18" fill="#D4AF37" opacity="0.9"/>
       <polygon points="600,12 604,18 600,24 596,18" fill="#D4AF37" opacity="0.9"/>
-      
       <path d="M80,408 L600,408" stroke="rgba(74,20,140,0.5)" stroke-width="1.5"/>
       <path d="M80,412 L600,412" stroke="rgba(212,175,55,0.5)" stroke-width="0.5"/>
       <polygon points="340,416 345,408 340,400 335,408" fill="#4A148C" opacity="0.9"/>
 
+      <!-- 動態隨機香湯浴佛特效層 -->
+      <g id="bathe-fx" style="opacity:0;transition:opacity 0.6s ease"></g>
 
-      <!-- 香湯浴佛特效層 (JS 控制顯示，初始隱藏) -->
-      <g id="bathe-fx" style="opacity:0;transition:opacity 0.6s ease">
-
-        <!-- 柔和金光背光 -->
-        <radialGradient id="bathGlowGrad" cx="50%" cy="42%" r="42%">
-          <stop offset="0%" stop-color="#FFE082" stop-opacity="0.35"/>
-          <stop offset="60%" stop-color="#CE93D8" stop-opacity="0.12"/>
-          <stop offset="100%" stop-color="#7E57C2" stop-opacity="0"/>
-        </radialGradient>
-        <ellipse cx="340" cy="175" rx="115" ry="125" fill="url(#bathGlowGrad)">
-          <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/>
-        </ellipse>
-
-        <!-- 左肩水流 (2 道，緩慢) -->
-        <path d="M258,152 Q252,196 255,240 Q258,270 256,294"
-              fill="none" stroke="#B39DDB" stroke-width="3.5" stroke-linecap="round"
-              stroke-dasharray="9 10" opacity="0.75">
-          <animate attributeName="stroke-dashoffset" values="0;-76" dur="2.2s" repeatCount="indefinite"/>
-        </path>
-        <path d="M278,140 Q272,184 274,228 Q276,260 275,292"
-              fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"
-              stroke-dasharray="7 11" opacity="0.68">
-          <animate attributeName="stroke-dashoffset" values="0;-72" dur="2.6s" repeatCount="indefinite"/>
-        </path>
-
-        <!-- 右肩水流 (2 道，緩慢) -->
-        <path d="M422,152 Q428,196 425,240 Q422,270 424,294"
-              fill="none" stroke="#B39DDB" stroke-width="3.5" stroke-linecap="round"
-              stroke-dasharray="9 10" opacity="0.75">
-          <animate attributeName="stroke-dashoffset" values="0;-76" dur="2.3s" repeatCount="indefinite"/>
-        </path>
-        <path d="M402,140 Q408,184 406,228 Q404,260 405,292"
-              fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"
-              stroke-dasharray="7 11" opacity="0.68">
-          <animate attributeName="stroke-dashoffset" values="0;-72" dur="2.7s" repeatCount="indefinite"/>
-        </path>
-
-        <!-- 水滴 左側 (2 顆，慢速) -->
-        <circle cx="262" cy="155" r="3" fill="#B39DDB">
-          <animate attributeName="cy" values="152;296" dur="3s" begin="0s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0;0.8;0" dur="3s" begin="0s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="282" cy="143" r="2" fill="#FFD700">
-          <animate attributeName="cy" values="140;293" dur="3.4s" begin="1.2s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0;0.72;0" dur="3.4s" begin="1.2s" repeatCount="indefinite"/>
-        </circle>
-
-        <!-- 水滴 右側 (2 顆，慢速) -->
-        <circle cx="418" cy="155" r="3" fill="#CE93D8">
-          <animate attributeName="cy" values="152;296" dur="3.1s" begin="0.6s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0;0.78;0" dur="3.1s" begin="0.6s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="399" cy="143" r="2" fill="#FFE082">
-          <animate attributeName="cy" values="140;293" dur="3.5s" begin="1.8s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0;0.7;0" dur="3.5s" begin="1.8s" repeatCount="indefinite"/>
-        </circle>
-
-        <!-- 盆中水波 (2 圈，緩慢擴散) -->
-        <ellipse cx="340" cy="295" rx="8" ry="3" fill="none" stroke="#B39DDB" stroke-width="1.8">
-          <animate attributeName="rx" values="8;88;8" dur="2.8s" repeatCount="indefinite"/>
-          <animate attributeName="ry" values="3;10;3" dur="2.8s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.85;0;0.85" dur="2.8s" repeatCount="indefinite"/>
-        </ellipse>
-        <ellipse cx="340" cy="295" rx="8" ry="3" fill="none" stroke="#FFD700" stroke-width="1.5">
-          <animate attributeName="rx" values="8;72;8" dur="2.8s" begin="1.2s" repeatCount="indefinite"/>
-          <animate attributeName="ry" values="3;8;3" dur="2.8s" begin="1.2s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.7;0;0.7" dur="2.8s" begin="1.2s" repeatCount="indefinite"/>
-        </ellipse>
-
-        <!-- 金光粒子上升 (3 顆) -->
-        <circle cx="300" cy="280" r="2" fill="#FFD700">
-          <animate attributeName="cy" values="285;160" dur="3.8s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0;0.85;0" dur="3.8s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="340" cy="280" r="2.5" fill="#FFE082">
-          <animate attributeName="cy" values="285;150" dur="3.5s" begin="0.9s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0;1;0" dur="3.5s" begin="0.9s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="380" cy="280" r="2" fill="#FFD700">
-          <animate attributeName="cy" values="285;158" dur="4s" begin="1.8s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0;0.85;0" dur="4s" begin="1.8s" repeatCount="indefinite"/>
-        </circle>
-      </g>
       <!-- TEXT -->
       <text x="340" y="50" text-anchor="middle" font-family="Noto Serif TC, serif" font-weight="700" font-size="12" fill="rgba(74,20,140,0.9)" letter-spacing="5">佛光普照　法雨均霑</text>
       <text x="340" y="398" text-anchor="middle" font-family="Noto Serif TC, serif" font-weight="700" font-size="11" fill="rgba(74,20,140,0.8)" letter-spacing="8">阿彌陀佛</text>
@@ -719,124 +556,151 @@
 </div>
 
 <script>
-  const blessings = [
-    { text: "南無本師釋迦牟尼佛", sub: "佛光普照，慈悲無量，福慧雙修，法喜充滿" },
-    { text: "願您六時吉祥，萬事如意", sub: "身心清淨，業障消除，善緣廣結，福德增長" },
-    { text: "菩提心生，煩惱自滅", sub: "智慧明朗，慈悲廣大，諸事圓滿，吉祥如意" },
-    { text: "佛光普照，法喜充滿", sub: "心開意解，業障消散，福慧增長，萬事皆順" },
-    { text: "福慧雙修，圓滿無缺", sub: "身心自在，六塵不染，善根增長，菩提成就" },
-    { text: "願您身心安樂，諸事圓滿", sub: "佛菩薩加持，業障消除，善緣廣結，福德無量" },
-    { text: "慈悲喜捨，廣度眾生", sub: "菩薩行願，功德無量，智慧圓明，普利有情" },
-    { text: "心清淨則國土清淨", sub: "自性光明，本來清淨，六根清淨，萬緣放下" },
-    { text: "願您法喜充滿，吉祥安康", sub: "善業增長，惡業消除，福慧雙修，圓成佛道" },
-    { text: "一切眾生皆有佛性", sub: "悟得自性，煩惱自除，智慧現前，解脫自在" },
-    { text: "南無觀世音菩薩，慈悲救苦", sub: "有求必應，慈悲無量，護佑眾生，消災解厄" },
-    { text: "願您廣結善緣，福德無量", sub: "菩薩加持，業障消散，諸願圓滿，吉祥如意" },
-    { text: "心存善念，福自天來", sub: "善因善果，惡因惡果，種善因者，得善果報" },
-    { text: "廣結善緣，廣積功德", sub: "善因善果，如影隨形，功德無量，福報自來" },
-    { text: "回頭是岸，善念常在", sub: "善念一起，萬邪自退，佛性現前，轉迷為覺" },
-    { text: "願您禪心常在，智慧開朗", sub: "定慧等持，身心自在，六根清淨，萬緣放下" },
-    { text: "阿彌陀佛，慈光普照", sub: "信願行三，念佛成就，花開見佛，法喜充滿" },
-    { text: "佛法無邊，慈航普渡", sub: "眾生有緣，皆蒙度化，廣結善緣，福慧增長" },
-    { text: "願您諸惡莫作，眾善奉行", sub: "自淨其意，是諸佛教，身語意業，清淨圓滿" },
-    { text: "心平則天下平，氣和則萬事和", sub: "內心安定，外境隨之，慈悲待人，和樂相處" },
-    { text: "南無地藏王菩薩，大願無邊", sub: "悲願宏深，廣度眾生，護佑有情，吉祥圓滿" },
-    { text: "願您智慧增長，業障消除", sub: "般若光明，照破無明，諸佛加持，善根增長" },
-    { text: "三寶加持，萬事如意", sub: "佛法僧三寶，護佑眾生，信受奉行，福慧雙圓" },
-    { text: "願您廣行菩薩道，利益眾生", sub: "上求佛道，下化眾生，悲智雙運，圓成大願" },
-    { text: "一念清淨，諸佛歡喜", sub: "心淨佛土淨，念念向善，菩提心生，煩惱自滅" },
-    { text: "善惡到頭終有報，只爭來早與來遲", sub: "修善積福，廣結善緣，三世因果，絲毫不爽" },
-    { text: "願您吉祥平安，萬事順遂", sub: "諸佛護念，龍天擁護，善緣廣結，福德無量" },
-    { text: "心中有佛，處處蓮花", sub: "念念不離佛，佛即在心中，行住坐臥，皆是修行" },
-    { text: "南無文殊師利菩薩，智慧第一", sub: "般若智慧，破除無明，廣學多聞，弘法利生" },
-    { text: "願您修行精進，道業增長", sub: "戒定慧三學，勤修不懈，菩提大道，步步向前" },
-    { text: "因果不空，種善因得善果", sub: "廣種福田，廣結善緣，善業增長，福報現前" },
-    { text: "願您身心健康，福壽無量", sub: "三業清淨，龍天護佑，諸佛加持，壽比南山" },
-    { text: "菩薩低眉，是慈悲相", sub: "金剛怒目，是智慧相，慈悲與智慧，並行不悖" },
-    { text: "願您廣發菩提心，利益一切眾生", sub: "上求下化，悲智圓滿，菩薩行願，功德無邊" },
-    { text: "空即是色，色即是空", sub: "萬法皆空，緣起性空，不執著相，自在解脫" },
-    { text: "願您心開意解，法喜充滿", sub: "善根增長，業障消散，智慧朗現，菩提現前" },
-    { text: "南無普賢菩薩，行願無邊", sub: "十大行願，廣度眾生，功德無量，圓成佛道" },
-    { text: "願您廣結法緣，弘法利生", sub: "以法布施，功德最大，眾生受益，自身亦增福慧" },
-    { text: "忍辱波羅蜜，成就大菩提", sub: "忍一時之辱，修萬世之福，心如虛空，含容一切" },
-    { text: "願您六根清淨，萬緣放下", sub: "不住色聲香味觸法，自性光明，解脫自在" },
-    { text: "隨緣了業，莫再造新業", sub: "業障消除，善根增長，清淨修行，早證菩提" },
-    { text: "願您廣行布施，福德增長", sub: "財布施，法布施，無畏布施，三種布施，功德無量" },
-    { text: "念念不離菩提心，步步踏向解脫路", sub: "上求佛道，下化眾生，圓成無上正等正覺" },
-    { text: "南無藥師琉璃光如來，消災延壽", sub: "十二大願，救度眾生，消除病苦，健康長壽" },
-    { text: "願您諸事吉祥，家庭和樂", sub: "龍天護佑，諸佛加持，六親眷屬，和諧圓滿" },
-    { text: "戒定慧，斷貪瞋癡", sub: "三學增上，六度圓滿，煩惱自滅，菩提現前" },
-    { text: "願您廣行十善，遠離十惡", sub: "身口意三業清淨，善業增長，福德無量" },
-    { text: "平常心是道，自在即菩提", sub: "不執不著，隨緣自在，心境如如，即是解脫" },
-    { text: "願您信願行三，念佛成就", sub: "信心堅固，願力宏深，持名念佛，花開見佛" },
-    { text: "布施得福，持戒得定，忍辱增慧", sub: "六波羅蜜，廣修勤行，功德增長，菩提成就" },
-    { text: "願您廣結善緣，廣積功德", sub: "善因善果，如影隨形，功德無量，福報現前" },
-    { text: "南無大勢至菩薩，接引眾生", sub: "都攝六根，淨念相繼，不假方便，自得心開" },
-    { text: "願您禪定深厚，智慧增長", sub: "止觀雙運，定慧等持，心境明朗，般若現前" },
-    { text: "惡業消散如雪見陽光", sub: "善念一起，萬邪自退，佛光普照，業障自除" },
-    { text: "願您廣度有情，圓成大願", sub: "菩薩行願，廣被法界，一切眾生，皆蒙救度" },
-    { text: "諸行無常，把握當下", sub: "精進修行，勤植善因，智慧增長，菩提成就" },
-    { text: "願您心淨如蓮，出污泥而不染", sub: "自性清淨，六塵不染，蓮花德行，清淨莊嚴" },
-    { text: "萬法唯心造，心善則萬善", sub: "心中有善，善緣廣結，福德增長，萬事圓滿" },
-    { text: "願您廣弘正法，利益無量眾生", sub: "法輪常轉，眾生得益，功德無量，佛菩薩歡喜" },
-    { text: "放下萬緣，一心念佛", sub: "深信切願，持名念佛，心境清明，智慧朗現" },
-    { text: "願您佛緣深厚，道心堅固", sub: "菩提大道，步步向前，三寶加持，永不退轉" },
-    { text: "悲智雙運，自利利他", sub: "慈悲利他，智慧自利，悲智圓滿，成就佛道" },
-    { text: "願您廣作佛事，功德無量", sub: "供養三寶，護持正法，廣度眾生，福慧雙增" },
-    { text: "千江有水千江月，萬里無雲萬里天", sub: "自性如月，遍照法界，心淨智明，隨緣應化" },
-    { text: "願您早日覺悟，成就菩提", sub: "勤修三學，廣行六度，無上菩提，指日可期" },
-    { text: "佛在靈山莫遠求，靈山只在汝心頭", sub: "自性是佛，莫向外求，反觀自照，頓悟成佛" },
-    { text: "願您廣植福田，收穫豐盛", sub: "善因善果，勤修功德，福報無量，受用不盡" },
-    { text: "不忘初心，方得始終", sub: "菩提初心，永不退失，行願圓滿，圓成佛道" },
-    { text: "願您萬事如意，諸願圓滿", sub: "三寶加持，龍天護佑，善緣廣結，吉祥如意" },
-    { text: "上報四重恩，廣行菩薩道", sub: "知恩報恩，廣度眾生，功德無量，福慧增長" },
-    { text: "願您廣學多聞，深入經藏", sub: "智慧如海，辯才無礙，弘法利生，廣度眾生" },
-    { text: "隨喜功德，功德同等", sub: "見人行善，隨喜讚嘆，功德不減，善根增長" },
-    { text: "願您吉星高照，好運連連", sub: "諸佛護念，善神擁護，事事如意，時時吉祥" },
-    { text: "清淨三業，廣積資糧", sub: "身口意清淨，福慧資糧具足，菩提大道現前" },
-    { text: "願您法緣殊勝，修行有成", sub: "親近善知識，聞思修三慧，道業增長，早證菩提" },
-    { text: "三界唯心，萬法唯識", sub: "心外無法，法外無心，識得自心，即見如來" },
-    { text: "願您廣結菩薩緣，圓滿菩薩行", sub: "上求下化，悲智雙運，圓成大願，利益眾生" },
-    { text: "轉煩惱為菩提，轉業障為功德", sub: "智慧觀照，煩惱即菩提，業障即資糧，轉化有術" },
-    { text: "願您心定如山，智慧如海", sub: "禪定深厚，智慧廣大，心境如如，自在解脫" },
-    { text: "廣行善事，福報自來", sub: "善業積累，福德增長，善因善果，絲毫不爽" },
-    { text: "願您廣度冤親債主，消業增福", sub: "以慈化怨，以善化業，業障消散，福慧增長" },
-    { text: "觀自在，照見五蘊皆空", sub: "色受想行識，空無自性，般若智慧，自在圓滿" },
-    { text: "願您諸惑永斷，法身圓滿", sub: "見思惑斷，塵沙惑盡，無明滅盡，法身現前" },
-    { text: "緣起性空，性空緣起", sub: "萬法緣起，自性本空，不執有無，中道圓融" },
-    { text: "願您廣行供養，廣積功德", sub: "供養三寶，功德無量，諸佛歡喜，龍天護佑" },
-    { text: "回向功德，法界眾生共享", sub: "一切功德，普皆回向，眾生受益，自身亦增福慧" },
-    { text: "願您早證無上正等正覺", sub: "勤修戒定慧，廣行六波羅蜜，菩提大道，早日圓成" },
-    { text: "莫輕小善，以為無益", sub: "滴水成河，積沙成塔，小善積累，大福自來" },
-    { text: "願您六度萬行，圓滿無缺", sub: "布施持戒忍辱精進禪定般若，六度齊修，菩提成就" },
-    { text: "應無所住而生其心", sub: "不住六塵，清淨心生，不執一法，自在解脫" },
-    { text: "願您廣行懺悔，業障消除", sub: "至誠懺悔，業障消散，清淨身心，善根增長" },
-    { text: "一即一切，一切即一", sub: "萬法圓融，事事無礙，法界一如，自在無礙" },
-    { text: "願您常憶念佛，心燈常明", sub: "念念不離佛，心光普照，善根增長，福慧圓滿" },
-    { text: "修行不在山林，鬧市亦可修行", sub: "心清則處處清淨，心定則處處禪定，隨緣修行，功德無量" },
-    { text: "願您廣行孝道，感恩報恩", sub: "孝順父母，恭敬師長，廣結善緣，福德增長" },
-    { text: "無緣大慈，同體大悲", sub: "慈悲無量，普及法界，眾生苦樂，如己苦樂" },
-    { text: "願您精進修行，不退初心", sub: "勇猛精進，永不退轉，菩提大道，步步前進" },
-    { text: "見賢思齊，見不賢而內自省", sub: "學習善知識，遠離惡因緣，善根增長，道業精進" },
-    { text: "願您廣種菩提因，早收菩提果", sub: "因地修行，果地圓滿，菩提大道，圓成在即" },
-    { text: "禍福無門，唯人自召", sub: "善惡因果，自作自受，廣修善業，福報自來" },
-    { text: "願您心如蓮花，清淨無染", sub: "出污泥而不染，濯清漣而不妖，清淨德行，圓滿莊嚴" },
-    { text: "萬物並育而不相害", sub: "慈悲愛護，一切眾生，和諧共處，世界和平" },
-    { text: "願您廣弘佛法，化益眾生", sub: "以身作則，以法化人，功德無量，諸佛歡喜" },
-    { text: "知足常樂，少欲知足", sub: "欲少事少，欲多苦多，知足自在，心常快樂" },
-    { text: "願您福慧具足，萬德莊嚴", sub: "福報充足，智慧圓滿，功德莊嚴，相好光明" },
-    { text: "一花一世界，一葉一菩提", sub: "萬法皆是佛法，處處皆是道場，時時皆在修行" },
-    { text: "願您廣度有緣，共成佛道", sub: "廣結善緣，廣度眾生，共同發菩提心，共成無上佛道" },
-    { text: "念念清淨，步步蓮花", sub: "清淨念佛，念念向善，每一步都是蓮花，每一念都是菩提" },
-    { text: "願您法喜禪悅，吉祥如意", sub: "修行法喜，禪定禪悅，身心自在，吉祥圓滿" },
-    { text: "南無阿彌陀佛，慈悲無量", sub: "信願行三，念念清淨，佛光普照，吉祥如意" },
-    { text: "願您廣積陰德，福蔭子孫", sub: "陰德廣積，善果豐盛，子孫蒙福，世代吉祥" },
-    { text: "佛種從緣起，廣結菩提緣", sub: "善緣廣結，佛種廣播，眾生受益，功德無量" },
-    { text: "願您身心康泰，萬壽無疆", sub: "三業清淨，身心健康，福壽綿長，壽比南山" },
+  // 透過 64 組主句與 8 組副句，動態組合出 512 組獨一無二的佛教吉祥祝福語。
+  // 嚴格屏除「生死」、「西方極樂」、「往生」等字眼，全數保留充滿正能量的清淨與慈悲話語。
+  
+  const baseTexts = [
+    "佛光普照，法喜充滿", "福慧雙修，圓滿無缺", "菩提心生，煩惱自滅", "願您六時吉祥，萬事如意",
+    "慈悲喜捨，廣度眾生", "心清淨則天下平", "一切眾生皆有佛性", "南無本師釋迦牟尼佛",
+    "南無觀世音菩薩，慈悲救苦", "願您廣結善緣，福德無量", "心存善念，福自天來", "廣積功德，善緣廣結",
+    "回頭是岸，善念常在", "願您禪心常在，智慧開朗", "佛法無邊，慈航普渡", "願您諸惡莫作，眾善奉行",
+    "心平則天下平，氣和則萬事和", "南無彌勒菩薩，歡喜自在", "願您智慧增長，煩惱消除", "三寶加持，平安如意",
+    "願您廣行菩薩道，利益眾生", "一念清淨，諸佛歡喜", "因果不空，勤修善業", "願您吉祥平安，萬事順遂",
+    "心中有佛，處處蓮花", "南無大智文殊師利菩薩", "願您修行精進，道業增長", "種善因得善果，福慧雙圓",
+    "願您身心健康，福壽無量", "菩薩低眉，是慈悲相", "願您廣發菩提心，廣度有情", "色不異空，空不異色",
+    "願您心開意解，法喜充滿", "南無大行普賢菩薩", "願您廣結法緣，弘法利生", "忍辱波羅蜜，成就大菩提",
+    "願您六根清淨，自在無礙", "隨緣自在，莫起煩惱", "願您廣行布施，福德增長", "念念不離菩提心，步步覺悟",
+    "南無藥師琉璃光如來，消災延壽", "願您諸事吉祥，家庭和樂", "勤修戒定慧，息滅貪瞋癡", "願您廣行十善，遠離諸惡",
+    "平常心是道，自在即菩提", "定慧等持，般若現前", "布施得福，持戒得定", "南無大勢至菩薩，得大智慧",
+    "願您禪定深厚，智慧無礙", "惡業消散，佛光護體", "願您廣度有情，圓成大願", "諸行無常，把握當下",
+    "願您心淨如蓮，出污泥而不染", "萬法唯心造，心善則萬善", "願您廣弘正法，利益無量眾生", "清淨自在，一心向善",
+    "願您佛緣深厚，道心堅固", "悲智雙運，自利利他", "願您廣作佛事，功德無量", "千江有水千江月，萬里無雲萬里天",
+    "願您早日覺悟，成就菩提", "佛在靈山莫遠求，靈山只在汝心", "願您廣植福田，收穫豐盛", "不忘初心，方得始終"
   ];
+
+  const baseSubs = [
+    "身心清淨，煩惱消除，善緣廣結，福德增長",
+    "智慧明朗，慈悲廣大，諸事圓滿，吉祥如意",
+    "佛菩薩加持，違緣消散，善根增長，萬事皆順",
+    "菩薩行願，功德無量，智慧圓明，普利有情",
+    "自性光明，本來清淨，六塵不染，萬緣放下",
+    "般若光明，照破無明，諸佛護念，平安健康",
+    "心境澄明，念念向善，菩提心生，歡喜自在",
+    "廣種福田，廣結善緣，善業增長，福報現前"
+  ];
+
+  const blessings = [];
+  // 64 * 8 = 產生完美的 512 組佛教祝福
+  baseTexts.forEach(text => {
+    baseSubs.forEach(sub => {
+      blessings.push({ text, sub });
+    });
+  });
 
   let lastIndex = -1;
   let bathTimer = null;
+
+  // 每次點擊產生獨一無二的隨機香湯浴佛 SVG 特效
+  function randomizeBathFX() {
+    const fx = document.getElementById('bathe-fx');
+    
+    // 隨機抽選水流、光芒與粒子的配色組合 (紫金、水藍、翠綠、粉紫等清淨色調)
+    const palettes = [
+      ['#B39DDB', '#FFD700'], 
+      ['#81D4FA', '#FFF59D'], 
+      ['#A5D6A7', '#FFD54F'], 
+      ['#CE93D8', '#80CBC4'], 
+      ['#FFCC80', '#DCE775']  
+    ];
+    const palette = palettes[Math.floor(Math.random() * palettes.length)];
+    const c1 = palette[0];
+    const c2 = palette[1];
+
+    // 隨機流速與擴散時間
+    const d1 = (1.8 + Math.random() * 0.5).toFixed(1);
+    const d2 = (2.2 + Math.random() * 0.5).toFixed(1);
+    const rippleDur = (2.5 + Math.random()).toFixed(1);
+
+    let content = `
+      <!-- 背景光暈 -->
+      <radialGradient id="bathGlowGrad_rand" cx="50%" cy="42%" r="42%">
+        <stop offset="0%" stop-color="${c2}" stop-opacity="0.35"/>
+        <stop offset="60%" stop-color="${c1}" stop-opacity="0.12"/>
+        <stop offset="100%" stop-color="#7E57C2" stop-opacity="0"/>
+      </radialGradient>
+      <ellipse cx="340" cy="175" rx="115" ry="125" fill="url(#bathGlowGrad_rand)">
+        <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/>
+      </ellipse>
+
+      <!-- 左側甘露水流 -->
+      <path d="M258,152 Q252,196 255,240 Q258,270 256,294" fill="none" stroke="${c1}" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="9 10" opacity="0.75">
+        <animate attributeName="stroke-dashoffset" values="0;-76" dur="${d1}s" repeatCount="indefinite"/>
+      </path>
+      <path d="M278,140 Q272,184 274,228 Q276,260 275,292" fill="none" stroke="${c2}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="7 11" opacity="0.68">
+        <animate attributeName="stroke-dashoffset" values="0;-72" dur="${d2}s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- 右側甘露水流 -->
+      <path d="M422,152 Q428,196 425,240 Q422,270 424,294" fill="none" stroke="${c1}" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="9 10" opacity="0.75">
+        <animate attributeName="stroke-dashoffset" values="0;-76" dur="${d1}s" repeatCount="indefinite"/>
+      </path>
+      <path d="M402,140 Q408,184 406,228 Q404,260 405,292" fill="none" stroke="${c2}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="7 11" opacity="0.68">
+        <animate attributeName="stroke-dashoffset" values="0;-72" dur="${d2}s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- 浴佛盆水波漣漪 -->
+      <ellipse cx="340" cy="295" rx="8" ry="3" fill="none" stroke="${c1}" stroke-width="1.8">
+        <animate attributeName="rx" values="8;88;8" dur="${rippleDur}s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="3;10;3" dur="${rippleDur}s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.85;0;0.85" dur="${rippleDur}s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="340" cy="295" rx="8" ry="3" fill="none" stroke="${c2}" stroke-width="1.5">
+        <animate attributeName="rx" values="8;72;8" dur="${(parseFloat(rippleDur)+0.2).toFixed(1)}s" begin="0.5s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="3;8;3" dur="${(parseFloat(rippleDur)+0.2).toFixed(1)}s" begin="0.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.7;0;0.7" dur="${(parseFloat(rippleDur)+0.2).toFixed(1)}s" begin="0.5s" repeatCount="indefinite"/>
+      </ellipse>
+    `;
+
+    // 隨機水滴數量與位置
+    const dropCount = 3 + Math.floor(Math.random() * 3);
+    for (let i = 0; i < dropCount; i++) {
+      const cxL = 250 + Math.random() * 30;
+      const cxR = 400 + Math.random() * 30;
+      const durD = (2.5 + Math.random()).toFixed(1);
+      const delD = (Math.random() * 1.5).toFixed(1);
+      const cD = Math.random() > 0.5 ? c1 : c2;
+      content += `
+        <circle cx="${cxL}" cy="155" r="${1.5 + Math.random() * 1.5}" fill="${cD}">
+          <animate attributeName="cy" values="152;296" dur="${durD}s" begin="${delD}s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0.8;0" dur="${durD}s" begin="${delD}s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="${cxR}" cy="155" r="${1.5 + Math.random() * 1.5}" fill="${cD}">
+          <animate attributeName="cy" values="152;296" dur="${durD}s" begin="${delD}s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0.8;0" dur="${durD}s" begin="${delD}s" repeatCount="indefinite"/>
+        </circle>
+      `;
+    }
+
+    // 隨機上升的光芒粒子
+    const particleCount = 6 + Math.floor(Math.random() * 8);
+    for (let i = 0; i < particleCount; i++) {
+      const px = 270 + Math.random() * 140;
+      const pyStart = 285 + Math.random() * 10;
+      const pyEnd = 130 + Math.random() * 40;
+      const r = 1.2 + Math.random() * 2.5;
+      const pdur = (3 + Math.random() * 2).toFixed(1);
+      const pdel = (Math.random() * 2).toFixed(1);
+      const pc = Math.random() > 0.3 ? '#FFD700' : (Math.random() > 0.5 ? c1 : '#FFFFFF');
+      content += `
+        <circle cx="${px}" cy="${pyStart}" r="${r}" fill="${pc}">
+          <animate attributeName="cy" values="${pyStart};${pyEnd}" dur="${pdur}s" begin="${pdel}s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0.9;0" dur="${pdur}s" begin="${pdel}s" repeatCount="indefinite"/>
+        </circle>
+      `;
+    }
+
+    fx.innerHTML = content;
+  }
 
   function showBlessing() {
     let idx;
@@ -859,11 +723,19 @@
     btn.style.transform = 'scale(0.96)';
     setTimeout(() => { btn.style.transform = ''; }, 200);
 
-    // 香湯浴佛特效：淡入顯示，10 秒後淡出
+    // 香湯浴佛特效：先隨機重組 SVG，再淡入顯示，10 秒後淡出
+    randomizeBathFX();
     const fx = document.getElementById('bathe-fx');
     if (bathTimer) { clearTimeout(bathTimer); bathTimer = null; }
+    
+    // 強制重繪以觸發 SVG Animate
+    fx.style.display = 'none';
+    void fx.offsetWidth; 
+    fx.style.display = 'inline';
+    
     fx.style.transition = 'opacity 0.6s ease';
     fx.style.opacity = '1';
+    
     bathTimer = setTimeout(() => {
       fx.style.transition = 'opacity 1.5s ease';
       fx.style.opacity = '0';
