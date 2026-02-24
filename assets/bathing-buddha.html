@@ -332,6 +332,21 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes float-lotus { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  
+  /* 佛像與蓮花 3D 立體旋轉特效 */
+  .majestic-spin {
+    animation: majesticSpin 10s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transform-style: preserve-3d;
+    transform-origin: center center;
+    transform-box: fill-box;
+  }
+  @keyframes majesticSpin {
+    0% { transform: perspective(1200px) rotateY(0deg) scale(1) translateY(0px); }
+    25% { transform: perspective(1200px) rotateY(180deg) scale(1.1) translateY(-6px); }
+    50% { transform: perspective(1200px) rotateY(360deg) scale(1.18) translateY(-12px); } /* 旋轉時放大懸浮，產生強烈立體感 */
+    75% { transform: perspective(1200px) rotateY(540deg) scale(1.1) translateY(-6px); }
+    100% { transform: perspective(1200px) rotateY(720deg) scale(1) translateY(0px); } /* 10秒內平穩旋轉 2 圈，最後剛好回到原先正面位置 */
+  }
 </style>
 </head>
 <body>
@@ -422,17 +437,18 @@
       <ellipse cx="340" cy="190" rx="180" ry="180" fill="url(#glowGrad)" filter="url(#blur-sm)"/>
 
       <!-- LOTUS BASE -->
-      <g style="animation: float-lotus 4s ease-in-out infinite">
-        <ellipse cx="250" cy="375" rx="35" ry="16" fill="url(#whitePetal)" opacity="0.95" transform="rotate(-25,250,375)"/>
-        <ellipse cx="290" cy="385" rx="35" ry="16" fill="url(#whitePetalGreen)" opacity="0.95" transform="rotate(-10,290,385)"/>
+      <g id="lotus-spin-wrapper" style="transform-origin: center; transform-box: fill-box;">
+        <rect x="0" y="0" width="680" height="420" fill="none" pointer-events="none" />
+        <g style="animation: float-lotus 4s ease-in-out infinite">
+          <ellipse cx="250" cy="375" rx="35" ry="16" fill="url(#whitePetal)" opacity="0.95" transform="rotate(-25,250,375)"/>
         <ellipse cx="340" cy="390" rx="38" ry="16" fill="url(#whitePetal)" opacity="1.0"/>
         <ellipse cx="390" cy="385" rx="35" ry="16" fill="url(#whitePetalGreen)" opacity="0.95" transform="rotate(10,390,385)"/>
         <ellipse cx="430" cy="375" rx="35" ry="16" fill="url(#whitePetal)" opacity="0.95" transform="rotate(25,430,375)"/>
         <ellipse cx="270" cy="378" rx="28" ry="13" fill="#FFFFFF" opacity="0.9" transform="rotate(-15,270,378)"/>
         <ellipse cx="312" cy="387" rx="28" ry="13" fill="#F1F8E9" opacity="0.85" transform="rotate(-5,312,387)"/>
-        <ellipse cx="340" cy="389" rx="30" ry="13" fill="#FFFFFF" opacity="0.95"/>
-        <ellipse cx="368" cy="387" rx="28" ry="13" fill="#F1F8E9" opacity="0.85" transform="rotate(5,368,387)"/>
-        <ellipse cx="410" cy="378" rx="28" ry="13" fill="#FFFFFF" opacity="0.9" transform="rotate(15,410,378)"/>
+          <ellipse cx="368" cy="387" rx="28" ry="13" fill="#F1F8E9" opacity="0.85" transform="rotate(5,368,387)"/>
+          <ellipse cx="410" cy="378" rx="28" ry="13" fill="#FFFFFF" opacity="0.9" transform="rotate(15,410,378)"/>
+        </g>
       </g>
 
       <!-- BASIN -->
@@ -457,7 +473,10 @@
       </circle>
 
       <!-- 佛像 -->
-      <image href="bathing-buddha.png" x="220" y="55" width="240" height="260" preserveAspectRatio="xMidYMid meet" />
+      <g id="buddha-spin-wrapper" style="transform-origin: center; transform-box: fill-box;">
+        <rect x="0" y="0" width="680" height="420" fill="none" pointer-events="none" />
+        <image href="bathing-buddha.png" x="220" y="55" width="240" height="260" preserveAspectRatio="xMidYMid meet" />
+      </g>
 
       <!-- INCENSE -->
       <rect x="178" y="290" width="3" height="60" rx="1" fill="#D4AF37"/>
@@ -723,6 +742,20 @@
     btn.style.transform = 'scale(0.96)';
     setTimeout(() => { btn.style.transform = ''; }, 200);
 
+    // 佛像與蓮花旋轉 10 秒特效
+    const lotusSpin = document.getElementById('lotus-spin-wrapper');
+    const buddhaSpin = document.getElementById('buddha-spin-wrapper');
+    
+    // 重置動畫，若在 10 秒內連點也能重新觸發
+    lotusSpin.classList.remove('majestic-spin');
+    buddhaSpin.classList.remove('majestic-spin');
+    void lotusSpin.offsetWidth;
+    void buddhaSpin.offsetWidth;
+    
+    // 啟動旋轉
+    lotusSpin.classList.add('majestic-spin');
+    buddhaSpin.classList.add('majestic-spin');
+
     // 香湯浴佛特效：先隨機重組 SVG，再淡入顯示，10 秒後淡出
     randomizeBathFX();
     const fx = document.getElementById('bathe-fx');
@@ -739,6 +772,11 @@
     bathTimer = setTimeout(() => {
       fx.style.transition = 'opacity 1.5s ease';
       fx.style.opacity = '0';
+      
+      // 10 秒後移除旋轉 class，讓它確實回到原先靜態位置
+      lotusSpin.classList.remove('majestic-spin');
+      buddhaSpin.classList.remove('majestic-spin');
+      
       bathTimer = null;
     }, 10000);
   }
