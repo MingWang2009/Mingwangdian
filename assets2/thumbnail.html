@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB 預覽圖產生器 - 1200x630 (禪意版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #1A1816; 
+            margin: 0;
+            padding: 80px 20px 40px 20px; 
+            text-align: center;
+            min-height: 100vh;
+        }
+        
+        .preview-wrapper {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.8);
+            display: inline-block; 
+            text-align: left;
+            width: 1200px;
+            height: 630px;
+        }
+
+        /* 嚴格鎖定 FB 建議尺寸：1200x630 */
+        .og-container {
+            width: 1200px;
+            height: 630px;
+            background-color: #F5F4F1; 
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* 為了閃現法過渡平滑 */
+            transition: opacity 0.1s;
+        }
+
+        /* 極簡禪風細線邊框 */
+        .zen-border {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            right: 30px;
+            bottom: 30px;
+            border: 1px solid #D6D2C9;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* 四個角落的點綴 */
+        .corner-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: #8C3E38; 
+        }
+        .dot-tl { top: -2px; left: -2px; }
+        .dot-tr { top: -2px; right: -2px; }
+        .dot-bl { bottom: -2px; left: -2px; }
+        .dot-br { bottom: -2px; right: -2px; }
+    </style>
+</head>
+<body>
+
+    <!-- 新增 wrapper 裝載陰影 -->
+    <div class="preview-wrapper">
+        <!-- 這個容器就是 1200x630 的截圖範圍 (移除了陰影) -->
+        <div class="og-container" id="ogImageNode">
+            
+            <!-- 裝飾邊框 -->
+            <div class="zen-border">
+                <div class="corner-dot dot-tl"></div>
+                <div class="corner-dot dot-tr"></div>
+                <div class="corner-dot dot-bl"></div>
+                <div class="corner-dot dot-br"></div>
+            </div>
+            
+            <!-- 巨型背景浮水印 -->
+            <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-0 overflow-hidden">
+                <span class="text-[480px] font-black text-[#2B2824] opacity-[0.035] tracking-[0.05em] leading-none select-none ml-[0.05em]">心經</span>
+            </div>
+
+            <!-- 內容主體 -->
+            <div class="z-20 flex flex-col items-center text-center px-20">
+                <!-- 殿名 (修正字體視覺基線) -->
+                <div class="flex items-center gap-6 mb-8">
+                    <span class="h-[1px] w-12 bg-[#8C3E38]"></span>
+                    <!-- 加入 leading-none 與 -translate-y-[2px] 向上微調 -->
+                    <h2 class="text-2xl font-bold tracking-[0.4em] text-[#8C3E38] leading-none -translate-y-[2px]">東密明王殿</h2>
+                    <span class="h-[1px] w-12 bg-[#8C3E38]"></span>
+                </div>
+
+                <!-- 主標題 -->
+                <h1 class="text-[5.5rem] font-bold tracking-[0.15em] text-[#2B2824] leading-tight mb-8 ml-6">
+                    般若波羅蜜多心經
+                </h1>
+                
+                <!-- 副標題 -->
+                <div class="border-y border-[#D6D2C9] py-4 px-12 mb-12 relative z-20 bg-transparent">
+                    <p class="text-2xl font-medium text-[#5C564D] tracking-[0.3em]">
+                        互動修行指南與十二課淺譯
+                    </p>
+                </div>
+
+                <!-- 法語 -->
+                <div class="text-[#8C857B] text-[1.35rem] tracking-[0.4em] leading-loose font-light relative z-20">
+                    <p>明以弘法渡陰陽，修以禪宗解六界</p>
+                    <p>定以蓮師揚佛法，靜以待之渡同門</p>
+                </div>
+                
+                <!-- 底部資訊 -->
+                <div class="text-[#9E8667] text-lg tracking-[0.3em] font-light flex items-center gap-4 relative z-20 mt-12">
+                    <span class="text-[#8C3E38]">☸</span> 釋明法 合十恭譯 <span class="text-[#8C3E38]">☸</span>
+                </div>
+            </div>
+
+        </div> 
+    </div>
+
+</body>
+</html>

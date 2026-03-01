@@ -1,1 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>東密明王殿 - 般若波羅蜜多心經互動解析</title>
+    
+    <meta property="og:title" content="東密明王殿 - 《心經》互動修行指南" />
+    <meta property="og:description" content="將釋明法師父之《心經》淺譯，轉化為互動式的數位修行道場。透過循序漸進的十二堂課，體悟自覺與覺他的菩薩道。" />
+    <meta property="og:type" content="og-image.jpg" />
+    <meta property="og:site_name" content="東密明王殿" />
 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Zen High Contrast Reading (Paper #F5F4F1, Deep Ink #2B231D, Muted Temple Red #A63A32, Antique Bronze #9C7E5A, Reading Text #4A3B32, Border #E8E4DB) -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #F5F4F1; /* 素雅宣紙白 */
+            color: #4A3B32; /* 深焙茶色，適合長時間舒適閱讀的高對比內文色 */
+            letter-spacing: 0.05em;
+            overflow-x: hidden;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+            min-height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 50vh;
+            }
+        }
+        .zen-panel {
+            background-color: #FFFFFF;
+            border: 1px solid #E8E4DB;
+            box-shadow: 0 10px 30px rgba(43, 35, 29, 0.04);
+            border-radius: 4px; /* 極簡微圓角 */
+        }
+        
+        /* 電腦版導覽列特效 */
+        .nav-item {
+            transition: all 0.3s ease;
+            border-left: 2px solid transparent;
+            border-radius: 4px;
+        }
+        .nav-item:hover {
+            background-color: #F5F4F1;
+            color: #A63A32;
+        }
+        .nav-item-active {
+            font-weight: 700;
+            color: #A63A32 !important;
+            border-left-color: #A63A32 !important;
+            border-left-width: 3px !important;
+            background-color: #F5F4F1 !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 訂製極簡卷軸 */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #EFE9DD; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9C7E5A; }
+
+        /* 互動卡片特效 */
+        .interactive-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .interactive-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(166, 58, 50, 0.08); /* 柔和紅陰影 */
+            border-color: #E8E4DB;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- 頂部標題區 -->
+    <header class="bg-[#2B231D] text-[#F5F4F1] py-14 px-6 shadow-md relative overflow-hidden z-10">
+        <!-- 背景巨型浮水印 -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none text-8xl md:text-9xl flex items-center justify-center font-bold tracking-[0.2em] select-none">
+            般若波羅蜜多心經
+        </div>
+        
+        <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 border-b border-[#40352C] pb-8">
+            <div class="text-center md:text-left flex flex-col md:flex-row items-center gap-6">
+                <!-- 視覺標誌 -->
+                <div class="hidden md:flex flex-col items-center gap-2">
+                    <div class="w-[2px] h-12 bg-[#A63A32]"></div>
+                    <div class="text-[#A63A32] text-xl">☸</div>
+                </div>
+                <div>
+                    <!-- 標題文字改用純白，提升明亮度 -->
+                    <h1 class="text-3xl md:text-5xl font-bold mb-3 tracking-widest text-[#FFFFFF]">東密明王殿</h1>
+                    <h2 class="text-xl md:text-2xl font-light tracking-[0.3em] text-[#9C7E5A]">《心經》互動修行指南</h2>
+                    <p class="mt-5 text-sm text-[#D4CBBF] max-w-xl leading-relaxed tracking-wider">
+                        本指南將釋明法師父之《心經》淺譯，轉化為互動式的數位修行道場。請透過點擊<span class="hidden md:inline">左側</span><span class="inline md:hidden text-[#F5F4F1] font-bold">上方</span>課程選單，循序漸進地體悟自覺與覺他的菩薩道。
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 法語區塊 -->
+            <div class="bg-[#382E26] p-6 rounded-sm border border-[#40352C] text-sm text-center md:text-right shadow-inner min-w-[280px]">
+                <p class="text-[#A63A32] font-bold mb-3 text-lg tracking-widest border-b border-[#40352C] pb-2 inline-block">法 語</p>
+                <p class="italic leading-loose tracking-widest text-[#F5F4F1]">明以弘法渡陰陽、修以禪宗解六界<br>定以蓮師揚佛法、靜以待之渡同門</p>
+                <div class="mt-4 pt-3 border-t border-[#40352C] text-[#D4CBBF] text-xs font-light">
+                    <p>📍 台南市善化區中山路377號</p>
+                    <p class="mt-1">主講/翻譯：釋明法 合十恭譯</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主內容區 -->
+    <div class="max-w-7xl mx-auto w-full flex-grow flex flex-col md:flex-row p-4 md:p-8 gap-4 md:gap-8 md:mt-2 z-10 relative">
+        
+        <!-- 修行次第選單 (左側/上方) -->
+        <aside class="w-full md:w-1/3 lg:w-1/4 flex flex-col gap-4 relative z-20">
+            <div class="zen-panel p-4 md:p-6 sticky top-4 md:top-8">
+                <!-- 電腦版標題 -->
+                <h3 class="hidden md:flex text-lg font-bold mb-6 text-[#2B231D] border-b border-[#E8E4DB] pb-3 tracking-[0.2em] items-center gap-2">
+                    <span class="text-[#A63A32] text-sm">◆</span> 修行次第
+                </h3>
+                
+                <!-- 手機版：下拉式選單 -->
+                <div class="md:hidden relative">
+                    <label for="mobile-nav" class="sr-only">選擇課程</label>
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-[#A63A32] text-xs">
+                        ◆
+                    </div>
+                    <select id="mobile-nav" onchange="loadContent(this.value, true)" class="block w-full pl-10 pr-10 py-3.5 text-base text-[#4A3B32] bg-[#F5F4F1] border border-[#E8E4DB] focus:outline-none focus:border-[#A63A32] rounded-sm appearance-none tracking-widest font-bold shadow-sm cursor-pointer">
+                        <!-- Options injected by JS -->
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-[#9C7E5A] text-[10px]">
+                        ▼
+                    </div>
+                </div>
+                
+                <!-- 電腦版：垂直列表選單 -->
+                <nav id="lesson-nav" class="hidden md:flex flex-col gap-2 overflow-y-auto max-h-[65vh] md:pr-3 custom-scrollbar">
+                    <!-- Nav items injected by JS -->
+                </nav>
+            </div>
+        </aside>
+
+        <!-- 內容顯示區 (右側/下方) -->
+        <main class="w-full md:w-2/3 lg:w-3/4 flex flex-col">
+            <article id="content-display" class="zen-panel p-8 md:p-14 min-h-[65vh] transition-all duration-300 relative">
+                <!-- Content injected by JS -->
+            </article>
+        </main>
+
+    </div>
+
+    <!-- 頁尾 -->
+    <footer class="bg-[#2B231D] text-[#D4CBBF] text-center py-8 text-sm mt-auto border-t border-[#40352C] z-10 relative">
+        <p class="tracking-[0.2em] mb-2">願以此功德，普及於一切。我等與眾生，皆共成佛道。</p>
+        <p class="text-xs font-light tracking-widest opacity-60">東密明王殿 Facebook 社團 | 數位互動化呈現</p>
+    </footer>
+
+    <script>
+        // Data Structure storing the parsed Source Report (Heart Sutra Translation)
+        const sutraData = [
+            {
+                id: 'intro',
+                type: 'intro',
+                title: '開始修行',
+                icon: '◇',
+                content: `
+                    <div class="text-center mb-10">
+                        <span class="text-5xl text-[#A63A32] block mb-6">☸</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-[#2B231D] mb-4 tracking-[0.2em]">歡迎來到《心經》互動解析</h2>
+                        <p class="text-lg text-[#9C7E5A] tracking-widest font-light">一處沉澱心靈的數位空間</p>
+                    </div>
+                    <div class="text-lg leading-loose text-[#4A3B32] max-w-2xl mx-auto text-justify tracking-wide">
+                        <p class="mb-6">我們將《般若波羅蜜多心經》的深奧智慧，拆解為十二堂循序漸進的課程與三篇總結。這裡的設計旨在讓您能專注於當下的每一句經文。</p>
+                        <p class="mb-10">請點擊<span class="hidden md:inline">左側</span><span class="inline md:hidden text-[#A63A32] font-bold">上方</span>的課程選單，深入探索經文的現代語譯與修行重點。無論您是初學者或是精進的同修，皆能在此觀照內心，尋得平靜。</p>
+                        <div class="flex justify-center">
+                            <button onclick="loadContent('lesson-1', true)" class="bg-[#F5F4F1] px-10 py-4 rounded-sm border border-[#E8E4DB] text-[#A63A32] font-bold tracking-widest hover:bg-[#A63A32] hover:text-[#F5F4F1] transition-all duration-300 shadow-sm flex items-center justify-center gap-3 w-full md:w-auto">
+                                <span class="text-sm">◆</span> 點此進入第一課：觀自在菩薩
+                            </button>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'lesson-1',
+                type: 'lesson',
+                title: '第一課',
+                icon: '▪',
+                sutra: '觀自在菩薩',
+                body: `
+                    <p class="mb-6 text-[#4A3B32]">一般人就解釋為觀世音菩薩，而這句真正的意思：</p>
+                    <div class="bg-[#F5F4F1] p-6 rounded-sm border border-[#E8E4DB] mb-8">
+                        <ul class="space-y-4">
+                            <li class="flex items-start"><b class="text-[#9C7E5A] text-xl mr-3 font-black">觀</b> <span>就是「看」的意思。</span></li>
+                            <li class="flex items-start"><b class="text-[#9C7E5A] text-xl mr-3 font-black">自</b> <span>就是「自己」的意思。</span></li>
+                            <li class="flex items-start"><b class="text-[#9C7E5A] text-xl mr-3 font-black">在</b> <span>就是「自在」的意思。</span></li>
+                        </ul>
+                    </div>
+                    <p class="mb-4 text-[#4A3B32]">所以整句就是 <b class="text-[#A63A32] font-bold">「觀看自己內心是否自在」</b>。要如何的自在呢？必須每日以十善業覺照自己，每個人總是觀照他人缺點，而沒有觀察是否自己錯誤。</p>
+                `,
+                takeawayTitle: '觀自在',
+                takeawayBody: '要先修持觀自在，之後再修觀世音：觀照救拔世間苦難的聲音。<br><br><div class="flex gap-4 mt-4"><span class="bg-white px-4 py-2 rounded-sm border border-[#E8E4DB] text-sm font-bold text-[#4A3B32] tracking-widest"><span class="text-[#9C7E5A]">觀自在 ➔</span> 自覺</span><span class="bg-white px-4 py-2 rounded-sm border border-[#E8E4DB] text-sm font-bold text-[#4A3B32] tracking-widest"><span class="text-[#9C7E5A]">觀世音 ➔</span> 覺他</span></div>'
+            },
+            {
+                id: 'lesson-2',
+                type: 'lesson',
+                title: '第二課',
+                icon: '▪',
+                sutra: '行深般若波羅蜜多時，照見五蘊皆空',
+                body: `
+                    <ul class="list-none pl-0 mb-8 space-y-4 text-[#4A3B32]">
+                        <li class="bg-[#F5F4F1] p-4 border-l-4 border-[#9C7E5A]"><b class="text-[#2B231D]">行深般若波羅蜜多時</b>：解釋為修行到最深妙智慧的時候。</li>
+                        <li class="bg-[#F5F4F1] p-4 border-l-4 border-[#9C7E5A]"><b class="text-[#2B231D]">照見五蘊皆空</b>：解釋為必須覺照自己內心對世間形色、感受、思想、行為、意識，這五蘊要能放下。</li>
+                    </ul>
+                    <p class="text-[#4A3B32]">人，在世間因<span class="text-[#A63A32] font-medium">形形色色人事物的干擾</span>，有了不同的感受、思想，<span class="text-[#A63A32] font-medium">產生偏差的行為與意念</span>，為了想擁有、過度的貪求，傷害他人而不自知，才造成種種惡業。</p>
+                `,
+                takeawayTitle: '要學習原諒與放下',
+                takeawayBody: '要達到五蘊皆空雖然很難，但我們千萬不要因為我們的自私五蘊熾盛而傷害他人，或傷害其他有形或無形眾生。<br><br><div class="flex flex-wrap gap-4 mt-4"><span class="bg-white px-4 py-2 rounded-sm border border-[#E8E4DB] text-sm font-bold text-[#4A3B32]"><span class="text-[#9C7E5A]">有形 ➔</span> 其他動物</span><span class="bg-white px-4 py-2 rounded-sm border border-[#E8E4DB] text-sm font-bold text-[#4A3B32]"><span class="text-[#9C7E5A]">無形 ➔</span> 天地之間看不見的萬物</span></div>'
+            },
+            {
+                id: 'lesson-3',
+                type: 'lesson',
+                title: '第三課',
+                icon: '▪',
+                sutra: '度一切苦厄',
+                body: `
+                    <p class="mb-6 text-xl font-bold text-[#A63A32] text-center tracking-widest border-b border-[#E8E4DB] pb-4">解釋為度化自己心中一切的煩惱苦厄。</p>
+                    <p class="text-[#4A3B32] text-justify leading-loose">人，因為五蘊熾盛、被世界的萬物所染，金錢、權勢、名利、名牌、名車、豪宅、過度的需求，而產生慾妄貪求，而心被這些綁住了，變成了眾多的煩惱，這些煩惱憂苦我們的身心，甚至迫使我們為了想擁有而造成惡業，使我們墮落於輪迴之中。</p>
+                `,
+                takeawayTitle: '轉念',
+                takeawayBody: '只要轉個念頭、知足常樂，只要看淡五蘊，放下五蘊，自能度化心中一切煩惱苦厄。'
+            },
+            {
+                id: 'lesson-4',
+                type: 'lesson',
+                title: '第四課',
+                icon: '▪',
+                sutra: '舍利子，色不異空、空不異色',
+                body: `
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 text-center">
+                        <div class="bg-[#F5F4F1] py-4 px-2 rounded-sm border border-[#E8E4DB]"><b class="text-[#9C7E5A] block text-lg mb-1">舍利子</b><span class="text-sm text-[#4A3B32]">一個修行的人</span></div>
+                        <div class="bg-[#F5F4F1] py-4 px-2 rounded-sm border border-[#E8E4DB]"><b class="text-[#9C7E5A] block text-lg mb-1">色</b><span class="text-sm text-[#4A3B32]">世間的一切事物</span></div>
+                        <div class="bg-[#F5F4F1] py-4 px-2 rounded-sm border border-[#E8E4DB]"><b class="text-[#9C7E5A] block text-lg mb-1">不異</b><span class="text-sm text-[#4A3B32]">不染、無著、不障礙</span></div>
+                        <div class="bg-[#F5F4F1] py-4 px-2 rounded-sm border border-[#E8E4DB]"><b class="text-[#9C7E5A] block text-lg mb-1">空</b><span class="text-sm text-[#4A3B32]">心性</span></div>
+                    </div>
+                    <p class="mb-6 text-[#4A3B32]"><b class="text-[#A63A32] font-bold">全句解釋：</b>一個修行的人，要了解，世間的一切人事物是不會障礙到心性的修行。</p>
+                    <p class="text-[#4A3B32] text-justify leading-loose">我們的心性原本就不染世間萬物的。因為我們帶著業障，輪迴六道之中，<span class="text-[#A63A32] font-medium">投胎來這世間，而染塵事</span>，因果報、報恩或討債，也就是宿世業，當我們了解這些因緣道理，我們必須圓滿一切。</p>
+                `,
+                takeawayTitle: '圓融',
+                takeawayBody: '面對宿世業與因果，必須圓滿一切人事物，不讓外境障礙心性。'
+            },
+            {
+                id: 'lesson-5',
+                type: 'lesson',
+                title: '第五課',
+                icon: '▪',
+                sutra: '色即是空、空即是色',
+                body: `
+                    <div class="flex flex-col md:flex-row gap-6 mb-8">
+                        <div class="bg-[#F5F4F1] p-6 rounded-sm border border-[#E8E4DB] flex-1">
+                            <b class="text-[#9C7E5A] text-2xl mb-2 block font-black">色</b>
+                            <p class="text-[#4A3B32]">塵世間的一切事物。</p>
+                        </div>
+                        <div class="bg-[#F5F4F1] p-6 rounded-sm border border-[#E8E4DB] flex-1">
+                            <b class="text-[#9C7E5A] text-2xl mb-2 block font-black">空</b>
+                            <p class="text-[#4A3B32]">心性。</p>
+                        </div>
+                    </div>
+                    <p class="text-[#4A3B32] text-justify leading-loose"><b class="text-[#A63A32] font-bold">全句解釋：</b>塵世間的一切事物都只是因緣起因緣滅的假相，是不該影響到我們的心性，而我們的心性在這世間雖然<span class="text-[#A63A32] font-medium">每天面對這一切，要如何穩定情緒這才是修行重點</span>。</p>
+                `,
+                takeawayTitle: '不動',
+                takeawayBody: '也就是學習不讓種種善或惡的因緣，讓我們產生貪念、動怒、癡迷、忌妒、高慢、猜疑這些情緒上的反應。'
+            },
+            {
+                id: 'lesson-6',
+                type: 'lesson',
+                title: '第六課',
+                icon: '▪',
+                sutra: '受想行識、亦復如是',
+                body: `
+                    <div class="flex flex-wrap gap-4 mb-8 justify-center">
+                        <span class="bg-[#F5F4F1] px-5 py-3 rounded-sm border border-[#E8E4DB] text-[#2B231D]"><b class="text-[#9C7E5A] text-lg mr-2">受</b>感受</span>
+                        <span class="bg-[#F5F4F1] px-5 py-3 rounded-sm border border-[#E8E4DB] text-[#2B231D]"><b class="text-[#9C7E5A] text-lg mr-2">想</b>思想</span>
+                        <span class="bg-[#F5F4F1] px-5 py-3 rounded-sm border border-[#E8E4DB] text-[#2B231D]"><b class="text-[#9C7E5A] text-lg mr-2">行</b>行為</span>
+                        <span class="bg-[#F5F4F1] px-5 py-3 rounded-sm border border-[#E8E4DB] text-[#2B231D]"><b class="text-[#9C7E5A] text-lg mr-2">識</b>意識</span>
+                        <span class="bg-[#F5F4F1] px-5 py-3 rounded-sm border border-[#E8E4DB] text-[#2B231D] w-full text-center md:w-auto"><b class="text-[#9C7E5A] text-lg mr-2">亦復如是</b>都是同樣的</span>
+                    </div>
+                    <p class="mb-4 text-[#4A3B32]"><b class="text-[#A63A32] font-bold">全句解釋：</b>感受、思想、行為、意識，和前面所講都是同樣的道理。</p>
+                    <p class="text-[#4A3B32] text-justify leading-loose">當我們遇到善或惡、順境或逆境的人事物各種形色，每個人都有不同的感受、產生不同的思想、做出不同的行為，以及不同的想法意識，才會有那麼多的爭執、我執、法執。</p>
+                `,
+                takeawayTitle: '聞、思、修',
+                takeawayBody: '聽聞或看到任何事，必須思考後、修正再做。'
+            },
+            {
+                id: 'lesson-7',
+                type: 'lesson',
+                title: '第七課',
+                icon: '▪',
+                sutra: '舍利子、是諸法空相',
+                body: `
+                    <ul class="list-none mb-8 space-y-4">
+                        <li class="flex items-start"><b class="text-[#9C7E5A] text-lg font-bold min-w-[120px]">舍利子</b> <span class="text-[#4A3B32]">一個修行的人。</span></li>
+                        <li class="flex items-start"><b class="text-[#9C7E5A] text-lg font-bold min-w-[120px]">是諸法空相</b> <span class="text-[#4A3B32]">要了解這世間用盡了所有的諸法，一切的方法所得到的物質，都只是假相。</span></li>
+                    </ul>
+                    <p class="text-[#4A3B32] text-justify leading-loose">一切所有的諸法，都是為了救度眾生而產生，一切所有的物質、名牌、榮譽、地位，都是短暫的假相、萬般帶不走、只有業隨身。</p>
+                `,
+                takeawayTitle: '不執',
+                takeawayBody: '不要太過執著、又不要不執著就可以跳脫煩惱束縛。'
+            },
+            {
+                id: 'lesson-8',
+                type: 'lesson',
+                title: '第八課',
+                icon: '▪',
+                sutra: '不生不滅、不垢不淨、不增不減。<br>是故空中無色、無受想行識',
+                body: `
+                    <p class="mb-6 text-[#9C7E5A] font-bold tracking-widest text-center">這句是前七課的總整理。</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-[#F5F4F1] p-6 rounded-sm border-t-4 border-[#A63A32]">
+                            <b class="text-3xl text-[#2B231D] block mb-3 font-black">空</b>
+                            <p class="text-[#4A3B32] leading-relaxed">代表心性、神識、靈魂、元神、佛性。</p>
+                        </div>
+                        <div class="bg-[#F5F4F1] p-6 rounded-sm border-t-4 border-[#9C7E5A]">
+                            <b class="text-3xl text-[#2B231D] block mb-3 font-black">色</b>
+                            <p class="text-[#4A3B32] leading-relaxed">代表世間人事、物。</p>
+                        </div>
+                    </div>
+                    <p class="text-[#4A3B32] text-justify leading-loose">所以我們的心原本清淨無染任何壞習慣，也不會因為世間的事物而有太多的感受、思想、行為、意識，當能夠了解前面七課的意思，且融會貫通。</p>
+                `,
+                takeawayTitle: '覺',
+                takeawayBody: '即覺醒或覺悟。'
+            },
+            {
+                id: 'lesson-9',
+                type: 'lesson',
+                title: '第九課',
+                icon: '▪',
+                sutra: '無眼耳鼻舌身意，無色聲香味觸法。<br>無眼界，乃至無意識界',
+                body: `
+                    <p class="mb-6 font-bold text-[#A63A32]">第一句是「無六根」，第二句是「無六塵」。</p>
+                    <p class="mb-6 text-sm text-[#A38C71]">請點擊下方「六根」，觀察其如何對應外在的「六塵」：</p>
+                    
+                    <div class="flex flex-col md:flex-row gap-6 mb-10 items-stretch">
+                        <!-- Roots -->
+                        <div class="w-full md:w-1/2 flex flex-col gap-3" id="roots-container">
+                            <div class="text-center font-bold text-[#2B231D] mb-2 border-b border-[#E8E4DB] pb-2 tracking-widest">六根 (內在)</div>
+                            <button onclick="highlightDust('root-1')" class="root-btn interactive-card bg-[#F5F4F1] p-4 rounded-sm border border-[#E8E4DB] text-left hover:bg-[#E8E4DB] text-[#4A3B32] font-bold"><span class="text-[#9C7E5A] mr-2">眼</span> (看)</button>
+                            <button onclick="highlightDust('root-2')" class="root-btn interactive-card bg-[#F5F4F1] p-4 rounded-sm border border-[#E8E4DB] text-left hover:bg-[#E8E4DB] text-[#4A3B32] font-bold"><span class="text-[#9C7E5A] mr-2">耳</span> (聽)</button>
+                            <button onclick="highlightDust('root-3')" class="root-btn interactive-card bg-[#F5F4F1] p-4 rounded-sm border border-[#E8E4DB] text-left hover:bg-[#E8E4DB] text-[#4A3B32] font-bold"><span class="text-[#9C7E5A] mr-2">鼻</span> (嗅)</button>
+                            <button onclick="highlightDust('root-4')" class="root-btn interactive-card bg-[#F5F4F1] p-4 rounded-sm border border-[#E8E4DB] text-left hover:bg-[#E8E4DB] text-[#4A3B32] font-bold"><span class="text-[#9C7E5A] mr-2">舌</span> (嚐)</button>
+                            <button onclick="highlightDust('root-5')" class="root-btn interactive-card bg-[#F5F4F1] p-4 rounded-sm border border-[#E8E4DB] text-left hover:bg-[#E8E4DB] text-[#4A3B32] font-bold"><span class="text-[#9C7E5A] mr-2">身</span> (觸)</button>
+                            <button onclick="highlightDust('root-6')" class="root-btn interactive-card bg-[#F5F4F1] p-4 rounded-sm border border-[#E8E4DB] text-left hover:bg-[#E8E4DB] text-[#4A3B32] font-bold"><span class="text-[#9C7E5A] mr-2">意</span> (想)</button>
+                        </div>
+                        <!-- Dusts -->
+                        <div class="w-full md:w-1/2 flex flex-col gap-3" id="dusts-container">
+                            <div class="text-center font-bold text-[#2B231D] mb-2 border-b border-[#E8E4DB] pb-2 tracking-widest">六塵 (外境)</div>
+                            <div id="dust-root-1" class="dust-item bg-white p-4 rounded-sm border border-transparent text-[#C4BDB5] transition-all flex items-center h-full"><span class="font-bold mr-2">色</span> （人、事、物）</div>
+                            <div id="dust-root-2" class="dust-item bg-white p-4 rounded-sm border border-transparent text-[#C4BDB5] transition-all flex items-center h-full"><span class="font-bold mr-2">聲</span> （怒罵、恭維）</div>
+                            <div id="dust-root-3" class="dust-item bg-white p-4 rounded-sm border border-transparent text-[#C4BDB5] transition-all flex items-center h-full"><span class="font-bold mr-2">香</span> （惡臭、香氣）</div>
+                            <div id="dust-root-4" class="dust-item bg-white p-4 rounded-sm border border-transparent text-[#C4BDB5] transition-all flex items-center h-full"><span class="font-bold mr-2">味</span> （辣辛甘、酸甜苦）</div>
+                            <div id="dust-root-5" class="dust-item bg-white p-4 rounded-sm border border-transparent text-[#C4BDB5] transition-all flex items-center h-full"><span class="font-bold mr-2">觸</span> （輕重冷暖、濕軟硬滑）</div>
+                            <div id="dust-root-6" class="dust-item bg-white p-4 rounded-sm border border-transparent text-[#C4BDB5] transition-all flex items-center h-full"><span class="font-bold mr-2">法</span> （所思、所想）</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-[#2B231D] text-[#F5F4F1] p-6 rounded-sm text-base leading-loose shadow-md">
+                        我們的六根是因為碰到六塵產生好或不好的因緣，而產生了<span class="text-[#A63A32] font-bold tracking-widest bg-white px-2 py-1 mx-1 rounded-sm">貪念、瞋恨、癡迷、傲慢、猜疑</span>這五毒，所以心經講，無眼界乃至無意識界，這句是六根清淨的意思。
+                    </div>
+                `,
+                takeawayTitle: '去五毒',
+                takeawayBody: '這課很難，但若每天觀自在，長時間薰修，一定會去除五毒，達到六根清淨。'
+            },
+            {
+                id: 'lesson-10',
+                type: 'lesson',
+                title: '第十課',
+                icon: '▪',
+                sutra: '無無明、亦無無明盡，乃至無老死、亦無老死盡',
+                body: `
+                    <p class="mb-4 text-[#4A3B32]">這幾句幾乎沒幾個人懂，這幾句講佛教十二因緣法：</p>
+                    
+                    <div class="bg-[#F5F4F1] p-6 rounded-sm border border-[#E8E4DB] mb-8 text-[#4A3B32] leading-loose text-justify text-sm md:text-base">
+                        <b class="text-[#2B231D] block mb-2 font-bold tracking-widest">詳細解釋：</b>
+                        眾生因有<b class="text-[#A63A32]">無明</b>的壞習性，造了行為惡因，及不好的六識念頭，投胎於名色婆娑世界中，在母親的肚子中眼耳鼻舌身意這六根六入慢慢的形成，出生後接觸了這世間一切慾望，有了感受，產生愛慾，想要取得，想盡辦法擁有，如此一直造因受果輪迴出生，一直老死。以上共十二句解釋。
+                    </div>
+
+                    <p class="mb-6 font-bold text-[#A63A32] text-center tracking-widest">▼ 點擊下方流轉輪，探索這十二個循環節點 ▼</p>
+                    
+                    <div class="bg-white rounded-sm border border-[#E8E4DB] p-6 mb-8">
+                        <div class="chart-container">
+                            <canvas id="nidanaChart"></canvas>
+                        </div>
+                        <div id="chart-detail-box" class="mt-8 p-5 bg-[#F5F4F1] rounded-sm border border-[#E8E4DB] text-center text-[#4A3B32] min-h-[5rem] flex items-center justify-center font-bold transition-all tracking-widest">
+                            點擊上方圖表區塊以查看節點解說
+                        </div>
+                    </div>
+
+                    <p class="text-[#4A3B32] leading-loose">也就是說我們要把壞習慣改到「無無明盡」。意思是連我已改掉的念頭也無了。當無明已改盡，既生天界，不再受輪迴之苦，何來老死的痛苦。</p>
+                `,
+                hasChart: true,
+                takeawayTitle: '看破放下，破十二因緣，既得自在解脫',
+                takeawayBody: '斬斷無明，脫離十二因緣的循環，獲得真正的解脫。'
+            },
+            {
+                id: 'lesson-11',
+                type: 'lesson',
+                title: '第十一課',
+                icon: '▪',
+                sutra: '無苦集滅道',
+                body: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                        <div class="interactive-card bg-[#F5F4F1] p-6 rounded-sm border border-[#E8E4DB]">
+                            <h4 class="text-2xl font-black text-[#A63A32] border-b border-[#EFE9DD] pb-3 mb-4">苦</h4>
+                            <p class="text-sm text-[#4A3B32] leading-relaxed text-justify">人生有八大苦。身體有生老病死，四種痛苦，心理有愛別離苦，求不得苦，怨憎恨苦，五蘊熾盛苦。生理有生老病死是每個生命必須經歷的過程，而後四種心理的痛苦卻是造成煩惱束縛著我們過去，造惡業之因。</p>
+                        </div>
+                        <div class="interactive-card bg-[#F5F4F1] p-6 rounded-sm border border-[#E8E4DB]">
+                            <h4 class="text-2xl font-black text-[#A63A32] border-b border-[#EFE9DD] pb-3 mb-4">集</h4>
+                            <p class="text-sm text-[#4A3B32] leading-relaxed">常因這些惡業而集結了業障。</p>
+                        </div>
+                        <div class="interactive-card bg-[#F5F4F1] p-6 rounded-sm border border-[#E8E4DB]">
+                            <h4 class="text-2xl font-black text-[#A63A32] border-b border-[#EFE9DD] pb-3 mb-4">滅</h4>
+                            <p class="text-sm text-[#4A3B32] leading-relaxed">當你進入佛門實修，必須止惡行善減除自己業障。</p>
+                        </div>
+                        <div class="interactive-card bg-[#F5F4F1] p-6 rounded-sm border border-[#E8E4DB]">
+                            <h4 class="text-2xl font-black text-[#A63A32] border-b border-[#EFE9DD] pb-3 mb-4">道</h4>
+                            <p class="text-sm text-[#4A3B32] leading-relaxed">就是把人大道，轉換成八正道。</p>
+                        </div>
+                    </div>
+                    <p class="mb-6 text-[#4A3B32] leading-loose">為什麼前面有個「無」字呢？佛祖希望你若已經把八大苦轉念成八正道的時候，不要認為你已經成就了，連這些念頭都要放下，這才是實修無苦集滅道。</p>
+                    <p class="text-[#4A3B32] leading-loose">師兄用最簡單的方式來解釋：<span class="font-bold text-[#A63A32]">希望大家聽得懂，也希望提問。</span>當妳能夠把每個生命，當成自己的小孩，百般呵護，因父母對自己小孩既是無我狀態，那你已接近無我。</p>
+                `,
+                takeawayTitle: '無我共勉',
+                takeawayBody: '以父母對子女的無我狀態，看待一切生命。'
+            },
+            {
+                id: 'lesson-12',
+                type: 'lesson',
+                title: '第十二課',
+                icon: '▪',
+                sutra: '無智亦無得，以無所得故',
+                body: `
+                    <p class="mb-6 text-[#4A3B32]">師兄用最簡單解釋：當你了解以上所有課程，且已在入實修階段，而體悟到佛的智慧，不要認為你已得了道，成了就，這些念頭都要放下。</p>
+                    <div class="bg-white p-6 rounded-sm border border-[#E8E4DB] mb-8">
+                        <b class="text-[#A63A32] text-lg block mb-2">以無所得故：</b>
+                        <p class="text-[#4A3B32]">連這些念頭都要放下。</p>
+                    </div>
+                    <div class="bg-[#2B231D] p-8 rounded-sm text-[#EFE9DD] mb-8 shadow-md text-center">
+                        <span class="text-3xl text-[#9C7E5A] font-serif block mb-4">"</span>
+                        <p class="tracking-widest leading-loose text-lg text-white">奇哉，一切眾生皆俱佛性，<br>只因業障太深而遮蓋佛性。</p>
+                        <p class="mt-4 text-sm text-[#D4CBBF]">也就是我們本來就俱足一切，沒有得與不得之別。</p>
+                    </div>
+                `,
+                takeawayTitle: '空境',
+                takeawayBody: '所謂空境，既是心無所住，也就是我們遇到順逆境的相的任何事，不要留在心中。深層解釋，不要有果位之想，不要有任何佛果、佛智之求，真正證得佛印之人，不會說自己是佛，是智。而是一切以利益眾生為重，才是無智亦無得，以無所得故。'
+            },
+            {
+                id: 'summary-1',
+                type: 'summary',
+                title: '總結之一',
+                icon: '◆',
+                sutra: '菩提薩埵',
+                body: `
+                    <p class="mb-6 text-[#4A3B32] leading-loose text-justify">這句是梵文，翻成中文是（自覺、覺他），這句是心經很重要的分段詞，這句之前的十二課，是自覺法門。這句之後是覺他法門。</p>
+                    <p class="mb-8 text-[#4A3B32] leading-loose text-justify">第一字是菩，第三字是薩，中國所講的菩薩名詞，是因這句菩提薩埵而生。要修行菩薩道，必須自覺、覺他。</p>
+                    <div class="border-l-4 border-[#A63A32] pl-6 py-2">
+                        <p class="font-bold text-[#2B231D] tracking-widest leading-loose">也就是自己悟透了前面十二課程的道理，也要覺他的幫助六道眾生悟透這些道理。希望各位慢慢的頓悟漸修。</p>
+                    </div>
+                `
+            },
+            {
+                id: 'summary-2',
+                type: 'summary',
+                title: '總結之二',
+                icon: '◆',
+                sutra: '依般若波羅蜜多故、心無罣礙、無罣礙故、無有恐怖',
+                body: `
+                    <div class="bg-[#F5F4F1] p-8 rounded-sm border border-[#E8E4DB]">
+                        <b class="text-[#A63A32] block mb-4 tracking-widest">翻譯：</b>
+                        <p class="text-lg leading-loose text-[#4A3B32] text-justify">所有的菩薩，都是依照這十二課覺照自己，實修自己，以這些道理，分享給眾生了解，讓大家放下一切煩惱，不被世間的五蘊六塵所染，達到任何罣礙恐佈所擾都不為所動。</p>
+                    </div>
+                `
+            },
+            {
+                id: 'summary-3',
+                type: 'summary',
+                title: '總結之三',
+                icon: '◆',
+                sutra: '遠離顛倒夢想、究竟涅槃',
+                body: `
+                    <div class="mb-10">
+                        <b class="text-[#A63A32] block mb-4 tracking-widest">翻譯：</b>
+                        <p class="text-[#4A3B32] text-justify leading-loose">以上十二課，若能了解文字字義，進而觀照自己的身口意，實修自己的內在，到達與菩薩的身口意相同相應，即能遠離這顛倒幻境的世界，才是真正的究竟，真正的涅槃。</p>
+                    </div>
+                    
+                    <div class="bg-[#2B231D] text-[#F5F4F1] p-8 rounded-sm shadow-md relative overflow-hidden">
+                        <div class="absolute -right-4 -bottom-10 text-[10rem] opacity-[0.05] text-white select-none">☸</div>
+                        <h4 class="text-xl font-bold text-[#EFE9DD] mb-4 border-b border-[#40352C] pb-3 tracking-widest">關於涅槃</h4>
+                        <p class="leading-loose text-[#D4CBBF] text-justify">就是經過修行而減除了貪欲、瞋恨、愚癡、邪見、是非等煩惱以後，所獲得的一種圓滿光明，自由自在的寧靜心境。涅槃不是死亡，那麼多人學佛，就為了涅槃死亡，那就太沒意義了，涅槃絕對不是死亡才可證得。</p>
+                    </div>
+                `
+            }
+        ];
+
+        // Chart.js Data logic for Lesson 10
+        const nidanaDescriptions = [
+            "① 無明：眾生因有無明的壞習性",
+            "② 行：造了行為惡因，及不好的六識念頭",
+            "③ 識：投胎於名色婆娑世界中",
+            "④ 名色：在母親的肚子中",
+            "⑤ 六入：眼耳鼻舌身意這六根慢慢的形成",
+            "⑥ 觸：出生後接觸了這世間一切慾望",
+            "⑦ 受：有了感受",
+            "⑧ 愛：產生愛慾",
+            "⑨ 取：想要取得，想盡辦法擁有",
+            "⑩ 有：如此一直造因受果",
+            "⑪ 生：輪迴出生",
+            "⑫ 老死：一直老死"
+        ];
+
+        let currentChartInstance = null;
+
+        // Initialize Application
+        function initApp() {
+            const navContainer = document.getElementById('lesson-nav');
+            const mobileNav = document.getElementById('mobile-nav');
+            
+            sutraData.forEach(item => {
+                // 1. 電腦版側邊欄按鈕
+                const btn = document.createElement('button');
+                btn.className = 'nav-item text-left px-5 py-3 rounded-sm text-[#4A3B32] text-sm md:text-base tracking-widest w-full flex items-center gap-3 border-transparent';
+                btn.id = `nav-${item.id}`;
+                btn.onclick = () => loadContent(item.id, true);
+                
+                // Styling icon dynamically based on type
+                let iconStr = `<span class="text-[#EFE9DD] text-xs">${item.icon}</span>`;
+                if(item.type === 'intro') iconStr = `<span class="text-[#9C7E5A] text-xs">${item.icon}</span>`;
+                if(item.type === 'summary') iconStr = `<span class="text-[#A63A32] text-xs">${item.icon}</span>`;
+
+                btn.innerHTML = `${iconStr} <span class="truncate">${item.title}</span>`;
+                navContainer.appendChild(btn);
+
+                // 2. 手機版下拉選單選項
+                if (mobileNav) {
+                    const option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = `${item.icon} ${item.title}`;
+                    mobileNav.appendChild(option);
+                }
+            });
+
+            // 預設載入介紹頁
+            loadContent('intro');
+        }
+
+        // Handle Content Switching
+        function loadContent(id, shouldScroll = false) {
+            // 清除所有的 active 狀態 (電腦版)
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('nav-item-active'));
+            
+            // 標示點選的按鈕 (電腦版)
+            const activeBtn = document.getElementById(`nav-${id}`);
+            if(activeBtn) {
+                activeBtn.classList.add('nav-item-active');
+            }
+
+            // 同步更新手機版下拉選單的顯示值
+            const mobileNav = document.getElementById('mobile-nav');
+            if(mobileNav) {
+                mobileNav.value = id;
+            }
+
+            // 尋找對應資料
+            const data = sutraData.find(item => item.id === id);
+            if (!data) return;
+
+            const container = document.getElementById('content-display');
+            
+            // 觸發重新渲染的動畫
+            container.classList.remove('fade-in');
+            void container.offsetWidth; // 強制瀏覽器重繪 (reflow)
+            
+            let htmlContent = '';
+
+            // 渲染 Intro
+            if (data.type === 'intro') {
+                htmlContent = data.content;
+            } 
+            // 渲染 Lessons 或 Summaries
+            else {
+                htmlContent = `
+                    <div class="mb-5 text-[#9C7E5A] tracking-[0.2em] text-sm font-bold flex items-center gap-3">
+                        <span class="w-6 h-[1px] bg-[#9C7E5A]"></span> ${data.title}
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-[#A63A32] mb-10 pb-6 border-b border-[#E8E4DB] tracking-widest leading-loose text-center">
+                        「${data.sutra}」
+                    </h2>
+                    <div class="mb-10 text-[#4A3B32]">
+                        ${data.body}
+                    </div>
+                `;
+
+                // Add Takeaway Box if it exists
+                if (data.takeawayTitle) {
+                    htmlContent += `
+                        <div class="mt-12 bg-[#F5F4F1] p-8 rounded-sm border-l-4 border-[#A63A32]">
+                            <h3 class="text-lg font-bold text-[#2B231D] mb-4 tracking-widest">進入佛門${data.title}：<span class="text-[#A63A32]">【${data.takeawayTitle}】</span></h3>
+                            <p class="text-[#4A3B32] leading-loose text-justify">${data.takeawayBody}</p>
+                        </div>
+                    `;
+                }
+
+                // 底部上下單元導覽按鈕
+                const currentIndex = sutraData.findIndex(item => item.id === id);
+                let bottomNavHtml = '<div class="flex flex-col md:flex-row justify-between items-center mt-12 pt-8 border-t border-[#E8E4DB] gap-4">';
+
+                // 上一單元按鈕
+                if (currentIndex > 0) {
+                    const prevItem = sutraData[currentIndex - 1];
+                    bottomNavHtml += `<button onclick="loadContent('${prevItem.id}', true)" class="w-full md:w-auto text-center md:text-left px-6 py-3 rounded-sm border border-[#E8E4DB] bg-[#F5F4F1] text-[#4A3B32] hover:bg-white hover:border-[#A63A32] hover:text-[#A63A32] transition-all shadow-sm tracking-widest"><span class="text-[10px] mr-2 text-[#9C7E5A]">▲</span>上一單元：${prevItem.title}</button>`;
+                } else {
+                    bottomNavHtml += `<div class="hidden md:block w-full md:w-auto"></div>`; 
+                }
+
+                // 下一單元按鈕
+                if (currentIndex < sutraData.length - 1) {
+                    const nextItem = sutraData[currentIndex + 1];
+                    bottomNavHtml += `<button onclick="loadContent('${nextItem.id}', true)" class="w-full md:w-auto text-center md:text-right px-6 py-3 rounded-sm border border-[#E8E4DB] bg-[#F5F4F1] text-[#4A3B32] hover:bg-white hover:border-[#A63A32] hover:text-[#A63A32] transition-all shadow-sm tracking-widest">下一單元：${nextItem.title}<span class="text-[10px] ml-2 text-[#9C7E5A]">▼</span></button>`;
+                } else {
+                    bottomNavHtml += `<div class="hidden md:block w-full md:w-auto"></div>`;
+                }
+                
+                bottomNavHtml += '</div>';
+                htmlContent += bottomNavHtml;
+            }
+
+            container.innerHTML = htmlContent;
+            container.classList.add('fade-in');
+
+            // Handle Chart logic
+            if (data.hasChart) {
+                setTimeout(renderChart, 100);
+            } else if (currentChartInstance) {
+                currentChartInstance.destroy();
+                currentChartInstance = null;
+            }
+
+            // 滾動定位邏輯
+            if (shouldScroll) {
+                setTimeout(() => {
+                    const yOffset = window.innerWidth < 768 ? -100 : -40; 
+                    const y = container.getBoundingClientRect().top + window.scrollY + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }, 150);
+            }
+        }
+
+        // Custom Interaction for Lesson 9 (六根六塵)
+        function highlightDust(rootId) {
+            // 重置所有六塵
+            document.querySelectorAll('.dust-item').forEach(el => {
+                el.classList.remove('bg-[#2B231D]', 'border-[#40352C]', 'text-[#F5F4F1]', 'shadow-md');
+                el.classList.add('bg-white', 'border-transparent', 'text-[#C4BDB5]');
+            });
+            // 重置所有六根
+            document.querySelectorAll('.root-btn').forEach(el => {
+                el.classList.remove('border-[#A63A32]', 'bg-white');
+                el.classList.add('border-[#E8E4DB]', 'bg-[#F5F4F1]');
+            });
+
+            // 高亮選擇的六根
+            event.currentTarget.classList.remove('border-[#E8E4DB]', 'bg-[#F5F4F1]');
+            event.currentTarget.classList.add('border-[#A63A32]', 'bg-white');
+
+            // 高亮對應的六塵
+            const dustId = `dust-${rootId}`;
+            const targetDust = document.getElementById(dustId);
+            if (targetDust) {
+                targetDust.classList.remove('bg-white', 'border-transparent', 'text-[#C4BDB5]');
+                targetDust.classList.add('bg-[#2B231D]', 'border-[#40352C]', 'text-[#F5F4F1]', 'shadow-md');
+            }
+        }
+
+        // Chart.js Rendering for Lesson 10 (十二因緣)
+        function renderChart() {
+            const ctx = document.getElementById('nidanaChart').getContext('2d');
+            
+            if (currentChartInstance) {
+                currentChartInstance.destroy();
+            }
+
+            const labels = ['無明', '行', '識', '名色', '六入', '觸', '受', '愛', '取', '有', '生', '老死'];
+            const dataValues = Array(12).fill(1);
+            
+            // 更為明亮的禪風大地色系漸層
+            const bgColors = [
+                '#A63A32', '#9C7E5A', '#A38865', '#AB9270', '#B39B7A', '#BB0485', 
+                '#C2AE8F', '#C8B699', '#CFBFA3', '#D5C7AD', '#DBCEB7', '#2B231D'
+            ];
+
+            currentChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: dataValues,
+                        backgroundColor: bgColors,
+                        borderWidth: 2,
+                        borderColor: '#FFFFFF',
+                        hoverOffset: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '55%',
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.label + ' (點擊查看)';
+                                }
+                            },
+                            backgroundColor: 'rgba(43, 35, 29, 0.9)',
+                            titleFont: { family: "'Noto Serif TC', serif", size: 14 },
+                            bodyFont: { family: "'Noto Serif TC', serif", size: 13 },
+                            padding: 12,
+                            displayColors: false
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        const detailBox = document.getElementById('chart-detail-box');
+                        if (elements.length > 0) {
+                            const index = elements[0].index;
+                            detailBox.innerHTML = `<span class="text-[#A63A32] text-lg leading-loose">${nidanaDescriptions[index]}</span>`;
+                            detailBox.classList.remove('bg-[#F5F4F1]', 'border-[#E8E4DB]');
+                            detailBox.classList.add('bg-white', 'shadow-md', 'border-[#A63A32]');
+                        } else {
+                            detailBox.innerHTML = '點擊上方圖表區塊以查看節點解說';
+                            detailBox.classList.remove('bg-white', 'shadow-md', 'border-[#A63A32]');
+                            detailBox.classList.add('bg-[#F5F4F1]', 'border-[#E8E4DB]');
+                        }
+                    }
+                }
+            });
+        }
+
+        // 初始化應用
+        window.addEventListener('DOMContentLoaded', initApp);
+
+    </script>
+</body>
+</html>
