@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB OG Image 設計</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap');
+
+        .og-container {
+            width: 1200px;
+            height: 630px;
+            font-family: 'Noto Serif TC', serif;
+            background-color: #FAFAF9;
+            color: #292524;
+            position: relative;
+            overflow: hidden;
+            transform-origin: top left;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .force-emoji {
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", "EmojiOne Color", sans-serif !important;
+        }
+
+        .myoo-flame-glow {
+            text-shadow: 0 4px 20px rgba(139, 0, 0, 0.5);
+        }
+        
+        .zen-glow {
+            text-shadow: 0 4px 20px rgba(95, 113, 97, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-gray-200 flex items-center justify-center min-h-screen p-8">
+
+    <div class="og-container flex flex-col justify-center relative">
+        
+        <!-- 背景光暈 -->
+        <div class="absolute top-0 left-0 w-[800px] h-[800px] bg-[radial-gradient(circle_at_top_left,#8B0000_0%,transparent_60%)] opacity-[0.08] z-0"></div>
+        <div class="absolute bottom-0 right-0 w-[800px] h-[800px] bg-[radial-gradient(circle_at_bottom_right,#5F7161_0%,transparent_60%)] opacity-[0.08] z-0"></div>
+
+        <!-- 浮水印圖騰 (修正為完美同心圓對齊) -->
+        <div class="absolute inset-0 flex items-center justify-center z-0 opacity-[0.04] pointer-events-none">
+            <div class="relative flex items-center justify-center w-[800px] h-[800px] transform scale-150">
+                <div class="absolute inset-0 border-[12px] border-[#292524] rounded-full"></div>
+                <!-- 修正字體基線偏移，使其視覺上絕對置中 -->
+                <span class="absolute text-[650px] text-[#292524] force-emoji leading-none transform -rotate-12 -translate-y-12">☸️</span>
+                <span class="absolute text-[350px] force-emoji leading-none -translate-y-6">🔥</span>
+            </div>
+        </div>
+
+        <!-- 內容主體 -->
+        <div class="relative z-10 px-24 w-full flex justify-between items-center h-full">
+            
+            <!-- 左側資訊 -->
+            <div class="w-[60%] flex flex-col justify-center">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="bg-[#8B0000] text-white px-5 py-2 rounded-full text-xl font-bold tracking-[0.2em] shadow-md flex items-center gap-2">
+                        <span class="force-emoji myoo-flame-glow">🔥</span> 東密明王殿
+                    </div>
+                    <div class="text-[#5F7161] text-2xl tracking-[0.3em] font-medium border-b-2 border-[#D6CDBA] pb-1">
+                        DHARMA PRACTICE
+                    </div>
+                </div>
+
+                <h1 class="text-[5rem] font-black text-[#292524] leading-[1.1] mb-4 tracking-wide">
+                    禪心<span class="text-[#D6CDBA] mx-3 font-light">|</span>早課實修
+                </h1>
+                
+                <h2 class="text-[2.5rem] font-bold text-[#5F7161] mb-8 tracking-widest">
+                    清淨心 <span class="text-[#8B0000] mx-4">・</span> 覺悟道
+                </h2>
+
+                <div class="border-l-[6px] border-[#D6CDBA] pl-6">
+                    <p class="text-2xl text-stone-600 font-medium mb-2">
+                        八風不動心法 ｜ 十善業觀自在 ｜ 般若智慧次第
+                    </p>
+                    <p class="text-xl text-stone-500 font-light italic">
+                        「迷於塵世而煩惱枷鎖，或覺於真心而清淨自在。」
+                    </p>
+                </div>
+            </div>
+
+            <!-- 右側視覺 (結構重構，修正圓心對齊與位移問題) -->
+            <div class="w-[400px] h-[400px] flex-shrink-0 relative flex items-center justify-center mr-8">
+                <!-- 雙層外圍圓形 -->
+                <div class="absolute inset-0 bg-white rounded-full shadow-sm z-0"></div>
+                <div class="absolute inset-4 border border-[#D6CDBA] rounded-full z-0 border-dashed"></div>
+                
+                <!-- 法輪與火焰：利用 absolute inset-0 與 flex 置中，再以 translateY 抵銷字體下墜感 -->
+                <div class="absolute inset-0 z-10 flex items-center justify-center transform hover:scale-105 transition-transform duration-500">
+                    <span class="absolute text-[12rem] text-[#5F7161] force-emoji zen-glow leading-none -translate-y-4">☸️</span>
+                    <span class="absolute text-[5.5rem] myoo-flame-glow z-30 -translate-y-2">🔥</span>
+                </div>
+                
+                <!-- 底部文字標籤：相對於父容器(400x400)底部定位，絕對不會與法輪重疊 -->
+                <div class="absolute -bottom-8 text-center bg-white/95 px-6 py-3 rounded-lg border border-stone-200 shadow-md z-30">
+                    <p class="text-stone-800 text-lg font-bold tracking-widest">師兄精華講解</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 底部邊條 -->
+        <div class="absolute bottom-0 left-0 w-full h-2 flex z-40">
+            <div class="h-full bg-[#8B0000] w-1/4"></div>
+            <div class="h-full bg-[#D6CDBA] w-1/2"></div>
+            <div class="h-full bg-[#5F7161] w-1/4"></div>
+        </div>
+    </div>
+
+</body>
+</html>
