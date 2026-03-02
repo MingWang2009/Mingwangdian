@@ -1,1 +1,995 @@
-1
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="default">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>東密明王殿 - 般若波羅蜜多心經實修十二堂課</title>
+    
+    <meta property="og:title" content="東密明王殿 - 《心經》實修十二堂課筆記" />
+    <meta property="og:description" content="以「修心實踐」為核心，將《心經》的智慧化為入佛門的十二堂必修課。" />
+	<meta property="og:image" content="og-image.jpg">
+	<meta property="og:type" content="website">	
+    <meta property="og:site_name" content="東密明王殿" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- 導入具備高度禪意與古典美感的「霞鶩文楷 (LXGW WenKai TC)」 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Dynamic Zen Themes (Default Warm Paper, Cinnabar, Cyan Ink, Dark Night, Pine Grey) -->
+    
+    <!-- Application Structure Plan: 
+         採用「數位互動法堂」的 Master-Detail (主從式) 儀表板架構。
+         左側/上方：提供「修行次第」導覽列，將《心經十二堂課筆記》拆解為 12 堂課與總結，降低認知負荷，讓使用者能掌握學習進度並自由跳轉。
+         右側/主要內容區：作為「觀照」的空間，動態渲染筆記內容。完美套用了指定的 HTML/CSS 樣式（如 Grid 網格、四宮格互動卡片、高光區塊），將「核心心法」以最易讀且具互動性的卡片式設計呈現。
+         懸浮控件：右下角提供「主題切換」功能，適應不同閱讀情境（如夜間）。
+    -->
+    
+    <!-- Visualization & Content Choices: 
+         1. 導覽/文本 (Goal: Inform): 使用結構化的排版與重點高亮，讓筆記中的經文、心法一目了然。
+         2. 第四、六、八課 (Goal: Organize/Inform): 套用網格(Grid)與彈性盒子(Flex)排版樣式，將「空與色」、「受想行識」等概念具象化分類排列。
+         3. 第九課 六根六塵 (Goal: Compare/Relationships): 套用互動式的 HTML Grid 樣式。點擊「六根」，對應的「六塵」會亮起，視覺化展示產生「五毒」的過程。(無 SVG/Mermaid)
+         4. 第十課 十二因緣 (Goal: Organize/Process): 使用傳統方印與古典十二宮格排版，呈現十二因緣流轉次第，取代現代圖表，更具禪意。
+         5. 第十一課 苦集滅道 (Goal: Organize): 套用四宮格互動卡片 (HTML/CSS) 樣式，將筆記中的八大苦與八正道等概念清晰分類。
+    -->
+    
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        // 將預設的 serif 字體替換為古典禪意字體
+                        serif: ['"LXGW WenKai TC"', '"BiauKai"', '"KaiTi"', '"標楷體"', 'serif'],
+                        sans: ['"LXGW WenKai TC"', '"BiauKai"', '"KaiTi"', '"標楷體"', 'sans-serif'],
+                    },
+                    colors: {
+                        zen: {
+                            bg: 'var(--bg-body)',
+                            panel: 'var(--bg-panel)',
+                            header: 'var(--bg-header)',
+                            sub: 'var(--bg-sub)',
+                            headerBox: 'var(--bg-header-box)',
+                            textMain: 'var(--text-main)',
+                            textHeading: 'var(--text-heading)',
+                            textHeaderMain: 'var(--text-header-main)',
+                            textHeaderSub: 'var(--text-header-sub)',
+                            accent: 'var(--color-accent)',
+                            gold: 'var(--color-gold)',
+                            border: 'var(--border-main)',
+                            borderHeader: 'var(--border-header)',
+                            watermark: 'var(--text-watermark)',
+                            muted: 'var(--text-muted)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* CSS Variables for 5 Zen Themes */
+        :root, [data-theme="default"] {
+            --bg-body: #F5F4F1; --bg-panel: #FFFFFF; --bg-header: #2B231D; --bg-sub: #EFE9DD; --bg-header-box: #382E26;
+            --text-main: #4A3B32; --text-heading: #2B231D; --text-header-main: #FFFFFF; --text-header-sub: #D4CBBF;
+            --color-accent: #A63A32; --color-gold: #9C7E5A; --border-main: #E8E4DB; --border-header: #40352C;
+            --text-watermark: rgba(43, 35, 29, 0.03); --text-muted: #C4BDB5; --shadow-color: rgba(43, 35, 29, 0.05);
+        }
+        [data-theme="cinnabar"] {
+            --bg-body: #F2E8D5; --bg-panel: #FCF6EB; --bg-header: #1A0E08; --bg-sub: #EADFCA; --bg-header-box: #26160D;
+            --text-main: #3A2A22; --text-heading: #1A0E08; --text-header-main: #F2E8D5; --text-header-sub: #C49A2A;
+            --color-accent: #C8321F; --color-gold: #C49A2A; --border-main: #DBCDB5; --border-header: #3A2A22;
+            --text-watermark: rgba(26, 14, 8, 0.03); --text-muted: #C7B9A3; --shadow-color: rgba(26, 14, 8, 0.06);
+        }
+        [data-theme="cyan"] {
+            --bg-body: #EEF0EC; --bg-panel: #F9FAF8; --bg-header: #1C2325; --bg-sub: #E2E5E0; --bg-header-box: #273133;
+            --text-main: #2C3A3D; --text-heading: #1C2325; --text-header-main: #EEF0EC; --text-header-sub: #A0845C;
+            --color-accent: #4A7B6F; --color-gold: #A0845C; --border-main: #D4D9D2; --border-header: #35454A;
+            --text-watermark: rgba(28, 35, 37, 0.03); --text-muted: #B8C0B5; --shadow-color: rgba(28, 35, 37, 0.04);
+        }
+        [data-theme="dark"] {
+            --bg-body: #100A06; --bg-panel: #1E140D; --bg-header: #0A0604; --bg-sub: #2A1D13; --bg-header-box: #140D08;
+            --text-main: #CDBCA7; --text-heading: #F0E6D8; --text-header-main: #D4A93A; --text-header-sub: #A69279;
+            --color-accent: #B83228; --color-gold: #D4A93A; --border-main: #3A2A1E; --border-header: #1E140D;
+            --text-watermark: rgba(212, 169, 58, 0.02); --text-muted: #5A4839; --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+        [data-theme="pine"] {
+            --bg-body: #F0EDEA; --bg-panel: #FFFFFF; --bg-header: #181818; --bg-sub: #E6E2DE; --bg-header-box: #242424;
+            --text-main: #444444; --text-heading: #181818; --text-header-main: #F0EDEA; --text-header-sub: #999999;
+            --color-accent: #3D5C4A; --color-gold: #555555; --border-main: #C8C2BA; --border-header: #333333;
+            --text-watermark: rgba(24, 24, 24, 0.02); --text-muted: #A39E99; --shadow-color: rgba(24, 24, 24, 0.04);
+        }
+
+        /* --- Base Styles --- */
+        body {
+            font-family: 'LXGW WenKai TC', 'BiauKai', 'KaiTi', '標楷體', serif; 
+            background-color: var(--bg-body); color: var(--text-main);
+            letter-spacing: 0.08em; /* 稍微加寬字距以適應楷體特性 */
+            overflow-x: hidden; transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* --- Chart Container Constraints (Critical) --- */
+        .chart-container {
+            position: relative; width: 100%; max-width: 450px; margin: 0 auto; 
+            height: 40vh; max-height: 400px; min-height: 300px;
+        }
+        @media (min-width: 768px) { .chart-container { height: 50vh; } }
+        
+        .zen-panel { background-color: var(--bg-panel); border: 1px solid var(--border-main); box-shadow: 0 10px 30px var(--shadow-color); border-radius: 4px; transition: all 0.4s ease; }
+        
+        /* --- Custom Scrollbar --- */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--bg-sub); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--color-gold); }
+
+        /* ================= Animations & Effects ================= */
+        
+        /* 1. Header Staggered Entry */
+        @keyframes drop-fade {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .header-stagger-1 { animation: drop-fade 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s backwards; }
+        .header-stagger-2 { animation: drop-fade 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s backwards; }
+        .header-stagger-3 { animation: drop-fade 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s backwards; }
+
+        /* 2. Background Breathing Text */
+        @keyframes watermark-breathe {
+            0%, 100% { transform: scale(1); opacity: 0.04; }
+            50% { transform: scale(1.04); opacity: 0.07; }
+        }
+        .watermark-breathe { animation: watermark-breathe 12s ease-in-out infinite; }
+
+        /* 3. Theme Button Auto Ripple */
+        @keyframes auto-ripple-ring {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            20% { transform: scale(1.6); opacity: 0; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        .auto-ripple-container { position: relative; width: 3rem; height: 3rem; }
+        .auto-ripple-ring::before, .auto-ripple-ring::after {
+            content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--color-accent);
+            background-color: var(--color-gold); animation: auto-ripple-ring 10s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+            z-index: 0; pointer-events: none;
+        }
+        .auto-ripple-ring::after { animation-delay: 0.8s; }
+
+        /* 4. Content Blur Transition */
+        @keyframes content-blur-out {
+            0% { opacity: 1; filter: blur(0px); transform: translateY(0); }
+            100% { opacity: 0; filter: blur(8px); transform: translateY(15px); }
+        }
+        @keyframes content-blur-in {
+            0% { opacity: 0; filter: blur(8px); transform: translateY(-15px); }
+            100% { opacity: 1; filter: blur(0px); transform: translateY(0); }
+        }
+        .content-exit { animation: content-blur-out 0.3s forwards; }
+        .content-enter { animation: content-blur-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        
+        .child-stagger { opacity: 0; }
+        .content-enter .child-stagger:nth-child(1) { animation: drop-fade 0.6s 0.1s forwards; }
+        .content-enter .child-stagger:nth-child(2) { animation: drop-fade 0.6s 0.2s forwards; }
+        .content-enter .child-stagger:nth-child(3) { animation: drop-fade 0.6s 0.3s forwards; }
+        .content-enter .child-stagger:nth-child(4) { animation: drop-fade 0.6s 0.4s forwards; }
+        .content-enter .child-stagger:nth-child(5) { animation: drop-fade 0.6s 0.5s forwards; }
+        .content-enter .child-stagger:nth-child(6) { animation: drop-fade 0.6s 0.6s forwards; }
+        .content-enter .child-stagger:nth-child(7) { animation: drop-fade 0.6s 0.7s forwards; }
+        .content-enter .child-stagger:nth-child(8) { animation: drop-fade 0.6s 0.8s forwards; }
+        .content-enter .child-stagger:nth-child(9) { animation: drop-fade 0.6s 0.9s forwards; }
+        .content-enter .child-stagger:nth-child(10) { animation: drop-fade 0.6s 1.0s forwards; }
+
+        /* 5. Navigation Items */
+        @keyframes slide-right {
+            0% { opacity: 0; transform: translateX(-20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .nav-item {
+            position: relative; overflow: hidden; transition: all 0.3s ease; border-left: 2px solid transparent; border-radius: 4px;
+        }
+        .nav-item::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-20deg); transition: left 0.5s ease; z-index: 1; pointer-events: none;
+        }
+        .nav-item:hover::after { left: 150%; }
+        .nav-item:hover { background-color: var(--bg-body); color: var(--color-accent); }
+        .nav-item-active { font-weight: 700; color: var(--color-accent) !important; border-left-color: var(--color-accent) !important; border-left-width: 3px !important; background-color: var(--bg-body) !important; }
+
+        /* 6. Title Drawing Underline */
+        @keyframes draw-line { 0% { width: 0; } 100% { width: 100%; } }
+        .draw-underline { position: relative; display: inline-block; padding-bottom: 0.5rem; }
+        .draw-underline::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            height: 1px; background-color: var(--color-accent); width: 0;
+            animation: draw-line 1s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+        }
+
+        /* 7. Interactive Cards Elasticity */
+        .interactive-card { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.4s ease; }
+        .interactive-card:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 8px 20px var(--shadow-color); border-color: var(--border-main); z-index: 10;}
+
+        /* 8. Elastic Theme Menu */
+        .elastic-menu { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; }
+        .menu-hidden { opacity: 0; transform: scale(0.8) translateY(10px); pointer-events: none; }
+        .menu-visible { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+
+        /* 9. Click Ripple */
+        .ripple-btn { position: relative; overflow: hidden; cursor: pointer; }
+        .ripple-btn .ripple {
+            position: absolute; border-radius: 50%; background: var(--color-accent); opacity: 0.18;
+            transform: scale(0); animation: rippleAnim 0.55s linear; pointer-events: none;
+        }
+        @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+        /* Global Theme Transition */
+        .theme-transitioning, .theme-transitioning * { transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out, border-color 0.8s ease-in-out, box-shadow 0.8s ease-in-out !important; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-serif">
+
+    <!-- Theme Switcher Floating Action Button -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+        <!-- Menu Panel -->
+        <div id="theme-menu" class="elastic-menu menu-hidden absolute bottom-[120%] right-0 flex-col gap-2 bg-zen-panel p-3 rounded-md shadow-2xl border border-zen-border w-40 origin-bottom-right flex">
+            <p class="text-xs text-zen-gold font-bold tracking-widest border-b border-zen-border pb-2 mb-1 text-center">切換禪境色調</p>
+            <button onclick="setTheme('default')" class="ripple-btn flex items-center gap-3 text-sm text-zen-textMain hover:text-zen-accent px-2 py-1.5 transition-colors">
+                <span class="w-4 h-4 rounded-full bg-[#F5F4F1] border border-[#E8E4DB] shadow-sm pointer-events-none"></span> 原版靜心
+            </button>
+            <button onclick="setTheme('cinnabar')" class="ripple-btn flex items-center gap-3 text-sm text-zen-textMain hover:text-zen-accent px-2 py-1.5 transition-colors">
+                <span class="w-4 h-4 rounded-full bg-[#F2E8D5] border border-[#DBCDB5] shadow-sm pointer-events-none"></span> 御用朱砂
+            </button>
+            <button onclick="setTheme('cyan')" class="ripple-btn flex items-center gap-3 text-sm text-zen-textMain hover:text-zen-accent px-2 py-1.5 transition-colors">
+                <span class="w-4 h-4 rounded-full bg-[#EEF0EC] border border-[#D4D9D2] shadow-sm pointer-events-none"></span> 青墨禪境
+            </button>
+            <button onclick="setTheme('dark')" class="ripple-btn flex items-center gap-3 text-sm text-zen-textMain hover:text-zen-accent px-2 py-1.5 transition-colors">
+                <span class="w-4 h-4 rounded-full bg-[#100A06] border border-[#3A2A1E] shadow-sm pointer-events-none"></span> 夜讀金經
+            </button>
+            <button onclick="setTheme('pine')" class="ripple-btn flex items-center gap-3 text-sm text-zen-textMain hover:text-zen-accent px-2 py-1.5 transition-colors">
+                <span class="w-4 h-4 rounded-full bg-[#F0EDEA] border border-[#C8C2BA] shadow-sm pointer-events-none"></span> 松煙淡墨
+            </button>
+        </div>
+        
+        <!-- FAB Button -->
+        <div class="auto-ripple-container">
+            <div class="auto-ripple-ring absolute inset-0"></div>
+            <button onclick="toggleThemeMenu()" class="ripple-btn bg-zen-header text-zen-textHeaderMain w-full h-full rounded-full shadow-lg border border-zen-borderHeader hover:scale-110 transition-transform flex items-center justify-center font-bold text-xl relative z-10">
+                <span class="pointer-events-none">☸</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="bg-zen-header text-zen-textHeaderMain py-14 px-6 shadow-md relative overflow-hidden z-10 transition-colors duration-400">
+        <!-- Canvas Ink Particles -->
+        <canvas id="ink-particles" class="absolute inset-0 pointer-events-none z-0 opacity-40"></canvas>
+        
+        <!-- Background Breathing Text -->
+        <div class="watermark-breathe absolute top-0 left-0 w-full h-full pointer-events-none text-8xl md:text-9xl flex items-center justify-center font-bold tracking-[0.2em] select-none text-zen-watermark font-serif">
+            般若波羅蜜多心經
+        </div>
+        
+        <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 border-b border-zen-borderHeader pb-8">
+            <div class="text-center md:text-left flex flex-col md:flex-row items-center gap-6 header-stagger-1">
+                <div class="hidden md:flex flex-col items-center gap-2">
+                    <div class="w-[2px] h-12 bg-zen-accent"></div>
+                    <div class="text-zen-accent text-xl">☸</div>
+                </div>
+                <div>
+                    <h1 class="text-3xl md:text-5xl font-bold mb-3 tracking-widest text-zen-textHeaderMain">東密明王殿</h1>
+                    <h2 class="header-stagger-2 text-xl md:text-2xl font-light tracking-[0.3em] text-zen-gold">《心經》十二堂課筆記</h2>
+                    <p class="header-stagger-2 mt-5 text-sm text-zen-textHeaderSub max-w-xl leading-relaxed tracking-wider">
+                        本解析打破文字表相，將釋明法師《心經》筆記轉化為以『修心實踐』為核心的十二堂入佛必修課。請透過點擊<span class="hidden md:inline">左側</span><span class="inline md:hidden text-zen-textHeaderMain font-bold">上方</span>選單循序探索。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="header-stagger-3 bg-zen-headerBox p-6 rounded-sm border border-zen-borderHeader text-sm text-center md:text-right shadow-inner min-w-[280px]">
+                <p class="text-zen-accent font-bold mb-3 text-lg tracking-widest border-b border-zen-borderHeader pb-2 inline-block">法 語</p>
+                <p class="italic leading-loose tracking-widest text-zen-textHeaderMain">明以弘法渡陰陽、修以禪宗解六界<br>定以蓮師揚佛法、靜以待之渡同門</p>
+                <div class="mt-4 pt-3 border-t border-zen-borderHeader text-zen-textHeaderSub text-xs font-light">
+                    <p>📍 台南市善化區中山路377號</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Layout -->
+    <div class="max-w-7xl mx-auto w-full flex-grow flex flex-col md:flex-row p-4 md:p-8 gap-4 md:gap-8 md:mt-2 z-10 relative">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-1/3 lg:w-1/4 flex flex-col gap-4 relative z-20">
+            <div class="zen-panel p-4 md:p-6 sticky top-4 md:top-8 header-stagger-2 flex flex-col max-h-[85vh]">
+                
+                <!-- Progress Header -->
+                <div class="flex flex-col gap-2 pb-3">
+                    <h3 class="text-lg font-bold text-zen-textHeading tracking-[0.2em] flex items-center gap-2">
+                        <span class="text-zen-accent text-sm">◆</span> 修行次第
+                    </h3>
+                    <div class="text-xs text-zen-muted font-bold tracking-widest">
+                        修行進度 <span id="progress-count" class="text-zen-accent text-sm">0</span> / <span id="total-count">16</span>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-zen-sub h-[3px] rounded-full mb-4 md:mb-5 overflow-hidden flex-shrink-0 relative">
+                    <div id="scroll-progress-sidebar" class="absolute top-0 left-0 h-full w-0 transition-all duration-500 ease-out" style="background: linear-gradient(to right, var(--color-gold), var(--color-accent));"></div>
+                </div>
+                
+                <!-- Mobile Select Dropdown -->
+                <div class="md:hidden relative mb-2 flex-shrink-0">
+                    <label for="mobile-nav" class="sr-only">選擇課程</label>
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-zen-accent text-xs">◆</div>
+                    <select id="mobile-nav" onchange="loadContent(this.value, true)" class="block w-full pl-10 pr-10 py-3.5 text-base text-zen-textMain bg-zen-bg border border-zen-border focus:outline-none focus:border-zen-accent rounded-sm appearance-none tracking-widest font-bold shadow-sm cursor-pointer transition-colors flex-shrink-0">
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-zen-gold text-[10px]">▼</div>
+                </div>
+                
+                <!-- Desktop Vertical List -->
+                <nav id="lesson-nav" class="hidden md:flex flex-col gap-2 overflow-y-auto md:pr-2 custom-scrollbar flex-grow font-serif">
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Content Display Area -->
+        <main class="w-full md:w-2/3 lg:w-3/4 flex flex-col header-stagger-3">
+            <article id="content-display" class="zen-panel p-8 md:p-14 min-h-[65vh] relative flex flex-col">
+                <!-- Content will be dynamically injected here by JavaScript -->
+            </article>
+        </main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-zen-header text-zen-textHeaderSub text-center py-8 text-sm mt-auto border-t border-zen-borderHeader z-10 relative transition-colors duration-400">
+        <p class="tracking-[0.2em] mb-2 font-serif">願以此功德，普及於一切。我等與眾生，皆共成佛道。</p>
+        <p class="text-xs font-light tracking-widest opacity-60">東密明王殿 Facebook 社團 | 數位互動化筆記呈現</p>
+    </footer>
+
+    <script>
+        // --- Data Source Parsing (Sourced directly from MD note but using index.html structural styles) ---
+        const sutraData = [
+            {
+                id: 'intro', type: 'intro', title: '開始修行', icon: '◇',
+                content: `
+                    <div class="child-stagger text-center mb-10 flex-grow flex flex-col justify-center pt-4 md:pt-8">
+                        <span class="text-5xl text-zen-accent block mb-6 transition-colors">☸</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-zen-textHeading mb-4 tracking-[0.2em] transition-colors font-serif">歡迎進入《心經》實修道場</h2>
+                        <p class="text-lg text-zen-gold tracking-widest font-light transition-colors mb-12 font-serif">一處沉澱心靈的數位空間</p>
+                        
+                        <!-- 心經全文區塊 -->
+                        <div class="child-stagger bg-zen-panel p-8 md:p-12 rounded-sm border border-zen-border shadow-sm mb-16 relative overflow-hidden text-center mx-auto max-w-4xl transition-colors">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-zen-accent to-transparent opacity-40"></div>
+                            <div class="absolute -right-10 -bottom-10 text-[10rem] opacity-[0.02] text-zen-textHeading select-none pointer-events-none font-serif">經</div>
+                            <h3 class="text-2xl font-bold text-zen-accent tracking-[0.4em] mb-8 pb-4 border-b border-zen-sub inline-block ml-[0.2em] font-serif">般若波羅蜜多心經</h3>
+                            <p class="text-lg md:text-[1.15rem] leading-[2.8] md:leading-[3] text-zen-textMain font-serif text-justify tracking-widest relative z-10">
+                                觀自在菩薩，行深般若波羅蜜多時，照見五蘊皆空，度一切苦厄。舍利子！色不異空，空不異色；色即是空，空即是色，受想行識亦復如是。舍利子！是諸法空相，不生不滅，不垢不淨，不增不減。是故空中無色，無受想行識；無眼耳鼻舌身意；無色聲香味觸法；無眼界，乃至無意識界；無無明；亦無無明盡，乃至無老死，亦無老死盡；無苦集滅道；無智亦無得。以無所得故，菩提薩埵，依般若波羅蜜多故，心無罣礙；無罣礙故，無有恐怖，遠離顛倒夢想，究竟涅槃。三世諸佛，依般若波羅蜜多故，得阿耨多羅三藐三菩提。故知般若波羅蜜多是大神咒，是大明咒，是無上咒，是無等等咒，能除一切苦，真實不虛，故說般若波羅蜜多咒。即說咒曰：揭諦揭諦，波羅揭諦，波羅僧揭諦，菩提薩婆訶。
+                            </p>
+                        </div>
+
+                        <!-- 簡介與按鈕區塊 -->
+                        <div class="child-stagger text-lg leading-loose text-zen-textMain max-w-2xl mx-auto text-justify tracking-wide transition-colors font-serif">
+                            <p class="mb-6">本篇解析回歸東密明王殿釋明法師父最完整的開示，以「修心實踐」為核心，將《心經》的智慧化為入佛門的十二堂必修課。</p>
+                            <p class="mb-10">請點擊<span class="hidden md:inline">左側</span><span class="inline md:hidden text-zen-accent font-bold">上方</span>的課程選單，循序漸進地體悟自覺與覺他的菩薩道。</p>
+                            <div class="flex justify-center">
+                                <button onclick="loadContent('lesson-1', true)" class="ripple-btn bg-zen-bg px-10 py-4 rounded-sm border border-zen-border text-zen-accent font-bold tracking-widest hover:bg-zen-panel transition-all duration-300 shadow-sm flex items-center justify-center gap-3 w-full md:w-auto font-serif">
+                                    <span class="text-sm pointer-events-none">◆</span> <span class="pointer-events-none flex-1 whitespace-normal text-left">開始第一課：觀自在菩薩</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>`
+            },
+            // --- 基礎修心：覺察與轉念 ---
+            {
+                id: 'lesson-1', type: 'lesson', title: '第一課：觀自在', icon: '▪', sutra: '觀自在菩薩', phase: '基礎修心：覺察與轉念',
+                body: `<div class="child-stagger text-justify leading-loose text-zen-textMain text-lg"><p>一般人淺譯為觀世音菩薩，而真實深義，為<span class="text-zen-accent font-bold">觀照自己內心是否自在</span>。</p><p class="mt-4">要如何自在？必須每日以「十善業」覺照自己。每個人總是觀照他人缺失，一直認為是他人的錯，而卻沒觀照是否是自己的法執障礙。</p><p class="mt-4">入佛門第一課就是心經第一句「觀自在」，因落實觀自在法門，才能進修觀世音法門（既照世間苦難聲音法門），才是所謂自覺覺他。</p></div>`,
+                takeawayTitle: '觀自在', takeawayBody: '落實觀自在法門，才能進修觀世音法門。'
+            },
+            {
+                id: 'lesson-2', type: 'lesson', title: '第二課：學習原諒與放下', icon: '▪', sutra: '行深般若波羅蜜多時，照見五蘊皆空', phase: '基礎修心：覺察與轉念',
+                body: `<div class="child-stagger text-justify leading-loose text-zen-textMain text-lg"><p>譯為修行到最深妙智慧的時候，必須覺照看見自己內心對世間<span class="text-zen-accent font-bold">形色、感受、思想、行為、意識</span>，這五蘊要能放的下。</p><p class="mt-4">人，在世間因形形色色的干擾，有了不同的感受、思想，產生偏差的行為與意念，才造成種種惡業。</p></div>`,
+                takeawayTitle: '原諒與放下', takeawayBody: '要學習原諒與放下，要達到五蘊皆空雖然很難，但我們千萬不要因為我們的五蘊熾盛而傷害他人，或者傷害有形或無形眾生。'
+            },
+            {
+                id: 'lesson-3', type: 'lesson', title: '第三課：轉念', icon: '▪', sutra: '度一切苦厄', phase: '基礎修心：覺察與轉念',
+                body: `<div class="child-stagger text-justify leading-loose text-zen-textMain text-lg"><p>譯為度化心中一切的煩惱苦厄。</p><p class="mt-4">人，因為五蘊熾盛才有眾多的煩惱，而這些煩惱憂苦身心，甚至是造成惡業而輪迴六道之中。</p><p class="mt-4">所謂山不轉人轉，人不轉路轉，退一步海闊天空，只要看淡五蘊，放下五蘊，自然能度化心中一切的煩惱苦厄。</p></div>`,
+                takeawayTitle: '轉念', takeawayBody: '轉化自己念頭，只要看淡五蘊，放下五蘊，自然能度化心中一切的煩惱苦厄。'
+            },
+            // --- 破除執著：圓融與清淨 ---
+            {
+                id: 'lesson-4', type: 'lesson', title: '第四課：圓融', icon: '▪', sutra: '舍利子！色不異空，空不異色', phase: '破除執著：圓融與清淨',
+                body: `
+                    <div class="child-stagger grid grid-cols-2 gap-4 mb-8 text-center transition-colors">
+                        <div class="bg-zen-bg py-6 px-4 rounded-sm border border-zen-border flex flex-col items-center justify-center"><b class="text-zen-gold block text-4xl mb-3 font-black font-serif">空</b><span class="text-sm">解釋為心性，我們的心原本清淨。</span></div>
+                        <div class="bg-zen-bg py-6 px-4 rounded-sm border border-zen-border flex flex-col items-center justify-center"><b class="text-zen-gold block text-4xl mb-3 font-black font-serif">色</b><span class="text-sm">塵世間的人事物形形色色。</span></div>
+                    </div>
+                    <div class="child-stagger text-justify leading-loose text-zen-textMain text-lg"><p>一個修行的人，要了解塵世間的人事物形形色色包圍我們身邊，而我們也離不開這些形形色色。</p><p class="mt-4">我們的心原本清淨，是因來到這世間而染塵事，也就是「宿世業」。當我們了解這些道理，我們必須圓滿一切。</p></div>`,
+                takeawayTitle: '圓融', takeawayBody: '了解宿世因緣道理後，必須圓滿一切。'
+            },
+            {
+                id: 'lesson-5', type: 'lesson', title: '第五課：不動', icon: '▪', sutra: '色即是空，空即是色', phase: '破除執著：圓融與清淨',
+                body: `<div class="child-stagger text-justify leading-loose text-zen-textMain text-lg"><p>既然我們來到這娑婆人間，我們也必須面對這娑婆人間與我們有關的人事物。</p><p class="mt-4">也就是學習不讓總總善的或惡的因緣，讓我們產生<span class="text-zen-accent font-bold">貪念、動怒或癡迷、忌妒或高慢或猜疑</span>，保持心不動。</p></div>`,
+                takeawayTitle: '不動', takeawayBody: '學習不讓總總善的或惡的因緣，讓我們產生貪嗔癡慢疑等情緒。'
+            },
+            {
+                id: 'lesson-6', type: 'lesson', title: '第六課：聞思修', icon: '▪', sutra: '受想行識亦復如是', phase: '破除執著：圓融與清淨',
+                body: `
+                    <div class="child-stagger flex flex-wrap gap-4 mb-8 justify-center transition-colors">
+                        <span class="bg-zen-bg px-5 py-3 rounded-sm border border-zen-border text-zen-textHeading"><b class="text-zen-gold text-xl mr-2 font-serif">受</b>感受</span>
+                        <span class="bg-zen-bg px-5 py-3 rounded-sm border border-zen-border text-zen-textHeading"><b class="text-zen-gold text-xl mr-2 font-serif">想</b>思想</span>
+                        <span class="bg-zen-bg px-5 py-3 rounded-sm border border-zen-border text-zen-textHeading"><b class="text-zen-gold text-xl mr-2 font-serif">行</b>行為</span>
+                        <span class="bg-zen-bg px-5 py-3 rounded-sm border border-zen-border text-zen-textHeading"><b class="text-zen-gold text-xl mr-2 font-serif">識</b>意識</span>
+                    </div>
+                    <div class="child-stagger text-justify leading-loose text-zen-textMain text-lg"><p>感受、思想、行為、意識，和前面所講都是同樣的道理。</p><p class="mt-4">當我們遇到善或惡、順境或逆境的人事物各種形色，因每個人有不同的感受，產生不同的思想，有不同的行為和意識，才會有那麼多的<span class="text-zen-accent font-bold">我執和法執</span>。</p></div>`,
+                takeawayTitle: '聞思修', takeawayBody: '當五蘊熾盛之時，更需聞思修。'
+            },
+            {
+                id: 'lesson-7', type: 'lesson', title: '第七課：不執', icon: '▪', sutra: '舍利子！是諸法空相', phase: '破除執著：圓融與清淨',
+                body: `<div class="child-stagger text-justify leading-loose text-zen-textMain text-lg"><p>【舍利子】解釋為一個修行者，【是諸法空相】解釋為要了解在娑婆世界中一切的擁有都是假相。</p><p class="mt-4">師兄再簡單的說明，比如生病看醫生，不同病症有不同的藥，所有醫院的藥單有八萬四千種，但是這些藥是因為身體生病了需這些藥，而若身體壞掉死亡了，相對的這些藥對身體已無效用。</p><p class="mt-4">所以一切諸法都是因為救渡六道眾生而使用，不執著就可跳脫煩惱束縛。</p></div>`,
+                takeawayTitle: '不執', takeawayBody: '了解世間物質皆因度眾而生，不執著就可跳脫煩惱束縛。'
+            },
+            // --- 覺醒與解脫：去毒與無我 ---
+            {
+                id: 'lesson-8', type: 'lesson', title: '第八課：覺（覺醒、醒悟）', icon: '▪', sutra: '不生不滅，不垢不淨，不增不減。<br>是故空中無色，無受想行識', phase: '覺醒與解脫：去毒與無我',
+                body: `
+                    <p class="child-stagger mb-6 text-zen-gold font-bold tracking-widest text-center transition-colors">這幾句是前七課的總整理。</p>
+                    <div class="child-stagger grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 transition-colors">
+                        <div class="bg-zen-bg p-6 rounded-sm border-t-4 border-zen-accent"><b class="text-4xl text-zen-textHeading block mb-3 font-black font-serif">空</b><p class="leading-relaxed">代表心性、神識、靈魂、元神、佛性。</p></div>
+                        <div class="bg-zen-bg p-6 rounded-sm border-t-4 border-zen-gold"><b class="text-4xl text-zen-textHeading block mb-3 font-black font-serif">色</b><p class="leading-relaxed">代表世間物質。</p></div>
+                    </div>
+                    <div class="child-stagger text-justify leading-loose text-zen-textMain text-lg"><p>所以我們的心原本清淨無染任何壞習慣，也不會因為世間的事物而有太多的感受、思想、行為、意識。當能夠了解前面七課的意思，且融會貫通，既已進入佛門第八課「覺」，是覺醒或醒悟。</p></div>`,
+                takeawayTitle: '覺', takeawayBody: '能了解前面七課的意思，且融會貫通，既已進入「覺」醒悟的階段。'
+            },
+            {
+                id: 'lesson-9', type: 'lesson', title: '第九課：去五毒（六根清淨）', icon: '▪', sutra: '無眼耳鼻舌身意；無色聲香味觸法；無眼界，乃至無意識界', phase: '覺醒與解脫：去毒與無我',
+                body: `
+                    <p class="child-stagger mb-6 font-bold text-zen-accent">第一句是無六根，第二句是無六塵。請點擊下方「六根」，觀察其如何對應外境：</p>
+                    <div class="child-stagger flex flex-col md:flex-row gap-6 mb-10 items-stretch transition-colors">
+                        <div class="w-full md:w-1/2 flex flex-col gap-3" id="roots-container">
+                            <div class="text-center font-bold text-zen-textHeading mb-2 border-b border-zen-border pb-2 tracking-widest font-serif">六根 (內在)</div>
+                            <button onclick="highlightDust('root-1', event)" class="ripple-btn root-btn interactive-card bg-zen-sub p-4 rounded-sm border border-zen-border text-left font-bold text-zen-textMain"><span class="text-zen-gold mr-2 text-lg pointer-events-none flex-shrink-0 font-serif">眼</span></button>
+                            <button onclick="highlightDust('root-2', event)" class="ripple-btn root-btn interactive-card bg-zen-sub p-4 rounded-sm border border-zen-border text-left font-bold text-zen-textMain"><span class="text-zen-gold mr-2 text-lg pointer-events-none flex-shrink-0 font-serif">耳</span></button>
+                            <button onclick="highlightDust('root-3', event)" class="ripple-btn root-btn interactive-card bg-zen-sub p-4 rounded-sm border border-zen-border text-left font-bold text-zen-textMain"><span class="text-zen-gold mr-2 text-lg pointer-events-none flex-shrink-0 font-serif">鼻</span></button>
+                            <button onclick="highlightDust('root-4', event)" class="ripple-btn root-btn interactive-card bg-zen-sub p-4 rounded-sm border border-zen-border text-left font-bold text-zen-textMain"><span class="text-zen-gold mr-2 text-lg pointer-events-none flex-shrink-0 font-serif">舌</span></button>
+                            <button onclick="highlightDust('root-5', event)" class="ripple-btn root-btn interactive-card bg-zen-sub p-4 rounded-sm border border-zen-border text-left font-bold text-zen-textMain"><span class="text-zen-gold mr-2 text-lg pointer-events-none flex-shrink-0 font-serif">身</span></button>
+                            <button onclick="highlightDust('root-6', event)" class="ripple-btn root-btn interactive-card bg-zen-sub p-4 rounded-sm border border-zen-border text-left font-bold text-zen-textMain"><span class="text-zen-gold mr-2 text-lg pointer-events-none flex-shrink-0 font-serif">意</span></button>
+                        </div>
+                        <div class="w-full md:w-1/2 flex flex-col gap-3" id="dusts-container">
+                            <div class="text-center font-bold text-zen-textHeading mb-2 border-b border-zen-border pb-2 tracking-widest font-serif">六塵 (外境)</div>
+                            <div id="dust-root-1" class="dust-item bg-zen-panel p-4 rounded-sm border border-transparent text-zen-muted transition-all flex items-center h-full"><span class="font-bold mr-2 text-zen-textMain flex-shrink-0 text-lg font-serif">色</span> （世間形色）</div>
+                            <div id="dust-root-2" class="dust-item bg-zen-panel p-4 rounded-sm border border-transparent text-zen-muted transition-all flex items-center h-full"><span class="font-bold mr-2 text-zen-textMain flex-shrink-0 text-lg font-serif">聲</span> （恭維或辱罵的聲音）</div>
+                            <div id="dust-root-3" class="dust-item bg-zen-panel p-4 rounded-sm border border-transparent text-zen-muted transition-all flex items-center h-full"><span class="font-bold mr-2 text-zen-textMain flex-shrink-0 text-lg font-serif">香</span> （氣味）</div>
+                            <div id="dust-root-4" class="dust-item bg-zen-panel p-4 rounded-sm border border-transparent text-zen-muted transition-all flex items-center h-full"><span class="font-bold mr-2 text-zen-textMain flex-shrink-0 text-lg font-serif">味</span> （滋味）</div>
+                            <div id="dust-root-5" class="dust-item bg-zen-panel p-4 rounded-sm border border-transparent text-zen-muted transition-all flex items-center h-full"><span class="font-bold mr-2 text-zen-textMain flex-shrink-0 text-lg font-serif">觸</span> （觸覺）</div>
+                            <div id="dust-root-6" class="dust-item bg-zen-panel p-4 rounded-sm border border-transparent text-zen-muted transition-all flex items-center h-full"><span class="font-bold mr-2 text-zen-textMain flex-shrink-0 text-lg font-serif">法</span> （意念想法）</div>
+                        </div>
+                    </div>
+                    <div class="child-stagger bg-zen-header text-zen-textHeaderMain p-6 rounded-sm text-base leading-loose shadow-md transition-colors">
+                        六根與六塵起反應產生六種意識，這些意識交叉平方，產生多種煩惱。我們的六根是因為碰到六塵產生好或不好的因緣，而造下<span class="text-zen-accent font-bold tracking-widest bg-zen-panel px-2 py-1 mx-1 rounded-sm">貪嗔癡慢疑</span>這五毒。所以心經講，無眼界乃至無意識界這句是六根清淨的意思。
+                    </div>`
+                , takeawayTitle: '去五毒', takeawayBody: '這課很難，但若每天反覆觀自在，長時間薰修，一定會去五毒，達到六根清淨。'
+            },
+            {
+                id: 'lesson-10', type: 'lesson', title: '第十課：看破放下得大自在', icon: '▪', sutra: '無無明，亦無無明盡，乃至無老死，亦無老死盡', phase: '覺醒與解脫：去毒與無我',
+                body: `
+                    <div class="child-stagger bg-zen-bg p-6 rounded-sm border border-zen-border mb-8 leading-loose text-justify text-sm md:text-base transition-colors">
+                        <b class="text-zen-textHeading block mb-2 font-bold tracking-widest">破除十二因緣法：</b>這幾句幾乎沒幾個人懂，這幾句道盡了十二因緣法。<br><br>
+                        師兄詳細解釋：眾生因有無明壞習性，造了行為惡因，及不好的六識，投胎於名色世界中，在母親肚中六根形成進入，出生後接觸慾海，有了感受，產生愛慾，想要取得，想盡辦法擁有，如此循環一直出生，一直老病死。<br><br>
+                        也就是說我們要把壞習慣改到無無明，甚至連我已改掉的念頭也盡了，當無明已盡，既生天界，何來生老病死的痛苦。
+                    </div>
+                    <div class="child-stagger mb-6 text-zen-gold font-bold tracking-widest text-center transition-colors">十二因緣流轉次第</div>
+                    <div class="child-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 transition-colors">
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">一</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">一</span>無明
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">眾生因有無明的壞習性，造了行為惡因</div>
+                        </div>
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">二</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">二</span>行
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">及不好的六識念頭</div>
+                        </div>
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">三</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">三</span>識
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">投胎於名色娑婆世界中</div>
+                        </div>
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">四</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">四</span>名色
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">在母親的肚子中</div>
+                        </div>
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">五</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">五</span>六入
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">眼耳鼻舌身意這六根六入慢慢的形成</div>
+                        </div>
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">六</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">六</span>觸
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">出生後接觸了這世間一切慾望</div>
+                        </div>
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">七</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">七</span>受
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">有了感受</div>
+                        </div>
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">八</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">八</span>愛
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">產生愛慾</div>
+                        </div>
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">九</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">九</span>取
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">想要取得，想盡辦法擁有</div>
+                        </div>
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">十</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">十</span>有
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">如此一直造因受果</div>
+                        </div>
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] tracking-tighter text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">十一</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">十一</span>生
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">輪迴出生</div>
+                        </div>
+                        
+                        <div class="interactive-card bg-zen-panel p-6 rounded-sm border border-zen-border relative overflow-hidden group">
+                            <div class="absolute -right-2 -bottom-6 text-[6rem] tracking-tighter text-zen-watermark font-serif font-black group-hover:text-zen-sub transition-colors leading-none select-none whitespace-nowrap">十二</div>
+                            <div class="text-zen-accent font-bold text-lg mb-3 relative z-10 tracking-widest flex items-center font-serif">
+                                <span class="inline-flex items-center justify-center h-6 min-w-[1.75rem] px-1.5 border border-zen-gold bg-zen-sub text-zen-gold text-sm mr-2 rounded-sm leading-none">十二</span>老死
+                            </div>
+                            <div class="text-sm text-zen-textMain leading-relaxed relative z-10">一直老死</div>
+                        </div>
+                    </div>`,
+                takeawayTitle: '看破放下得大自在', takeawayBody: '看破十二因緣，放下十二因緣，既得自在解脫。'
+            },
+            {
+                id: 'lesson-11', type: 'lesson', title: '第十一課：學習無我', icon: '▪', sutra: '無苦集滅道', phase: '覺醒與解脫：去毒與無我',
+                body: `
+                    <div class="child-stagger grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 transition-colors">
+                        <div class="interactive-card bg-zen-bg p-6 rounded-sm border border-zen-border"><h4 class="text-3xl font-black text-zen-accent border-b border-zen-border pb-3 mb-4 font-serif">苦</h4><p class="text-sm leading-relaxed text-justify text-zen-textMain">人生有八大苦：身體有生老病死四種痛苦，心理有愛別離苦，求不得苦，怨憎恨苦，五蘊熾盛苦。生老病死是每個生命必須經過，而後四種心理的痛苦，卻是造成惡業的因素。</p></div>
+                        <div class="interactive-card bg-zen-bg p-6 rounded-sm border border-zen-border"><h4 class="text-3xl font-black text-zen-accent border-b border-zen-border pb-3 mb-4 font-serif">集</h4><p class="text-sm leading-relaxed text-zen-textMain">因這些惡因而集結了業障。</p></div>
+                        <div class="interactive-card bg-zen-bg p-6 rounded-sm border border-zen-border"><h4 class="text-3xl font-black text-zen-accent border-b border-zen-border pb-3 mb-4 font-serif">滅</h4><p class="text-sm leading-relaxed text-zen-textMain">當妳進入佛門實修必須消業以功德滅除自己的業障。</p></div>
+                        <div class="interactive-card bg-zen-bg p-6 rounded-sm border border-zen-border"><h4 class="text-3xl font-black text-zen-accent border-b border-zen-border pb-3 mb-4 font-serif">道</h4><p class="text-sm leading-relaxed text-zen-textMain">既把八大苦，轉換成八正道。</p></div>
+                    </div>
+                    <div class="child-stagger bg-zen-sub p-6 rounded-sm border-l-4 border-zen-gold transition-colors">
+                        <h4 class="text-xl font-bold text-zen-textHeading mb-3 tracking-widest font-serif">為何前面有個無字呢？</h4>
+                        <p class="text-zen-textMain leading-loose text-justify mb-4">佛祖希望你若已把八大苦轉成八正道的時候，不要認為你已成就了，連這些念頭都要放下。</p>
+                        <p class="text-zen-textMain leading-loose text-justify">師兄用最簡單的方式來解釋：當妳能把每個生命，當成自己小孩，百般呵護，因父母親對自己小孩既是無我狀態，那你已接近無我。</p>
+                    </div>`
+            },
+            {
+                id: 'lesson-12', type: 'lesson', title: '第十二課：空境', icon: '▪', sutra: '無智亦無得，以無所得故', phase: '覺醒與解脫：去毒與無我',
+                body: `
+                    <div class="child-stagger bg-zen-panel p-6 rounded-sm border border-zen-border mb-8 transition-colors"><b class="text-zen-accent text-lg block mb-2 font-serif">以無所得故：</b><p class="text-justify leading-loose text-lg">當你了解以上所有課程，且已進入實修階段，而體悟到佛的智慧，不要認為你已得到了，成就了。連這些都要放下。</p></div>
+                    <div class="child-stagger bg-zen-header p-8 rounded-sm text-zen-textHeaderSub mb-8 shadow-md text-center transition-colors"><span class="text-3xl text-zen-gold font-serif block mb-4">"</span><p class="tracking-widest leading-loose text-xl text-zen-textHeaderMain font-serif">奇哉！一切眾生皆俱佛性，<br>只因業障太深而遮蓋佛性。</p><p class="mt-4 text-sm text-zen-textHeaderSub">也就是我們本來就俱足一切，沒有得與不得之別。</p></div>`,
+                takeawayTitle: '空境', takeawayBody: '所謂空境，既是心無所住，當我們遇到順逆境相之事，不要留在心中。深層解識不要有果位之想，不要有任何佛果佛智慧之求，一切以利益眾生為重，才是無智亦無得，以無所得故。'
+            },
+            // --- 究竟涅槃：自覺覺他的菩薩道 ---
+            {
+                id: 'summary-1', type: 'summary', title: '菩提薩埵（自覺覺他）', icon: '◆', sutra: '菩提薩埵', phase: '究竟涅槃：自覺覺他的菩薩道',
+                body: `
+                    <p class="child-stagger mb-6 leading-loose text-justify text-lg text-zen-textMain">這句是梵文，翻成中文是<<自覺，覺他>>，這句是心經很重要的分段詞，這句之前十二課程是自覺法門，這句之後是覺他法門。</p>
+                    <p class="child-stagger mb-6 leading-loose text-justify text-lg text-zen-textMain">第一字是菩，第三字是薩，中國的菩薩名詞是因此而生。</p>
+                    <div class="child-stagger border-l-4 border-zen-accent pl-6 py-2 transition-colors mb-8"><p class="font-bold text-zen-textHeading tracking-widest leading-loose text-justify text-lg font-serif">要修行菩薩道，必須<<自覺，覺他>>也就是自己悟透了前面十二堂課程的道理，也要幫助六道眾生悟透這些道理。</p></div>`
+            },
+            {
+                id: 'summary-2', type: 'summary', title: '究竟涅槃', icon: '◆', sutra: '依般若波羅蜜多故，心無罣礙... 遠離顛倒夢想，究竟涅槃', phase: '究竟涅槃：自覺覺他的菩薩道',
+                body: `
+                    <div class="child-stagger bg-zen-header text-zen-textHeaderMain p-8 rounded-sm shadow-md relative overflow-hidden transition-colors">
+                        <div class="absolute -right-4 -bottom-10 text-[10rem] opacity-[0.05] text-white select-none font-serif">☸</div>
+                        <p class="text-lg leading-loose text-zen-textHeaderSub text-justify relative z-10">所有的菩薩，都是依照這十二課覺照自己，實修自己，以這些道理，分享給眾生了解，讓大家放下一切煩惱，不被世間的五蘊六塵所染，達到任何罣礙恐怖所擾而不為所動。</p>
+                        <div class="w-12 h-[1px] bg-zen-gold my-6 relative z-10"></div>
+                        <p class="text-lg leading-loose text-zen-textHeaderSub text-justify relative z-10">以上十二課，若能了解文字字義，進而觀照實修，到達與菩薩身口意相同的三相應，既能遠離這顛倒幻境的世界，才是真正的究竟，真正的涅槃。</p>
+                    </div>`
+            },
+            {
+                id: 'summary-3', type: 'summary', title: '果位詮釋', icon: '◆', sutra: '阿耨多羅三藐三菩提', phase: '究竟涅槃：自覺覺他的菩薩道',
+                body: `
+                    <p class="child-stagger text-justify leading-loose mb-6 text-lg text-zen-textMain">過去世、現在世、未來世，所有佛菩薩，都是依照這十二課，得到無上正等正覺：</p>
+                    <div class="child-stagger grid grid-cols-1 md:grid-cols-3 gap-6 transition-colors">
+                        <div class="bg-zen-bg p-6 rounded-sm border border-zen-border text-center">
+                            <b class="text-zen-gold text-2xl block mb-2 border-b border-zen-border pb-2 font-serif">正覺</b>
+                            <p class="text-zen-textMain text-sm mb-3">修自覺法門的佛弟子</p>
+                            <span class="bg-zen-sub text-zen-accent font-bold px-3 py-1 rounded-full text-xs tracking-widest">簡單解釋為大學畢業</span>
+                        </div>
+                        <div class="bg-zen-bg p-6 rounded-sm border border-zen-border text-center">
+                            <b class="text-zen-gold text-2xl block mb-2 border-b border-zen-border pb-2 font-serif">正等正覺</b>
+                            <p class="text-zen-textMain text-sm mb-3">修自覺覺他的菩薩乘法門</p>
+                            <span class="bg-zen-sub text-zen-accent font-bold px-3 py-1 rounded-full text-xs tracking-widest">簡單解釋為碩士學位</span>
+                        </div>
+                        <div class="bg-zen-bg p-6 rounded-sm border border-zen-border text-center">
+                            <b class="text-zen-gold text-2xl block mb-2 border-b border-zen-border pb-2 font-serif">無上正等正覺</b>
+                            <p class="text-zen-textMain text-sm mb-3">業力已消願力圓滿已成就佛菩薩之境界</p>
+                            <span class="bg-zen-sub text-zen-accent font-bold px-3 py-1 rounded-full text-xs tracking-widest">簡單解釋為博士學位</span>
+                        </div>
+                    </div>`
+            },
+            {
+                id: 'summary-4', type: 'summary', title: '總結：《心經》是大神咒', icon: '◆', sutra: '故知般若波羅蜜多是大神咒... 菩提薩婆訶', phase: '究竟涅槃：自覺覺他的菩薩道',
+                body: `
+                    <div class="child-stagger bg-zen-bg p-8 rounded-sm border border-zen-border transition-colors flex flex-col items-center">
+                        <p class="text-lg leading-loose text-justify mb-8 w-full text-zen-textMain">所以心經 是讓我們元神定心的神咒，是讓我們明心見性的咒，無上 解釋為佛境，是讓我們的心達佛境的咒，是無等等具足一切智慧功德內外圓滿的咒，能除心中一切苦厄，是真實並不是虛假。<br><br>所以心經的要義為：<b class="text-zen-accent font-serif">去除我執、去除法執，以智慧去除一切執著，以智慧止惡行善，讓心境不被五蘊六塵所染，達到正覺之路。</b></p>
+                        <div class="inline-block border-y-2 border-zen-gold py-4 px-10 mt-2 bg-zen-panel shadow-sm">
+                            <span class="text-2xl font-bold text-zen-accent tracking-[0.4em] ml-[0.2em] font-serif">阿彌陀佛！！！</span>
+                        </div>
+                    </div>`
+            }
+        ];
+
+        const getThemeColor = (varName) => getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+        const chartPalettes = {
+            'default': ['#A63A32', '#9C7E5A', '#A38865', '#AB9270', '#B39B7A', '#BBA485', '#C2AE8F', '#C8B699', '#CFBFA3', '#D5C7AD', '#DBCEB7', '#2B231D'],
+            'cinnabar': ['#C8321F', '#C49A2A', '#C9A33B', '#CFAC4C', '#D4B55D', '#D9BD6F', '#DEC680', '#E4CF91', '#E9D8A2', '#EFE1B3', '#F4EAC4', '#1A0E08'],
+            'cyan': ['#4A7B6F', '#A0845C', '#A78E6B', '#AE987A', '#B5A289', '#BCAC98', '#C3B6A7', '#CAC0B6', '#D1CAC5', '#D8D4D4', '#DFDEE3', '#1C2325'],
+            'dark': ['#B83228', '#D4A93A', '#D9AF48', '#DEB556', '#E3BB64', '#E8C172', '#EDC780', '#F2CD8E', '#F7D39C', '#FCD9AA', '#FFDFB8', '#0A0604'],
+            'pine': ['#3D5C4A', '#555555', '#666666', '#777777', '#888888', '#999999', '#AAAAAA', '#BBBBBB', '#CCCCCC', '#DDDDDD', '#EEEEEE', '#181818']
+        };
+
+        const nidanaDescriptions = [
+            "無明", "行", "識", "名色", "六入", "觸", "受", "愛", "取", "有", "生", "老死"
+        ];
+
+        let currentChartInstance = null;
+        let currentThemeId = 'default';
+        let isTransitioning = false;
+
+        // --- Ripple Effect Event Delegation ---
+        function addRipple(e) {
+            const btn = e.currentTarget;
+            if (!btn.classList.contains('ripple-btn')) return;
+            const rect = btn.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            ripple.style.cssText = `width:${size}px;height:${size}px;top:${e.clientY - rect.top - size/2}px;left:${e.clientX - rect.left - size/2}px`;
+            btn.appendChild(ripple);
+            ripple.addEventListener('animationend', () => ripple.remove());
+        }
+
+        document.addEventListener('click', e => {
+            const btn = e.target.closest('.ripple-btn');
+            if (btn) addRipple({ currentTarget: btn, clientX: e.clientX, clientY: e.clientY });
+        });
+
+        // --- Theme Management ---
+        function setTheme(theme) {
+            currentThemeId = theme;
+            document.body.classList.add('theme-transitioning');
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('zen-theme', theme);
+            
+            if (currentChartInstance) renderChart();
+            toggleThemeMenu();
+            setTimeout(() => document.body.classList.remove('theme-transitioning'), 800);
+        }
+
+        function toggleThemeMenu() {
+            const menu = document.getElementById('theme-menu');
+            menu.classList.toggle('menu-hidden');
+            menu.classList.toggle('menu-visible');
+        }
+
+        // --- Progress Bar ---
+        function updateScrollProgress(currentIndex) {
+            if (currentIndex <= 0) {
+                document.getElementById('scroll-progress-sidebar').style.width = '0%';
+                return;
+            }
+            const totalLessons = sutraData.length - 1; 
+            const progressPercentage = (currentIndex / totalLessons) * 100;
+            const progressBar = document.getElementById('scroll-progress-sidebar');
+            if(progressBar) {
+                progressBar.style.width = progressPercentage + '%';
+            }
+        }
+
+        // --- Ink Particles Animation (Canvas) ---
+        function initInkParticles() {
+            const canvas = document.getElementById('ink-particles');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const particleCount = 55;
+
+            function resize() {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.3; 
+                    this.vy = (Math.random() - 0.5) * 0.3;
+                    this.radius = Math.random() * 2 + 0.5;
+                }
+                update() {
+                    this.x += this.vx; this.y += this.vy;
+                    if (this.x < 0 || this.x > canvas.width) this.vx = -this.vx;
+                    if (this.y < 0 || this.y > canvas.height) this.vy = -this.vy;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = getThemeColor('--color-gold'); 
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update(); particles[i].draw();
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 100) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = getThemeColor('--color-gold');
+                            ctx.globalAlpha = 1 - (dist / 100);
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                            ctx.globalAlpha = 1; 
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // --- Initialization ---
+        function initApp() {
+            const savedTheme = localStorage.getItem('zen-theme') || 'default';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            currentThemeId = savedTheme;
+
+            document.getElementById('total-count').innerText = sutraData.length - 1;
+
+            const navContainer = document.getElementById('lesson-nav');
+            const mobileNav = document.getElementById('mobile-nav');
+            
+            sutraData.forEach((item, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'ripple-btn nav-item text-left px-5 py-3 rounded-sm text-zen-textMain text-sm md:text-base tracking-widest w-full flex items-start gap-3 border-transparent opacity-0 leading-relaxed flex-shrink-0 transition-colors font-serif';
+                btn.id = `nav-${item.id}`;
+                btn.onclick = () => loadContent(item.id, true);
+                btn.style.animation = `slide-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.05}s forwards`;
+                
+                let iconStr = `<span class="text-zen-gold text-xs pointer-events-none mt-1 flex-shrink-0">${item.icon}</span>`;
+                if(item.type === 'summary') iconStr = `<span class="text-zen-accent text-xs pointer-events-none mt-1 flex-shrink-0">${item.icon}</span>`;
+
+                btn.innerHTML = `${iconStr} <span class="pointer-events-none flex-1 whitespace-normal">${item.title}</span>`;
+                navContainer.appendChild(btn);
+
+                if (mobileNav) {
+                    const option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = `${item.icon} ${item.title}`;
+                    mobileNav.appendChild(option);
+                }
+            });
+
+            loadContent('intro');
+            initInkParticles();
+        }
+
+        // --- Content Rendering ---
+        function loadContent(id, shouldScroll = false) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('nav-item-active'));
+            const activeBtn = document.getElementById(`nav-${id}`);
+            if(activeBtn) activeBtn.classList.add('nav-item-active');
+
+            const mobileNav = document.getElementById('mobile-nav');
+            if(mobileNav) mobileNav.value = id;
+
+            const currentIndex = sutraData.findIndex(item => item.id === id);
+            document.getElementById('progress-count').innerText = id === 'intro' ? '0' : currentIndex;
+            updateScrollProgress(currentIndex);
+
+            const data = sutraData.find(item => item.id === id);
+            if (!data) { isTransitioning = false; return; }
+
+            const container = document.getElementById('content-display');
+            container.classList.remove('content-enter');
+            container.classList.add('content-exit');
+
+            setTimeout(() => {
+                let htmlContent = '';
+
+                if (data.type === 'intro') {
+                    htmlContent = data.content;
+                } else {
+                    let headerBadge = data.phase ? 
+                        `<div class="child-stagger mb-2 text-zen-gold tracking-[0.2em] text-xs font-bold flex items-center gap-3 transition-colors uppercase font-serif">${data.phase}</div>` : '';
+
+                    htmlContent = `
+                        ${headerBadge}
+                        <div class="child-stagger mb-5 text-zen-accent tracking-[0.2em] text-sm font-bold flex items-center gap-3 transition-colors font-serif">
+                            <span class="w-6 h-[1px] bg-zen-accent"></span> ${data.title}
+                        </div>
+                        <div class="child-stagger draw-underline text-center mb-10 w-full inline-block">
+                            <h2 class="text-2xl md:text-3xl font-bold text-zen-textHeading tracking-widest leading-loose transition-colors font-serif">
+                                「${data.sutra}」
+                            </h2>
+                        </div>
+                        <div class="mb-10 text-zen-textMain transition-colors font-serif">
+                            ${data.body}
+                        </div>
+                    `;
+
+                    if (data.takeawayTitle) {
+                        htmlContent += `
+                            <div class="child-stagger mt-auto bg-zen-bg p-8 rounded-sm border-l-4 border-zen-accent transition-colors shadow-sm">
+                                <h3 class="text-lg font-bold text-zen-textHeading mb-4 tracking-widest font-serif"><span class="text-zen-accent">【${data.takeawayTitle}】</span></h3>
+                                <p class="text-zen-textMain leading-loose text-justify font-bold font-serif">${data.takeawayBody}</p>
+                            </div>
+                        `;
+                    }
+
+                    let bottomNavHtml = '<div class="child-stagger flex flex-col md:flex-row justify-between items-center mt-12 pt-8 border-t border-zen-border gap-4 transition-colors w-full">';
+
+                    if (currentIndex > 0) {
+                        const prevItem = sutraData[currentIndex - 1];
+                        bottomNavHtml += `<button onclick="loadContent('${prevItem.id}', true)" class="ripple-btn w-full md:w-auto text-center md:text-left px-6 py-3 rounded-sm border border-zen-border bg-zen-bg text-zen-textMain hover:bg-zen-panel hover:border-zen-accent hover:text-zen-accent transition-all shadow-sm tracking-widest flex items-center font-serif"><span class="text-[10px] mr-2 text-zen-gold pointer-events-none flex-shrink-0">▲</span><span class="pointer-events-none flex-1 whitespace-normal">上一單元：${prevItem.title}</span></button>`;
+                    } else {
+                        bottomNavHtml += `<div class="hidden md:block w-full md:w-auto"></div>`; 
+                    }
+
+                    if (currentIndex < sutraData.length - 1) {
+                        const nextItem = sutraData[currentIndex + 1];
+                        bottomNavHtml += `<button onclick="loadContent('${nextItem.id}', true)" class="ripple-btn w-full md:w-auto text-center md:text-right px-6 py-3 rounded-sm border border-zen-border bg-zen-bg text-zen-textMain hover:bg-zen-panel hover:border-zen-accent hover:text-zen-accent transition-all shadow-sm tracking-widest flex items-center justify-end font-serif"><span class="pointer-events-none flex-1 whitespace-normal text-right">下一單元：${nextItem.title}</span><span class="text-[10px] ml-2 text-zen-gold pointer-events-none flex-shrink-0">▼</span></button>`;
+                    } else {
+                        bottomNavHtml += `<div class="hidden md:block w-full md:w-auto"></div>`;
+                    }
+                    
+                    bottomNavHtml += '</div>';
+                    htmlContent += bottomNavHtml;
+                }
+
+                container.innerHTML = htmlContent;
+                
+                container.classList.remove('content-exit');
+                void container.offsetWidth; 
+                container.classList.add('content-enter');
+
+                if (data.hasChart) {
+                    setTimeout(renderChart, 100);
+                } else if (currentChartInstance) {
+                    currentChartInstance.destroy();
+                    currentChartInstance = null;
+                }
+
+                if (shouldScroll) {
+                    const yOffset = window.innerWidth < 768 ? -100 : -40; 
+                    const y = container.getBoundingClientRect().top + window.scrollY + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+
+                isTransitioning = false;
+            }, 300);
+        }
+
+        // --- Lesson 9 Specific Interaction ---
+        function highlightDust(rootId, event) {
+            document.querySelectorAll('.dust-item').forEach(el => {
+                el.className = 'dust-item bg-zen-panel p-4 rounded-sm border border-transparent text-zen-muted transition-all flex items-center h-full font-serif';
+            });
+            document.querySelectorAll('.root-btn').forEach(el => {
+                el.className = 'ripple-btn root-btn interactive-card bg-zen-sub p-4 rounded-sm border border-zen-border text-left hover:border-zen-accent text-zen-textMain font-bold font-serif';
+            });
+
+            event.currentTarget.classList.add('border-zen-accent', 'bg-zen-panel');
+            event.currentTarget.classList.remove('border-zen-border', 'bg-zen-sub');
+
+            const targetDust = document.getElementById(`dust-${rootId}`);
+            if (targetDust) {
+                targetDust.className = 'dust-item bg-zen-header p-4 rounded-sm border border-zen-borderHeader text-zen-textHeaderMain transition-all flex items-center h-full shadow-md font-bold text-lg font-serif';
+            }
+        }
+
+        // --- Lesson 10 Chart.js ---
+        function renderChart() {
+            const ctx = document.getElementById('nidanaChart').getContext('2d');
+            if (currentChartInstance) currentChartInstance.destroy();
+
+            const labels = nidanaDescriptions;
+            const dataValues = Array(12).fill(1);
+            const bgColors = chartPalettes[currentThemeId] || chartPalettes['default'];
+
+            currentChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: dataValues, backgroundColor: bgColors,
+                        borderWidth: 2, borderColor: getThemeColor('--bg-panel'), hoverOffset: 12
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, cutout: '55%',
+                    animation: { animateScale: true, animateRotate: true },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: { label: function(context) { return ' 第' + (context.dataIndex + 1) + '因緣: ' + context.label; } },
+                            backgroundColor: getThemeColor('--bg-headerBox'),
+                            titleFont: { family: "'LXGW WenKai TC', 'BiauKai', serif", size: 14 },
+                            bodyFont: { family: "'LXGW WenKai TC', 'BiauKai', serif", size: 13 },
+                            titleColor: getThemeColor('--text-header-main'),
+                            bodyColor: getThemeColor('--text-header-main'),
+                            padding: 12, displayColors: false
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        const detailBox = document.getElementById('chart-detail-box');
+                        if (elements.length > 0) {
+                            const index = elements[0].index;
+                            detailBox.innerHTML = `<span class="text-zen-accent text-lg leading-loose font-serif">${nidanaDescriptions[index]}</span>`;
+                            detailBox.className = 'mt-8 p-5 bg-zen-panel rounded-sm border border-zen-accent shadow-md text-center min-h-[5rem] flex items-center justify-center font-bold transition-all tracking-widest text-zen-textMain font-serif';
+                        } else {
+                            detailBox.innerHTML = '點擊上方圖表區塊以查看節點解說';
+                            detailBox.className = 'mt-8 p-5 bg-zen-bg rounded-sm border border-zen-border text-center min-h-[5rem] flex items-center justify-center font-bold transition-all tracking-widest text-zen-textMain font-serif';
+                        }
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', initApp);
+
+    </script>
+</body>
+</html>
