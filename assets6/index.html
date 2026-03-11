@@ -1,1 +1,364 @@
-12
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>115年浴佛朝聖大法會</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #FDFBF7;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='#d4b78f' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .text-gold {
+            color: #B47B2B;
+        }
+        .bg-gold {
+            background-color: #B47B2B;
+        }
+        .border-gold {
+            border-color: #B47B2B;
+        }
+        .bg-lotus-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0c0 0-4 10-10 15 0 5 10 10 10 10s10-5 10-10C34 10 20 0 20 0zm0 25c-5-5-5-10-5-10s5-5 5-5 5 5 5 5-5 5-5 10z' fill='%23B47B2B' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* 新增純 CSS 佛光與光暈動畫 */
+        .animate-fade-slow {
+            animation: fade-slow 6s ease-in-out infinite;
+        }
+        @keyframes fade-slow {
+            0%, 100% { opacity: 0.15; }
+            50% { opacity: 0.4; }
+        }
+        .bg-radial-gold {
+            background: radial-gradient(circle at center 30%, rgba(180, 123, 43, 0.4) 0%, rgba(28, 24, 20, 1) 65%);
+        }
+    </style>
+</head>
+<body class="text-stone-800 antialiased">
+
+    <!-- Hero Section -->
+    <header class="relative pt-28 pb-24 text-center overflow-hidden border-b-8 border-gold bg-stone-900 bg-radial-gold">
+        
+        <!-- 1. 旋轉的金色法輪光芒 (純 CSS 繪製，永不失效) -->
+        <div class="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_30%,rgba(252,211,77,0)_0%,rgba(252,211,77,0.07)_15%,rgba(252,211,77,0)_30%,rgba(252,211,77,0.07)_45%,rgba(252,211,77,0)_60%,rgba(252,211,77,0.07)_75%,rgba(252,211,77,0)_100%)] animate-[spin_90s_linear_infinite] z-0"></div>
+        
+        <!-- 2. 巨型蓮花光影底紋 (純程式碼向量圖，永不破圖) -->
+        <div class="absolute top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] md:w-[1200px] md:h-[1200px] text-amber-400 pointer-events-none z-0 animate-fade-slow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.2" class="w-full h-full drop-shadow-[0_0_50px_rgba(252,211,77,0.6)]">
+                <path d="M12 2C12 2 5 9 5 14C5 18 8 21 12 21C16 21 19 18 19 14C19 9 12 2 12 2Z" fill="currentColor" fill-opacity="0.05"/>
+                <path d="M12 22C12 22 17 18 22 13C22 9 19 6 16 6C13 6 12 9 12 9" />
+                <path d="M12 22C12 22 7 18 2 13C2 9 5 6 8 6C11 6 12 9 12 9" />
+            </svg>
+        </div>
+
+        <!-- 3. 中心佛光高光 -->
+        <div class="absolute top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-amber-400/30 rounded-full blur-[100px] pointer-events-none z-0"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-4">
+            <!-- Floating Lotus Ornament -->
+            <div class="animate-float mb-6 inline-block">
+                <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="mx-auto drop-shadow-[0_0_15px_rgba(252,211,77,0.5)]">
+                    <path d="M12 22C12 22 5 15 5 10C5 6 8 3 12 3C16 3 19 6 19 10C19 15 12 22 12 22Z" fill="#FCD34D" fill-opacity="0.15"/>
+                    <path d="M12 22C12 22 17 18 22 13C22 9 19 6 16 6C13 6 12 9 12 9" />
+                    <path d="M12 22C12 22 7 18 2 13C2 9 5 6 8 6C11 6 12 9 12 9" />
+                    <path d="M7 22H17" stroke-width="2"/>
+                </svg>
+            </div>
+
+            <!-- 加入降誕慶祝字樣 -->
+            <h3 class="text-xl md:text-2xl tracking-[0.4em] text-amber-200 mb-4 font-bold drop-shadow-md">紀念釋迦牟尼佛誕辰</h3>
+            <h1 class="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 leading-tight drop-shadow-2xl">115年浴佛朝聖大法會</h1>
+            <h3 class="text-lg md:text-xl tracking-[0.3em] text-amber-100/70 mb-10 font-light drop-shadow-md">— 預約一場心靈的沐浴 —</h3>
+            
+            <div class="inline-block bg-stone-900/40 backdrop-blur-md border border-amber-300/40 rounded-full px-8 py-3 mb-10 shadow-[0_0_20px_rgba(180,123,43,0.3)]">
+                <p class="text-lg md:text-xl font-medium text-amber-50 flex items-center justify-center gap-3 tracking-wider">
+                    <i data-lucide="calendar" class="w-6 h-6 text-amber-400"></i>
+                    國曆 5 月 17 日 (星期日) 09：10
+                </p>
+            </div>
+            
+            <p class="text-lg md:text-xl text-stone-200 leading-relaxed max-w-2xl mx-auto drop-shadow-md">
+                一年一度的浴佛法會，不僅紀念佛陀聖誕，<br class="hidden md:block">更是洗滌心塵、淨化身心的殊勝時刻。<br>
+                敬請提早規劃行程，當日以歡喜心共襄盛舉。<br>
+                <span class="block mt-8 text-2xl font-bold text-amber-300 tracking-widest relative inline-block">
+                    <span class="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-px bg-amber-400"></span>
+                    讓我們同沐佛恩，共結法緣
+                    <span class="absolute -right-8 top-1/2 -translate-y-1/2 w-4 h-px bg-amber-400"></span>
+                </span>
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 pb-20 space-y-12 -mt-8 relative z-20">
+
+        <!-- Meaning Section -->
+        <section class="bg-white rounded-2xl shadow-xl border border-amber-100 p-8 md:p-12 relative overflow-hidden bg-lotus-pattern">
+            <!-- Decorative Glows -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-amber-100 rounded-full blur-3xl opacity-40 -mr-20 -mt-20 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-50 rounded-full blur-3xl opacity-50 -ml-20 -mb-20 pointer-events-none"></div>
+            
+            <div class="flex items-center gap-4 mb-8 justify-center md:justify-start relative z-10 border-b border-amber-100 pb-6">
+                <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-3 rounded-full shadow-sm border border-amber-200">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#B47B2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2C12 2 5 9 5 14C5 18 8 21 12 21C16 21 19 18 19 14C19 9 12 2 12 2Z" fill="#B47B2B" fill-opacity="0.1"/>
+                        <path d="M12 2C12 2 17 6 22 11C22 15 19 18 16 18C13 18 12 15 12 15" />
+                        <path d="M12 2C12 2 7 6 2 11C2 15 5 18 8 18C11 18 12 15 12 15" />
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-bold text-stone-900 tracking-wider">浴佛的意義</h2>
+            </div>
+            <div class="space-y-5 text-stone-600 leading-loose text-lg text-justify relative z-10">
+                <p>藉由恭敬灌浴佛像的儀式，提醒我們回觀自心、清淨自心。佛陀本已圓滿清淨，浴佛其實是在洗滌我們內心的煩惱與塵垢，反省過往的身、口、意，並發願改過向善，讓心回歸光明與安定。</p>
+                <div class="relative py-2 my-6">
+                    <span class="absolute top-0 left-0 text-6xl text-amber-200 opacity-50 font-serif leading-none">"</span>
+                    <p class="bg-gradient-to-r from-amber-50 to-transparent p-6 pl-12 rounded-xl border-l-4 border-gold text-stone-800 font-medium italic text-xl shadow-sm">
+                        佛法云：「諸惡莫作，眾善奉行，自淨其意，是諸佛教。」
+                    </p>
+                </div>
+                <p>在浴佛的當下，以虔誠之心懺悔過往所造的業障，發願止惡行善，洗去自心的貪、嗔、癡三毒，使心念漸漸清淨。</p>
+                <p>浴佛不只是外在的儀式，更是一種心靈的修行與生命的成長。當我們淨化自己的心，也發願一切眾生皆能遠離煩惱、開啟智慧，同證菩提。若能時時觀照自心，時時保持清淨正念，便是於心中常行浴佛之道。</p>
+            </div>
+            <div class="mt-10 text-center md:text-left relative z-10">
+                <a href="https://mingwang2009.github.io/Mingwangdian/assets/bathing-buddha.html" target="_blank" class="text-white bg-gold hover:bg-amber-700 transition-all hover:shadow-lg inline-flex items-center gap-2 font-medium px-8 py-3.5 rounded-full tracking-wider">
+                    了解更多活動詳情 <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </section>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Schedule Section -->
+            <section class="bg-gradient-to-b from-[#FFFDF9] to-white rounded-3xl shadow-xl border border-amber-200/60 p-8 md:p-10 relative overflow-hidden group/schedule">
+                <!-- 背景隱約時鐘水印裝飾 -->
+                <div class="absolute top-[-20px] right-[-20px] opacity-[0.03] pointer-events-none transform group-hover/schedule:rotate-12 transition-transform duration-1000">
+                    <svg width="240" height="240" viewBox="0 0 24 24" fill="none" stroke="#B47B2B" stroke-width="0.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                </div>
+
+                <div class="flex items-center gap-3 mb-10 relative z-10">
+                    <div class="p-2.5 bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl shadow-sm border border-amber-200/50">
+                        <i data-lucide="clock" class="w-6 h-6 text-gold"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-stone-900 tracking-wider">當日流程</h2>
+                </div>
+
+                <div class="relative z-10">
+                    <!-- 漸層時間主軸線 -->
+                    <div class="absolute left-[15px] top-6 bottom-6 w-[2px] bg-gradient-to-b from-amber-400 via-amber-200/40 to-transparent rounded-full z-0"></div>
+
+                    <div class="space-y-4">
+                        <!-- Event 1 -->
+                        <div class="relative pl-10 group cursor-default">
+                            <div class="absolute left-[11px] top-[28px] w-2.5 h-2.5 rounded-full bg-gold ring-4 ring-[#FFFDF9] shadow-[0_0_0_4px_rgba(254,243,199,0.8)] group-hover:bg-amber-600 group-hover:ring-amber-100 group-hover:scale-125 transition-all duration-300 z-10"></div>
+                            <div class="bg-white rounded-2xl border border-amber-100/60 p-4 sm:px-5 shadow-sm group-hover:shadow-md group-hover:border-amber-300 transition-all duration-300 relative overflow-hidden flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6">
+                                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-gold to-amber-300 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="text-gold font-serif font-bold text-xl sm:text-2xl tracking-wide shrink-0">09:10</span>
+                                <h3 class="text-stone-800 font-semibold text-[17px] sm:text-lg">佛顓寺山門集合</h3>
+                            </div>
+                        </div>
+
+                        <!-- Event 2 -->
+                        <div class="relative pl-10 group cursor-default">
+                            <div class="absolute left-[11px] top-[28px] w-2.5 h-2.5 rounded-full bg-gold ring-4 ring-[#FFFDF9] shadow-[0_0_0_4px_rgba(254,243,199,0.8)] group-hover:bg-amber-600 group-hover:ring-amber-100 group-hover:scale-125 transition-all duration-300 z-10"></div>
+                            <div class="bg-white rounded-2xl border border-amber-100/60 p-4 sm:px-5 shadow-sm group-hover:shadow-md group-hover:border-amber-300 transition-all duration-300 relative overflow-hidden flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6">
+                                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-gold to-amber-300 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="text-gold font-serif font-bold text-xl sm:text-2xl tracking-wide shrink-0">09:30</span>
+                                <h3 class="text-stone-800 font-semibold text-[17px] sm:text-lg flex flex-wrap items-center gap-2">
+                                    起程 
+                                    <span class="text-sm text-stone-500 font-normal bg-stone-50 border border-stone-100 px-2 py-0.5 rounded-md">三步一拜、九部一跪</span>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <!-- Event 3 -->
+                        <div class="relative pl-10 group cursor-default">
+                            <div class="absolute left-[11px] top-[28px] w-2.5 h-2.5 rounded-full bg-gold ring-4 ring-[#FFFDF9] shadow-[0_0_0_4px_rgba(254,243,199,0.8)] group-hover:bg-amber-600 group-hover:ring-amber-100 group-hover:scale-125 transition-all duration-300 z-10"></div>
+                            <div class="bg-white rounded-2xl border border-amber-100/60 p-4 sm:px-5 shadow-sm group-hover:shadow-md group-hover:border-amber-300 transition-all duration-300 relative overflow-hidden flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6">
+                                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-gold to-amber-300 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="text-gold font-serif font-bold text-xl sm:text-2xl tracking-wide shrink-0">10:20</span>
+                                <h3 class="text-stone-800 font-semibold text-[17px] sm:text-lg">金身法像入墊過爐安座</h3>
+                            </div>
+                        </div>
+
+                        <!-- Event 4 -->
+                        <div class="relative pl-10 group cursor-default">
+                            <div class="absolute left-[11px] top-[28px] w-2.5 h-2.5 rounded-full bg-gold ring-4 ring-[#FFFDF9] shadow-[0_0_0_4px_rgba(254,243,199,0.8)] group-hover:bg-amber-600 group-hover:ring-amber-100 group-hover:scale-125 transition-all duration-300 z-10"></div>
+                            <div class="bg-white rounded-2xl border border-amber-100/60 p-4 sm:px-5 shadow-sm group-hover:shadow-md group-hover:border-amber-300 transition-all duration-300 relative overflow-hidden flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6">
+                                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-gold to-amber-300 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="text-gold font-serif font-bold text-xl sm:text-2xl tracking-wide shrink-0">10:30</span>
+                                <h3 class="text-stone-800 font-semibold text-[17px] sm:text-lg">前殿誦經浴佛</h3>
+                            </div>
+                        </div>
+
+                        <!-- Event 5 -->
+                        <div class="relative pl-10 group cursor-default">
+                            <div class="absolute left-[11px] top-[28px] w-2.5 h-2.5 rounded-full bg-gold ring-4 ring-[#FFFDF9] shadow-[0_0_0_4px_rgba(254,243,199,0.8)] group-hover:bg-amber-600 group-hover:ring-amber-100 group-hover:scale-125 transition-all duration-300 z-10"></div>
+                            <div class="bg-white rounded-2xl border border-amber-100/60 p-4 sm:px-5 shadow-sm group-hover:shadow-md group-hover:border-amber-300 transition-all duration-300 relative overflow-hidden flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6">
+                                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-gold to-amber-300 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="text-gold font-serif font-bold text-xl sm:text-2xl tracking-wide shrink-0">11:40</span>
+                                <h3 class="text-stone-800 font-semibold text-[17px] sm:text-lg">午餐平安齋</h3>
+                            </div>
+                        </div>
+
+                        <!-- Event 6 -->
+                        <div class="relative pl-10 group cursor-default">
+                            <div class="absolute left-[11px] top-[28px] w-2.5 h-2.5 rounded-full bg-gold ring-4 ring-[#FFFDF9] shadow-[0_0_0_4px_rgba(254,243,199,0.8)] group-hover:bg-amber-600 group-hover:ring-amber-100 group-hover:scale-125 transition-all duration-300 z-10"></div>
+                            <div class="bg-white rounded-2xl border border-amber-100/60 p-4 sm:px-5 shadow-sm group-hover:shadow-md group-hover:border-amber-300 transition-all duration-300 relative overflow-hidden flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6">
+                                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-gold to-amber-300 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="text-gold font-serif font-bold text-xl sm:text-2xl tracking-wide shrink-0">12:40</span>
+                                <h3 class="text-stone-800 font-semibold text-[17px] sm:text-lg">前殿廣場集合功德總迴向</h3>
+                            </div>
+                        </div>
+
+                        <!-- Event 7 -->
+                        <div class="relative pl-10 group cursor-default">
+                            <div class="absolute left-[11px] top-[28px] w-2.5 h-2.5 rounded-full bg-gold ring-4 ring-[#FFFDF9] shadow-[0_0_0_4px_rgba(254,243,199,0.8)] group-hover:bg-amber-600 group-hover:ring-amber-100 group-hover:scale-125 transition-all duration-300 z-10"></div>
+                            <div class="bg-white rounded-2xl border border-amber-100/60 p-4 sm:px-5 shadow-sm group-hover:shadow-md group-hover:border-amber-300 transition-all duration-300 relative overflow-hidden flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6">
+                                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-gold to-amber-300 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <span class="text-gold font-serif font-bold text-xl sm:text-2xl tracking-wide shrink-0">12:50</span>
+                                <h3 class="text-stone-800 font-semibold text-[17px] sm:text-lg">金身法像回駕</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Location & Transport Section -->
+            <section class="space-y-8">
+                <!-- Location -->
+                <div class="bg-white rounded-2xl shadow-sm border border-amber-100 p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="map-pin" class="w-7 h-7 text-gold"></i>
+                        <h2 class="text-2xl font-bold text-stone-900">會場資訊</h2>
+                    </div>
+                    <div class="space-y-2 text-lg mb-6">
+                        <p><span class="text-stone-500">地點：</span><span class="font-bold text-stone-800">佛顓寺</span></p>
+                        <p><span class="text-stone-500">地址：</span><span class="text-stone-800">臺南市新化區新和庄知義里6鄰12號</span></p>
+                    </div>
+                    <!-- 會場 Google 地圖 -->
+                    <div class="w-full h-48 rounded-xl overflow-hidden border border-amber-100 shadow-inner">
+                        <iframe src="https://maps.google.com/maps?q=23.026496,120.325844&hl=zh-TW&z=15&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <a href="https://www.google.com/maps/place/23%C2%B001'35.4%22N+120%C2%B019'33.0%22E/@23.0265009,120.3209731,1000m/data=!3m2!1e3!4b1!4m12!1m7!3m6!1s0x346e710012f05ed1:0x79abcd11e5890eda!2z5L2b6aGT5a-6!8m2!3d23.0213402!4d120.3300874!16s%2Fg%2F11n4sq8qfr!3m3!8m2!3d23.026496!4d120.325844?entry=ttu&g_ep=EgoyMDI2MDMwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="inline-flex items-center justify-center gap-2 text-gold hover:text-amber-800 font-medium bg-amber-50 hover:bg-amber-100 px-6 py-3 rounded-full transition-colors border border-amber-200 w-full md:w-auto">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-red-600"></i> 開啟會場 Google 地圖導航
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Transport -->
+                <div class="bg-white rounded-2xl shadow-sm border border-amber-100 p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="navigation" class="w-7 h-7 text-gold"></i>
+                        <h2 class="text-2xl font-bold text-stone-900">交通路線導引</h2>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-stone-800 text-lg flex items-center gap-2 mb-2">
+                                <span class="bg-amber-100 text-gold w-6 h-6 rounded-full flex items-center justify-center text-sm">1</span>
+                                經由國道1號 (中山高)
+                            </h4>
+                            <p class="text-stone-600 pl-8 leading-relaxed">北上/南下：請行駛至台南系統交流道(315K)，轉接國道8號往東(新化方向)。沿國道8號行駛至終點(新化端)後，右轉接台19甲線(中正路)，隨後依指標轉入中興路(往虎頭埤方向)即可抵達佛顓寺。</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-stone-800 text-lg flex items-center gap-2 mb-2">
+                                <span class="bg-amber-100 text-gold w-6 h-6 rounded-full flex items-center justify-center text-sm">2</span>
+                                經由國道3號 (福爾摩沙高速公路)
+                            </h4>
+                            <p class="text-stone-600 pl-8 leading-relaxed">北上/南下：請行駛至新化系統交流道(346K)，轉接國道8號往東(新化方向)。同樣行駛至國道8號終點處，右轉進入新化市區，沿台19甲線銜接中興路(往虎頭埤方向)即可抵達佛顓寺。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Registration & Donation -->
+        <section class="bg-stone-900 text-white rounded-2xl shadow-2xl p-8 md:p-12 relative overflow-hidden border-t-4 border-gold">
+            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+            <!-- Traditional mandala/lotus watermark in background -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none">
+                <svg width="400" height="400" viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="0.5">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 2C12 2 5 9 5 14C5 18 8 21 12 21C16 21 19 18 19 14C19 9 12 2 12 2Z"/>
+                    <path d="M12 22C12 22 17 18 22 13C22 9 19 6 16 6C13 6 12 9 12 9" />
+                    <path d="M12 22C12 22 7 18 2 13C2 9 5 6 8 6C11 6 12 9 12 9" />
+                </svg>
+            </div>
+            <div class="relative z-10 grid md:grid-cols-2 gap-12">
+                
+                <div>
+                    <h2 class="text-3xl font-bold text-amber-400 mb-6 border-b border-stone-700 pb-4">報名資訊</h2>
+                    <div class="space-y-4 text-lg">
+                        <p class="flex items-center gap-3">
+                            <i data-lucide="user" class="w-5 h-5 text-amber-500"></i>
+                            <span class="text-stone-400">總召集人：</span> 釋明法
+                        </p>
+                        <p class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-5 h-5 text-amber-500"></i>
+                            <span class="text-stone-400">報名專線：</span> <a href="tel:0915535588" class="hover:text-amber-400 transition-colors">0915-535-588</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-3xl font-bold text-amber-400 mb-6 border-b border-stone-700 pb-4">護持與聯絡</h2>
+                    <p class="text-stone-300 leading-relaxed mb-6">
+                        歡迎信眾隨喜發心贊助道場，護持壇城建設，恭書芳名投入功德箱，以積累福德資糧、共植福田；俾使明王殿得以常轉法輪，持續弘法利眾，廣結善緣。
+                    </p>
+                    <div class="space-y-3 bg-stone-800/50 p-6 rounded-xl border border-stone-700">
+                        <p class="flex items-center gap-3">
+                            <i data-lucide="phone-call" class="w-5 h-5 text-amber-500"></i>
+                            <span>明真師姐：<a href="tel:0915535588" class="hover:text-amber-400">0915-535-588</a></span>
+                        </p>
+                        <p class="flex items-center gap-3">
+                            <i data-lucide="message-circle" class="w-5 h-5 text-amber-500"></i>
+                            <span>LINE ID：<span class="text-amber-400 font-mono">0915535588</span></span>
+                        </p>
+                        <div class="flex items-start gap-3 mt-4 pt-4 border-t border-stone-700/50">
+                            <i data-lucide="map" class="w-5 h-5 text-amber-500 shrink-0 mt-1"></i>
+                            <div class="w-full">
+                                <span class="text-stone-200">台南市善化區中山路377號店面22號 <span class="text-sm text-amber-500/80 ml-1">(聯絡處)</span></span>
+                                <!-- 聯絡處 Google 地圖 -->
+                                <div class="w-full h-32 mt-3 rounded-lg overflow-hidden border border-stone-600 shadow-inner">
+                                    <iframe src="https://maps.google.com/maps?q=台南市善化區中山路377號&hl=zh-TW&z=15&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                </div>
+                                <a href="https://www.google.com/maps/search/?api=1&query=台南市善化區中山路377號" target="_blank" rel="noopener noreferrer" class="mt-3 text-stone-900 bg-amber-400 hover:bg-amber-300 transition-colors inline-flex items-center px-4 py-2.5 rounded-lg font-bold w-full justify-center shadow-sm">
+                                    <i data-lucide="map-pin" class="w-5 h-5 mr-2 text-red-700"></i> 導航至聯絡處
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="relative z-10 mt-12 text-center">
+                <p class="text-2xl font-serif text-amber-400 tracking-widest">感謝您 功德無量 阿彌陀佛</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 text-stone-500 text-sm">
+        <p>115年 浴佛朝聖大法會 敬邀各位信眾</p>
+    </footer>
+
+    <script>
+        // 初始化 Lucide 圖標
+        lucide.createIcons();
+    </script>
+</body>
+</html>
