@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>115年浴佛朝聖大法會</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700;900&family=Ma+Shan+Zheng&display=swap');
+        :root {
+            --gold: #C49A3C;
+            --gold-light: #F0C96A;
+            --gold-dark: #8B6914;
+            --deep: #1A120A;
+            --cream: #FDF8EE;
+        }
+        * { box-sizing: border-box; }
+        body { font-family: 'Noto Serif TC', serif; background-color: var(--deep); color: #E8DCC8; overflow-x: hidden; }
+        .bead-bg { background-image: radial-gradient(circle, rgba(196,154,60,0.18) 2px, transparent 2px); background-size: 28px 28px; }
+        @keyframes dharma-spin { to { transform: rotate(360deg); } }
+        .spin-slow  { animation: dharma-spin 60s linear infinite; }
+        .spin-med   { animation: dharma-spin 30s linear infinite reverse; }
+        .spin-fast  { animation: dharma-spin 12s linear infinite; }
+        @keyframes lotus-float { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-18px) rotate(2deg); } }
+        .lotus-float  { animation: lotus-float 7s ease-in-out infinite; }
+        .lotus-float2 { animation: lotus-float 9s ease-in-out infinite 1.5s; }
+        .lotus-float3 { animation: lotus-float 5s ease-in-out infinite 3s; }
+        @keyframes smoke { 0% { transform:translateY(0) scaleX(1); opacity:.7; } 50% { transform:translateY(-60px) scaleX(1.6); opacity:.35; } 100% { transform:translateY(-120px) scaleX(2.2); opacity:0; } }
+        .smoke  { animation: smoke 4s ease-out infinite; transform-origin: bottom center; }
+        .smoke2 { animation: smoke 4s ease-out 1.3s infinite; }
+        .smoke3 { animation: smoke 4s ease-out 2.6s infinite; }
+        @keyframes halo-pulse { 0%,100% { opacity:.15; transform:scale(1); } 50% { opacity:.35; transform:scale(1.05); } }
+        .halo-pulse { animation: halo-pulse 4s ease-in-out infinite; }
+        @keyframes text-glow { 0%,100% { text-shadow:0 0 20px rgba(196,154,60,.4),0 0 40px rgba(196,154,60,.2); } 50% { text-shadow:0 0 40px rgba(196,154,60,.8),0 0 80px rgba(196,154,60,.4),0 0 120px rgba(196,154,60,.2); } }
+        .text-glow { animation: text-glow 3s ease-in-out infinite; }
+        @keyframes candle { 0%,100% { transform:scaleY(1) scaleX(1); } 25% { transform:scaleY(1.1) scaleX(.9); } 75% { transform:scaleY(.9) scaleX(1.1); } }
+        .candle { animation: candle 1.8s ease-in-out infinite; transform-origin: bottom center; }
+        @keyframes fade-up { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+        .fade-up   { animation: fade-up 1s ease-out both; }
+        .delay-1   { animation-delay: .2s; }
+        .delay-2   { animation-delay: .5s; }
+        .delay-3   { animation-delay: .8s; }
+        .delay-4   { animation-delay: 1.1s; }
+        .gold-card { background: linear-gradient(135deg,rgba(255,248,220,.05) 0%,rgba(196,154,60,.05) 100%); border:1px solid rgba(196,154,60,.3); backdrop-filter:blur(8px); }
+        .gold-card:hover { border-color:rgba(196,154,60,.7); }
+        .scroll-card { background: linear-gradient(180deg,rgba(107,30,30,.15) 0%,transparent 60px), linear-gradient(0deg,rgba(107,30,30,.15) 0%,transparent 60px), linear-gradient(135deg,rgba(26,18,10,.9) 0%,rgba(40,28,16,.9) 100%); border-top:4px solid var(--gold); border-bottom:4px solid var(--gold); }
+        .timeline-dot { width:14px; height:14px; background:var(--gold); border-radius:50%; box-shadow:0 0 0 4px rgba(196,154,60,.15),0 0 12px rgba(196,154,60,.4); transition:all .3s; }
+        .timeline-item:hover .timeline-dot { box-shadow:0 0 0 6px rgba(196,154,60,.25),0 0 24px rgba(196,154,60,.6); transform:scale(1.3); }
+        .btn-gold { background:linear-gradient(135deg,#C49A3C 0%,#F0C96A 50%,#C49A3C 100%); background-size:200% auto; transition:background-position .4s,box-shadow .4s; color:var(--deep); font-weight:700; }
+        .btn-gold:hover { background-position:right center; box-shadow:0 0 20px rgba(196,154,60,.5),0 0 40px rgba(196,154,60,.2); }
+        .diamond-bullet::before { content:'◆'; color:var(--gold); margin-right:8px; font-size:.6em; vertical-align:middle; }
+        ::-webkit-scrollbar { width:6px; } ::-webkit-scrollbar-track { background:var(--deep); } ::-webkit-scrollbar-thumb { background:var(--gold-dark); border-radius:3px; }
+    </style>
+</head>
+<body class="antialiased">
+
+<!-- 全頁背景法輪曼陀羅 -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <svg class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] opacity-[0.03] spin-slow" viewBox="0 0 200 200" fill="none" stroke="#C49A3C" stroke-width="0.8">
+        <circle cx="100" cy="100" r="90"/><circle cx="100" cy="100" r="15"/>
+        <line x1="100" y1="10" x2="100" y2="190"/><line x1="10" y1="100" x2="190" y2="100"/>
+        <line x1="27" y1="27" x2="173" y2="173"/><line x1="173" y1="27" x2="27" y2="173"/>
+        <path d="M100,85 L93,55 M100,85 L107,55"/><path d="M100,115 L93,145 M100,115 L107,145"/>
+        <path d="M85,100 L55,93 M85,100 L55,107"/><path d="M115,100 L145,93 M115,100 L145,107"/>
+        <path d="M89,89 L65,65 M89,89 L75,60"/><path d="M111,89 L135,65 M111,89 L125,60"/>
+        <path d="M89,111 L65,135 M89,111 L75,140"/><path d="M111,111 L135,135 M111,111 L125,140"/>
+        <circle cx="100" cy="100" r="70" stroke-dasharray="4 6"/>
+        <circle cx="100" cy="100" r="50" stroke-dasharray="2 8"/>
+    </svg>
+    <svg class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] opacity-[0.02] spin-med" viewBox="0 0 200 200" fill="none" stroke="#C49A3C" stroke-width="0.5">
+        <circle cx="100" cy="100" r="95" stroke-dasharray="1 4"/>
+        <circle cx="100" cy="100" r="80" stroke-dasharray="3 3"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(22.5 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(45 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(67.5 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(90 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(112.5 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(135 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(157.5 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(180 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(202.5 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(225 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(247.5 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(270 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(292.5 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(315 100 100)"/>
+        <path d="M100,5 Q110,50 100,50 Q90,50 100,5" transform="rotate(337.5 100 100)"/>
+    </svg>
+</div>
+
+<!-- HERO -->
+<header class="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bead-bg" style="background-color:#1A120A;">
+    <div class="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_45%,rgba(196,154,60,0)_0%,rgba(196,154,60,0.06)_10%,rgba(196,154,60,0)_20%,rgba(196,154,60,0.06)_30%,rgba(196,154,60,0)_40%,rgba(196,154,60,0.06)_50%,rgba(196,154,60,0)_60%,rgba(196,154,60,0.06)_70%,rgba(196,154,60,0)_80%,rgba(196,154,60,0.06)_90%,rgba(196,154,60,0)_100%)] spin-slow z-0"></div>
+    <div class="absolute top-[44%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full halo-pulse z-0" style="background:radial-gradient(circle,rgba(196,154,60,.25) 0%,rgba(196,154,60,.08) 40%,transparent 70%)"></div>
+    <div class="absolute top-[44%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full z-0" style="background:radial-gradient(circle,rgba(240,201,106,.3) 0%,transparent 70%); animation:halo-pulse 2.5s ease-in-out infinite 1s;"></div>
+
+    <!-- 兩側蓮花 -->
+    <div class="absolute left-4 top-1/2 -translate-y-1/2 opacity-20 lotus-float hidden lg:block">
+        <svg width="110" height="150" viewBox="0 0 110 150" fill="none" stroke="#C49A3C" stroke-width="1.2">
+            <path d="M55,140 Q20,95 20,55 Q20,10 55,10 Q90,10 90,55 Q90,95 55,140Z" fill="#C49A3C" fill-opacity="0.1"/>
+            <path d="M55,140 Q80,105 100,65 Q100,28 72,28 Q55,28 55,55"/>
+            <path d="M55,140 Q30,105 10,65 Q10,28 38,28 Q55,28 55,55"/>
+            <ellipse cx="55" cy="144" rx="18" ry="4" fill="#C49A3C" fill-opacity="0.3" stroke="none"/>
+        </svg>
+    </div>
+    <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-20 lotus-float2 hidden lg:block" style="transform:translateY(-50%) scaleX(-1);">
+        <svg width="110" height="150" viewBox="0 0 110 150" fill="none" stroke="#C49A3C" stroke-width="1.2">
+            <path d="M55,140 Q20,95 20,55 Q20,10 55,10 Q90,10 90,55 Q90,95 55,140Z" fill="#C49A3C" fill-opacity="0.1"/>
+            <path d="M55,140 Q80,105 100,65 Q100,28 72,28 Q55,28 55,55"/>
+            <path d="M55,140 Q30,105 10,65 Q10,28 38,28 Q55,28 55,55"/>
+            <ellipse cx="55" cy="144" rx="18" ry="4" fill="#C49A3C" fill-opacity="0.3" stroke="none"/>
+        </svg>
+    </div>
+
+
+
+    <!-- 香爐煙霧 -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-0 flex flex-col items-center">
+        <div class="flex items-end gap-1 opacity-35">
+            <div class="w-1 h-16 rounded-full smoke"  style="background:linear-gradient(180deg,transparent,rgba(212,149,106,.6));"></div>
+            <div class="w-1 h-20 rounded-full smoke2" style="background:linear-gradient(180deg,transparent,rgba(212,149,106,.5));margin-left:4px"></div>
+            <div class="w-1 h-14 rounded-full smoke3" style="background:linear-gradient(180deg,transparent,rgba(212,149,106,.6));"></div>
+        </div>
+        <svg width="56" height="28" viewBox="0 0 56 28" fill="none" stroke="#C49A3C" stroke-width="1" class="opacity-50">
+            <path d="M8,26 Q28,18 48,26" fill="#C49A3C" fill-opacity="0.2"/>
+            <rect x="20" y="16" width="16" height="10" rx="2" fill="#C49A3C" fill-opacity="0.3"/>
+            <rect x="16" y="14" width="24" height="4" rx="1" fill="#C49A3C" fill-opacity="0.4"/>
+        </svg>
+    </div>
+
+    <!-- 主內容 -->
+    <div class="relative z-10 max-w-4xl mx-auto px-6 pt-20 pb-32">
+        <h3 class="fade-up delay-1 text-xl md:text-2xl tracking-[0.4em] mb-3 font-bold" style="color:#F0C96A;">紀念釋迦牟尼佛聖誕</h3>
+        <h1 class="fade-up delay-2 text-5xl md:text-6xl lg:text-8xl font-black leading-tight mb-6 text-glow"
+            style="font-family:'Ma Shan Zheng',serif;background:linear-gradient(180deg,#F0C96A 0%,#C49A3C 50%,#8B6914 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+            浴佛朝聖<br>大法會
+        </h1>
+        <div class="fade-up delay-2 inline-flex items-center gap-3 mb-6">
+            <div class="h-px w-10" style="background:linear-gradient(90deg,transparent,var(--gold))"></div>
+            <span class="px-5 py-1.5 rounded-full text-sm font-bold" style="background:rgba(196,154,60,0.15);border:1px solid rgba(196,154,60,0.5);color:var(--gold-light);letter-spacing:.3em;">一 一 五 年</span>
+            <div class="h-px w-10" style="background:linear-gradient(270deg,transparent,var(--gold))"></div>
+        </div>
+        <!-- 分隔裝飾 -->
+        <div class="fade-up delay-3 flex items-center justify-center gap-4 mb-8">
+            <div class="h-px flex-1 max-w-32" style="background:linear-gradient(90deg,transparent,rgba(196,154,60,.6))"></div>
+            <div class="flex gap-2">
+                <span class="w-2 h-2 rounded-full" style="background:var(--gold)"></span>
+                <span class="w-2 h-2 rounded-full opacity-60" style="background:var(--gold)"></span>
+                <span class="w-2 h-2 rounded-full opacity-30" style="background:var(--gold)"></span>
+            </div>
+            <div class="h-px flex-1 max-w-32" style="background:linear-gradient(270deg,transparent,rgba(196,154,60,.6))"></div>
+        </div>
+        <!-- 日期 -->
+        <div class="fade-up delay-3 inline-flex items-center gap-3 px-8 py-4 rounded-full mb-10 text-lg md:text-xl font-medium tracking-wider"
+             style="background:rgba(196,154,60,.1);border:1.5px solid rgba(196,154,60,.4);color:#F0E0A0;box-shadow:0 0 30px rgba(196,154,60,.15);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C49A3C" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            國曆 5 月 17 日（星期日）09：10
+        </div>
+        <p class="fade-up delay-4 text-lg md:text-xl leading-loose max-w-2xl mx-auto mb-10 opacity-80" style="color:#E8DCC8;">
+            一年一度的浴佛法會，不僅紀念佛陀聖誕，<br>更是洗滌心塵、淨化身心的殊勝時刻。<br>敬請提早規劃行程，當日以歡喜心共襄盛舉。
+        </p>
+        <p class="fade-up delay-4 text-2xl md:text-3xl font-bold tracking-widest text-glow" style="color:var(--gold-light);font-family:'Ma Shan Zheng',serif;">
+            讓我們同沐佛恩，共結法緣
+        </p>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 h-2 opacity-40" style="background:repeating-linear-gradient(90deg,transparent 0px,transparent 8px,rgba(196,154,60,.5) 8px,rgba(196,154,60,.5) 12px)"></div>
+</header>
+
+<main class="relative z-10 max-w-4xl mx-auto px-4 pb-20 pt-12 space-y-10">
+
+    <!-- 浴佛意義 -->
+    <section class="scroll-card rounded-2xl p-8 md:p-12 relative overflow-hidden shadow-2xl">
+        <div class="absolute top-4 right-4 opacity-10 lotus-float3">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#C49A3C" stroke-width="1">
+                <path d="M12 22C12 22 5 15 5 10C5 6 8 3 12 3C16 3 19 6 19 10C19 15 12 22 12 22Z" fill="#C49A3C" fill-opacity="0.5"/>
+                <path d="M12 22C12 22 17 18 22 13C22 9 19 6 16 6C13 6 12 9 12 9"/><path d="M12 22C12 22 7 18 2 13C2 9 5 6 8 6C11 6 12 9 12 9"/>
+            </svg>
+        </div>
+        <div class="absolute bottom-4 left-4 opacity-10 lotus-float">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#C49A3C" stroke-width="1">
+                <path d="M12 22C12 22 5 15 5 10C5 6 8 3 12 3C16 3 19 6 19 10C19 15 12 22 12 22Z" fill="#C49A3C" fill-opacity="0.5"/>
+                <path d="M12 22C12 22 17 18 22 13C22 9 19 6 16 6C13 6 12 9 12 9"/><path d="M12 22C12 22 7 18 2 13C2 9 5 6 8 6C11 6 12 9 12 9"/>
+            </svg>
+        </div>
+        <div class="flex items-center gap-4 mb-8 pb-6 justify-center md:justify-start" style="border-bottom:1px solid rgba(196,154,60,.25);">
+            <div class="p-3 rounded-full" style="background:rgba(196,154,60,.1);border:1px solid rgba(196,154,60,.3);">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="#C49A3C" stroke-width="1.5">
+                    <path d="M12 22C12 22 5 15 5 10C5 6 8 3 12 3C16 3 19 6 19 10C19 15 12 22 12 22Z" fill="#C49A3C" fill-opacity="0.15"/>
+                    <path d="M12 22C12 22 17 18 22 13C22 9 19 6 16 6C13 6 12 9 12 9"/>
+                    <path d="M12 22C12 22 7 18 2 13C2 9 5 6 8 6C11 6 12 9 12 9"/>
+                </svg>
+            </div>
+            <h2 class="text-3xl font-bold tracking-wider" style="color:#F0C96A;font-family:'Ma Shan Zheng',serif;">浴佛的意義</h2>
+        </div>
+        <div class="space-y-5 leading-loose text-lg text-justify" style="color:rgba(232,220,200,.85);">
+            <p class="diamond-bullet">藉由恭敬灌浴佛像的儀式，提醒我們回觀自心、清淨自心。佛陀本已圓滿清淨，浴佛其實是在洗滌我們內心的煩惱與塵垢，反省過往的身、口、意，並發願改過向善，讓心回歸光明與安定。</p>
+            <div class="relative my-8 py-6 px-8 rounded-xl text-center" style="background:rgba(196,154,60,.08);border:1px solid rgba(196,154,60,.25);">
+                <span class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 text-xs tracking-[0.3em] uppercase" style="background:#1A120A;color:var(--gold);">佛陀教誨</span>
+                <span class="text-5xl opacity-20 absolute top-2 left-4" style="color:var(--gold-light);font-family:serif;">"</span>
+                <p class="text-xl md:text-2xl font-bold italic tracking-wide" style="color:#F0C96A;text-shadow:0 0 20px rgba(196,154,60,.3);">
+                    諸惡莫作，眾善奉行，<br>自淨其意，是諸佛教。
+                </p>
+                <div class="mt-3 flex justify-center gap-2 items-center">
+                    <span style="color:var(--gold);font-size:1.1rem;">☸</span>
+                    <span class="text-xs tracking-[0.3em] opacity-60" style="color:var(--gold);">七佛通戒偈</span>
+                    <span style="color:var(--gold);font-size:1.1rem;">☸</span>
+                </div>
+            </div>
+            <p class="diamond-bullet">在浴佛的當下，以虔誠之心懺悔過往所造的業障，發願止惡行善，洗去自心的貪、嗔、癡三毒，使心念漸漸清淨。</p>
+            <p class="diamond-bullet">浴佛不只是外在的儀式，更是一種心靈的修行與生命的成長。若能時時觀照自心，保持清淨正念，便是於心中常行浴佛之道。</p>
+        </div>
+        <div class="mt-10 text-center md:text-left">
+            <a href="https://mingwang2009.github.io/Mingwangdian/assets/bathing-buddha.html" target="_blank"
+               class="btn-gold inline-flex items-center gap-2 px-8 py-3.5 rounded-full tracking-wider shadow-lg">
+                了解更多活動詳情
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- 流程 + 地點 -->
+    <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- 當日流程 -->
+        <section class="gold-card rounded-3xl p-8 relative overflow-hidden shadow-2xl" style="background:rgba(26,18,10,.95);">
+            <div class="absolute -bottom-12 -right-12 opacity-[0.04] spin-med">
+                <svg width="200" height="200" viewBox="0 0 200 200" fill="none" stroke="#C49A3C" stroke-width="1">
+                    <circle cx="100" cy="100" r="90"/><circle cx="100" cy="100" r="15"/>
+                    <line x1="100" y1="10" x2="100" y2="190"/><line x1="10" y1="100" x2="190" y2="100"/>
+                    <line x1="27" y1="27" x2="173" y2="173"/><line x1="173" y1="27" x2="27" y2="173"/>
+                </svg>
+            </div>
+            <div class="flex items-center gap-3 mb-8">
+                <div class="p-2.5 rounded-xl" style="background:rgba(196,154,60,.12);border:1px solid rgba(196,154,60,.3);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C49A3C" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h2 class="text-2xl font-bold tracking-wider" style="color:#F0C96A;font-family:'Ma Shan Zheng',serif;">當日流程</h2>
+            </div>
+            <div class="relative">
+                <div class="absolute left-[16px] top-4 bottom-4 w-0.5 rounded-full" style="background:linear-gradient(180deg,rgba(196,154,60,.8) 0%,rgba(196,154,60,.1) 100%)"></div>
+                <div class="space-y-3">
+                    <!-- 流程項目 x7 -->
+                    <div class="timeline-item relative pl-12 group cursor-default">
+                        <div class="timeline-dot absolute left-[10px] top-[18px]"></div>
+                        <div class="rounded-xl p-3.5 px-5 transition-all duration-300 group-hover:translate-x-1" style="background:rgba(196,154,60,.06);border:1px solid rgba(196,154,60,.15);">
+                            <div class="flex items-center gap-4">
+                                <span class="font-bold text-xl tracking-wide shrink-0" style="color:var(--gold-light);font-family:'Ma Shan Zheng',serif;">09:10</span>
+                                <span class="font-semibold text-base" style="color:#E8DCC8;">佛顓寺山門集合</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item relative pl-12 group cursor-default">
+                        <div class="timeline-dot absolute left-[10px] top-[18px]"></div>
+                        <div class="rounded-xl p-3.5 px-5 transition-all duration-300 group-hover:translate-x-1" style="background:rgba(196,154,60,.06);border:1px solid rgba(196,154,60,.15);">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="font-bold text-xl tracking-wide shrink-0" style="color:var(--gold-light);font-family:'Ma Shan Zheng',serif;">09:30</span>
+                                <span class="font-semibold text-base" style="color:#E8DCC8;">起程</span>
+                                <span class="text-xs px-2 py-0.5 rounded-md tracking-wide" style="background:rgba(196,154,60,.15);color:rgba(240,201,106,.8);border:1px solid rgba(196,154,60,.2);">三步一拜・九步一跪</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item relative pl-12 group cursor-default">
+                        <div class="timeline-dot absolute left-[10px] top-[18px]"></div>
+                        <div class="rounded-xl p-3.5 px-5 transition-all duration-300 group-hover:translate-x-1" style="background:rgba(196,154,60,.06);border:1px solid rgba(196,154,60,.15);">
+                            <div class="flex items-center gap-4">
+                                <span class="font-bold text-xl tracking-wide shrink-0" style="color:var(--gold-light);font-family:'Ma Shan Zheng',serif;">10:20</span>
+                                <span class="font-semibold text-base" style="color:#E8DCC8;">金身法像入殿過爐安座</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item relative pl-12 group cursor-default">
+                        <div class="timeline-dot absolute left-[10px] top-[18px]"></div>
+                        <div class="rounded-xl p-3.5 px-5 transition-all duration-300 group-hover:translate-x-1" style="background:rgba(196,154,60,.1);border:1px solid rgba(196,154,60,.3);">
+                            <div class="flex items-center gap-4">
+                                <span class="font-bold text-xl tracking-wide shrink-0" style="color:var(--gold-light);font-family:'Ma Shan Zheng',serif;">10:30</span>
+                                <div>
+                                    <span class="font-semibold text-base" style="color:#F0E0A0;">前殿誦經浴佛</span>
+                                    <div class="text-xs mt-0.5" style="color:rgba(196,154,60,.6);">☸ 核心儀式</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item relative pl-12 group cursor-default">
+                        <div class="timeline-dot absolute left-[10px] top-[18px]"></div>
+                        <div class="rounded-xl p-3.5 px-5 transition-all duration-300 group-hover:translate-x-1" style="background:rgba(196,154,60,.06);border:1px solid rgba(196,154,60,.15);">
+                            <div class="flex items-center gap-4">
+                                <span class="font-bold text-xl tracking-wide shrink-0" style="color:var(--gold-light);font-family:'Ma Shan Zheng',serif;">11:40</span>
+                                <span class="font-semibold text-base" style="color:#E8DCC8;">午餐平安齋</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item relative pl-12 group cursor-default">
+                        <div class="timeline-dot absolute left-[10px] top-[18px]"></div>
+                        <div class="rounded-xl p-3.5 px-5 transition-all duration-300 group-hover:translate-x-1" style="background:rgba(196,154,60,.06);border:1px solid rgba(196,154,60,.15);">
+                            <div class="flex items-center gap-4">
+                                <span class="font-bold text-xl tracking-wide shrink-0" style="color:var(--gold-light);font-family:'Ma Shan Zheng',serif;">12:40</span>
+                                <span class="font-semibold text-base" style="color:#E8DCC8;">功德總迴向</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item relative pl-12 group cursor-default">
+                        <div class="timeline-dot absolute left-[10px] top-[18px]"></div>
+                        <div class="rounded-xl p-3.5 px-5 transition-all duration-300 group-hover:translate-x-1" style="background:rgba(196,154,60,.06);border:1px solid rgba(196,154,60,.15);">
+                            <div class="flex items-center gap-4">
+                                <span class="font-bold text-xl tracking-wide shrink-0" style="color:var(--gold-light);font-family:'Ma Shan Zheng',serif;">12:50</span>
+                                <span class="font-semibold text-base" style="color:#E8DCC8;">金身法像回駕</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 會場 + 交通 -->
+        <section class="space-y-6">
+            <div class="gold-card rounded-2xl p-7 shadow-xl" style="background:rgba(26,18,10,.95);">
+                <div class="flex items-center gap-3 mb-5">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C49A3C" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <h2 class="text-xl font-bold tracking-wider" style="color:#F0C96A;font-family:'Ma Shan Zheng',serif;">會場資訊</h2>
+                </div>
+                <div class="space-y-1.5 text-base mb-5" style="color:#E8DCC8;">
+                    <p><span style="color:rgba(196,154,60,.7);">地點：</span><span class="font-bold">佛顓寺</span></p>
+                    <p><span style="color:rgba(196,154,60,.7);">地址：</span>臺南市新化區新和庄知義里6鄰12號</p>
+                </div>
+                <div class="w-full h-40 rounded-xl overflow-hidden" style="border:1px solid rgba(196,154,60,.25);">
+                    <iframe src="https://maps.google.com/maps?q=23.026496,120.325844&hl=zh-TW&z=15&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="mt-4">
+                    <a href="https://www.google.com/maps/place/23%C2%B001'35.4%22N+120%C2%B019'33.0%22E" target="_blank"
+                       class="btn-gold flex items-center justify-center gap-2 py-3 rounded-full tracking-wider shadow-lg">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        開啟 Google 地圖導航
+                    </a>
+                </div>
+            </div>
+            <div class="gold-card rounded-2xl p-7 shadow-xl" style="background:rgba(26,18,10,.95);">
+                <div class="flex items-center gap-3 mb-5">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C49A3C" stroke-width="1.8"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                    <h2 class="text-xl font-bold tracking-wider" style="color:#F0C96A;font-family:'Ma Shan Zheng',serif;">交通路線導引</h2>
+                </div>
+                <div class="space-y-4 text-sm leading-relaxed" style="color:rgba(232,220,200,.8);">
+                    <div>
+                        <h4 class="font-bold mb-1 flex items-center gap-2" style="color:#F0C96A;">
+                            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black" style="background:rgba(196,154,60,.2);border:1px solid rgba(196,154,60,.4);color:var(--gold);">1</span>
+                            國道 1 號（中山高）
+                        </h4>
+                        <p class="pl-8">行駛至台南系統交流道(315K)，轉國道8號往東（新化），至終點右轉台19甲，依指標轉中興路（往虎頭埤）即達佛顓寺。</p>
+                    </div>
+                    <div style="border-top:1px solid rgba(196,154,60,.15);padding-top:1rem;">
+                        <h4 class="font-bold mb-1 flex items-center gap-2" style="color:#F0C96A;">
+                            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black" style="background:rgba(196,154,60,.2);border:1px solid rgba(196,154,60,.4);color:var(--gold);">2</span>
+                            國道 3 號（福爾摩沙）
+                        </h4>
+                        <p class="pl-8">行駛至新化系統交流道(346K)，轉國道8號往東，至終點右轉進新化市區，沿台19甲銜接中興路（往虎頭埤）即達佛顓寺。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 供燈 Banner -->
+    <section class="rounded-2xl overflow-hidden relative py-10 px-8 text-center shadow-2xl" style="background:linear-gradient(135deg,rgba(107,30,30,.4) 0%,rgba(26,18,10,.95) 50%,rgba(107,30,30,.4) 100%);border:1px solid rgba(196,154,60,.3);">
+        <div class="flex justify-center gap-12 mb-6">
+            <div class="flex flex-col items-center">
+                <div class="candle" style="width:8px;height:30px;background:linear-gradient(180deg,#FCD34D,#F59E0B);border-radius:4px;box-shadow:0 0 10px rgba(252,211,77,.6);">
+                    <div style="width:6px;height:10px;background:radial-gradient(circle,#FFF 30%,#FCD34D);border-radius:50% 50% 0 0;margin:0 auto;margin-top:-8px;"></div>
+                </div>
+                <div style="width:12px;height:50px;background:linear-gradient(180deg,#E8DCC8,#C8B89A);border-radius:1px;"></div>
+            </div>
+            <div class="flex flex-col items-center -mt-3">
+                <div class="candle" style="width:10px;height:38px;background:linear-gradient(180deg,#FCD34D,#F59E0B);border-radius:4px;box-shadow:0 0 15px rgba(252,211,77,.7);">
+                    <div style="width:7px;height:12px;background:radial-gradient(circle,#FFF 30%,#FCD34D);border-radius:50% 50% 0 0;margin:0 auto;margin-top:-10px;"></div>
+                </div>
+                <div style="width:14px;height:60px;background:linear-gradient(180deg,#F0E0C8,#D4C4A8);border-radius:2px;"></div>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="candle" style="width:8px;height:30px;background:linear-gradient(180deg,#FCD34D,#F59E0B);border-radius:4px;box-shadow:0 0 10px rgba(252,211,77,.6);">
+                    <div style="width:6px;height:10px;background:radial-gradient(circle,#FFF 30%,#FCD34D);border-radius:50% 50% 0 0;margin:0 auto;margin-top:-8px;"></div>
+                </div>
+                <div style="width:12px;height:50px;background:linear-gradient(180deg,#E8DCC8,#C8B89A);border-radius:1px;"></div>
+            </div>
+        </div>
+        <div class="flex items-center justify-center gap-3 mb-2">
+            <span style="color:rgba(196,154,60,.4);font-size:1.5rem;">☸</span>
+            <h3 class="text-2xl md:text-3xl font-bold tracking-[0.2em] text-glow" style="color:#F0C96A;font-family:'Ma Shan Zheng',serif;">南無本師釋迦牟尼佛</h3>
+            <span style="color:rgba(196,154,60,.4);font-size:1.5rem;">☸</span>
+        </div>
+        <p class="tracking-[0.4em] text-sm opacity-50" style="color:var(--gold);">Namo Shakyamuni Buddha</p>
+    </section>
+
+    <!-- 報名 + 護持 -->
+    <section class="rounded-2xl shadow-2xl p-8 md:p-12 relative overflow-hidden" style="background:linear-gradient(135deg,#120C06 0%,#1E1208 100%);border-top:3px solid var(--gold);border-bottom:3px solid var(--gold);">
+        <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none spin-slow">
+            <svg width="500" height="500" viewBox="0 0 200 200" fill="none" stroke="#C49A3C" stroke-width="0.5">
+                <circle cx="100" cy="100" r="95"/><circle cx="100" cy="100" r="80"/>
+                <circle cx="100" cy="100" r="60"/><circle cx="100" cy="100" r="40"/><circle cx="100" cy="100" r="15"/>
+                <line x1="100" y1="5" x2="100" y2="195"/><line x1="5" y1="100" x2="195" y2="100"/>
+                <line x1="32" y1="32" x2="168" y2="168"/><line x1="168" y1="32" x2="32" y2="168"/>
+                <line x1="5" y1="60" x2="195" y2="140"/><line x1="5" y1="140" x2="195" y2="60"/>
+                <line x1="60" y1="5" x2="140" y2="195"/><line x1="140" y1="5" x2="60" y2="195"/>
+            </svg>
+        </div>
+        <div class="text-center mb-8 flex items-center justify-center gap-3">
+            <div class="h-px flex-1" style="background:linear-gradient(90deg,transparent,rgba(196,154,60,.5))"></div>
+            <span class="text-sm tracking-[0.5em] uppercase" style="color:rgba(196,154,60,.6);">報名與護持</span>
+            <div class="h-px flex-1" style="background:linear-gradient(270deg,transparent,rgba(196,154,60,.5))"></div>
+        </div>
+        <div class="relative z-10 grid md:grid-cols-2 gap-10">
+            <div>
+                <h2 class="text-2xl font-bold mb-6 pb-4 tracking-wider" style="color:#F0C96A;font-family:'Ma Shan Zheng',serif;border-bottom:1px solid rgba(196,154,60,.2);">
+                    <svg class="inline-block mr-2 -mt-0.5" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F0C96A" stroke-width="1.5"><circle cx="12" cy="5" r="2"/><circle cx="19" cy="9" r="2"/><circle cx="19" cy="15" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="5" cy="15" r="2"/><circle cx="5" cy="9" r="2"/><path d="M12 7 L18.5 8.5 M19 11 L19 13 M18.5 15.5 L13 18 M11 18 L6.5 16.5 M5 13 L5 11 M6.5 8.5 L11 7" stroke-dasharray="2 1"/></svg>報名資訊
+                </h2>
+                <div class="space-y-3 text-lg" style="color:#E8DCC8;">
+                    <div class="flex items-center gap-3 p-4 rounded-xl" style="background:rgba(196,154,60,.06);border:1px solid rgba(196,154,60,.15);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C49A3C" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <div><span style="color:rgba(196,154,60,.7);">總召集人：</span><span class="font-bold">釋明法</span></div>
+                    </div>
+                    <div class="flex items-center gap-3 p-4 rounded-xl" style="background:rgba(196,154,60,.06);border:1px solid rgba(196,154,60,.15);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C49A3C" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 9.58a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <div><span style="color:rgba(196,154,60,.7);">報名專線：</span><a href="tel:0915535588" class="font-bold" style="color:var(--gold-light);">0915-535-588</a></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold mb-6 pb-4 tracking-wider" style="color:#F0C96A;font-family:'Ma Shan Zheng',serif;border-bottom:1px solid rgba(196,154,60,.2);">
+                    <svg class="inline-block mr-2 -mt-0.5" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F0C96A" stroke-width="1.5"><path d="M12 22C12 22 5 15 5 10C5 6 8 3 12 3C16 3 19 6 19 10C19 15 12 22 12 22Z" fill="#F0C96A" fill-opacity="0.15"/><path d="M12 22C12 22 17 18 22 13C22 9 19 6 16 6C13 6 12 9 12 9"/><path d="M12 22C12 22 7 18 2 13C2 9 5 6 8 6C11 6 12 9 12 9"/></svg>護持與聯絡
+                </h2>
+                <p class="leading-relaxed mb-5 text-sm" style="color:rgba(232,220,200,.7);">
+                    歡迎信眾隨喜發心贊助道場，護持壇城建設，積累福德資糧、共植福田，讓明王殿持續弘法利眾，廣結善緣。
+                </p>
+                <div class="space-y-3 p-5 rounded-xl" style="background:rgba(196,154,60,.06);border:1px solid rgba(196,154,60,.2);">
+                    <p class="flex items-center gap-3 text-base" style="color:#E8DCC8;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C49A3C" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 9.58a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        明真師姐：<a href="tel:0915535588" class="font-bold" style="color:var(--gold-light);">0915-535-588</a>
+                    </p>
+                    <p class="flex items-center gap-3 text-base" style="color:#E8DCC8;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C49A3C" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        LINE ID：<span class="font-mono font-bold" style="color:var(--gold-light);">0915535588</span>
+                    </p>
+                    <div class="pt-3" style="border-top:1px solid rgba(196,154,60,.15);">
+                        <p class="text-sm mb-3" style="color:rgba(232,220,200,.7);">台南市善化區中山路377號店面22號 <span style="color:rgba(196,154,60,.6);">(聯絡處)</span></p>
+                        <div class="w-full h-28 rounded-lg overflow-hidden" style="border:1px solid rgba(196,154,60,.2);">
+                            <iframe src="https://maps.google.com/maps?q=台南市善化區中山路377號&hl=zh-TW&z=15&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=台南市善化區中山路377號" target="_blank"
+                           class="btn-gold mt-3 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-bold tracking-wider">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            導航至聯絡處
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative z-10 mt-12 text-center py-8" style="border-top:1px solid rgba(196,154,60,.2);">
+        <p class="text-xs tracking-[0.5em] mb-4 uppercase" style="color:rgba(196,154,60,.65);">Dedication of Merit</p>
+            <p class="text-2xl md:text-3xl font-bold tracking-widest text-glow" style="color:#F0C96A;font-family:'Ma Shan Zheng',serif;">
+                感謝您　功德無量　阿彌陀佛
+            </p>
+            <div class="flex justify-center gap-5 mt-5 text-2xl" style="color:rgba(196,154,60,.65);">
+                <span>☸</span><span>✿</span><span>☸</span><span>✿</span><span>☸</span>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="text-center py-10" style="border-top:1px solid rgba(196,154,60,.4);">
+    <div class="flex justify-center mb-4">
+        <svg width="280" height="16" viewBox="0 0 280 16" class="opacity-50">
+            <line x1="0" y1="8" x2="280" y2="8" stroke="#C49A3C" stroke-width="0.5" stroke-dasharray="1 10"/>
+            <circle cx="20" cy="8" r="4" fill="#C49A3C" fill-opacity="0.6"/>
+            <circle cx="50" cy="8" r="4" fill="#C49A3C" fill-opacity="0.6"/>
+            <circle cx="80" cy="8" r="4" fill="#C49A3C" fill-opacity="0.6"/>
+            <circle cx="110" cy="8" r="4" fill="#C49A3C" fill-opacity="0.6"/>
+            <circle cx="140" cy="8" r="6" fill="#C49A3C"/>
+            <circle cx="170" cy="8" r="4" fill="#C49A3C" fill-opacity="0.6"/>
+            <circle cx="200" cy="8" r="4" fill="#C49A3C" fill-opacity="0.6"/>
+            <circle cx="230" cy="8" r="4" fill="#C49A3C" fill-opacity="0.6"/>
+            <circle cx="260" cy="8" r="4" fill="#C49A3C" fill-opacity="0.6"/>
+        </svg>
+    </div>
+    <p class="text-sm tracking-[0.3em]" style="color:rgba(196,154,60,.8);">一一五年　浴佛朝聖大法會　敬邀各位信眾</p>
+    <p class="text-xs mt-2 tracking-[0.2em]" style="color:rgba(196,154,60,.55);">OM MANI PADME HUM　☸</p>
+</footer>
+
+</body>
+</html>
