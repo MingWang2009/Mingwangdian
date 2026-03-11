@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>115年浴佛朝聖大法會 - 佛顓寺</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --gold-primary: #B47B2B;
+            --gold-light: #FCD34D;
+            --stone-dark: #1C1917;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #FDFBF7;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 86c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm76-71c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-3-12c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zM11 52c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm7 31c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm16-71c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-8 47c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm31 8c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-2 13c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm27-1c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm26-21c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm-4-4c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zM26 13c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1zm3 48c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1z' fill='%23b47b2b' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .text-gold { color: var(--gold-primary); }
+        .bg-gold { background-color: var(--gold-primary); }
+        .border-gold { border-color: var(--gold-primary); }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(180, 123, 43, 0.15);
+        }
+
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-rotate-slow {
+            animation: rotate-slow 120s linear infinite;
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .animate-ripple {
+            animation: ripple 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        .lotus-glow {
+            filter: drop-shadow(0 0 15px rgba(252, 211, 77, 0.4));
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gold-light);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+        }
+
+        /* --- 修正頁籤狀態樣式 --- */
+        .tab-btn {
+            font-family: system-ui, -apple-system, "Microsoft JhengHei", sans-serif !important;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            transform: none !important;
+            backface-visibility: hidden;
+            transition: none !important;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--gold-primary) !important;
+            color: white !important;
+            box-shadow: none !important;
+        }
+        
+        .tab-header-container {
+            overflow: visible !important;
+        }
+    </style>
+</head>
+<body class="text-stone-800 antialiased selection:bg-amber-100 selection:text-amber-900">
+
+    <!-- Sticky Navigation -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-500 bg-stone-900/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center">
+                    <i data-lucide="flower-2" class="w-5 h-5 text-stone-900"></i>
+                </div>
+                <span class="text-white font-bold tracking-widest">佛顓寺</span>
+            </div>
+            
+            <div class="hidden md:flex gap-8 text-stone-300 text-sm font-medium tracking-widest">
+                <a href="#meaning" class="nav-link hover:text-white">浴佛意義</a>
+                <a href="#schedule" class="nav-link hover:text-white">活動流程</a>
+                <a href="#location" class="nav-link hover:text-white">交通資訊</a>
+                <a href="#register" class="nav-link hover:text-white text-amber-400">我要報名</a>
+            </div>
+            
+            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-amber-400 transition-colors">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-stone-900 z-[60] hidden flex-col items-center justify-center gap-10 transition-opacity opacity-0 duration-300">
+        <button id="close-menu-btn" class="absolute top-6 right-6 text-white hover:text-amber-400 transition-colors">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <a href="#meaning" class="mobile-link text-2xl text-stone-300 hover:text-white tracking-[0.2em]">浴佛意義</a>
+        <a href="#schedule" class="mobile-link text-2xl text-stone-300 hover:text-white tracking-[0.2em]">活動流程</a>
+        <a href="#location" class="mobile-link text-2xl text-stone-300 hover:text-white tracking-[0.2em]">交通資訊</a>
+        <a href="#register" class="mobile-link text-2xl text-amber-400 hover:text-amber-300 tracking-[0.2em] font-bold">我要報名</a>
+        
+        <div class="mt-8 flex items-center gap-2 text-amber-400/50">
+            <i data-lucide="flower-2" class="w-5 h-5"></i>
+            <span class="text-sm tracking-widest">佛顓寺</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center pt-20 pb-32 overflow-hidden bg-stone-900">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-radial-gradient from-amber-900/20 to-stone-900"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-10 animate-rotate-slow">
+                <svg viewBox="0 0 100 100" class="w-full h-full text-amber-400 fill-current">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="0.5"/>
+                    <circle cx="50" cy="50" r="10" fill="none" stroke="currentColor" stroke-width="0.5"/>
+                    <g stroke="currentColor" stroke-width="0.5">
+                        <line x1="50" y1="5" x2="50" y2="40" />
+                        <line x1="50" y1="60" x2="50" y2="95" />
+                        <line x1="5" y1="50" x2="40" y2="50" />
+                        <line x1="60" y1="50" x2="95" y2="50" />
+                        <line x1="18" y1="18" x2="43" y2="43" />
+                        <line x1="57" y1="57" x2="82" y2="82" />
+                        <line x1="18" y1="82" x2="43" y2="57" />
+                        <line x1="57" y1="43" x2="82" y2="18" />
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+            <div class="animate-float mb-12 inline-block">
+                <div class="p-6 rounded-full bg-white/5 backdrop-blur-sm border border-amber-400/30 lotus-glow">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="1.2" class="mx-auto">
+                        <path d="M12 22C12 22 5 15 5 10C5 6 8 3 12 3C16 3 19 6 19 10C19 15 12 22 12 22Z" fill="#FCD34D" fill-opacity="0.1"/>
+                        <path d="M12 22C12 22 17 18 22 13C22 9 19 6 16 6C13 6 12 9 12 9" />
+                        <path d="M12 22C12 22 7 18 2 13C2 9 5 6 8 6C11 6 12 9 12 9" />
+                        <circle cx="12" cy="13" r="2" fill="#FCD34D" />
+                    </svg>
+                </div>
+            </div>
+
+            <p class="text-amber-200/80 tracking-[0.5em] mb-4 text-sm md:text-base font-medium">SHAKYAMUNI BUDDHA BIRTHDAY</p>
+            <h3 class="text-xl md:text-3xl tracking-[0.3em] text-white mb-6 font-light">紀念釋迦牟尼佛誕辰</h3>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight tracking-wider">
+                <span class="text-amber-400">115</span>年浴佛朝聖<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-200">大法會</span>
+            </h1>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
+                <div class="flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
+                    <i data-lucide="calendar" class="w-5 h-5 text-amber-400"></i>
+                    <span class="text-white text-lg tracking-widest font-medium">國曆 5 月 17 日</span>
+                </div>
+                <div class="flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
+                    <i data-lucide="clock" class="w-5 h-5 text-amber-400"></i>
+                    <span class="text-white text-lg tracking-widest font-medium">星期日 09:10</span>
+                </div>
+            </div>
+
+            <div class="max-w-2xl mx-auto space-y-4">
+                <p class="text-stone-300 text-lg md:text-xl leading-loose">
+                    一年一度浴佛勝緣，洗滌心塵、淨化身心。<br>
+                    讓我們同沐佛恩，共結法緣，祈願世界和平，眾生安樂。
+                </p>
+                <div class="pt-8">
+                    <a href="#register" class="inline-flex items-center gap-2 bg-amber-400 text-stone-900 font-bold px-10 py-4 rounded-full hover:bg-white transition-all hover:scale-105 shadow-[0_0_30px_rgba(251,191,36,0.3)]">
+                        即刻報名參加 <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <a href="#meaning" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce">
+            <i data-lucide="chevron-down" class="w-8 h-8"></i>
+        </a>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-24 space-y-32">
+
+        <!-- Meaning Section -->
+        <section id="meaning" class="grid lg:grid-cols-5 gap-y-8 lg:gap-x-12 xl:gap-x-20 items-stretch">
+            
+            <div class="lg:col-span-2 flex flex-col order-1 lg:order-1">
+                <div class="w-full aspect-[4/5] bg-stone-900 rounded-[2.5rem] overflow-hidden shadow-2xl relative border-4 border-amber-100/20 group z-10">
+                    <div class="absolute inset-0 bg-stone-900">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%] opacity-20">
+                             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full border border-amber-400 animate-ripple"></div>
+                             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full border border-amber-400 animate-ripple" style="animation-delay: 1s;"></div>
+                             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full border border-amber-400 animate-ripple" style="animation-delay: 2s;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
+                        <div class="mb-10 p-5 rounded-full bg-amber-400/10 border border-amber-400/30 group-hover:scale-110 transition-transform duration-700">
+                            <i data-lucide="droplets" class="w-12 h-12 text-amber-400"></i>
+                        </div>
+                        
+                        <div class="flex items-center gap-12">
+                            <div class="vertical-text text-3xl md:text-4xl font-bold tracking-[0.5em] text-white">外浴佛身</div>
+                            <div class="w-px h-32 bg-gradient-to-b from-transparent via-amber-400/40 to-transparent"></div>
+                            <div class="vertical-text text-3xl md:text-4xl font-bold tracking-[0.5em] text-amber-400">內淨自心</div>
+                        </div>
+
+                        <div class="mt-12 text-stone-400 text-sm tracking-[0.3em] font-medium uppercase opacity-60">
+                            Purify the body, Cleansing the soul
+                        </div>
+                    </div>
+
+                    <div class="absolute top-6 left-6 w-12 h-12 border-t-2 border-l-2 border-amber-400/30 rounded-tl-xl"></div>
+                    <div class="absolute bottom-6 right-6 w-12 h-12 border-b-2 border-r-2 border-amber-400/30 rounded-br-xl"></div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 flex flex-col justify-center space-y-8 order-3 lg:order-2">
+                <div class="inline-block border-l-4 border-gold pl-4">
+                    <h2 class="text-4xl font-bold text-stone-900 tracking-wider">浴佛的意義</h2>
+                    <p class="text-gold font-medium mt-1">THE SPIRITUAL ESSENCE</p>
+                </div>
+                
+                <div class="space-y-6 text-stone-600 text-lg md:text-xl leading-loose text-justify">
+                    <p>恭敬灌浴佛像，實則是提醒我們回觀自心。佛陀本已圓滿清淨，儀式中的每一勺淨水，象徵著洗去我們內心的煩惱塵垢，反省過往的身、口、意，回歸自性的光明。</p>
+                    
+                    <div class="bg-amber-50/50 p-8 rounded-3xl border-l-4 border-gold italic text-stone-800 font-medium relative overflow-hidden">
+                        <i data-lucide="quote" class="absolute -top-4 -right-4 w-24 h-24 text-amber-100 opacity-50 -rotate-12"></i>
+                        「諸惡莫作，眾善奉行，自淨其意，是諸佛教。」
+                    </div>
+
+                    <p>在浴佛的當下，以虔誠心發願：願止惡行善，願洗去貪、嗔、癡三毒。這不只是外在儀式，更是一場深層的心靈修持。</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 flex order-2 lg:order-3 w-full items-start">
+                <div class="w-full bg-white p-4 rounded-2xl border border-stone-100 shadow-sm flex items-center justify-center transition-all h-[74px]">
+                    <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                         <div class="w-1.5 h-1.5 rounded-full bg-gold shrink-0"></div>
+                         <span class="h-px w-2 xl:w-4 bg-amber-200 shrink-0"></span>
+                    </div>
+                    <span class="text-stone-800 font-medium text-[15px] sm:text-base whitespace-nowrap mx-1.5 sm:mx-4">
+                        一勺淨水<span class="text-amber-300/50 mx-1.5 sm:mx-2">|</span>萬劫塵消
+                    </span>
+                    <div class="flex items-center gap-1.5 sm:gap-2 flex-row-reverse shrink-0">
+                         <i data-lucide="sparkles" class="w-4 h-4 text-amber-400/80 shrink-0"></i>
+                         <span class="h-px w-2 xl:w-4 bg-amber-200 shrink-0"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 flex order-4 lg:order-4 w-full items-start">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                    <div class="flex items-center justify-center gap-4 bg-white p-4 rounded-2xl border border-stone-100 shadow-sm h-[74px]">
+                        <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
+                            <i data-lucide="check" class="w-5 h-5 text-gold"></i>
+                        </div>
+                        <span class="text-stone-800 font-medium text-base">淨化身心，消除業障</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-4 bg-white p-4 rounded-2xl border border-stone-100 shadow-sm h-[74px]">
+                        <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
+                            <i data-lucide="check" class="w-5 h-5 text-gold"></i>
+                        </div>
+                        <span class="text-stone-800 font-medium text-base">開啟智慧，增長福德</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Schedule Section -->
+        <section id="schedule" class="py-16 bg-white rounded-[3rem] shadow-xl border border-amber-100 overflow-hidden relative">
+            <div class="absolute top-0 right-0 p-12 opacity-5">
+                <i data-lucide="clock" class="w-64 h-64 text-gold"></i>
+            </div>
+            
+            <div class="max-w-4xl mx-auto px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-stone-900 tracking-widest mb-4">法會流程</h2>
+                    <div class="w-20 h-1 bg-gold mx-auto"></div>
+                </div>
+
+                <div class="relative">
+                    <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-stone-200 -translate-x-1/2"></div>
+                    <div class="space-y-12">
+                        <div class="relative flex flex-col md:flex-row items-center group">
+                            <div class="hidden md:block w-1/2 pr-12 text-right">
+                                <span class="text-gold font-serif text-3xl font-bold">09:10</span>
+                            </div>
+                            <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
+                            <div class="w-full md:w-1/2 pl-12">
+                                <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-l-4 border-l-gold">
+                                    <span class="md:hidden text-gold font-bold mb-2 block">09:10</span>
+                                    <h3 class="text-xl font-bold text-stone-900">佛顓寺山門集合</h3>
+                                    <p class="text-stone-500 mt-2 text-sm">請提早抵達，維持道場莊嚴</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative flex flex-col md:flex-row items-center group">
+                            <div class="w-full md:w-1/2 pr-0 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                                <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-r-0 md:border-r-4 md:border-r-gold border-l-4 border-l-gold md:border-l-0">
+                                    <span class="md:hidden text-gold font-bold mb-2 block">09:30</span>
+                                    <h3 class="text-xl font-bold text-stone-900">朝聖起程</h3>
+                                    <p class="text-stone-500 mt-2 text-sm">三步一拜、九部一跪，至誠禮佛</p>
+                                </div>
+                            </div>
+                            <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
+                            <div class="hidden md:block w-1/2 pl-12 order-1 md:order-2"><span class="text-gold font-serif text-3xl font-bold">09:30</span></div>
+                        </div>
+                        <div class="relative flex flex-col md:flex-row items-center group">
+                            <div class="hidden md:block w-1/2 pr-12 text-right"><span class="text-gold font-serif text-3xl font-bold">10:30</span></div>
+                            <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
+                            <div class="w-full md:w-1/2 pl-12">
+                                <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-l-4 border-l-gold">
+                                    <span class="md:hidden text-gold font-bold mb-2 block">10:30</span>
+                                    <h3 class="text-xl font-bold text-stone-900">前殿誦經浴佛</h3>
+                                    <p class="text-stone-500 mt-2 text-sm">恭誦經文，淨水灌浴，法喜充滿</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative flex flex-col md:flex-row items-center group">
+                            <div class="w-full md:w-1/2 pr-0 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                                <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-r-0 md:border-r-4 md:border-r-gold border-l-4 border-l-gold md:border-l-0">
+                                    <span class="md:hidden text-gold font-bold mb-2 block">11:40</span>
+                                    <h3 class="text-xl font-bold text-stone-900">午餐平安齋</h3>
+                                    <p class="text-stone-500 mt-2 text-sm">廣結善緣，共享平安齋食</p>
+                                </div>
+                            </div>
+                            <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
+                            <div class="hidden md:block w-1/2 pl-12 order-1 md:order-2"><span class="text-gold font-serif text-3xl font-bold">11:40</span></div>
+                        </div>
+                        <div class="relative flex flex-col md:flex-row items-center group">
+                            <div class="hidden md:block w-1/2 pr-12 text-right"><span class="text-gold font-serif text-3xl font-bold">12:40</span></div>
+                            <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
+                            <div class="w-full md:w-1/2 pl-12">
+                                <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-l-4 border-l-gold">
+                                    <span class="md:hidden text-gold font-bold mb-2 block">12:40</span>
+                                    <h3 class="text-xl font-bold text-stone-900">功德總迴向</h3>
+                                    <p class="text-stone-500 mt-2 text-sm">願以此功德，普及於一切</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location Section -->
+        <section id="location" class="grid lg:grid-cols-5 gap-8">
+            <div class="lg:col-span-2 space-y-6">
+                <div class="inline-block border-l-4 border-gold pl-4"><h2 class="text-4xl font-bold text-stone-900 tracking-wider">會場資訊</h2><p class="text-gold font-medium mt-1 uppercase">Venue & Transport</p></div>
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-stone-100">
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-6 h-6 text-gold"></i></div>
+                            <div><p class="text-sm text-stone-400 mb-1">法會地點</p><p class="text-xl font-bold text-stone-800">佛顓寺</p><p class="text-stone-600 mt-1">臺南市新化區新和庄知義里6鄰12號</p></div>
+                        </div>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=23.026496,120.325844" target="_blank" class="flex items-center justify-center gap-2 w-full py-4 bg-stone-900 text-white rounded-xl hover:bg-gold font-bold transition-none"><i data-lucide="navigation" class="w-5 h-5"></i> 開始 Google 地圖導航</a>
+                    </div>
+                </div>
+
+                <!-- Transport Tab Panel -->
+                <div class="bg-white rounded-3xl shadow-xl border border-amber-100 flex flex-col overflow-visible">
+                    <!-- Tab Header -->
+                    <div class="p-2 bg-stone-50 flex gap-2 border-b border-stone-100 rounded-t-3xl tab-header-container">
+                        <button onclick="switchTab('highway1')" id="tab-highway1" class="tab-btn active flex-1 py-3 rounded-xl font-semibold text-[15px] flex items-center justify-center gap-2 bg-stone-50 text-stone-500 hover:bg-stone-100">
+                            <i data-lucide="map" class="w-4 h-4"></i> 國道 1 號
+                        </button>
+                        <button onclick="switchTab('highway3')" id="tab-highway3" class="tab-btn flex-1 py-3 rounded-xl font-semibold text-[15px] text-stone-500 bg-stone-50 hover:bg-stone-100 flex items-center justify-center gap-2">
+                            <i data-lucide="map" class="w-4 h-4"></i> 國道 3 號
+                        </button>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="p-6 md:p-8 min-h-[380px]">
+                        <!-- Highway 1 -->
+                        <div id="content-highway1" class="tab-content space-y-6 text-base">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="px-2 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded tracking-wider">中山高速公路</span><span class="text-stone-400 text-xs">北上 / 南下</span>
+                            </div>
+                            <div class="relative space-y-8 pl-4 border-l-2 border-dashed border-stone-200">
+                                <div class="relative">
+                                    <div class="absolute -left-[25px] top-0 w-4 h-4 bg-white border-2 border-gold rounded-full"></div>
+                                    <p class="text-[15px] font-bold text-stone-800">台南系統交流道 (315K)</p>
+                                    <p class="text-sm text-stone-500 mt-1">轉接 <span class="text-amber-600 font-bold">國道 8 號</span> 往東 (新化方向)</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="absolute -left-[25px] top-0 w-4 h-4 bg-white border-2 border-gold rounded-full"></div>
+                                    <p class="text-[15px] font-bold text-stone-800">國道 8 號終點 (新化端)</p>
+                                    <p class="text-sm text-stone-500 mt-1">下交流道後 <span class="text-amber-600 font-bold">右轉</span> 銜接台 19 甲線</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="absolute -left-[25px] top-0 w-4 h-4 bg-white border-2 border-gold rounded-full"></div>
+                                    <p class="text-[15px] font-bold text-stone-800">中正路 / 中興路口</p>
+                                    <p class="text-sm text-stone-500 mt-1">依指標 <span class="text-amber-600 font-bold">轉入中興路</span> (往虎頭埤方向)</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="absolute -left-[25px] top-0 w-5 h-5 bg-gold rounded-full flex items-center justify-center shadow-lg"><i data-lucide="check" class="w-3 h-3 text-white"></i></div>
+                                    <p class="text-[15px] font-bold text-stone-900">抵達佛顓寺</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Highway 3 -->
+                        <div id="content-highway3" class="tab-content hidden space-y-6 text-base">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="px-2 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded tracking-wider">福爾摩沙高速公路</span><span class="text-stone-400 text-xs">北上 / 南下</span>
+                            </div>
+                            <div class="relative space-y-8 pl-4 border-l-2 border-dashed border-stone-200">
+                                <div class="relative">
+                                    <div class="absolute -left-[25px] top-0 w-4 h-4 bg-white border-2 border-gold rounded-full"></div>
+                                    <p class="text-[15px] font-bold text-stone-800">新化系統交流道 (346K)</p>
+                                    <p class="text-sm text-stone-500 mt-1">轉接 <span class="text-amber-600 font-bold">國道 8 號</span> 往東 (新化方向)</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="absolute -left-[25px] top-0 w-4 h-4 bg-white border-2 border-gold rounded-full"></div>
+                                    <p class="text-[15px] font-bold text-stone-800">國道 8 號終點處</p>
+                                    <p class="text-sm text-stone-500 mt-1"><span class="text-amber-600 font-bold">右轉進入新化市區</span> 沿台 19 甲線行駛</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="absolute -left-[25px] top-0 w-4 h-4 bg-white border-2 border-gold rounded-full"></div>
+                                    <p class="text-[15px] font-bold text-stone-800">銜接中興路</p>
+                                    <p class="text-sm text-stone-500 mt-1"><span class="text-amber-600 font-bold">往虎頭埤方向</span> 行駛即可抵達</p>
+                                </div>
+                                <div class="relative">
+                                    <div class="absolute -left-[25px] top-0 w-5 h-5 bg-gold rounded-full flex items-center justify-center shadow-lg"><i data-lucide="check" class="w-3 h-3 text-white"></i></div>
+                                    <p class="text-[15px] font-bold text-stone-900">抵達佛顓寺</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 h-[500px] lg:h-auto rounded-3xl overflow-hidden shadow-inner border border-stone-200 order-last">
+                <iframe src="https://maps.google.com/maps?q=23.026496,120.325844&hl=zh-TW&z=15&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </section>
+
+        <!-- CTA / Register Section -->
+        <section id="register" class="relative bg-stone-900 rounded-[3rem] p-8 md:p-20 text-center overflow-hidden">
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute top-0 left-0 w-64 h-64 bg-amber-400 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 right-0 w-64 h-64 bg-amber-600 rounded-full blur-3xl"></div>
+            </div>
+            
+            <div class="relative z-10 space-y-12">
+                <div class="max-w-2xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl font-bold text-amber-400 mb-6">護持道場 ‧ 共植福田</h2>
+                    <p class="text-stone-300 text-lg leading-loose">歡迎十方信眾參與報名，亦可隨喜發心護持。您的護持將使佛法常轉，廣結善緣。</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 text-left hover:border-amber-400/50 transition-all">
+                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3"><i data-lucide="user-check" class="w-6 h-6 text-amber-400"></i> 報名窗口</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between"><span class="text-stone-400">總召集人</span><span class="text-white font-medium">釋明法</span></div>
+                            <div class="flex items-center justify-between"><span class="text-stone-400">報名專線</span><a href="tel:0915535588" class="text-amber-400 text-xl font-bold">0915-535-588</a></div>
+                        </div>
+                    </div>
+                    <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 text-left hover:border-amber-400/50 transition-all">
+                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3"><i data-lucide="message-square" class="w-6 h-6 text-amber-400"></i> 線上聯繫</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between"><span class="text-stone-400">LINE ID</span><span class="text-white font-mono bg-stone-800 px-3 py-1 rounded">0915535588</span></div>
+                            <div class="flex items-start justify-between">
+                                <span class="text-stone-400 mt-1">聯絡師姐</span>
+                                <div class="text-right">
+                                    <span class="text-white">明真師姐</span>
+                                    <span class="text-white/20 mx-2 hidden sm:inline">|</span>
+                                    <a href="tel:0915535588" class="text-amber-400 font-bold block sm:inline mt-1 sm:mt-0">0915-535-588</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-8 border-t border-white/10 max-w-4xl mx-auto">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-left">
+                        <div>
+                            <p class="text-stone-400 text-sm mb-1 uppercase tracking-widest">善化聯絡處</p>
+                            <p class="text-white text-lg">台南市善化區中山路377號22號店面</p>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=台南市善化區中山路377號" target="_blank" class="flex items-center gap-2 bg-white/10 text-white px-6 py-3 rounded-xl hover:bg-white/20 transition-all">
+                            <i data-lucide="map" class="w-5 h-5"></i> 地圖查看
+                        </a>
+                    </div>
+                </div>
+                <p class="text-2xl font-serif text-amber-400 italic tracking-[0.2em] pt-12">— 功德無量 ‧ 阿彌陀佛 —</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-stone-50 py-12 border-t border-stone-200">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-stone-900 rounded-full flex items-center justify-center"><i data-lucide="flower-2" class="w-6 h-6 text-amber-400"></i></div>
+                <div>
+                    <p class="font-bold text-stone-900 tracking-widest leading-none">佛顓寺</p>
+                    <p class="text-xs text-stone-400 mt-1 uppercase">Fo Zhuan Monastery</p>
+                </div>
+            </div>
+            <div class="text-stone-400 text-sm">&copy; 115年 浴佛朝聖大法會 ‧ 敬邀各位信眾</div>
+            <div class="flex gap-4">
+                <button class="w-10 h-10 rounded-full border border-stone-200 flex items-center justify-center hover:bg-stone-900 hover:text-white transition-all"><i data-lucide="share-2" class="w-4 h-4"></i></button>
+                <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="w-10 h-10 rounded-full bg-gold text-white flex items-center justify-center hover:shadow-lg transition-all"><i data-lucide="arrow-up" class="w-4 h-4"></i></button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        function switchTab(tabId) {
+            // 1. 更新按鈕樣式
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                // 恢復未點選時的顏色與懸停效果
+                btn.classList.add('text-stone-500', 'hover:bg-stone-100');
+            });
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.add('active');
+            // 移除點選後的干擾類別
+            activeBtn.classList.remove('text-stone-500', 'hover:bg-stone-100');
+
+            // 2. 切換內容顯示
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+        }
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-stone-900/95', 'shadow-2xl');
+                nav.classList.remove('bg-stone-900/80');
+            } else {
+                nav.classList.remove('bg-stone-900/95', 'shadow-2xl');
+                nav.classList.add('bg-stone-900/80');
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMobileMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => {
+                    mobileMenu.classList.remove('flex');
+                    mobileMenu.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        closeMenuBtn.addEventListener('click', toggleMobileMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMobileMenu));
+    </script>
+</body>
+</html>
