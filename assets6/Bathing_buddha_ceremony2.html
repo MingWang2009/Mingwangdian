@@ -86,7 +86,6 @@
             text-orientation: upright;
         }
 
-        /* --- 修正頁籤狀態樣式 --- */
         .tab-btn {
             font-family: system-ui, -apple-system, "Microsoft JhengHei", sans-serif !important;
             text-rendering: optimizeLegibility;
@@ -182,7 +181,7 @@
                 </div>
             </div>
 
-            <p class="text-amber-200/80 tracking-[0.5em] mb-4 text-sm md:text-base font-medium">SHAKYAMUNI BUDDHA BIRTHDAY</p>
+            <p class="text-amber-200/80 tracking-[0.5em] mb-4 text-sm md:text-base font-medium uppercase">Shakyamuni Buddha Birthday</p>
             <h3 class="text-xl md:text-3xl tracking-[0.3em] text-white mb-6 font-light">紀念釋迦牟尼佛誕辰</h3>
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight tracking-wider">
                 <span class="text-amber-400">115</span>年浴佛朝聖<br>
@@ -222,7 +221,6 @@
 
         <!-- Meaning Section -->
         <section id="meaning" class="grid lg:grid-cols-5 gap-y-8 lg:gap-x-12 xl:gap-x-20 items-stretch">
-            
             <div class="lg:col-span-2 flex flex-col order-1 lg:order-1">
                 <div class="w-full aspect-[4/5] bg-stone-900 rounded-[2.5rem] overflow-hidden shadow-2xl relative border-4 border-amber-100/20 group z-10">
                     <div class="absolute inset-0 bg-stone-900">
@@ -257,7 +255,7 @@
             <div class="lg:col-span-3 flex flex-col justify-center space-y-8 order-3 lg:order-2">
                 <div class="inline-block border-l-4 border-gold pl-4">
                     <h2 class="text-4xl font-bold text-stone-900 tracking-wider">浴佛的意義</h2>
-                    <p class="text-gold font-medium mt-1">THE SPIRITUAL ESSENCE</p>
+                    <p class="text-gold font-medium mt-1 uppercase">The Spiritual Essence</p>
                 </div>
                 
                 <div class="space-y-6 text-stone-600 text-lg md:text-xl leading-loose text-justify">
@@ -304,7 +302,6 @@
                     </div>
                 </div>
             </div>
-
         </section>
 
         <!-- Schedule Section -->
@@ -322,6 +319,7 @@
                 <div class="relative">
                     <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-stone-200 -translate-x-1/2"></div>
                     <div class="space-y-12">
+                        <!-- 09:10 -->
                         <div class="relative flex flex-col md:flex-row items-center group">
                             <div class="hidden md:block w-1/2 pr-12 text-right">
                                 <span class="text-gold font-serif text-3xl font-bold">09:10</span>
@@ -335,6 +333,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- 09:30 -->
                         <div class="relative flex flex-col md:flex-row items-center group">
                             <div class="w-full md:w-1/2 pr-0 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
                                 <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-r-0 md:border-r-4 md:border-r-gold border-l-4 border-l-gold md:border-l-0">
@@ -346,36 +346,72 @@
                             <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
                             <div class="hidden md:block w-1/2 pl-12 order-1 md:order-2"><span class="text-gold font-serif text-3xl font-bold">09:30</span></div>
                         </div>
+
+                        <!-- 10:20 (New) -->
                         <div class="relative flex flex-col md:flex-row items-center group">
-                            <div class="hidden md:block w-1/2 pr-12 text-right"><span class="text-gold font-serif text-3xl font-bold">10:30</span></div>
+                            <div class="hidden md:block w-1/2 pr-12 text-right">
+                                <span class="text-gold font-serif text-3xl font-bold">10:20</span>
+                            </div>
                             <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
                             <div class="w-full md:w-1/2 pl-12">
                                 <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-l-4 border-l-gold">
+                                    <span class="md:hidden text-gold font-bold mb-2 block">10:20</span>
+                                    <h3 class="text-xl font-bold text-stone-900">金身法像安座</h3>
+                                    <p class="text-stone-500 mt-2 text-sm">入墊過爐，莊嚴安座</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 10:30 -->
+                        <div class="relative flex flex-col md:flex-row items-center group">
+                            <div class="w-full md:w-1/2 pr-0 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                                <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-r-0 md:border-r-4 md:border-r-gold border-l-4 border-l-gold md:border-l-0">
                                     <span class="md:hidden text-gold font-bold mb-2 block">10:30</span>
                                     <h3 class="text-xl font-bold text-stone-900">前殿誦經浴佛</h3>
                                     <p class="text-stone-500 mt-2 text-sm">恭誦經文，淨水灌浴，法喜充滿</p>
                                 </div>
                             </div>
+                            <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
+                            <div class="hidden md:block w-1/2 pl-12 order-1 md:order-2"><span class="text-gold font-serif text-3xl font-bold">10:30</span></div>
                         </div>
+
+                        <!-- 11:40 -->
                         <div class="relative flex flex-col md:flex-row items-center group">
-                            <div class="w-full md:w-1/2 pr-0 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
-                                <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-r-0 md:border-r-4 md:border-r-gold border-l-4 border-l-gold md:border-l-0">
+                            <div class="hidden md:block w-1/2 pr-12 text-right"><span class="text-gold font-serif text-3xl font-bold">11:40</span></div>
+                            <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
+                            <div class="w-full md:w-1/2 pl-12">
+                                <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-l-4 border-l-gold">
                                     <span class="md:hidden text-gold font-bold mb-2 block">11:40</span>
                                     <h3 class="text-xl font-bold text-stone-900">午餐平安齋</h3>
                                     <p class="text-stone-500 mt-2 text-sm">廣結善緣，共享平安齋食</p>
                                 </div>
                             </div>
-                            <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
-                            <div class="hidden md:block w-1/2 pl-12 order-1 md:order-2"><span class="text-gold font-serif text-3xl font-bold">11:40</span></div>
                         </div>
+
+                        <!-- 12:40 (Updated) -->
                         <div class="relative flex flex-col md:flex-row items-center group">
-                            <div class="hidden md:block w-1/2 pr-12 text-right"><span class="text-gold font-serif text-3xl font-bold">12:40</span></div>
+                            <div class="w-full md:w-1/2 pr-0 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                                <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-r-0 md:border-r-4 md:border-r-gold border-l-4 border-l-gold md:border-l-0">
+                                    <span class="md:hidden text-gold font-bold mb-2 block">12:40</span>
+                                    <h3 class="text-xl font-bold text-stone-900">集合功德總迴向</h3>
+                                    <p class="text-stone-500 mt-2 text-sm">前殿廣場集合，以此功德普及一切</p>
+                                </div>
+                            </div>
+                            <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
+                            <div class="hidden md:block w-1/2 pl-12 order-1 md:order-2"><span class="text-gold font-serif text-3xl font-bold">12:40</span></div>
+                        </div>
+
+                        <!-- 12:50 (New) -->
+                        <div class="relative flex flex-col md:flex-row items-center group">
+                            <div class="hidden md:block w-1/2 pr-12 text-right">
+                                <span class="text-gold font-serif text-3xl font-bold">12:50</span>
+                            </div>
                             <div class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full bg-white border-4 border-gold -translate-x-1/2 z-10 group-hover:scale-150 transition-transform"></div>
                             <div class="w-full md:w-1/2 pl-12">
                                 <div class="glass-card p-6 rounded-2xl group-hover:shadow-lg transition-all border-l-4 border-l-gold">
-                                    <span class="md:hidden text-gold font-bold mb-2 block">12:40</span>
-                                    <h3 class="text-xl font-bold text-stone-900">功德總迴向</h3>
-                                    <p class="text-stone-500 mt-2 text-sm">願以此功德，普及於一切</p>
+                                    <span class="md:hidden text-gold font-bold mb-2 block">12:50</span>
+                                    <h3 class="text-xl font-bold text-stone-900">金身法像回駕</h3>
+                                    <p class="text-stone-500 mt-2 text-sm">法會圓滿，恭送金身回駕</p>
                                 </div>
                             </div>
                         </div>
@@ -400,7 +436,6 @@
 
                 <!-- Transport Tab Panel -->
                 <div class="bg-white rounded-3xl shadow-xl border border-amber-100 flex flex-col overflow-visible">
-                    <!-- Tab Header -->
                     <div class="p-2 bg-stone-50 flex gap-2 border-b border-stone-100 rounded-t-3xl tab-header-container">
                         <button onclick="switchTab('highway1')" id="tab-highway1" class="tab-btn active flex-1 py-3 rounded-xl font-semibold text-[15px] flex items-center justify-center gap-2 bg-stone-50 text-stone-500 hover:bg-stone-100">
                             <i data-lucide="map" class="w-4 h-4"></i> 國道 1 號
@@ -410,12 +445,10 @@
                         </button>
                     </div>
 
-                    <!-- Tab Content -->
                     <div class="p-6 md:p-8 min-h-[380px]">
-                        <!-- Highway 1 -->
                         <div id="content-highway1" class="tab-content space-y-6 text-base">
                             <div class="flex items-center gap-2 mb-4">
-                                <span class="px-2 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded tracking-wider">中山高速公路</span><span class="text-stone-400 text-xs">北上 / 南下</span>
+                                <span class="px-2 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded tracking-wider uppercase">中山高速公路</span><span class="text-stone-400 text-xs">北上 / 南下</span>
                             </div>
                             <div class="relative space-y-8 pl-4 border-l-2 border-dashed border-stone-200">
                                 <div class="relative">
@@ -440,10 +473,9 @@
                             </div>
                         </div>
 
-                        <!-- Highway 3 -->
                         <div id="content-highway3" class="tab-content hidden space-y-6 text-base">
                             <div class="flex items-center gap-2 mb-4">
-                                <span class="px-2 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded tracking-wider">福爾摩沙高速公路</span><span class="text-stone-400 text-xs">北上 / 南下</span>
+                                <span class="px-2 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded tracking-wider uppercase">福爾摩沙高速公路</span><span class="text-stone-400 text-xs">北上 / 南下</span>
                             </div>
                             <div class="relative space-y-8 pl-4 border-l-2 border-dashed border-stone-200">
                                 <div class="relative">
@@ -550,18 +582,14 @@
         lucide.createIcons();
 
         function switchTab(tabId) {
-            // 1. 更新按鈕樣式
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
-                // 恢復未點選時的顏色與懸停效果
                 btn.classList.add('text-stone-500', 'hover:bg-stone-100');
             });
             const activeBtn = document.getElementById('tab-' + tabId);
             activeBtn.classList.add('active');
-            // 移除點選後的干擾類別
             activeBtn.classList.remove('text-stone-500', 'hover:bg-stone-100');
 
-            // 2. 切換內容顯示
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.add('hidden');
             });
@@ -582,7 +610,10 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
             });
         });
 
