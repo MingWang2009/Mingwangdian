@@ -186,8 +186,6 @@
   .date-text { color: var(--sacred-purple-dark); font-size: clamp(13px, 2.5vw, 16px); letter-spacing: 3px; text-align: center; line-height: 1.8; font-weight: 700; }
   .date-highlight { color: var(--sacred-purple); font-size: clamp(22px, 4vw, 32px); font-weight: 900; letter-spacing: 4px; text-shadow: 0 2px 8px rgba(126,87,194,0.2); }
 
-  .footer { margin-top: 40px; color: rgba(74,20,140,0.6); font-size: 13px; letter-spacing: 6px; animation: fadeUp 1.2s ease 1.4s both; text-align: center; font-weight: 700; }
-
   /* 香湯浴佛按鈕區塊 */
   .bathing-section {
     width: 100%;
@@ -300,6 +298,118 @@
     line-height: 2;
   }
 
+  /* --- 當日大典流程區塊樣式 (全新滿版卡片排版) --- */
+  .schedule-section {
+    width: 100%;
+    max-width: 680px;
+    margin-top: 40px;
+    animation: fadeUp 1.2s ease 1.3s both;
+  }
+  .schedule-title {
+    text-align: center;
+    color: var(--sacred-purple-dark);
+    font-size: clamp(20px, 4vw, 26px);
+    font-weight: 900;
+    letter-spacing: 6px;
+    margin-bottom: 32px;
+    text-shadow: 0 2px 8px rgba(126,87,194,0.15);
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .schedule-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px; left: 10%; right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-pure), transparent);
+  }
+  
+  .schedule-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  
+  /* 左側的時間線裝飾 */
+  .schedule-timeline::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 20px;
+    bottom: 20px;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--gold-pure) 0%, var(--sacred-purple-light) 50%, var(--gold-pure) 100%);
+    border-radius: 3px;
+    z-index: 0;
+  }
+
+  .schedule-card-wrapper {
+    position: relative;
+    padding-left: 60px;
+    z-index: 1;
+  }
+
+  /* 時間線上的圓點 */
+  .schedule-dot {
+    position: absolute;
+    left: 17px; /* 24 + 1.5 - 8.5 = 17 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 17px;
+    height: 17px;
+    background: var(--gold-bright);
+    border: 4px solid var(--bg-pure);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(126,87,194,0.3);
+    z-index: 2;
+  }
+
+  /* 統一把背景、圓角、邊框設定在最外層容器，確保手機縮放絕對不破版 */
+  .schedule-card {
+    background: #FFFDF8;
+    border-radius: 16px;
+    border: 1.5px solid rgba(212,175,55,0.4);
+    box-shadow: 0 6px 20px rgba(74,20,140,0.15);
+    overflow: hidden;
+    transition: all 0.35s ease;
+    display: block;
+    line-height: 0; /* 消除內部 SVG 底部的微小空隙 */
+  }
+
+  .schedule-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(126,87,194,0.6);
+    box-shadow: 0 8px 24px rgba(74,20,140,0.2);
+  }
+
+  .schedule-card svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* 手機版優化：保留時間線且等比例縮放 */
+  @media (max-width: 600px) {
+    .schedule-timeline::before {
+      left: 16px; /* 稍微往左靠 */
+    }
+    .schedule-dot {
+      left: 9px; /* 16 - 8.5 + 1.5 */
+      width: 15px;
+      height: 15px;
+    }
+    .schedule-card-wrapper {
+      padding-left: 42px; /* 保留足夠空間給時間線，不隱藏 */
+    }
+  }
+
+  .footer { margin-top: 40px; color: rgba(74,20,140,0.6); font-size: 13px; letter-spacing: 6px; animation: fadeUp 1.2s ease 1.4s both; text-align: center; font-weight: 700; }
+
   @keyframes blessingAppear {
     from { opacity: 0; transform: translateY(10px) scale(0.97); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
@@ -343,9 +453,9 @@
   @keyframes majesticSpin {
     0% { transform: perspective(1200px) rotateY(0deg) scale(1) translateY(0px); }
     25% { transform: perspective(1200px) rotateY(180deg) scale(1.1) translateY(-6px); }
-    50% { transform: perspective(1200px) rotateY(360deg) scale(1.18) translateY(-12px); } /* 旋轉時放大懸浮，產生強烈立體感 */
+    50% { transform: perspective(1200px) rotateY(360deg) scale(1.18) translateY(-12px); }
     75% { transform: perspective(1200px) rotateY(540deg) scale(1.1) translateY(-6px); }
-    100% { transform: perspective(1200px) rotateY(720deg) scale(1) translateY(0px); } /* 10秒內平穩旋轉 2 圈，最後剛好回到原先正面位置 */
+    100% { transform: perspective(1200px) rotateY(720deg) scale(1) translateY(0px); }
   }
 </style>
 </head>
@@ -499,7 +609,7 @@
       <ellipse cx="160" cy="320" rx="12" ry="5" fill="url(#whitePetal)" opacity="0.85" transform="rotate(-30,160,320)">
         <animate attributeName="cy" values="320;310;320" dur="3s" repeatCount="indefinite"/>
       </ellipse>
-      <ellipse cx="520" cy="340" rx="10" ry="5" fill="url(#whitePetalGreen)" opacity="0.8" transform="rotate(20,520,340)">
+      <ellipse cx="520" cy="340" transform="rotate(20,520,340)" rx="10" ry="5" fill="url(#whitePetalGreen)" opacity="0.8">
         <animate attributeName="cy" values="340;330;340" dur="3.5s" repeatCount="indefinite"/>
       </ellipse>
       <ellipse cx="200" cy="240" rx="8" ry="4" fill="#FFFFFF" opacity="0.7" transform="rotate(-15,200,240)">
@@ -568,6 +678,180 @@
     <div class="date-text">佛顓寺 一一五年<br>浴佛朝聖大典</div>
     <div class="date-highlight">5月17日</div>
     <div class="date-text">國曆上午<br>敬請共襄盛舉</div>
+  </div>
+
+  <!-- 新增：當日大典流程圖文卡片區塊 -->
+  <div class="schedule-section">
+    <h2 class="schedule-title">☸ 當日大典流程 ☸</h2>
+    
+    <div class="schedule-timeline">
+      
+      <!-- 流程 1 -->
+      <div class="schedule-card-wrapper">
+        <div class="schedule-dot"></div>
+        <!-- 卡片外層，統一處理背景、圓角與邊框，避免手機破版 -->
+        <div class="schedule-card">
+          <svg viewBox="0 0 400 110">
+            <!-- Aura光暈 (置中於 x=85, y=55) -->
+            <circle cx="85" cy="55" r="50" fill="#F4EEFF"/>
+            <circle cx="85" cy="55" r="35" fill="#EDE5F9"/>
+            
+            <!-- 插畫圖形 -->
+            <g transform="translate(-15, 5) scale(0.5)">
+              <path d="M70 95 Q200 40 330 95 L310 115 Q200 70 90 115 Z" fill="#4A148C"/>
+              <path d="M60 85 Q200 10 340 85 L320 100 Q200 40 80 100 Z" fill="#D4AF37"/>
+              <path d="M120 40 L125 30 L130 40 Z" fill="#FFD700"/>
+              <path d="M280 40 L275 30 L270 40 Z" fill="#FFD700"/>
+              <circle cx="200" cy="25" r="8" fill="#FFD700"/>
+              <rect x="120" y="90" width="24" height="80" fill="#7E57C2" rx="2"/>
+              <rect x="256" y="90" width="24" height="80" fill="#7E57C2" rx="2"/>
+              <rect x="150" y="75" width="100" height="28" fill="#FFD700" rx="4" stroke="#D4AF37" stroke-width="2"/>
+              <text x="200" y="95" font-family="Noto Serif TC, serif" font-size="18" font-weight="900" fill="#4A148C" text-anchor="middle">佛顓寺</text>
+              <circle cx="95" cy="140" r="15" fill="#FFE0B2"/>
+              <path d="M89 138 Q92 142 95 138" stroke="#8D6E63" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M96 138 Q99 142 102 138" stroke="#8D6E63" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M78 170 Q95 140 112 170 Z" fill="#FF9800"/>
+              <circle cx="305" cy="140" r="15" fill="#FFE0B2"/>
+              <path d="M299 138 Q302 142 305 138" stroke="#8D6E63" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M306 138 Q309 142 312 138" stroke="#8D6E63" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M288 170 Q305 140 322 170 Z" fill="#FF9800"/>
+            </g>
+            
+            <!-- 文字區塊 (精確置中對齊) -->
+            <rect x="145" y="32" width="220" height="46" fill="rgba(212,175,55,0.15)" rx="23"/>
+            <text x="255" y="60" font-family="Noto Serif TC, serif" font-size="16" font-weight="900" fill="#311B92" text-anchor="middle" letter-spacing="1">09:10 佛顓寺山門集合</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 流程 2 -->
+      <div class="schedule-card-wrapper">
+        <div class="schedule-dot"></div>
+        <div class="schedule-card">
+          <svg viewBox="0 0 400 110">
+            <circle cx="85" cy="55" r="45" fill="#FFF8E6"/>
+            <g transform="translate(40, 10) scale(0.9)">
+              <circle cx="50" cy="35" r="16" fill="#FFE0B2"/>
+              <path d="M44 33 Q46 31 48 33" stroke="#8D6E63" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M52 33 Q54 31 56 33" stroke="#8D6E63" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M30 80 Q50 35 70 80 Z" fill="#FF9800"/>
+              <path d="M40 55 L50 65 L60 55" fill="none" stroke="#E65100" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="50" cy="65" r="4" fill="#FFB74D"/>
+            </g>
+            <rect x="145" y="25" width="220" height="60" fill="rgba(212,175,55,0.15)" rx="16"/>
+            <text x="255" y="48" font-family="Noto Serif TC, serif" font-size="16" font-weight="900" fill="#311B92" text-anchor="middle" letter-spacing="1">09:30 起程</text>
+            <text x="255" y="72" font-family="Noto Serif TC, serif" font-size="12" font-weight="700" fill="#666" text-anchor="middle" letter-spacing="1">(三步一拜、九步一跪)</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 流程 3 -->
+      <div class="schedule-card-wrapper">
+        <div class="schedule-dot"></div>
+        <div class="schedule-card">
+           <svg viewBox="0 0 400 110">
+            <circle cx="85" cy="55" r="45" fill="#F6F2FF"/>
+            <g transform="translate(40, 10) scale(0.9)">
+              <path d="M35 55 Q50 15 65 55 Z" fill="#FFD700"/>
+              <circle cx="50" cy="25" r="12" fill="#FFCA28"/>
+              <path d="M25 80 L35 60 L65 60 L75 80 Z" fill="#D4AF37"/>
+              <rect x="40" y="55" width="20" height="10" fill="#B8860B" rx="2"/>
+              <path d="M50 55 L50 65" stroke="#FFF" stroke-width="2" opacity="0.5"/>
+              <path d="M45 55 Q35 35 55 15" stroke="#D1C4E9" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </g>
+            <rect x="145" y="32" width="220" height="46" fill="rgba(212,175,55,0.15)" rx="23"/>
+            <text x="255" y="60" font-family="Noto Serif TC, serif" font-size="14" font-weight="900" fill="#311B92" text-anchor="middle" letter-spacing="1">10:20 金身法像入殿過爐安座</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 流程 4 -->
+      <div class="schedule-card-wrapper">
+        <div class="schedule-dot"></div>
+        <div class="schedule-card">
+           <svg viewBox="0 0 400 110">
+            <circle cx="85" cy="55" r="45" fill="#F0F4C3"/>
+            <g transform="translate(40, 10) scale(0.9)">
+              <ellipse cx="50" cy="75" rx="40" ry="12" fill="#D4AF37"/>
+              <ellipse cx="50" cy="70" rx="36" ry="9" fill="#81D4FA"/>
+              <path d="M42 68 Q50 35 58 68 Z" fill="#FFD700"/>
+              <circle cx="50" cy="40" r="9" fill="#FFCA28"/>
+              <circle cx="50" cy="35" r="3" fill="#FFB300"/>
+              <path d="M50 40 L50 60" stroke="#E65100" stroke-width="2"/>
+              <path d="M80 25 L60 45" stroke="#795548" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="60" cy="45" r="6" fill="#D4AF37"/>
+              <path d="M55 50 L55 60" stroke="#4FC3F7" stroke-width="2" stroke-dasharray="2 3"/>
+            </g>
+            <rect x="145" y="32" width="220" height="46" fill="rgba(212,175,55,0.15)" rx="23"/>
+            <text x="255" y="60" font-family="Noto Serif TC, serif" font-size="16" font-weight="900" fill="#311B92" text-anchor="middle" letter-spacing="1">10:30 前殿誦經浴佛</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 流程 5 -->
+      <div class="schedule-card-wrapper">
+        <div class="schedule-dot"></div>
+        <div class="schedule-card">
+           <svg viewBox="0 0 400 110">
+            <circle cx="85" cy="55" r="45" fill="#E0F7FA"/>
+            <g transform="translate(40, 10) scale(0.9)">
+              <path d="M15 60 Q50 100 85 60 Z" fill="#FFFFFF"/>
+              <path d="M20 60 Q50 25 80 60 Z" fill="#F5F5F5"/>
+              <circle cx="50" cy="45" r="20" fill="#FAFAFA"/>
+              <circle cx="35" cy="50" r="10" fill="#FAFAFA"/>
+              <circle cx="65" cy="50" r="10" fill="#FAFAFA"/>
+              <line x1="5" y1="35" x2="95" y2="45" stroke="#795548" stroke-width="4" stroke-linecap="round"/>
+              <line x1="5" y1="25" x2="95" y2="35" stroke="#795548" stroke-width="4" stroke-linecap="round"/>
+            </g>
+            <rect x="145" y="32" width="220" height="46" fill="rgba(212,175,55,0.15)" rx="23"/>
+            <text x="255" y="60" font-family="Noto Serif TC, serif" font-size="16" font-weight="900" fill="#311B92" text-anchor="middle" letter-spacing="1">11:40 午餐平安齋</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 流程 6 -->
+      <div class="schedule-card-wrapper">
+        <div class="schedule-dot"></div>
+        <div class="schedule-card">
+           <svg viewBox="0 0 400 110">
+            <circle cx="85" cy="55" r="45" fill="#FFF3E0"/>
+            <g transform="translate(40, 10) scale(0.9)">
+              <circle cx="50" cy="30" r="25" fill="#FFD700" opacity="0.6"/>
+              <path d="M30 85 L50 40 L70 85 Z" fill="#FFB74D"/>
+              <path d="M40 85 L50 40 L60 85 Z" fill="#FFA726"/>
+              <circle cx="35" cy="65" r="4" fill="#8D6E63"/>
+              <circle cx="42" cy="58" r="4" fill="#8D6E63"/>
+              <circle cx="58" cy="58" r="4" fill="#8D6E63"/>
+              <circle cx="65" cy="65" r="4" fill="#8D6E63"/>
+            </g>
+            <rect x="145" y="25" width="220" height="60" fill="rgba(212,175,55,0.15)" rx="16"/>
+            <text x="255" y="48" font-family="Noto Serif TC, serif" font-size="15" font-weight="900" fill="#311B92" text-anchor="middle" letter-spacing="1">12:40 前殿廣場集合</text>
+            <text x="255" y="72" font-family="Noto Serif TC, serif" font-size="15" font-weight="900" fill="#311B92" text-anchor="middle" letter-spacing="1">功德總迴向</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 流程 7 -->
+      <div class="schedule-card-wrapper">
+        <div class="schedule-dot"></div>
+        <div class="schedule-card">
+           <svg viewBox="0 0 400 110">
+            <circle cx="85" cy="55" r="45" fill="#FCE4EC"/>
+            <g transform="translate(40, 10) scale(0.9)">
+              <path d="M15 65 Q50 90 85 65 L70 55 Q50 75 30 55 Z" fill="#F48FB1"/>
+              <path d="M38 55 Q50 10 62 55 Z" fill="#FFD700"/>
+              <circle cx="50" cy="25" r="14" fill="#FFCA28"/>
+              <path d="M15 30 L22 18 L29 30 L22 42 Z" fill="#FFD700" opacity="0.8"/>
+              <path d="M85 30 L78 18 L71 30 L78 42 Z" fill="#FFD700" opacity="0.8"/>
+              <path d="M50 0 L54 10 L50 20 L46 10 Z" fill="#FFD700" opacity="0.8"/>
+            </g>
+            <rect x="145" y="32" width="220" height="46" fill="rgba(212,175,55,0.15)" rx="23"/>
+            <text x="255" y="60" font-family="Noto Serif TC, serif" font-size="16" font-weight="900" fill="#311B92" text-anchor="middle" letter-spacing="1">12:50 金身法像回駕</text>
+          </svg>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <div class="footer">卍 · 南無本師釋迦牟尼佛 · 卍</div>
