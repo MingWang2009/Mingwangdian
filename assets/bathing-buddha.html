@@ -158,10 +158,182 @@
   .meaning-title { font-size: 16px; font-weight: 700; color: var(--sacred-purple); letter-spacing: 3px; margin-bottom: 8px; }
   .meaning-text { font-size: 12px; color: #4A3A59; line-height: 1.8; letter-spacing: 1px; }
 
-  .date-banner {
+  /* 新增：活動資訊區塊 (流程、交通、聯絡) */
+  .info-section {
+    width: 100%;
+    max-width: 680px;
+    margin-top: 36px;
+    animation: fadeUp 1.2s ease 1.2s both;
+  }
+  .info-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--sacred-purple-dark);
+    text-align: center;
+    letter-spacing: 6px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .info-title::before, .info-title::after {
+    content: '';
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-pure), transparent);
+  }
+  .info-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(250,248,255,0.9) 100%);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 12px;
+    padding: 24px 32px;
+    box-shadow: 0 4px 20px rgba(74,20,140,0.06);
+    backdrop-filter: blur(4px);
+    position: relative;
+  }
+  .info-card::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px dashed rgba(212,175,55,0.2);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+  
+  /* --- 當日大典流程區塊樣式 (全新滿版卡片排版) --- */
+  .schedule-section {
+    width: 100%;
+    max-width: 680px;
+    margin-top: 40px;
+    animation: fadeUp 1.2s ease 1.3s both;
+  }
+  .schedule-title {
+    text-align: center;
+    color: var(--sacred-purple-dark);
+    font-size: clamp(20px, 4vw, 26px);
+    font-weight: 900;
+    letter-spacing: 6px;
+    margin-bottom: 32px;
+    text-shadow: 0 2px 8px rgba(126,87,194,0.15);
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .schedule-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px; left: 10%; right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-pure), transparent);
+  }
+  
+  .schedule-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  
+  /* 左側的時間線裝飾 */
+  .schedule-timeline::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 20px;
+    bottom: 20px;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--gold-pure) 0%, var(--sacred-purple-light) 50%, var(--gold-pure) 100%);
+    border-radius: 3px;
+    z-index: 0;
+  }
+
+  .schedule-card-wrapper {
+    position: relative;
+    padding-left: 60px;
+    z-index: 1;
+  }
+
+  /* 時間線上的圓點 */
+  .schedule-dot {
+    position: absolute;
+    left: 17px; /* 24 + 1.5 - 8.5 = 17 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 17px;
+    height: 17px;
+    background: var(--gold-bright);
+    border: 4px solid var(--bg-pure);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(126,87,194,0.3);
+    z-index: 2;
+  }
+
+  /* 統一把背景、圓角、邊框設定在最外層容器，確保手機縮放絕對不破版 */
+  .schedule-card {
+    background: #FFFDF8;
+    border-radius: 16px;
+    border: 1.5px solid rgba(212,175,55,0.4);
+    box-shadow: 0 6px 20px rgba(74,20,140,0.15);
+    overflow: hidden;
+    transition: all 0.35s ease;
+    display: block;
+    line-height: 0; /* 消除內部 SVG 底部的微小空隙 */
+  }
+
+  .schedule-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(126,87,194,0.6);
+    box-shadow: 0 8px 24px rgba(74,20,140,0.2);
+  }
+
+  .schedule-card svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* 手機版優化：保留時間線且等比例縮放 */
+  @media (max-width: 600px) {
+    .schedule-timeline::before {
+      left: 16px; /* 稍微往左靠 */
+    }
+    .schedule-dot {
+      left: 9px; /* 16 - 8.5 + 1.5 */
+      width: 15px;
+      height: 15px;
+    }
+    .schedule-card-wrapper {
+      padding-left: 42px; /* 保留足夠空間給時間線，不隱藏 */
+    }
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
     width: 100%;
     max-width: 680px;
     margin-top: 24px;
+    animation: fadeUp 1.2s ease 1.3s both;
+  }
+  @media (max-width: 650px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .meaning-section { grid-template-columns: 1fr; gap: 12px; }
+  }
+
+  .text-content { font-size: 13px; color: #4A3A59; line-height: 1.9; letter-spacing: 1px; position: relative; z-index: 2;}
+  .text-content strong { color: var(--sacred-purple-dark); font-weight: 900; }
+  .text-content .highlight { color: #B8860B; font-weight: 700; }
+  .contact-box { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(212,175,55,0.2); }
+
+  .date-banner {
+    width: 100%;
+    max-width: 680px;
+    margin-top: 36px;
     border: 1.5px solid rgba(212,175,55,0.4);
     background: linear-gradient(135deg, rgba(246,242,255,0.9) 0%, rgba(255,248,230,0.9) 100%);
     border-radius: 8px;
@@ -170,7 +342,7 @@
     align-items: center;
     justify-content: center;
     gap: 24px;
-    animation: fadeUp 1.2s ease 1.2s both;
+    animation: fadeUp 1.2s ease 1.4s both;
     flex-wrap: wrap;
     box-shadow: 0 4px 20px rgba(74,20,140,0.08);
     position: relative;
@@ -185,6 +357,8 @@
   }
   .date-text { color: var(--sacred-purple-dark); font-size: clamp(13px, 2.5vw, 16px); letter-spacing: 3px; text-align: center; line-height: 1.8; font-weight: 700; }
   .date-highlight { color: var(--sacred-purple); font-size: clamp(22px, 4vw, 32px); font-weight: 900; letter-spacing: 4px; text-shadow: 0 2px 8px rgba(126,87,194,0.2); }
+
+  .footer { margin-top: 40px; color: rgba(74,20,140,0.6); font-size: 13px; letter-spacing: 6px; animation: fadeUp 1.2s ease 1.5s both; text-align: center; font-weight: 700; }
 
   /* 香湯浴佛按鈕區塊 */
   .bathing-section {
@@ -297,118 +471,6 @@
     letter-spacing: 3px;
     line-height: 2;
   }
-
-  /* --- 當日大典流程區塊樣式 (全新滿版卡片排版) --- */
-  .schedule-section {
-    width: 100%;
-    max-width: 680px;
-    margin-top: 40px;
-    animation: fadeUp 1.2s ease 1.3s both;
-  }
-  .schedule-title {
-    text-align: center;
-    color: var(--sacred-purple-dark);
-    font-size: clamp(20px, 4vw, 26px);
-    font-weight: 900;
-    letter-spacing: 6px;
-    margin-bottom: 32px;
-    text-shadow: 0 2px 8px rgba(126,87,194,0.15);
-    position: relative;
-    display: inline-block;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .schedule-title::after {
-    content: '';
-    position: absolute;
-    bottom: -8px; left: 10%; right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold-pure), transparent);
-  }
-  
-  .schedule-timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    position: relative;
-    max-width: 620px;
-    margin: 0 auto;
-  }
-  
-  /* 左側的時間線裝飾 */
-  .schedule-timeline::before {
-    content: '';
-    position: absolute;
-    left: 24px;
-    top: 20px;
-    bottom: 20px;
-    width: 3px;
-    background: linear-gradient(to bottom, var(--gold-pure) 0%, var(--sacred-purple-light) 50%, var(--gold-pure) 100%);
-    border-radius: 3px;
-    z-index: 0;
-  }
-
-  .schedule-card-wrapper {
-    position: relative;
-    padding-left: 60px;
-    z-index: 1;
-  }
-
-  /* 時間線上的圓點 */
-  .schedule-dot {
-    position: absolute;
-    left: 17px; /* 24 + 1.5 - 8.5 = 17 */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 17px;
-    height: 17px;
-    background: var(--gold-bright);
-    border: 4px solid var(--bg-pure);
-    border-radius: 50%;
-    box-shadow: 0 0 0 2px rgba(126,87,194,0.3);
-    z-index: 2;
-  }
-
-  /* 統一把背景、圓角、邊框設定在最外層容器，確保手機縮放絕對不破版 */
-  .schedule-card {
-    background: #FFFDF8;
-    border-radius: 16px;
-    border: 1.5px solid rgba(212,175,55,0.4);
-    box-shadow: 0 6px 20px rgba(74,20,140,0.15);
-    overflow: hidden;
-    transition: all 0.35s ease;
-    display: block;
-    line-height: 0; /* 消除內部 SVG 底部的微小空隙 */
-  }
-
-  .schedule-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(126,87,194,0.6);
-    box-shadow: 0 8px 24px rgba(74,20,140,0.2);
-  }
-
-  .schedule-card svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  /* 手機版優化：保留時間線且等比例縮放 */
-  @media (max-width: 600px) {
-    .schedule-timeline::before {
-      left: 16px; /* 稍微往左靠 */
-    }
-    .schedule-dot {
-      left: 9px; /* 16 - 8.5 + 1.5 */
-      width: 15px;
-      height: 15px;
-    }
-    .schedule-card-wrapper {
-      padding-left: 42px; /* 保留足夠空間給時間線，不隱藏 */
-    }
-  }
-
-  .footer { margin-top: 40px; color: rgba(74,20,140,0.6); font-size: 13px; letter-spacing: 6px; animation: fadeUp 1.2s ease 1.4s both; text-align: center; font-weight: 700; }
 
   @keyframes blessingAppear {
     from { opacity: 0; transform: translateY(10px) scale(0.97); }
@@ -609,7 +671,7 @@
       <ellipse cx="160" cy="320" rx="12" ry="5" fill="url(#whitePetal)" opacity="0.85" transform="rotate(-30,160,320)">
         <animate attributeName="cy" values="320;310;320" dur="3s" repeatCount="indefinite"/>
       </ellipse>
-      <ellipse cx="520" cy="340" transform="rotate(20,520,340)" rx="10" ry="5" fill="url(#whitePetalGreen)" opacity="0.8">
+      <ellipse cx="520" cy="340" rx="10" ry="5" fill="url(#whitePetalGreen)" opacity="0.8" transform="rotate(20,520,340)">
         <animate attributeName="cy" values="340;330;340" dur="3.5s" repeatCount="indefinite"/>
       </ellipse>
       <ellipse cx="200" cy="240" rx="8" ry="4" fill="#FFFFFF" opacity="0.7" transform="rotate(-15,200,240)">
@@ -671,13 +733,6 @@
       <div class="meaning-title">發願修行</div>
       <div class="meaning-text">效法佛陀慈悲智慧，發菩提心，廣度有情，利益一切眾生</div>
     </div>
-  </div>
-
-
-  <div class="date-banner">
-    <div class="date-text">佛顓寺 一一五年<br>浴佛朝聖大典</div>
-    <div class="date-highlight">5月17日</div>
-    <div class="date-text">國曆上午<br>敬請共襄盛舉</div>
   </div>
 
   <!-- 新增：當日大典流程圖文卡片區塊 -->
@@ -852,6 +907,55 @@
       </div>
 
     </div>
+  </div>
+
+  <!-- 新增：交通與聯絡區塊 -->
+  <div class="info-grid">
+    <!-- 交通路線導引 -->
+    <div class="info-card">
+      <h2 class="info-title" style="font-size: 16px;">交通路線導引</h2>
+      <div class="text-content">
+        <p><strong>地點：</strong>佛顓寺 <span style="font-size:12px;">(臺南市新化區中興路，往虎頭埤方向)</span></p>
+        <p style="margin-top: 4px;"><strong>地址：</strong>臺南市新化區新和庄知義里6鄰12號</p>
+        <div style="margin-top: 10px;">
+          <p class="highlight">🚗 經由國道1號 (中山高)</p>
+          <p>行駛至 <strong>台南系統交流道(315K)</strong>，轉接國道8號往東(新化方向)。至終點右轉接台19甲線(中正路)，依指標轉入中興路即可抵達。</p>
+        </div>
+        <div style="margin-top: 10px;">
+          <p class="highlight">🚗 經由國道3號 (福爾摩沙高速公路)</p>
+          <p>行駛至 <strong>新化系統交流道(346K)</strong>，轉接國道8號往東(新化方向)。至終點右轉進入市區，沿台19甲線銜接中興路即可抵達。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 報名與護持資訊 -->
+    <div class="info-card">
+      <h2 class="info-title" style="font-size: 16px;">報名與護持</h2>
+      <div class="text-content">
+        <p style="display: flex; align-items: flex-start; gap: 8px;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0; margin-top: 1px;">
+            <rect x="4" y="11" width="16" height="11" rx="1.5" stroke="#D4AF37" stroke-width="2" fill="rgba(212,175,55,0.15)"/>
+            <path d="M2 11h20" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"/>
+            <line x1="12" y1="14" x2="12" y2="18" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="5" r="3.5" fill="#FFD700" stroke="#D4AF37" stroke-width="1.5"/>
+          </svg>
+          <span>歡迎信眾隨喜發心贊助道場，護持壇城建設，恭書芳名投入功德箱，以積累福德資糧、共植福田；俾使明王殿得以常轉法輪，廣結善緣。功德無量 🙏</span>
+        </p>
+        
+        <div class="contact-box">
+          <p><strong>總召集人：</strong>釋明法</p>
+          <p><strong>報名專線：</strong>0915-535-588 (明真師姐)</p>
+          <p><strong>LINE ID：</strong>0915535588</p>
+          <p><strong>聯絡地址：</strong>台南市善化區中山路377號店面22號</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="date-banner">
+    <div class="date-text">佛顓寺 民國115年<br>浴佛朝聖大典</div>
+    <div class="date-highlight">5月17日</div>
+    <div class="date-text">國曆(日) 上午<br>09:10 誠摯敬邀</div>
   </div>
 
   <div class="footer">卍 · 南無本師釋迦牟尼佛 · 卍</div>
