@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>道場文字深度解析 | 隨喜功德的智慧</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #faf8f5;
+            color: #3f3b36;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+            min-height: 300px;
+        }
+
+        .interactive-word {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px dashed #d97706;
+            padding-bottom: 2px;
+        }
+
+        .interactive-word:hover, .interactive-word.active {
+            background-color: #fef3c7;
+            color: #b45309;
+            border-bottom-style: solid;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        input[type=range] {
+            accent-color: #d97706;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-amber-200 selection:text-amber-900">
+    <!-- Chosen Palette: Zen Harmony (Stone-50 background, Stone-800 text, Amber-600/700 accents, Emerald-700 for 'Altruism' focus) -->
+    <!-- Application Structure Plan: A single-page scrollable journey. Section 1: Hero with the original text (Interactive text highlighting). Section 2: Deep Dive (4 layers presented as an interactive tabbed interface). Section 3: Conceptual Visualization (A Chart.js Radar Chart allowing users to see how 'Sincerity' and 'Altruism' expand their 'Merit Sphere'). Section 4: Conclusion & Call to Action. This structure intuitively guides the user from reading the surface text to interacting with its deep meaning, ending with a conceptual visual realization. -->
+    <!-- Visualization & Content Choices: 1. Text Highlighter: Goal=Inform, Viz=HTML/JS toggle, Justification=Connects surface text to deep meaning. 2. Layer Tabs: Goal=Organize, Viz=CSS/JS Tabs, Justification=Breaks down complex philosophy into digestible parts. 3. Merit Radar Chart: Goal=Relationships/Change, Viz=Chart.js Radar, Interaction=Sliders to adjust inputs, Justification=Converts qualitative spiritual concepts into a tangible interactive visualization, Library=Chart.js. Confirming NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-amber-800 tracking-wider">☸️ 修行指南</div>
+            <div class="space-x-4 hidden sm:block text-sm font-semibold">
+                <a href="#origin" class="text-stone-600 hover:text-amber-600 transition">緣起</a>
+                <a href="#analysis" class="text-stone-600 hover:text-amber-600 transition">深度解析</a>
+                <a href="#visualization" class="text-stone-600 hover:text-amber-600 transition">功德視覺化</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+        
+        <section id="origin" class="text-center space-y-8 fade-in">
+            <p class="text-amber-700 font-semibold tracking-widest text-sm">THE DEEP MEANING</p>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-stone-800">
+                道場文字背後的<br class="sm:hidden"><span class="text-amber-600">深意與功德</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg text-stone-600 leading-relaxed">
+                走進道場，我們常看見莊嚴的募款告示。這不只是在邀請捐款，更是一篇充滿智慧的「修行指南」。請點擊下方金色的核心字句，探索其背後的深層涵義。
+            </p>
+
+            <div class="bg-white p-8 sm:p-12 rounded-2xl shadow-xl shadow-stone-200/50 border border-stone-100 max-w-3xl mx-auto mt-12 text-xl sm:text-2xl leading-loose font-medium text-stone-700">
+                「歡迎信眾<span class="interactive-word" data-layer="0">隨喜發心</span>贊助道場，<span class="interactive-word" data-layer="1">護持壇城建設，恭書芳名</span>投入功德箱，以<span class="interactive-word" data-layer="2">積累福德資糧、共植福田</span>；俾使明王殿得以<span class="interactive-word" data-layer="3">常轉法輪，廣結善緣</span>。」
+            </div>
+            
+            <div id="dynamic-explanation" class="mt-8 p-6 bg-amber-50 rounded-xl border border-amber-100 min-h-[150px] flex flex-col justify-center transition-all">
+                <p class="text-stone-500 italic">👆 請點擊上方句子中標示的文字，以顯示對應的深度解析。</p>
+            </div>
+        </section>
+
+        <section id="analysis" class="space-y-12 pt-12 border-t border-stone-200">
+            <div class="text-center max-w-2xl mx-auto space-y-4">
+                <h2 class="text-3xl font-bold text-stone-800">四層修行涵義拆解</h2>
+                <p class="text-stone-600">
+                    本區塊將上述告示文拆解為四個層次。從個人的內心動機出發，延伸到具體行動，最終達到圓滿自我與利益大眾的境界。這揭示了佛教「自利利他」的核心精神。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="cards-container">
+            </div>
+        </section>
+
+        <section id="visualization" class="space-y-12 pt-12 border-t border-stone-200">
+            <div class="text-center max-w-2xl mx-auto space-y-4">
+                <h2 class="text-3xl font-bold text-stone-800">功德圓滿度視覺化</h2>
+                <p class="text-stone-600">
+                    佛教認為，功德的大小取決於「心念」。透過下方的互動式圖表，您可以調整四個維度的參數，觀察發心與利他的精神如何擴大您的「功德圓滿領域」。
+                </p>
+            </div>
+
+            <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-lg border border-stone-100 flex flex-col lg:flex-row gap-12 items-center">
+                <div class="w-full lg:w-1/2 space-y-8">
+                    <div class="space-y-2">
+                        <label class="flex justify-between text-stone-700 font-semibold">
+                            <span>✨ 發心的品質 (隨喜誠心)</span>
+                            <span id="val-mind">50</span>
+                        </label>
+                        <input type="range" id="range-mind" min="10" max="100" value="50" class="w-full h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer">
+                        <p class="text-xs text-stone-500">出自內心的喜悅與認同感。</p>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label class="flex justify-between text-stone-700 font-semibold">
+                            <span>🧱 具體的行動 (護持建設)</span>
+                            <span id="val-action">50</span>
+                        </label>
+                        <input type="range" id="range-action" min="10" max="100" value="50" class="w-full h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer">
+                        <p class="text-xs text-stone-500">將世俗力量轉化為護法願力的程度。</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="flex justify-between text-stone-700 font-semibold">
+                            <span>🌱 對自我的利益 (積累資糧)</span>
+                            <span id="val-self">50</span>
+                        </label>
+                        <input type="range" id="range-self" min="10" max="100" value="50" class="w-full h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer">
+                        <p class="text-xs text-stone-500">為自己與家人經營靈魂存摺的認知。</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="flex justify-between text-stone-700 font-semibold">
+                            <span>🎡 對大眾的貢獻 (常轉法輪)</span>
+                            <span id="val-others">50</span>
+                        </label>
+                        <input type="range" id="range-others" min="10" max="100" value="50" class="w-full h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer">
+                        <p class="text-xs text-stone-500">最高層次的利他行為與廣結善緣。</p>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2">
+                    <div class="chart-container">
+                        <canvas id="meritChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center py-16 bg-amber-800 text-amber-50 rounded-3xl px-6">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6">💡 核心精神總結</h2>
+            <p class="text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed opacity-90 mb-8">
+                這是一份「自利利他」的誠摯邀請。它將現實的硬體建設（明王殿），昇華為每位信眾心靈成長的契機。
+            </p>
+            <div class="inline-block bg-amber-900/50 px-8 py-4 rounded-xl border border-amber-700/50">
+                <p class="text-2xl font-serif font-bold tracking-widest text-amber-200">
+                    一分誠心，一分功德；<br class="sm:hidden mt-2">萬眾一心，法輪常轉。
+                </p>
+            </div>
+            <div class="mt-12 flex flex-wrap justify-center gap-3 text-sm opacity-70">
+                <span>#佛教文案</span>
+                <span>#深度解析</span>
+                <span>#明王殿</span>
+                <span>#隨喜功德</span>
+                <span>#福德資糧</span>
+                <span>#心靈修行</span>
+                <span>#法喜充滿</span>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-100 py-8 text-center border-t border-stone-200">
+        <p class="text-stone-500 text-sm">道場文字深度解析互動體驗</p>
+    </footer>
+
+    <script>
+        const layerData = [
+            {
+                id: 0,
+                icon: "✨",
+                title: "第一層：發心的品質",
+                subtitle: "隨喜發心",
+                analysis: "「隨喜」是佛教極高明的智慧。它告訴我們：功德的大小不在於金額的數字，而在於那份「清淨的發心」。",
+                meaning: "只要是出自內心的喜悅與認同而參與，這份善念就如同水滴入海，能獲得與大海一樣深廣的功德。"
+            },
+            {
+                id: 1,
+                icon: "🧱",
+                title: "第二層：具體的行動",
+                subtitle: "護持壇城、恭書芳名",
+                analysis: "「壇城」象徵佛菩薩居住的聖所。護持建設，等於是在人間打造一座「心靈的避風港」。",
+                meaning: "「恭書芳名」象徵將自己的名號與佛法事業連結。這是一個隆重的儀式感，代表我們願意將世俗的力量轉化為守護正法的願力。"
+            },
+            {
+                id: 2,
+                icon: "🌱",
+                title: "第三層：對自我的利益",
+                subtitle: "積累資糧、共植福田",
+                analysis: "資糧：就像出遠門需要乾糧，人生要獲得幸福、修行要開悟，也需要「福德」作為燃料。福田：道場是肥沃的土地。在這裡布施，就像在最好的季節播種，未來必能收穫善果。",
+                meaning: "布施不是「失去」，而是「種植」。這是在為自己與家人經營一份帶不走的「靈魂存摺」。"
+            },
+            {
+                id: 3,
+                icon: "🎡",
+                title: "第四層：對大眾的貢獻",
+                subtitle: "常轉法輪、廣結善緣",
+                analysis: "常轉法輪：讓佛法的智慧教育能持續運作，不停熄。廣結善緣：讓更多原本不認識佛法的人，因為這座殿堂的落成，有機會改變命運。",
+                meaning: "這是最高層次的利他行為。您的支持，成就了明王殿的運作，讓智慧的光芒能照亮更多人的黑暗。"
+            }
+        ];
+
+        const words = document.querySelectorAll('.interactive-word');
+        const displayArea = document.getElementById('dynamic-explanation');
+        
+        words.forEach(word => {
+            word.addEventListener('click', (e) => {
+                words.forEach(w => w.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                const layerId = parseInt(e.target.getAttribute('data-layer'));
+                const data = layerData[layerId];
+                
+                displayArea.innerHTML = `
+                    <div class="fade-in">
+                        <h3 class="text-xl font-bold text-amber-800 mb-2">${data.icon} ${data.title}：${data.subtitle}</h3>
+                        <p class="text-stone-700 mb-4"><span class="font-semibold px-2 py-1 bg-white rounded shadow-sm text-sm mr-2 text-stone-500">解析</span>${data.analysis}</p>
+                        <p class="text-amber-900 bg-amber-100/50 p-3 rounded-lg"><span class="font-semibold px-2 py-1 bg-amber-200 rounded shadow-sm text-sm mr-2 text-amber-800">深意</span>${data.meaning}</p>
+                    </div>
+                `;
+            });
+        });
+
+        const cardsContainer = document.getElementById('cards-container');
+        layerData.forEach(data => {
+            const card = document.createElement('div');
+            card.className = "bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-stone-100 flex flex-col h-full";
+            card.innerHTML = `
+                <div class="text-3xl mb-4">${data.icon}</div>
+                <h3 class="text-lg font-bold text-stone-800 mb-1">${data.title}</h3>
+                <h4 class="text-amber-600 font-semibold mb-4 pb-4 border-b border-stone-100">${data.subtitle}</h4>
+                <div class="space-y-3 flex-grow text-sm">
+                    <p class="text-stone-600"><strong class="text-stone-800">解析：</strong>${data.analysis}</p>
+                    <p class="text-stone-600"><strong class="text-stone-800">深意：</strong>${data.meaning}</p>
+                </div>
+            `;
+            cardsContainer.appendChild(card);
+        });
+
+        const ctx = document.getElementById('meritChart').getContext('2d');
+        
+        const chartConfig = {
+            type: 'radar',
+            data: {
+                labels: ['發心品質 (Mind)', '具體行動 (Action)', '大眾貢獻 (Others)', '自我利益 (Self)'],
+                datasets: [{
+                    label: '功德圓滿度',
+                    data: [50, 50, 50, 50],
+                    backgroundColor: 'rgba(217, 119, 6, 0.2)',
+                    borderColor: 'rgba(217, 119, 6, 0.8)',
+                    pointBackgroundColor: 'rgba(217, 119, 6, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(217, 119, 6, 1)',
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0, 0, 0, 0.05)' },
+                        grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                        pointLabels: {
+                            font: { size: 14, family: "'Noto Serif TC', serif", weight: 'bold' },
+                            color: '#57534e'
+                        },
+                        ticks: {
+                            display: false,
+                            min: 0,
+                            max: 100,
+                            stepSize: 20
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(63, 59, 54, 0.9)',
+                        titleFont: { family: "'Noto Serif TC', serif" },
+                        bodyFont: { family: "'Noto Serif TC', serif" },
+                        padding: 12,
+                        cornerRadius: 8
+                    }
+                }
+            }
+        };
+
+        const meritChart = new Chart(ctx, chartConfig);
+
+        const ids = ['mind', 'action', 'self', 'others'];
+        
+        ids.forEach((id, index) => {
+            const input = document.getElementById(`range-${id}`);
+            const valDisplay = document.getElementById(`val-${id}`);
+            
+            input.addEventListener('input', (e) => {
+                const val = parseInt(e.target.value);
+                valDisplay.textContent = val;
+                
+                let datasetIndex = 0;
+                if(id === 'mind') datasetIndex = 0;
+                if(id === 'action') datasetIndex = 1;
+                if(id === 'others') datasetIndex = 2;
+                if(id === 'self') datasetIndex = 3;
+
+                meritChart.data.datasets[0].data[datasetIndex] = val;
+                
+                if(id === 'mind' || id === 'others') {
+                    const currentSelf = meritChart.data.datasets[0].data[3];
+                    const currentAction = meritChart.data.datasets[0].data[1];
+                    const boost = Math.floor(val * 0.1);
+                    
+                    if (id === 'mind' && currentAction < 100) {
+                        const newAction = Math.min(100, currentAction + boost);
+                        meritChart.data.datasets[0].data[1] = newAction;
+                        document.getElementById('range-action').value = newAction;
+                        document.getElementById('val-action').textContent = newAction;
+                    }
+                    if (id === 'others' && currentSelf < 100) {
+                        const newSelf = Math.min(100, currentSelf + boost);
+                        meritChart.data.datasets[0].data[3] = newSelf;
+                        document.getElementById('range-self').value = newSelf;
+                        document.getElementById('val-self').textContent = newSelf;
+                    }
+                }
+
+                const total = meritChart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                const opacity = Math.min(0.8, 0.1 + (total / 400) * 0.7);
+                meritChart.data.datasets[0].backgroundColor = `rgba(217, 119, 6, ${opacity})`;
+
+                meritChart.update();
+            });
+        });
+    </script>
+</body>
+</html>
