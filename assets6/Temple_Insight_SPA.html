@@ -140,7 +140,7 @@
             </div>
             
             <p class="max-w-2xl mx-auto text-lg text-stone-600 leading-relaxed font-medium tracking-wide">
-                走進道場，我們常看見莊嚴的募款告示。這不只是在邀請捐款，更是一篇充滿智慧的「修行指南」。請點擊下方金色的核心字句，探索其背後的深層涵義。
+                走進道場，我們常看見莊嚴的募款告示。這不只是在邀請捐款，更是一篇充滿智慧的「修行指南」。請點擊下方的核心字句，探索其背後的深層涵義。
             </p>
 
             <div class="temple-border p-8 sm:p-14 shadow-2xl shadow-stone-300/40 max-w-3xl mx-auto mt-12 text-2xl sm:text-3xl leading-loose font-medium text-[#3f3b36] relative overflow-hidden">
@@ -150,7 +150,7 @@
                 <div class="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-[#b45309] opacity-50"></div>
                 <div class="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-[#b45309] opacity-50"></div>
 
-                「歡迎信眾<span class="interactive-word" data-layer="0">隨喜發心</span>贊助道場，<span class="interactive-word" data-layer="1">護持道場，恭書芳名</span>投入功德箱，以<span class="interactive-word" data-layer="2">積累福德資糧、共植福田</span>；俾使明王殿得以<span class="interactive-word" data-layer="3">常轉法輪，廣結善緣</span>。」
+                「歡迎信眾<span class="interactive-word" data-layer="0">隨喜發心</span>贊助道場、<span class="interactive-word" data-layer="1">護持壇城</span>，<span class="interactive-word" data-layer="1">恭書芳名</span>投入功德箱，以積累<span class="interactive-word" data-layer="2">福德資糧</span>，<span class="interactive-word" data-layer="2">共植福田</span>，俾使明王殿得以<span class="interactive-word" data-layer="3">常轉法輪</span>，<span class="interactive-word" data-layer="3">廣結善緣</span>。」
             </div>
             
             <div id="dynamic-explanation" class="mt-8 p-8 bg-[#fdfbf7] border-t-4 border-[#991b1b] shadow-md min-h-[160px] flex flex-col justify-center transition-all w-full max-w-3xl">
@@ -310,10 +310,15 @@
         
         words.forEach(word => {
             word.addEventListener('click', (e) => {
+                // 移除所有 active 狀態
                 words.forEach(w => w.classList.remove('active'));
-                e.target.classList.add('active');
                 
-                const layerId = parseInt(e.target.getAttribute('data-layer'));
+                // 取得當前點擊的層級 ID
+                const layerId = e.target.getAttribute('data-layer');
+                
+                // 將同屬一個層級的所有關鍵字都設為 active (同時亮起)
+                document.querySelectorAll(`.interactive-word[data-layer="${layerId}"]`).forEach(w => w.classList.add('active'));
+                
                 const data = layerData[layerId];
                 
                 displayArea.innerHTML = `
