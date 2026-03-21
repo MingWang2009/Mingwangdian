@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>明氏宗旨 | 壇城互動探索</title>
+    
+    <!-- Chosen Palette: Sacred Mandala (Warm Ivory, Ritual Gold, Crimson, Deep Slate, Sage) -->
+    <!-- Application Structure Plan: 
+        1. 標籤編排優化：手機端採用 2x2 矩陣排列，增加點擊面積並提升視覺對稱性。
+        2. 視覺細節：加入圓形標誌與選中後的光暈效果，模擬法印質感。
+        3. 閱讀優化：維持高不透明度的卡片背景，確保文字在任何裝置上皆清晰易讀。
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sacred-white': '#FAF9F6',
+                        'ritual-gold': '#D4AF37',
+                        'ritual-red': '#92400E',
+                        'ritual-slate': '#4A5568',
+                        'ritual-sage': '#718096'
+                    },
+                    fontFamily: {
+                        'serif': ['"Noto Serif TC"', '"PMingLiU"', 'serif'],
+                        'sans': ['"Noto Sans TC"', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* 全域禁用文字選取視覺，防止「反白」現象 */
+        *::selection {
+            background: transparent;
+        }
+        *::-moz-selection {
+            background: transparent;
+        }
+
+        body {
+            background-color: #FAF9F6;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.02) 0%, transparent 80%),
+                linear-gradient(rgba(250, 249, 246, 0.95), rgba(250, 249, 246, 0.95));
+            color: #2D3748;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* 祥雲裝飾 - 僅在桌面端顯示 */
+        .cloud {
+            position: fixed;
+            opacity: 0.05;
+            z-index: -1;
+            pointer-events: none;
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .cloud { display: block; }
+        }
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: #D4AF37;
+            border-radius: 50%;
+        }
+        .cloud-1 { top: 15%; left: 5%; width: 100px; height: 30px; border-radius: 20px; background: #D4AF37; }
+        .cloud-1::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+        .cloud-1::after { width: 40px; height: 40px; top: -15px; left: 45px; }
+
+        .cloud-2 { bottom: 20%; right: 10%; width: 120px; height: 35px; border-radius: 25px; background: #D4AF37; transform: scaleX(-1); }
+        .cloud-2::before { width: 60px; height: 60px; top: -30px; left: 20px; }
+        .cloud-2::after { width: 50px; height: 50px; top: -20px; left: 55px; }
+
+        /* 邊角裝飾 - 僅在桌面端顯示 */
+        .mandala-corner {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0.4;
+            display: none;
+        }
+        @media (min-width: 1024px) {
+            .mandala-corner { display: block; }
+        }
+        .corner-tl { top: 20px; left: 20px; border-left: 2px solid #D4AF37; border-top: 2px solid #D4AF37; border-radius: 10px 0 0 0; }
+        .corner-tr { top: 20px; right: 20px; border-right: 2px solid #D4AF37; border-top: 2px solid #D4AF37; border-radius: 0 10px 0 0; }
+        .corner-bl { bottom: 20px; left: 20px; border-left: 2px solid #D4AF37; border-bottom: 2px solid #D4AF37; border-radius: 0 0 0 10px; }
+        .corner-br { bottom: 20px; right: 20px; border-right: 2px solid #D4AF37; border-bottom: 2px solid #D4AF37; border-radius: 0 0 10px 0; }
+        
+        .corner-symbol {
+            position: absolute;
+            color: #D4AF37;
+            font-size: 18px;
+            line-height: 1;
+            user-select: none;
+        }
+        .corner-tl .corner-symbol { top: -10px; left: -10px; }
+        .corner-tr .corner-symbol { top: -10px; right: -10px; }
+        .corner-bl .corner-symbol { bottom: -10px; left: -10px; }
+        .corner-br .corner-symbol { bottom: -10px; right: -10px; }
+
+        #mandala-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.08; /* 進一步降低手機背景干擾 */
+            pointer-events: none;
+        }
+        @media (min-width: 768px) {
+            #mandala-canvas { opacity: 0.25; }
+        }
+
+        .swipe-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-bottom: 1.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .swipe-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .swipe-card {
+            flex: 0 0 100%;
+            scroll-snap-align: center;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.98); 
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.06);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        @media (min-width: 768px) {
+            .glass-card { background: rgba(255, 255, 255, 0.92); }
+        }
+
+        /* 標籤設計優化 */
+        .nav-btn, .dot {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        .nav-btn {
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 按鈕首字標誌 */
+        .btn-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            font-size: 12px;
+            border: 1px solid currentColor;
+            transition: all 0.3s ease;
+        }
+
+        /* 當標籤被選中時 */
+        .nav-btn.active, .nav-btn.active:hover {
+            background-color: #D4AF37 !important;
+            color: white !important;
+            border-color: #D4AF37 !important;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
+            transform: translateY(-2px);
+            cursor: default;
+        }
+
+        .nav-btn.active .btn-circle {
+            background: white;
+            color: #D4AF37;
+            border-color: white;
+        }
+
+        .active-dot {
+            width: 35px;
+            background-color: #D4AF37 !important;
+        }
+        @media (min-width: 768px) {
+            .active-dot { width: 45px; }
+        }
+
+        .ritual-border {
+            border-style: double;
+            border-width: 4px;
+            border-color: rgba(212, 175, 55, 0.3);
+            background-clip: padding-box;
+        }
+        @media (min-width: 768px) {
+            .ritual-border { border-width: 6px; }
+        }
+
+        .text-justified {
+            text-align: justify;
+            text-justify: inter-character;
+        }
+
+        /* 標題背景裝飾 */
+        .header-bg-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 6rem;
+            opacity: 0.015;
+            font-family: serif;
+            pointer-events: none;
+            user-select: none;
+        }
+        @media (min-width: 768px) {
+            .header-bg-text { font-size: 10rem; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- 佛教背景裝飾 -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+
+    <!-- 頁面邊角裝飾 -->
+    <div class="mandala-corner corner-tl"><span class="corner-symbol">卍</span></div>
+    <div class="mandala-corner corner-tr"><span class="corner-symbol">☸</span></div>
+    <div class="mandala-corner corner-bl"><span class="corner-symbol">☯</span></div>
+    <div class="mandala-corner corner-br"><span class="corner-symbol">卍</span></div>
+
+    <!-- 動態壇城畫布 -->
+    <canvas id="mandala-canvas"></canvas>
+
+    <header class="w-full pt-12 md:pt-24 pb-6 md:pb-10 text-center relative overflow-hidden">
+        <div class="header-bg-text">明氏</div>
+        <h1 class="text-3xl md:text-6xl font-serif font-bold tracking-[0.35em] md:tracking-[0.45em] text-ritual-red mb-3 relative z-10">明氏宗旨</h1>
+        <div class="flex items-center justify-center space-x-3 md:space-x-5 opacity-90">
+            <span class="h-[1px] w-8 md:w-16 bg-gradient-to-r from-transparent to-ritual-gold"></span>
+            <p class="text-xs md:text-lg text-ritual-red font-semibold tracking-[0.25em] md:tracking-[0.4em]">釋明法 題</p>
+            <span class="h-[1px] w-8 md:w-16 bg-gradient-to-l from-transparent to-ritual-gold"></span>
+        </div>
+    </header>
+
+    <!-- 導覽標籤：手機 2x2 矩陣，電腦橫向排列 -->
+    <nav class="grid grid-cols-2 md:flex md:flex-wrap justify-center items-center mt-4 mb-10 md:mb-16 gap-3 md:gap-5 px-5 md:px-10 relative z-20 max-w-3xl mx-auto">
+        <button onclick="scrollToCard(0)" class="nav-btn group flex items-center justify-center px-3 md:px-6 py-3 md:py-4 rounded-xl md:rounded-full border border-ritual-gold/40 text-ritual-red/90 bg-white/40 backdrop-blur-sm transition-all font-serif text-sm md:text-lg font-medium" id="btn-0">
+            <span class="btn-circle">明</span>明以弘法
+        </button>
+        <button onclick="scrollToCard(1)" class="nav-btn group flex items-center justify-center px-3 md:px-6 py-3 md:py-4 rounded-xl md:rounded-full border border-ritual-gold/40 text-ritual-red/90 bg-white/40 backdrop-blur-sm transition-all font-serif text-sm md:text-lg font-medium" id="btn-1">
+            <span class="btn-circle">修</span>修以禪宗
+        </button>
+        <button onclick="scrollToCard(2)" class="nav-btn group flex items-center justify-center px-3 md:px-6 py-3 md:py-4 rounded-xl md:rounded-full border border-ritual-gold/40 text-ritual-red/90 bg-white/40 backdrop-blur-sm transition-all font-serif text-sm md:text-lg font-medium" id="btn-2">
+            <span class="btn-circle">定</span>定以蓮師
+        </button>
+        <button onclick="scrollToCard(3)" class="nav-btn group flex items-center justify-center px-3 md:px-6 py-3 md:py-4 rounded-xl md:rounded-full border border-ritual-gold/40 text-ritual-red/90 bg-white/40 backdrop-blur-sm transition-all font-serif text-sm md:text-lg font-medium" id="btn-3">
+            <span class="btn-circle">靜</span>靜以待之
+        </button>
+    </nav>
+
+    <!-- 主內容區：滑動卡片 -->
+    <main class="w-full max-w-5xl mx-auto overflow-hidden">
+        <div class="swipe-container" id="swipe-container">
+            <!-- 卡片 1 -->
+            <div class="swipe-card">
+                <div class="glass-card w-full max-w-2xl rounded-[2.5rem] md:rounded-[3.5rem] p-10 md:p-20 ritual-border">
+                    <div class="flex flex-col items-center">
+                        <div class="w-16 h-16 md:w-24 md:h-24 rounded-full bg-ritual-gold text-white flex items-center justify-center text-2xl md:text-4xl font-serif mb-6 md:mb-10 shadow-lg border-2 md:border-4 border-white/30">明</div>
+                        <h2 class="text-xl md:text-4xl font-serif font-bold text-ritual-red mb-6 md:mb-10 tracking-[0.2em] md:tracking-[0.25em] text-center">明以弘法渡陰陽</h2>
+                        <div class="w-32 md:w-48 h-[1px] md:h-[2px] bg-gradient-to-r from-transparent via-ritual-gold to-transparent mb-8 md:mb-12"></div>
+                        <p class="text-ritual-red/95 leading-[2.2] md:leading-[2.5] text-justified font-serif text-lg md:text-2xl whitespace-pre-line">明氏家族以弘揚佛法為根本，真正的道場在各位弟子身、口、意。
+
+也因為各位的身行、口語、意念，才能引進同修入門，讓一切眾生放下一切貪、嗔、癡，共修佛道。</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 卡片 2 -->
+            <div class="swipe-card">
+                <div class="glass-card w-full max-w-2xl rounded-[2.5rem] md:rounded-[3.5rem] p-10 md:p-20 ritual-border">
+                    <div class="flex flex-col items-center">
+                        <div class="w-16 h-16 md:w-24 md:h-24 rounded-full bg-ritual-red text-white flex items-center justify-center text-2xl md:text-4xl font-serif mb-6 md:mb-10 shadow-lg border-2 md:border-4 border-white/30">修</div>
+                        <h2 class="text-xl md:text-4xl font-serif font-bold text-ritual-red mb-6 md:mb-10 tracking-[0.2em] md:tracking-[0.25em] text-center">修以禪宗解六界</h2>
+                        <div class="w-32 md:w-48 h-[1px] md:h-[2px] bg-gradient-to-r from-transparent via-ritual-gold to-transparent mb-8 md:mb-12"></div>
+                        <p class="text-ritual-red/95 leading-[2.2] md:leading-[2.5] text-justified font-serif text-lg md:text-2xl whitespace-pre-line">大家一定覺得奇怪，明氏是佛道修行，怎麼會以禪宗解六界呢？
+
+禪宗是佛教的支脈之一，禪宗是以《金剛經》為根基，《金剛經》的心髓是《心經》，師兄一直宣導《心經》解導大界；而六界是道教之說，即天、人、冥、妖、魔、邪界，在佛教中稱為大道。</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 卡片 3 -->
+            <div class="swipe-card">
+                <div class="glass-card w-full max-w-2xl rounded-[2.5rem] md:rounded-[3.5rem] p-10 md:p-20 ritual-border">
+                    <div class="flex flex-col items-center">
+                        <div class="w-16 h-16 md:w-24 md:h-24 rounded-full bg-ritual-sage text-white flex items-center justify-center text-2xl md:text-4xl font-serif mb-6 md:mb-10 shadow-lg border-2 md:border-4 border-white/30">定</div>
+                        <h2 class="text-xl md:text-4xl font-serif font-bold text-ritual-red mb-6 md:mb-10 tracking-[0.2em] md:tracking-[0.25em] text-center">定以蓮師揚佛法</h2>
+                        <div class="w-32 md:w-48 h-[1px] md:h-[2px] bg-gradient-to-r from-transparent via-ritual-gold to-transparent mb-8 md:mb-12"></div>
+                        <p class="text-ritual-red/95 leading-[2.2] md:leading-[2.5] text-justified font-serif text-lg md:text-2xl whitespace-pre-line">大家一定覺得奇怪，我的今世主又不是蓮師，為什麼要以蓮師揚佛法？
+
+記載說：蓮師被視為釋迦牟尼佛、阿彌陀佛、觀世音菩薩三位，及十方諸佛的一切願力，精通經、律、論三藏經論，及一切救世神變之法力。
+
+蓮師在壇城是我們的班級導師，教導各位一切之法力，當各位有所成就，再轉交給各位的今世主恩師。</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 卡片 4 -->
+            <div class="swipe-card">
+                <div class="glass-card w-full max-w-2xl rounded-[2.5rem] md:rounded-[3.5rem] p-10 md:p-20 ritual-border">
+                    <div class="flex flex-col items-center">
+                        <div class="w-16 h-16 md:w-24 md:h-24 rounded-full bg-ritual-slate text-white flex items-center justify-center text-2xl md:text-4xl font-serif mb-6 md:mb-10 shadow-lg border-2 md:border-4 border-white/30">靜</div>
+                        <h2 class="text-xl md:text-4xl font-serif font-bold text-ritual-red mb-6 md:mb-10 tracking-[0.2em] md:tracking-[0.25em] text-center">靜以待之渡同門</h2>
+                        <div class="w-32 md:w-48 h-[1px] md:h-[2px] bg-gradient-to-r from-transparent via-ritual-gold to-transparent mb-8 md:mb-12"></div>
+                        <p class="text-ritual-red/95 leading-[2.2] md:leading-[2.5] text-justified font-serif text-lg md:text-2xl whitespace-pre-line">當我們大家的身、口、意品德不佳，又如何引導新進的同門學弟妹？不能把明氏發揚光大，把壇城發揚光大。
+
+為什麼靜以待之，是十方諸佛，靜靜地在等待我們成長、精進、成就啊！我們不精進，何以渡同門啊！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 進度指示點 -->
+        <div class="flex justify-center space-x-4 mt-6 mb-28">
+            <div class="dot w-2 h-2 rounded-full bg-ritual-gold/25 transition-all duration-500" id="dot-0"></div>
+            <div class="dot w-2 h-2 rounded-full bg-ritual-gold/25 transition-all duration-500" id="dot-1"></div>
+            <div class="dot w-2 h-2 rounded-full bg-ritual-gold/25 transition-all duration-500" id="dot-2"></div>
+            <div class="dot w-2 h-2 rounded-full bg-ritual-gold/25 transition-all duration-500" id="dot-3"></div>
+        </div>
+    </main>
+
+    <footer class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-xl py-6 md:py-8 text-center border-t border-ritual-gold/20 z-30">
+        <p class="text-[10px] md:text-sm tracking-[0.4em] md:tracking-[0.6em] text-ritual-red/80 font-bold uppercase">靜 心 觀 想 ‧ 般 若 智慧</p>
+    </footer>
+
+    <script>
+        // --- 壇城與蓮花背景動畫 ---
+        const canvas = document.getElementById('mandala-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, centerX, centerY;
+        let angle = 0;
+        let currentHue = 45; 
+        let targetHue = 45;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            centerX = width / 2;
+            centerY = height / 2;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        function drawMandala() {
+            ctx.clearRect(0, 0, width, height);
+            angle += 0.0008; // 速度稍微減慢，減少干擾
+            currentHue += (targetHue - currentHue) * 0.03;
+
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            
+            const layers = 10;
+            for (let i = 1; i <= layers; i++) {
+                const radius = i * (Math.min(width, height) / 18);
+                const petals = 6 + (i % 2 === 0 ? 6 : 0);
+                
+                ctx.save();
+                ctx.rotate(angle * (i % 2 === 0 ? 1 : -0.5));
+
+                ctx.beginPath();
+                ctx.strokeStyle = `hsla(${currentHue}, 50%, 40%, ${0.15 / i})`;
+                ctx.lineWidth = 1;
+
+                for (let j = 0; j < petals; j++) {
+                    const rot = (j / petals) * Math.PI * 2;
+                    ctx.save();
+                    ctx.rotate(rot);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.quadraticCurveTo(radius / 2, radius / 2, radius, 0);
+                    ctx.quadraticCurveTo(radius / 2, -radius / 2, 0, 0);
+                    ctx.stroke();
+                    
+                    ctx.restore();
+                }
+                ctx.restore();
+            }
+            
+            ctx.restore();
+            requestAnimationFrame(drawMandala);
+        }
+
+        drawMandala();
+
+        // --- 導覽與滾動邏輯 ---
+        const container = document.getElementById('swipe-container');
+        const dots = document.querySelectorAll('.dot');
+        const btns = document.querySelectorAll('.nav-btn');
+        const hues = [45, 10, 150, 210];
+
+        container.addEventListener('scroll', () => {
+            const cardWidth = container.offsetWidth;
+            const index = Math.round(container.scrollLeft / cardWidth);
+            if (index >= 0 && index < btns.length) {
+                updateUI(index);
+            }
+        });
+
+        function updateUI(index) {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active-dot', i === index);
+            });
+
+            if (hues[index] !== undefined) {
+                targetHue = hues[index];
+            }
+
+            btns.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function scrollToCard(index) {
+            const cardWidth = container.offsetWidth;
+            container.scrollTo({
+                left: index * cardWidth,
+                behavior: 'smooth'
+            });
+            updateUI(index);
+        }
+
+        // 防止反白
+        btns.forEach(btn => {
+            btn.addEventListener('mousedown', (e) => e.preventDefault());
+        });
+
+        window.onload = () => {
+            updateUI(0);
+        };
+    </script>
+</body>
+</html>
