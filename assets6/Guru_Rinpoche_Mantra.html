@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>蓮師法門：蓮師心咒即是蓮師 - 功德開示全文</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700;900&family=Noto+Sans+TC:wght@700;900&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&display=swap');
+        
+        :root {
+            --cinnabar-red: #9D2933;   /* 硃砂紅 */
+            --lapis-blue: #1A365D;      /* 琉璃藍 */
+            --incense-paper: #F9F3E6;   /* 檀香紙色 */
+            --buddha-gold: #D4AF37;     /* 佛光金 */
+            --turquoise: #319795;       /* 松石綠 */
+            --ink-black: #1A1A1A;       /* 墨黑色 */
+        }
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: var(--incense-paper);
+            color: var(--ink-black);
+            line-height: 2;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .font-calligraphy { font-family: 'Zhi Mang Xing', cursive; }
+        .font-brush { font-family: 'Ma Shan Zheng', cursive; }
+        
+        /* 標題與強調文字：穩定對稱字體 */
+        .title-stable {
+            font-family: 'Noto Sans TC', sans-serif;
+            font-weight: 900;
+            color: var(--cinnabar-red);
+            letter-spacing: 0.3em;
+            text-indent: 0.3em; 
+            display: inline-block;
+            line-height: 1.4;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        /* 針對長段落的穩定字體優化 */
+        .long-quote-stable {
+            display: block;
+            word-break: normal;
+            overflow-wrap: break-word;
+        }
+
+        /* 閱讀進度條 */
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0; width: 0%; height: 4px;
+            background: linear-gradient(to right, var(--cinnabar-red), var(--buddha-gold), var(--lapis-blue));
+            z-index: 1000;
+        }
+
+        /* 壇城外框響應式優化 */
+        .mandala-container {
+            max-width: 920px;
+            margin: 15px auto;
+            background: #fff;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            border: 2px solid var(--buddha-gold);
+            padding: 2px;
+            width: 94%; 
+        }
+
+        .inner-frame {
+            border: 1px solid var(--buddha-gold);
+            padding: 25px 12px;
+            background: #fff;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .inner-frame { padding: 60px 50px; }
+            .mandala-container { margin: 40px auto; }
+            .long-quote-stable { display: inline-block; }
+        }
+
+        /* 裝飾轉角 */
+        .corner {
+            position: absolute;
+            width: 20px; height: 20px;
+            border: 2px solid var(--buddha-gold);
+            z-index: 20;
+        }
+        @media (min-width: 768px) {
+            .corner { width: 45px; height: 45px; border-width: 3px; }
+        }
+        .top-left { top: -3px; left: -3px; border-right: 0; border-bottom: 0; }
+        .top-right { top: -3px; right: -3px; border-left: 0; border-bottom: 0; }
+        .bottom-left { bottom: -3px; left: -3px; border-right: 0; border-top: 0; }
+        .bottom-right { bottom: -3px; right: -3px; border-left: 0; border-top: 0; }
+
+        /* 心咒區塊與注音樣式 */
+        .mantra-shrine {
+            background: linear-gradient(135deg, var(--lapis-blue) 0%, #0c1c36 100%);
+            color: #fff;
+            padding: 2.5rem 0.75rem;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+            border: 1px solid var(--buddha-gold);
+        }
+        @media (min-width: 768px) {
+            .mantra-shrine { padding: 4rem 2rem; }
+        }
+
+        .mantra-text {
+            letter-spacing: 0.1em;
+            text-indent: 0.1em;
+            display: inline-block;
+        }
+
+        ruby rt {
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 0.35em;
+            font-weight: 400;
+            color: var(--buddha-gold);
+            opacity: 0.9;
+            padding-bottom: 0.2em;
+        }
+
+        /* 功德卡片 */
+        .merit-grid-card {
+            background: var(--incense-paper);
+            border-top: 4px solid var(--cinnabar-red);
+            padding: 1.25rem;
+            height: 100%;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .section-title-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cinnabar-red);
+            margin: 2.5rem 0;
+            font-weight: bold;
+        }
+        .section-title-line::before, .section-title-line::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(to var(--dir, right), transparent, var(--buddha-gold));
+        }
+        .section-title-line::after { --dir: left; }
+    </style>
+</head>
+<body class="selection:bg-yellow-100">
+
+    <div id="progress" class="progress-bar"></div>
+
+    <div class="mandala-container">
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <div class="inner-frame">
+            
+            <header class="text-center mb-10 md:mb-20">
+                <span class="text-[9px] md:text-xs tracking-[0.3em] md:tracking-[0.4em] text-stone-400 font-bold mb-4 block uppercase px-2">
+                    Om Ah Hum Vajra Guru Padma Siddhi Hum
+                </span>
+                
+                <div class="mb-6 md:mb-12">
+                    <h1 class="text-3xl md:text-7xl title-stable">蓮師法門</h1>
+                </div>
+                
+                <div class="mantra-shrine mb-8">
+                    <p class="text-2xl md:text-5xl font-bold leading-[2.5] md:leading-[2.5] mb-3 mantra-text">
+                        <ruby>嗡<rt>ㄨㄥ</rt></ruby><ruby>阿<rt>ㄚ</rt></ruby><ruby>吽<rt>ㄏㄨㄥˋ</rt></ruby>
+                        &nbsp;
+                        <ruby>班<rt>ㄅㄢ</rt></ruby><ruby>扎<rt>ㄓㄚ</rt></ruby><ruby>咕<rt>ㄍㄨ</rt></ruby><ruby>嚕<rt>ㄌㄨ</rt></ruby><br>
+                        <ruby>貝<rt>ㄅㄟˋ</rt></ruby><ruby>瑪<rt>ㄇㄚˇ</rt></ruby><ruby>西<rt>ㄒㄧ</rt></ruby><ruby>帝<rt>ㄉㄧˋ</rt></ruby><ruby>吽<rt>ㄏㄨㄥˋ</rt></ruby>
+                    </p>
+                    <div class="w-16 h-px bg-yellow-500 mx-auto opacity-40"></div>
+                </div>
+
+                <p class="text-base md:text-2xl text-stone-600 font-medium italic px-4">
+                    「心咒，就是你現量能見到的蓮師，<br class="hidden md:block">是你內在佛性的具體外現。」
+                </p>
+            </header>
+
+            <article class="space-y-10 md:space-y-20">
+                
+                <section class="text-center px-2">
+                    <p class="text-base md:text-xl text-stone-700 mb-8 leading-relaxed">
+                        向蓮師祈禱時，不必疑惑：「為什麼蓮師沒有現前？為什麼我沒有見到蓮師？」<br>
+                        蓮師不是真的不在，只是你以為他不在；你也不是真的沒見到，只是你見到了，卻認為那不是。
+                    </p>
+                    <div class="bg-stone-50 p-5 md:p-10 border-l-4 md:border-l-8 border-red-900 rounded-r-lg text-left shadow-sm">
+                        <p class="text-sm md:text-lg text-stone-600 mb-4">
+                            《蓮師心咒之功德》是一篇由伏藏大師<strong>噶瑪朗巴</strong>取出的伏藏，內容是蓮師和空行母<strong>益西措嘉</strong>的對話。應空行母祈請，上師蓮花生大士開示了蓮師心咒的殊勝功德。
+                        </p>
+                        <p class="text-sm md:text-lg text-stone-600">
+                            這篇開示篇幅短小，加持力巨大，尤其對末法時代的眾生有著不共的意義。開篇，空行母直接表明心願：為利益未來時代的眾生而請上師開示。因此，文中所講到的功德，於末法時代的我們而言，都有著特別的加持力。
+                        </p>
+                    </div>
+                </section>
+
+                <div class="section-title-line">
+                    <span class="mx-4 text-xs tracking-widest opacity-40">☸</span>
+                </div>
+
+                <!-- 區塊二：論述 -->
+                <section class="px-2">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl md:text-5xl title-stable border-b-2 border-red-50 inline-block pb-2">蓮師心咒就是蓮師</h2>
+                    </div>
+                    
+                    <div class="space-y-6 text-sm md:text-lg text-stone-700 text-justify md:text-center leading-relaxed">
+                        <p>
+                            如上所說，蓮師心咒是圓滿含攝一切修行、能夠成就佛道的法門。蓮師心咒本身是圓滿的，但能否通過修持得到圓滿的加持，完全取決於<strong>「信心」</strong>。
+                        </p>
+                        <p>
+                            密咒本身就是佛的智慧，但在眾生心前，顯現為文字、聲音的形式。所以，當我們念著心咒向蓮師祈禱時，即便無法現量見到蓮師，心中也一定要確信：並非蓮師沒有現前，他其實從未離開。
+                        </p>
+                        
+                        <div class="my-6 md:my-10 py-8 md:py-16 border-y border-stone-100 text-center bg-stone-50/50 shadow-inner">
+                            <p class="text-lg md:text-4xl title-stable long-quote-stable leading-relaxed px-4">
+                                蓮師存在的形式，反映了修持者自身的福德與業力。<br class="hidden md:block">
+                                見不到又何妨？那只是自己的問題，不代表祂不在。
+                            </p>
+                        </div>
+                        
+                        <p>
+                            對於祈禱者而言，這是一種巨大的鼓舞。因為你終於開始明白：見不到又何妨？那只是自己的問題，不代表祂不在。心咒就是蓮師，祂一直與自己同在。
+                        </p>
+                        <p>
+                            帶著這樣的信念去祈禱，每念一句心咒，便都是在超越侷限——依靠信心的力量，超越自己有漏根識的所見所感。祈禱，果然是靠近實相的捷徑。什麼是實相？侷限不再，就是實相。
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 功德區塊 -->
+                <section class="px-1">
+                    <h2 class="text-2xl md:text-4xl font-brush text-center text-red-900 mb-8 md:mb-12">功 德</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                        <div class="merit-grid-card">
+                            <div class="bg-red-900 text-white text-[9px] px-2 py-0.5 rounded inline-block mb-3 font-bold">每日百遍</div>
+                            <p class="text-stone-700 text-sm md:text-lg leading-relaxed">即使（每天）不間斷唸誦一百遍，也會使他人悅意，在無勤中獲得食品、財物受用。</p>
+                        </div>
+                        <div class="merit-grid-card">
+                            <div class="bg-red-900 text-white text-[9px] px-2 py-0.5 rounded inline-block mb-3 font-bold">千、萬遍</div>
+                            <p class="text-stone-700 text-sm md:text-lg leading-relaxed">如果唸誦千、萬遍等，則能懾服、加持他心，無礙成就威力。</p>
+                        </div>
+                        <div class="merit-grid-card">
+                            <div class="bg-red-900 text-white text-[9px] px-2 py-0.5 rounded inline-block mb-3 font-bold">十萬、百萬遍</div>
+                            <p class="text-stone-700 text-sm md:text-lg leading-relaxed">倘若唸誦十萬、百萬遍等，則能懷柔三界，懾服三有，役使鬼神，無礙成就四種事業，能行持一切眾生所想的量利益。</p>
+                        </div>
+                        <div class="merit-grid-card bg-stone-900 text-white border-t-0" style="border-right: 4px solid var(--buddha-gold);">
+                            <div class="bg-yellow-600 text-black text-[9px] px-2 py-0.5 rounded inline-block mb-3 font-bold">三千萬或七千萬遍</div>
+                            <p class="text-stone-300 text-sm md:text-lg leading-relaxed">如若能唸誦三千萬或七千萬遍等，則與三世諸佛不相分離，與我無二無別，所有天龍八部言聽計從，成辦所囑託之事。</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 根器區塊 -->
+                <section class="bg-stone-50 p-6 md:p-12 rounded-xl border border-stone-200 shadow-inner">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 text-center">
+                        <div class="px-2">
+                            <div class="text-turquoise text-xl md:text-3xl font-bold mb-3">上根者</div>
+                            <p class="text-sm md:text-base text-stone-700 leading-relaxed">於即生成就虹身</p>
+                        </div>
+                        <div class="h-px w-full bg-stone-200 md:hidden my-2"></div>
+                        <div class="md:border-x md:border-stone-200 px-2">
+                            <div class="text-turquoise text-xl md:text-3xl font-bold mb-3">中根者</div>
+                            <p class="text-sm md:text-base text-stone-700 leading-relaxed">在臨終時認識母子光明</p>
+                        </div>
+                        <div class="h-px w-full bg-stone-200 md:hidden my-2"></div>
+                        <div class="px-2">
+                            <div class="text-turquoise text-xl md:text-3xl font-bold mb-3">下根者</div>
+                            <p class="text-sm md:text-base text-stone-700 leading-relaxed">也會在中陰面見我而顯現解脫於自地</p>
+                        </div>
+                    </div>
+                    <div class="mt-10 pt-8 border-t border-stone-100 text-center">
+                        <p class="text-lg md:text-xl font-bold text-red-900 tracking-widest leading-relaxed">
+                            往生妙拂洲剎土，利益無量眾生。
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 功德體性區塊 -->
+                <section class="space-y-5 text-sm md:text-lg text-stone-700 leading-relaxed px-2">
+                    <p>
+                        蓮師心咒是<strong>身、語、意三金剛</strong>，以及<strong>五部佛之最勝心要</strong>，是一切皈依處全體圓滿之體性，圓滿含攝無量法海之命根。乃為<strong>淨除一切煩惱障、抵制一切邪魔、證成三身五智、圓成一切事業</strong>之方便。
+                    </p>
+                    <p>
+                        而且，常持蓮師心咒能<strong>遮除一切詛咒</strong>，獲得兩種悉地，無礙往生一切淨土，<strong>成就四種持明之果位</strong>。由於蓮師的願力，向他祈禱能帶給我們最迅速威猛的力量，遣除世間生活以及出世間修道的一切障礙，如意滿足一切所願。
+                    </p>
+                    <div class="bg-red-900 text-white p-6 md:p-10 rounded-lg text-center shadow-lg">
+                        <p class="text-base font-bold mb-3">三世諸佛總集化現</p>
+                        <p class="leading-relaxed opacity-90 text-xs md:text-base text-justify md:text-center">
+                            蓮師本身就是三世諸佛的總集化現——當我們想到蓮師，諸佛菩薩、所有的上師都在他的身、語、意上體現；當我們向蓮師祈禱，也就是在向三世諸佛祈禱。
+                        </p>
+                    </div>
+                </section>
+
+                <footer class="text-center pt-6 pb-10">
+                    <div class="inline-block relative px-6 py-4 mb-10">
+                        <div class="absolute inset-0 bg-red-900 opacity-5 transform -skew-x-12"></div>
+                        <p class="text-xl md:text-4xl font-black text-red-950 font-brush tracking-[0.2em] leading-relaxed">
+                            一即一切 ‧ 圓滿加持
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-3 text-stone-600">
+                        <p class="text-base md:text-2xl font-bold tracking-[0.3em]">願以此功德 普及於一切</p>
+                        <p class="text-base md:text-2xl font-bold tracking-[0.3em]">我等與眾生 皆共成佛道</p>
+                    </div>
+                    
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="mt-12 text-stone-300 hover:text-red-900 transition-all text-[10px] tracking-[0.4em] font-black py-4">
+                        ── 回到頂端 ──
+                    </button>
+                </footer>
+
+            </article>
+        </div>
+    </div>
+
+    <script>
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("progress").style.width = scrolled + "%";
+        };
+    </script>
+
+</body>
+</html>
