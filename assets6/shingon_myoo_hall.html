@@ -1,0 +1,2620 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>東密明王殿 — 五大明王立體曼荼羅與三密護摩互動道場</title>
+<style>
+  :root {
+    --bg-deep: #07060a;
+    --bg-hall: #100c14;
+    --bg-card: rgba(24, 18, 30, 0.86);
+    --bg-panel: rgba(16, 12, 22, 0.92);
+    --gold-bright: #f5d076;
+    --gold-mid: #c99a3e;
+    --gold-dark: #7a5818;
+    --crimson: #c93b2b;
+    --crimson-glow: #ff5733;
+    --text-main: #f3ece0;
+    --text-muted: #b8ab99;
+    --text-dim: #7f7264;
+    --accent-color: #e85d35;
+    --accent-secondary: #f5d076;
+    --border-gold: rgba(201, 154, 62, 0.38);
+    --shadow-heavy: 0 16px 48px rgba(0, 0, 0, 0.78);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text-main);
+    font-family: "Noto Serif TC", "Songti TC", "PMingLiU", "Microsoft JhengHei", serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    selection-background-color: var(--gold-mid);
+  }
+
+  /* Ambient Canvas Background */
+  #bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Architectural Temple Frame */
+  .temple-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 16px 20px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* Top Temple Header / Plaque (匾額) */
+  .temple-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 24px;
+    background: linear-gradient(180deg, rgba(32, 20, 28, 0.95) 0%, rgba(16, 11, 18, 0.92) 100%);
+    border: 1px solid var(--border-gold);
+    border-top: 3px solid var(--gold-mid);
+    border-radius: 12px;
+    box-shadow: var(--shadow-heavy), inset 0 0 32px rgba(201, 154, 62, 0.12);
+  }
+
+  .plaque-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .plaque-seal {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: radial-gradient(circle at 35% 35%, #521614, #1e0707);
+    border: 2px solid var(--gold-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: var(--gold-bright);
+    box-shadow: 0 0 18px rgba(232, 93, 53, 0.45);
+    font-weight: 700;
+  }
+
+  .plaque-titles h1 {
+    font-size: 1.55rem;
+    letter-spacing: 0.14em;
+    color: var(--gold-bright);
+    text-shadow: 0 2px 12px rgba(245, 208, 118, 0.35);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .plaque-titles p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    margin-top: 3px;
+  }
+
+  /* Header Controls & Audio Bar */
+  .header-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mode-tabs {
+    display: flex;
+    background: rgba(8, 6, 12, 0.8);
+    padding: 4px;
+    border-radius: 9px;
+    border: 1px solid rgba(201, 154, 62, 0.3);
+    gap: 4px;
+  }
+
+  .mode-tab {
+    background: transparent;
+    color: var(--text-muted);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .mode-tab:hover {
+    color: var(--gold-bright);
+    background: rgba(201, 154, 62, 0.12);
+  }
+
+  .mode-tab.active {
+    background: linear-gradient(135deg, #8b2518 0%, #5c160e 100%);
+    color: var(--gold-bright);
+    box-shadow: 0 2px 10px rgba(201, 59, 43, 0.45);
+    border: 1px solid rgba(245, 208, 118, 0.45);
+    font-weight: 600;
+  }
+
+  .sound-btn {
+    background: rgba(28, 21, 34, 0.9);
+    color: var(--gold-bright);
+    border: 1px solid var(--border-gold);
+    padding: 8px 13px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.84rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sound-btn:hover {
+    background: rgba(201, 154, 62, 0.22);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(201, 154, 62, 0.25);
+  }
+
+  .sound-btn.playing {
+    background: linear-gradient(135deg, rgba(201, 154, 62, 0.35), rgba(140, 45, 25, 0.5));
+    border-color: var(--gold-bright);
+    box-shadow: 0 0 14px rgba(245, 208, 118, 0.4);
+  }
+
+  /* Main 3-Column Sanctuary Grid */
+  .sanctuary-grid {
+    display: grid;
+    grid-template-columns: 340px 1fr 390px;
+    gap: 18px;
+    align-items: start;
+  }
+
+  @media (max-width: 1220px) {
+    .sanctuary-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .col-center {
+      grid-column: 1 / -1;
+      order: -1;
+    }
+  }
+
+  @media (max-width: 780px) {
+    .sanctuary-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Panel Card Styling */
+  .panel-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-gold);
+    border-radius: 12px;
+    box-shadow: var(--shadow-heavy);
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+  }
+
+  .panel-header {
+    padding: 13px 18px;
+    background: linear-gradient(90deg, rgba(64, 24, 22, 0.72) 0%, rgba(28, 20, 36, 0.72) 100%);
+    border-bottom: 1px solid var(--border-gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-header h2 {
+    font-size: 1.02rem;
+    color: var(--gold-bright);
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .panel-badge {
+    font-size: 0.74rem;
+    padding: 3px 9px;
+    border-radius: 99px;
+    background: rgba(201, 154, 62, 0.18);
+    color: var(--gold-bright);
+    border: 1px solid rgba(201, 154, 62, 0.35);
+  }
+
+  .panel-body {
+    padding: 16px 18px;
+  }
+
+  /* Left Column: Interactive Mandala Map & Roster */
+  .view-switch-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .sub-btn {
+    flex: 1;
+    padding: 7px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(201, 154, 62, 0.25);
+    color: var(--text-muted);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .sub-btn.active, .sub-btn:hover {
+    background: rgba(201, 154, 62, 0.2);
+    color: var(--gold-bright);
+    border-color: var(--gold-mid);
+  }
+
+  /* Five Directions Mandala Diagram */
+  .mandala-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 300px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(92, 24, 18, 0.42) 0%, rgba(22, 16, 30, 0.88) 68%, rgba(10, 8, 14, 0.96) 100%);
+    border: 2px solid var(--gold-mid);
+    box-shadow: inset 0 0 36px rgba(245, 208, 118, 0.18), 0 0 24px rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mandala-rings {
+    position: absolute;
+    inset: 10px;
+    border-radius: 50%;
+    border: 1px dashed rgba(245, 208, 118, 0.32);
+    pointer-events: none;
+  }
+
+  .mandala-square {
+    position: absolute;
+    inset: 38px;
+    border: 1.5px solid rgba(201, 154, 62, 0.45);
+    background: rgba(15, 10, 20, 0.55);
+    pointer-events: none;
+  }
+
+  .mandala-node {
+    position: absolute;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #2a1e30, #120c18);
+    border: 2px solid var(--node-color, var(--gold-mid));
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
+    z-index: 2;
+    padding: 4px;
+    text-align: center;
+  }
+
+  .mandala-node:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--node-color, var(--gold-bright));
+  }
+
+  .mandala-node.active {
+    transform: scale(1.14);
+    background: radial-gradient(circle at 35% 35%, var(--node-bg, #5e1914), #160a10);
+    border-color: var(--gold-bright);
+    box-shadow: 0 0 24px var(--node-color, var(--crimson-glow)), inset 0 0 12px rgba(245, 208, 118, 0.35);
+  }
+
+  .mandala-node .seed-char {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold-bright);
+    line-height: 1.1;
+  }
+
+  .mandala-node .node-name {
+    font-size: 0.7rem;
+    margin-top: 2px;
+    color: var(--text-main);
+    font-weight: 600;
+  }
+
+  .mandala-node .node-dir {
+    font-size: 0.62rem;
+    color: var(--gold-mid);
+  }
+
+  /* Positions in Mandala (Traditional Esoteric Orientation: Center, East=Top or Bottom/Right, we label clearly) */
+  .node-center { top: 50%; left: 50%; transform: translate(-50%, -50%); width: 78px; height: 78px; }
+  .node-center:hover, .node-center.active { transform: translate(-50%, -50%) scale(1.12); }
+  .node-east   { top: 8%;  left: 50%; transform: translateX(-50%); }
+  .node-east:hover, .node-east.active { transform: translateX(-50%) scale(1.1); }
+  .node-south  { top: 50%; right: 6%; transform: translateY(-50%); }
+  .node-south:hover, .node-south.active { transform: translateY(-50%) scale(1.1); }
+  .node-west   { bottom: 8%; left: 50%; transform: translateX(-50%); }
+  .node-west:hover, .node-west.active { transform: translateX(-50%) scale(1.1); }
+  .node-north  { top: 50%; left: 6%;  transform: translateY(-50%); }
+  .node-north:hover, .node-north.active { transform: translateY(-50%) scale(1.1); }
+
+  /* Horizontal Sumeru Altar Lineup View (東寺講堂須彌壇一列配置) */
+  .lineup-stage {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(10, 7, 14, 0.75);
+    border: 1px solid rgba(201, 154, 62, 0.3);
+  }
+
+  .lineup-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .lineup-item {
+    padding: 10px 4px;
+    border-radius: 8px;
+    background: rgba(28, 20, 36, 0.8);
+    border: 1px solid rgba(201, 154, 62, 0.3);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lineup-item.active, .lineup-item:hover {
+    border-color: var(--gold-bright);
+    background: rgba(140, 38, 24, 0.45);
+    transform: translateY(-2px);
+  }
+
+  /* Deity Roster List (Includes 5 Wisdom Kings + Aizen + Mahamayuri) */
+  .deity-roster {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .roster-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(201, 154, 62, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .roster-card:hover {
+    background: rgba(201, 154, 62, 0.12);
+    border-color: rgba(201, 154, 62, 0.5);
+  }
+
+  .roster-card.active {
+    background: linear-gradient(90deg, rgba(122, 32, 22, 0.55) 0%, rgba(36, 22, 42, 0.65) 100%);
+    border-color: var(--gold-bright);
+    box-shadow: inset 3px 0 0 var(--gold-bright);
+  }
+
+  .roster-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .roster-seed {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--gold-bright);
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(245, 208, 118, 0.35);
+  }
+
+  .roster-info h4 {
+    font-size: 0.92rem;
+    color: var(--text-main);
+  }
+
+  .roster-info span {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+  }
+
+  .roster-tag {
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--gold-mid);
+    border: 1px solid rgba(201, 154, 62, 0.25);
+  }
+
+  /* Center Column: Main Shrine Altar & Interactive Stage */
+  .shrine-stage {
+    position: relative;
+    min-height: 640px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: radial-gradient(ellipse at 50% 35%, rgba(90, 26, 18, 0.32) 0%, rgba(12, 9, 18, 0.95) 75%);
+    border: 1px solid var(--gold-mid);
+    border-radius: 14px;
+    box-shadow: var(--shadow-heavy), inset 0 0 60px rgba(0, 0, 0, 0.85);
+    overflow: hidden;
+  }
+
+  /* Shrine Top Curtain (御簾與五色幔幕) */
+  .shrine-curtain {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    height: 10px;
+    width: 100%;
+    z-index: 3;
+  }
+  .curtain-strip.blue   { background: #2b5b9e; }
+  .curtain-strip.yellow { background: #d9a738; }
+  .curtain-strip.red    { background: #b83227; }
+  .curtain-strip.white  { background: #dfd8cc; }
+  .curtain-strip.black  { background: #3b2848; }
+
+  .shrine-top-bar {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px 6px;
+  }
+
+  .deity-title-banner h2 {
+    font-size: 1.65rem;
+    color: var(--gold-bright);
+    letter-spacing: 0.1em;
+    text-shadow: 0 2px 16px rgba(232, 93, 53, 0.65);
+  }
+
+  .deity-title-banner p {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .visual-toggle-group {
+    display: flex;
+    gap: 6px;
+    background: rgba(10, 8, 15, 0.78);
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid var(--border-gold);
+  }
+
+  .vis-btn {
+    padding: 6px 11px;
+    font-size: 0.78rem;
+    font-family: inherit;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .vis-btn.active {
+    background: rgba(201, 154, 62, 0.28);
+    color: var(--gold-bright);
+    font-weight: 600;
+  }
+
+  /* Central Deity Halo & Canvas Container */
+  .halo-viewport {
+    position: relative;
+    flex: 1;
+    min-height: 370px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  #flame-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .deity-art-container {
+    position: relative;
+    z-index: 2;
+    width: 320px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.35s ease;
+  }
+
+  .deity-art-container:hover {
+    transform: scale(1.03);
+  }
+
+  /* Interactive Hotspots on the Deity */
+  .hotspot-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  .hotspot-pin {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(245, 208, 118, 0.92);
+    color: #1a0d0a;
+    font-size: 0.76rem;
+    font-weight: 700;
+    border: 2px solid #fff;
+    box-shadow: 0 0 14px rgba(245, 208, 118, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s, background 0.2s;
+    animation: pulsePin 2.2s infinite ease-in-out;
+  }
+
+  .hotspot-pin:hover {
+    transform: scale(1.25);
+    background: #fff;
+  }
+
+  @keyframes pulsePin {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245, 208, 118, 0.7), 0 0 12px rgba(245, 208, 118, 0.9); }
+    50% { box-shadow: 0 0 0 9px rgba(245, 208, 118, 0), 0 0 18px rgba(245, 208, 118, 1); }
+  }
+
+  /* Hotspot Tooltip Banner */
+  .hotspot-Callout {
+    margin: 0 20px 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(20, 14, 26, 0.9);
+    border-left: 3px solid var(--gold-bright);
+    border-top: 1px solid rgba(201, 154, 62, 0.28);
+    border-right: 1px solid rgba(201, 154, 62, 0.28);
+    border-bottom: 1px solid rgba(201, 154, 62, 0.28);
+    font-size: 0.84rem;
+    color: var(--text-main);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .hotspot-Callout strong {
+    color: var(--gold-bright);
+  }
+
+  /* Six Esoteric Offerings Altar Table (密教六種供養須彌壇) */
+  .altar-table {
+    position: relative;
+    z-index: 3;
+    background: linear-gradient(180deg, rgba(44, 24, 20, 0.92) 0%, rgba(20, 12, 16, 0.98) 100%);
+    border-top: 2px solid var(--gold-mid);
+    padding: 14px 20px;
+  }
+
+  .altar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    color: var(--gold-bright);
+  }
+
+  .offerings-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .offerings-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .offering-btn {
+    background: rgba(14, 10, 18, 0.82);
+    border: 1px solid rgba(201, 154, 62, 0.32);
+    border-radius: 8px;
+    padding: 9px 6px;
+    color: var(--text-main);
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .offering-btn:hover {
+    border-color: var(--gold-bright);
+    background: rgba(201, 154, 62, 0.16);
+    transform: translateY(-2px);
+  }
+
+  .offering-btn.offered {
+    border-color: var(--gold-bright);
+    background: linear-gradient(180deg, rgba(168, 52, 32, 0.48), rgba(60, 22, 18, 0.65));
+    box-shadow: 0 0 14px rgba(245, 208, 118, 0.35);
+  }
+
+  .offering-icon {
+    font-size: 1.35rem;
+  }
+
+  .offering-name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--gold-bright);
+  }
+
+  .offering-meaning {
+    font-size: 0.66rem;
+    color: var(--text-muted);
+  }
+
+  /* Right Column: Deep Lore, Mantra Chanting, Mudra & Homa Ritual Tabs */
+  .practice-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--border-gold);
+    background: rgba(12, 9, 16, 0.9);
+  }
+
+  .prac-tab {
+    padding: 11px 6px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .prac-tab:hover {
+    color: var(--gold-bright);
+  }
+
+  .prac-tab.active {
+    color: var(--gold-bright);
+    border-bottom-color: var(--gold-bright);
+    background: rgba(201, 154, 62, 0.12);
+    font-weight: 600;
+  }
+
+  .prac-pane {
+    display: none;
+    padding: 16px 18px;
+  }
+
+  .prac-pane.active {
+    display: block;
+  }
+
+  /* Lore & Attributes Grid */
+  .attr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .attr-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(201, 154, 62, 0.22);
+    border-radius: 8px;
+    padding: 9px 11px;
+  }
+
+  .attr-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .attr-val {
+    font-size: 0.88rem;
+    color: var(--gold-bright);
+    font-weight: 600;
+  }
+
+  .lore-section {
+    margin-bottom: 14px;
+  }
+
+  .lore-section h4 {
+    font-size: 0.88rem;
+    color: var(--gold-bright);
+    margin-bottom: 6px;
+    border-left: 3px solid var(--crimson);
+    padding-left: 8px;
+  }
+
+  .lore-section p {
+    font-size: 0.84rem;
+    line-height: 1.65;
+    color: var(--text-main);
+  }
+
+  /* Mantra Chanting & 108 Mala Box */
+  .mantra-card {
+    background: linear-gradient(135deg, rgba(46, 20, 24, 0.78), rgba(18, 13, 24, 0.92));
+    border: 1px solid var(--border-gold);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .mantra-sanskrit {
+    font-size: 1.02rem;
+    color: var(--gold-bright);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+
+  .mantra-phonetic {
+    font-size: 0.86rem;
+    color: #f3c892;
+    margin-bottom: 6px;
+  }
+
+  .mantra-meaning {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .mala-ring-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    background: rgba(10, 8, 14, 0.65);
+    border-radius: 10px;
+    border: 1px solid rgba(201, 154, 62, 0.25);
+    margin-bottom: 12px;
+  }
+
+  .mala-controls {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .btn-primary {
+    flex: 1;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #b83227 0%, #7c1c14 100%);
+    color: var(--gold-bright);
+    border: 1px solid var(--gold-bright);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(184, 50, 39, 0.4);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(232, 93, 53, 0.55);
+  }
+
+  .btn-secondary {
+    padding: 10px 14px;
+    background: rgba(201, 154, 62, 0.16);
+    color: var(--gold-bright);
+    border: 1px solid var(--border-gold);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.84rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(201, 154, 62, 0.28);
+  }
+
+  /* Mudra & Ajikan Meditation Styles */
+  .mudra-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-gold);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+
+  .mudra-steps {
+    list-style: none;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mudra-steps li {
+    font-size: 0.83rem;
+    line-height: 1.55;
+    padding: 8px 10px;
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 6px;
+    border-left: 3px solid var(--gold-mid);
+  }
+
+  /* Homa Fire Ritual Module (護摩修法專區) */
+  .homa-hearth-selector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .hearth-btn {
+    padding: 8px 4px;
+    border-radius: 7px;
+    border: 1px solid rgba(201, 154, 62, 0.3);
+    background: rgba(15, 11, 20, 0.85);
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.76rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .hearth-btn.active {
+    border-color: var(--gold-bright);
+    color: var(--gold-bright);
+    background: rgba(140, 42, 24, 0.45);
+    font-weight: 600;
+  }
+
+  .homa-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .gomagi-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .preset-chip {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 99px;
+    background: rgba(201, 154, 62, 0.14);
+    border: 1px solid rgba(201, 154, 62, 0.32);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+
+  .preset-chip:hover {
+    background: rgba(201, 154, 62, 0.3);
+    color: var(--gold-bright);
+  }
+
+  .gomagi-input {
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-gold);
+    background: rgba(8, 6, 12, 0.85);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.85rem;
+  }
+
+  .homa-log {
+    max-height: 155px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-right: 4px;
+    margin-top: 10px;
+  }
+
+  .homa-log-item {
+    font-size: 0.78rem;
+    padding: 7px 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border-left: 3px solid var(--crimson-glow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Bottom Knowledge & Five Wisdoms Comparison Table */
+  .bottom-matrix {
+    margin-top: 6px;
+  }
+
+  .matrix-table-wrap {
+    overflow-x: auto;
+  }
+
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+
+  .matrix-table th, .matrix-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(201, 154, 62, 0.2);
+    text-align: left;
+  }
+
+  .matrix-table th {
+    background: rgba(64, 24, 22, 0.55);
+    color: var(--gold-bright);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .matrix-table tr:hover td {
+    background: rgba(201, 154, 62, 0.08);
+    cursor: pointer;
+  }
+
+  .matrix-table tr.active-row td {
+    background: rgba(168, 52, 32, 0.28);
+  }
+
+  /* Toast Notification */
+  #ritual-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: linear-gradient(135deg, rgba(42, 18, 20, 0.96), rgba(18, 12, 24, 0.96));
+    border: 1px solid var(--gold-bright);
+    color: var(--gold-bright);
+    padding: 12px 24px;
+    border-radius: 99px;
+    font-size: 0.9rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 208, 118, 0.35);
+    z-index: 100;
+    opacity: 0;
+    transition: all 0.32s cubic-bezier(0.2, 0.9, 0.3, 1);
+    pointer-events: none;
+  }
+
+  #ritual-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="temple-wrapper">
+  <!-- Temple Header Plaque -->
+  <header class="temple-header">
+    <div class="plaque-group">
+      <div class="plaque-seal" id="header-seed-seal" title="本尊悉曇種子字">हूँ</div>
+      <div class="plaque-titles">
+        <h1>東密明王殿 <span style="font-size:0.86rem; font-weight:400; color:var(--text-muted);">｜五大明王立體曼荼羅・三密護摩道場</span></h1>
+        <p>真言宗教令輪身・折伏無明煩惱・轉五毒成五智（點擊壇城尊位、法器熱點與六種供養即可互動修法）</p>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <button class="sound-btn" id="btn-bell" onclick="SoundEngine.playVajraBell()">🔔 振金剛鈴</button>
+      <button class="sound-btn" id="btn-conch" onclick="SoundEngine.playConch()">🐚 吹法螺</button>
+      <button class="sound-btn" id="btn-drone" onclick="SoundEngine.toggleDrone()">🕉️ 梵唄共鳴：關閉</button>
+    </div>
+  </header>
+
+  <!-- Main 3-Column Sanctuary -->
+  <main class="sanctuary-grid">
+
+    <!-- Left Column: Mandala Spatial Selector & Deity Roster -->
+    <section class="panel-card">
+      <div class="panel-header">
+        <h2>🧭 五大明王曼荼羅壇城</h2>
+        <span class="panel-badge" id="current-dir-badge">中央・法界體性智</span>
+      </div>
+      <div class="panel-body">
+        <div class="view-switch-bar">
+          <button class="sub-btn active" id="btn-view-mandala" onclick="App.setAltarLayout('mandala')">五方曼荼羅配置</button>
+          <button class="sub-btn" id="btn-view-lineup" onclick="App.setAltarLayout('lineup')">東寺講堂一列配置</button>
+        </div>
+
+        <!-- Five-Direction Circular Mandala Stage -->
+        <div class="mandala-stage" id="mandala-stage">
+          <div class="mandala-rings"></div>
+          <div class="mandala-square"></div>
+
+          <div class="mandala-node node-center active" data-id="acala" style="--node-color:#ff5733; --node-bg:#6e1d14;" onclick="App.selectDeity('acala')">
+            <span class="node-dir">中央</span>
+            <span class="seed-char">हूँ</span>
+            <span class="node-name">不動明王</span>
+          </div>
+
+          <div class="mandala-node node-east" data-id="trailokyavijaya" style="--node-color:#4fa3ff; --node-bg:#163868;" onclick="App.selectDeity('trailokyavijaya')">
+            <span class="node-dir">東方</span>
+            <span class="seed-char">हूं</span>
+            <span class="node-name">降三世</span>
+          </div>
+
+          <div class="mandala-node node-south" data-id="kundali" style="--node-color:#42d68c; --node-bg:#134e32;" onclick="App.selectDeity('kundali')">
+            <span class="node-dir">南方</span>
+            <span class="seed-char">हूं</span>
+            <span class="node-name">軍荼利</span>
+          </div>
+
+          <div class="mandala-node node-west" data-id="yamantaka" style="--node-color:#ff6b8b; --node-bg:#61182b;" onclick="App.selectDeity('yamantaka')">
+            <span class="node-dir">西方</span>
+            <span class="seed-char">ह्रीः</span>
+            <span class="node-name">大威德</span>
+          </div>
+
+          <div class="mandala-node node-north" data-id="vajrayaksa" style="--node-color:#b87aff; --node-bg:#3c1d66;" onclick="App.selectDeity('vajrayaksa')">
+            <span class="node-dir">北方</span>
+            <span class="seed-char">हूं</span>
+            <span class="node-name">金剛夜叉</span>
+          </div>
+        </div>
+
+        <!-- Horizontal Sumeru Altar Lineup Stage -->
+        <div class="lineup-stage" id="lineup-stage">
+          <div style="font-size:0.76rem; color:var(--text-muted); text-align:center;">京都教王護國寺（東寺）講堂須彌壇・五大明王橫列配置</div>
+          <div class="lineup-row" id="lineup-row"></div>
+        </div>
+
+        <div style="font-size:0.78rem; color:var(--gold-mid); margin: 10px 0 8px; letter-spacing:0.06em;">▼ 點選本尊切換壇城法相（含五大明王與二大別尊）</div>
+        <div class="deity-roster" id="deity-roster"></div>
+      </div>
+    </section>
+
+    <!-- Center Column: Main Shrine Stage, Flame Halo, SVG Iconography & Offerings -->
+    <section class="shrine-stage col-center">
+      <div>
+        <div class="shrine-curtain">
+          <div class="curtain-strip blue" title="青（大圓鏡智）"></div>
+          <div class="curtain-strip yellow" title="黃（平等性智）"></div>
+          <div class="curtain-strip red" title="赤（妙觀察智）"></div>
+          <div class="curtain-strip white" title="白（法界體性智）"></div>
+          <div class="curtain-strip black" title="黑/紫（成所作智）"></div>
+        </div>
+
+        <div class="shrine-top-bar">
+          <div class="deity-title-banner">
+            <h2 id="main-deity-name">大日大聖不動明王</h2>
+            <p id="main-deity-subtitle">Acala Vidyārāja ｜ 大日如來教令輪身・五大明王主尊</p>
+          </div>
+
+          <div class="visual-toggle-group">
+            <button class="vis-btn active" id="vis-form" onclick="App.setVisualMode('form')">尊容法相</button>
+            <button class="vis-btn" id="vis-samaya" onclick="App.setVisualMode('samaya')">三昧耶形</button>
+            <button class="vis-btn" id="vis-seed" onclick="App.setVisualMode('seed')">悉曇種子字</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Central Halo + SVG + Interactive Hotspots -->
+      <div class="halo-viewport">
+        <canvas id="flame-canvas"></canvas>
+        <div class="deity-art-container" id="deity-svg-mount"></div>
+        <div class="hotspot-layer" id="hotspot-layer"></div>
+      </div>
+
+      <!-- Interactive Hotspot Explanation Callout -->
+      <div class="hotspot-Callout" id="hotspot-callout">
+        <div>
+          <strong id="callout-title">【法相密意導覽】</strong>
+          <span id="callout-desc">點擊本尊身上的金色光點，探尋東密造像儀軌中的法器、手印與微細表法意涵。</span>
+        </div>
+        <span class="panel-badge" id="flame-intensity-badge">迦樓羅焰：常寂光</span>
+      </div>
+
+      <!-- Altar Six Offerings (密教六種供養) -->
+      <div class="altar-table">
+        <div class="altar-header">
+          <span>☸️ 密教六種供養（對應六波羅蜜・點擊獻供可助長迦樓羅焰光背）</span>
+          <span id="offering-counter-text">已獻供：0 / 6 供具</span>
+        </div>
+        <div class="offerings-grid" id="offerings-grid"></div>
+      </div>
+    </section>
+
+    <!-- Right Column: Three Mysteries & Homa Fire Ritual -->
+    <section class="panel-card">
+      <div class="practice-tabs">
+        <button class="prac-tab active" onclick="App.switchTab('lore')">📜 密義解讀</button>
+        <button class="prac-tab" onclick="App.switchTab('mantra')">📿 口密真言</button>
+        <button class="prac-tab" onclick="App.switchTab('mudra')">🙏 身密・意密</button>
+        <button class="prac-tab" onclick="App.switchTab('homa')">🔥 護摩修法</button>
+      </div>
+
+      <!-- Tab 1: Lore & Iconography Details -->
+      <div class="prac-pane active" id="pane-lore">
+        <div class="attr-grid" id="deity-attr-grid"></div>
+
+        <div class="lore-section">
+          <h4>三輪身與轉毒成智</h4>
+          <p id="lore-philosophy"></p>
+        </div>
+
+        <div class="lore-section">
+          <h4>造像儀軌與法器表法</h4>
+          <p id="lore-iconography"></p>
+        </div>
+
+        <div class="lore-section">
+          <h4>本尊功德與修法利益</h4>
+          <p id="lore-benefits"></p>
+        </div>
+      </div>
+
+      <!-- Tab 2: Mantra & 108 Mala Counter -->
+      <div class="prac-pane" id="pane-mantra">
+        <div class="mantra-card">
+          <div style="font-size:0.74rem; color:var(--gold-mid); margin-bottom:4px;" id="mantra-title-label">本尊根本真言（咒語）</div>
+          <div class="mantra-sanskrit" id="mantra-sanskrit"></div>
+          <div class="mantra-phonetic" id="mantra-phonetic"></div>
+          <div class="mantra-meaning" id="mantra-meaning"></div>
+        </div>
+
+        <div class="mala-ring-box">
+          <div style="display:flex; justify-content:space-between; width:100%; font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">
+            <span>菩提念珠持誦計數（108顆一圓滿）</span>
+            <span id="mala-round-text" style="color:var(--gold-bright);">第 0 遍 / 累計 0 珠</span>
+          </div>
+
+          <svg id="mala-svg" width="210" height="210" viewBox="0 0 210 210"></svg>
+
+          <div class="mala-controls">
+            <button class="btn-primary" onclick="App.chantOnce()">📿 撥珠持誦一聲 (Space)</button>
+            <button class="btn-secondary" id="btn-auto-chant" onclick="App.toggleAutoChant()">自動共修</button>
+            <button class="btn-secondary" onclick="App.resetMala()">歸零</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Body Mystery (Mudra) & Mind Mystery (Ajikan Moon Disc) -->
+      <div class="prac-pane" id="pane-mudra">
+        <div class="mudra-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h4 style="color:var(--gold-bright); font-size:0.95rem;" id="mudra-name">不動根本印（獨股劍印）</h4>
+            <span class="panel-badge">身密結契</span>
+          </div>
+          <div id="mudra-svg-box" style="margin:12px auto; text-align:center;"></div>
+          <ul class="mudra-steps" id="mudra-steps"></ul>
+        </div>
+
+        <div class="mudra-card" style="margin-bottom:0;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h4 style="color:var(--gold-bright); font-size:0.95rem;">意密・月輪種子字觀想</h4>
+            <button class="sub-btn" style="flex:0 0 auto; padding:4px 10px;" id="btn-breath" onclick="App.toggleBreathing()">啟動三密調息</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div id="moon-disc" style="width:78px; height:78px; border-radius:50%; background:radial-gradient(circle, #fffbe6 0%, #f5d076 65%, rgba(245,208,118,0) 100%); display:flex; align-items:center; justify-content:center; font-size:2rem; color:#3d140c; font-weight:700; box-shadow:0 0 24px rgba(245,208,118,0.65); transition:transform 3.5s ease-in-out; flex-shrink:0;">हूँ</div>
+            <div style="font-size:0.81rem; line-height:1.58; color:var(--text-main);" id="meditation-guide-text">
+              觀想胸間有一輪清淨滿月輪，月輪中央安立本尊金色悉曇種子字，放光照耀十方，息滅一切妄想執著，與本尊三密相應。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Homa Fire Ritual (護摩火供修法) -->
+      <div class="prac-pane" id="pane-homa">
+        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px;">選擇東密四種護摩壇爐（依祈願性質相應）：</div>
+        <div class="homa-hearth-selector">
+          <button class="hearth-btn active" data-hearth="shantika" onclick="App.selectHearth('shantika')">⚪ 息災法<br><span style="font-size:0.66rem;">圓爐・純白</span></button>
+          <button class="hearth-btn" data-hearth="paustika" onclick="App.selectHearth('paustika')">🟨 增益法<br><span style="font-size:0.66rem;">方爐・金黃</span></button>
+          <button class="hearth-btn" data-hearth="vasikarana" onclick="App.selectHearth('vasikarana')">🌺 敬愛法<br><span style="font-size:0.66rem;">蓮爐・赤紅</span></button>
+          <button class="hearth-btn" data-hearth="abhicaraka" onclick="App.selectHearth('abhicaraka')">🔺 調伏法<br><span style="font-size:0.66rem;">三角・青黑</span></button>
+        </div>
+
+        <div class="mudra-card" style="padding:12px; margin-bottom:12px;">
+          <div style="font-size:0.82rem; color:var(--gold-bright); font-weight:600; margin-bottom:4px;" id="hearth-title">【息災護摩（Śāntika）】除障安樂・消融災厄</div>
+          <div style="font-size:0.78rem; color:var(--text-muted); line-height:1.5;" id="hearth-desc">面向北方，築白色圓形爐壇，以本尊智慧火焚燒煩惱薪柴，祈願息滅病苦、災障與內心憂惱。</div>
+        </div>
+
+        <div class="homa-input-group">
+          <div style="font-size:0.78rem; color:var(--gold-mid);">點選祈願詞或親書護摩木（投木入火即化為智慧光明）：</div>
+          <div class="gomagi-presets">
+            <span class="preset-chip" onclick="App.setGomagiText('斷除無明煩惱・圓證菩提智慧')">斷除無明煩惱</span>
+            <span class="preset-chip" onclick="App.setGomagiText('闔家身心安康・息滅一切病苦')">闔家身心安康</span>
+            <span class="preset-chip" onclick="App.setGomagiText('道業福慧增長・所求善願成就')">福慧資糧增長</span>
+            <span class="preset-chip" onclick="App.setGomagiText('善緣敬愛和合・違緣障礙悉除')">善緣和合順遂</span>
+          </div>
+          <input type="text" id="gomagi-input" class="gomagi-input" placeholder="輸入您的祈願文（如：祈願心神安定、智慧明朗）..." value="斷除無明煩惱・圓證菩提智慧">
+          <div style="display:flex; gap:8px;">
+            <button class="btn-primary" onclick="App.castGomagi()">🪵 投擲護摩木入火</button>
+            <button class="btn-secondary" onclick="App.pourGhee()">🥄 獻蘇油助火</button>
+          </div>
+        </div>
+
+        <div style="font-size:0.78rem; color:var(--gold-mid); display:flex; justify-content:space-between;">
+          <span>護摩祈願功德芳名錄</span>
+          <span id="homa-count-label">已焚修 0 支護摩木</span>
+        </div>
+        <div class="homa-log" id="homa-log"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Five Wisdoms & Myoo Correspondence Matrix -->
+  <section class="panel-card bottom-matrix">
+    <div class="panel-header">
+      <h2>🏛️ 東密五佛・五智・五大明王與別尊三輪身總覽表（點擊列可直接請尊陞座）</h2>
+      <span class="panel-badge">大日經・金剛頂經・教王護國寺儀軌</span>
+    </div>
+    <div class="panel-body matrix-table-wrap">
+      <table class="matrix-table" id="matrix-table">
+        <thead>
+          <tr>
+            <th>尊號</th>
+            <th>方位</th>
+            <th>自性輪身（本地佛）</th>
+            <th>正法輪身（菩薩）</th>
+            <th>所轉五毒 → 五智</th>
+            <th>種子字</th>
+            <th>三昧耶形</th>
+            <th>核心表法密意</th>
+          </tr>
+        </thead>
+        <tbody id="matrix-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<div id="ritual-toast"></div>
+
+<script>
+/**
+ * 東密七大明王完整法相、教義、真言、手印與互動熱點資料庫
+ */
+const DEITIES = {
+  acala: {
+    id: 'acala',
+    name: '大日大聖不動明王',
+    shortName: '不動明王',
+    sanskritName: 'Acala Vidyārāja',
+    direction: '中央',
+    buddha: '大日如來 (毘盧遮那佛)',
+    bodhisattva: '金剛波羅蜜多菩薩',
+    wisdom: '法界體性智（轉癡毒與根本無明）',
+    seed: 'हूँ',
+    seedRomaji: 'Hāṃ (憾)',
+    seedMeaning: '象徵菩提心堅固不動、斬斷一切戲論與無明執著。',
+    samayaName: '俱利伽羅龍劍・金剛羂索',
+    colorPrimary: '#ff5733',
+    colorSecondary: '#f5d076',
+    flameHue: 14,
+    philosophy: '依《大日經》與東密三輪身教義，大日如來為攝受剛強難調之眾生，特現忿怒教令輪身「不動明王」。「不動」乃指慈悲與菩提心堅固不傾動；外現威猛烈火相，內懷大悲父母心。',
+    iconography: '面現童子忿怒相，左眼微眇（一目觀天、一目察地，或表不捨惡見眾生），上齒咬下唇、下齒咬上唇；髮垂左肩成莎髻（表垂慈救度生死海眾生）；右手持利劍斬斷三毒纏縛，左手持羂索繫縛頑劣有情導入菩提，安坐於金剛盤石座，背負迦樓羅猛火光背。',
+    benefits: '摧破一切內外魔障、斷除猶豫與無明煩惱、守護行者道場安寧、臨終正念不亂、所求善願速疾成就。',
+    mantraTitle: '不動明王一字心真言 ／ 慈救咒',
+    mantraSanskrit: 'Namo samanta-vajrāṇāṃ caṇḍa mahāroṣaṇa sphoṭaya hūṃ traṭ hāṃ māṃ',
+    mantraPhonetic: '南麼 三曼多 伐折羅赧 戰拏 摩訶邏剎拏 娑破吒也 吽 怛囉吒 憾 䙖',
+    mantraMeaning: '歸命普遍諸金剛尊！暴惡大忿怒尊！摧破一切障難！令恐怖魔軍降伏，以大悲空智堅固攝受我！',
+    mudraName: '不動明王根本劍印（獨股劍鞘印）',
+    mudraSteps: [
+      '左手四指以拇指壓無名指與小指指甲，食指與中指伸直併攏如劍鞘。',
+      '右手同樣以拇指壓無名指與小指，食指與中指伸直如寶劍。',
+      '將右手二指插入左手掌鞘中，象徵以般若智劍調伏無明煩惱，身心安住不動三昧。'
+    ],
+    hotspots: [
+      { x: 74, y: 38, label: '劍', title: '右手・俱利伽羅利劍', desc: '象徵斷除眾生貪、瞋、癡三毒與現行煩惱的般若智慧寶劍，劍身纏繞黑龍化現火燄。' },
+      { x: 24, y: 46, label: '索', title: '左手・金剛五色羂索', desc: '象徵方便度生之慈悲繩索，繫縛不肯受教的剛強眾生，將其牽引至菩提正道。' },
+      { x: 48, y: 22, label: '眼', title: '天地眼與莎髻辮髮', desc: '左眼微閉表示一眼觀法界真如、一眼悲憫苦海眾生；七結辮髮垂左肩表大悲垂護。' },
+      { x: 50, y: 80, label: '座', title: '金剛盤石座與迦樓羅焰', desc: '安坐堅固盤石表菩提心永不退轉；背後金翅鳥火燄焚盡一切業障與毒害。' }
+    ]
+  },
+  trailokyavijaya: {
+    id: 'trailokyavijaya',
+    name: '東方・降三世明王',
+    shortName: '降三世明王',
+    sanskritName: 'Trailokyavijaya Vidyārāja',
+    direction: '東方',
+    buddha: '阿閦如來 (不動如來)',
+    bodhisattva: '金剛薩埵 (金剛手菩薩)',
+    wisdom: '大圓鏡智（轉瞋毒與三世貪瞋癡）',
+    seed: 'हूं',
+    seedRomaji: 'Hūṃ (吽)',
+    seedMeaning: '象徵因地菩提心與果地大圓鏡智一體不二，摧破三界無明。',
+    samayaName: '五股金剛杵・三股金剛鉤',
+    colorPrimary: '#4fa3ff',
+    colorSecondary: '#a6d8ff',
+    flameHue: 210,
+    philosophy: '阿閦如來之教令輪身。「三世」指過去、現在、未來三世之貪瞋癡三毒，亦指欲界、色界、無色界三界之主大自在天。降三世明王以大圓鏡智折伏三界最深重的我慢與愚癡。',
+    iconography: '三面八臂，每面各具三目，青黑色身。主手於胸前結「降三世印」並持五股金剛鈴與五股杵，其餘六手分持弓、箭、劍、三股戟、羂索；左足踏大自在天（Maheśvara），右足踏烏摩妃（Umā），表降伏根本無明與貪愛。',
+    benefits: '折伏瞋恚與傲慢習氣、破除宿世業障與怨敵違緣、令心鏡澄明如大圓鏡智。',
+    mantraTitle: '降三世明王根本真言（孫婆尼孫婆咒）',
+    mantraSanskrit: 'Oṃ sumbha nisumbha hūṃ gṛhṇa gṛhṇa hūṃ gṛhṇāpaya hūṃ ānaya hoḥ bhagavan vajra hūṃ phaṭ',
+    mantraPhonetic: '嗡 孫婆 尼孫婆 吽 格哩哈納 格哩哈納 吽 格哩哈納波耶 吽 阿那耶 斛 婆伽梵 伐折囉 吽 發吒',
+    mantraMeaning: '歸命金剛世尊！調伏一切魔障，執持無明妄念，引攝一切有情入於大圓鏡智金剛三昧！',
+    mudraName: '降三世根本印（二羽交背三股鉤印）',
+    mudraSteps: [
+      '雙手於胸前手背相靠交叉（右手在外、左手在內）。',
+      '兩手小指互相鉤結（表慈悲不斷），兩手大拇指壓住中指與無名指。',
+      '兩手食指伸直微曲如三股金剛鉤，觀想鉤召並摧破三世一切煩惱。'
+    ],
+    hotspots: [
+      { x: 50, y: 42, label: '印', title: '胸前・降三世大印', desc: '主二臂於胸前反背相交結降三世印，象徵以不二金剛智降伏三界魔軍。' },
+      { x: 78, y: 34, label: '弓', title: '八臂法器（弓箭・劍・戟・索）', desc: '八臂對應八正道，分持金剛鈴杵、弓箭與三股戟，四方破除邪見。' },
+      { x: 50, y: 82, label: '足', title: '足踏大自在天與烏摩妃', desc: '大自在天表三界愚癡與我慢之首，烏摩妃表貪愛；雙足踏之代表轉煩惱為菩提。' }
+    ]
+  },
+  kundali: {
+    id: 'kundali',
+    name: '南方・軍荼利明王',
+    shortName: '軍荼利明王',
+    sanskritName: 'Kuṇḍali Vidyārāja',
+    direction: '南方',
+    buddha: '寶生如來',
+    bodhisattva: '金剛寶菩薩 (虛空藏菩薩)',
+    wisdom: '平等性智（轉慢毒，賜不死甘露）',
+    seed: 'हूं',
+    seedRomaji: 'Hūṃ (吽) ／ Raḥ',
+    seedMeaning: '象徵不死甘露（Amṛta）遍灑法界，消融眾生分別我慢。',
+    samayaName: '甘露寶瓶・蛇飾三股戟',
+    colorPrimary: '#42d68c',
+    colorSecondary: '#f5d076',
+    flameHue: 145,
+    philosophy: '南方寶生如來之教令輪身。梵名 Kuṇḍali 意為「盤繞之蛇」或「甘露瓶」，故亦稱「甘露軍荼利明王」。能以平等性智破除眾生貢高我慢，並以大悲甘露洗滌身心病苦與毒害。',
+    iconography: '一面八臂，身青色，眼紅赤，手足皆纏繞白蛇（象徵調伏龍族與人我執著）。胸前二手交叉結軍荼利根本印，餘手持金剛杵、金剛輪、三股戟、金剛鉤與羂索，立於蓮華座上。',
+    benefits: '消除疫病、毒害與飲食障難，增益壽命與福德資糧，調和人際傲慢對立，護佑行者健康安樂。',
+    mantraTitle: '甘露軍荼利明王心真言',
+    mantraSanskrit: 'Oṃ amṛte hūṃ phaṭ',
+    mantraPhonetic: '嗡 阿蜜栗帝 吽 發吒',
+    mantraMeaning: '歸命無死甘露尊！以金剛平等智催破一切病障與我慢煩惱，普施清涼甘露！',
+    mudraName: '軍荼利根本印（雙臂交抱三股印）',
+    mudraSteps: [
+      '雙手握拳，大拇指壓無名指與小指，食指與中指伸直微開如三股杵。',
+      '雙臂於胸前十字交抱（右臂在外、左臂在內）。',
+      '觀想本尊甘露瓶傾注光明甘露，洗淨全身病氣與八萬四千塵勞。'
+    ],
+    hotspots: [
+      { x: 50, y: 40, label: '臂', title: '胸前交抱・甘露軍荼利印', desc: '雙臂於胸前交抱成三股印，象徵悲智雙運、甘露常盈。' },
+      { x: 24, y: 52, label: '蛇', title: '八臂纏繞靈蛇瓔珞', desc: '身臂纏蛇象徵調伏瞋慢習氣與執著，化毒蛇為護法莊嚴。' },
+      { x: 76, y: 48, label: '輪', title: '金剛寶輪與三股戟', desc: '象徵寶生如來平等性智法輪常轉，摧伏一切外道邪執。' }
+    ]
+  },
+  yamantaka: {
+    id: 'yamantaka',
+    name: '西方・大威德明王',
+    shortName: '大威德明王',
+    sanskritName: 'Yamāntaka Vidyārāja',
+    direction: '西方',
+    buddha: '阿彌陀如來 (無量壽佛)',
+    bodhisattva: '文殊師利菩薩 (法利菩薩)',
+    wisdom: '妙觀察智（轉貪毒，降伏死魔閻魔）',
+    seed: 'ह्रीः',
+    seedRomaji: 'Hrīḥ (紇哩)',
+    seedMeaning: '與阿彌陀佛同體種子字，象徵妙觀察智蓮華不染，斷除生死怖畏。',
+    samayaName: '三股戟・寶棒・青水牛座',
+    colorPrimary: '#ff6b8b',
+    colorSecondary: '#ffd166',
+    flameHue: 340,
+    philosophy: '西方阿彌陀如來（或文殊菩薩）之教令輪身。梵名 Yamāntaka 意為「終結死神閻魔者」，能以無量光明與妙觀察智，摧破眾生對生死的恐懼、貪戀與無明惡業。',
+    iconography: '六面六臂六足，乘騎青色水牛（因此又稱六足尊、水牛明王）。六面代表觀察六道眾生根機，六臂持劍、戟、棒、輪、索、弓箭表圓滿六波羅蜜，六足表清淨六道輪迴。水牛能涉水渡河，喻帶領眾生橫超生死苦海。',
+    benefits: '摧伏死魔與惡毒龍障、破除貪欲纏縛、增長大智慧與辯才、令亡者超生善處、行者無畏安穩。',
+    mantraTitle: '大威德明王心真言',
+    mantraSanskrit: 'Oṃ ṣṭrīḥ kāla-rūpa hūṃ khaṃ svāhā',
+    mantraPhonetic: '嗡 瑟置哩 迦羅嚕跛 吽 欠 娑婆訶',
+    mantraMeaning: '歸命大威德尊！超越死亡黑闇之相，以空性妙觀察智斷除一切怖畏，圓滿成就！',
+    mudraName: '大威德根本印（水牛角印）',
+    mudraSteps: [
+      '雙手內縛（十指交叉握於掌內）。',
+      '兩手中指伸直，指尖相觸如水牛雙角之狀。',
+      '觀想自身乘大白牛車／青水牛，以妙觀察智刺破生死無明長夜。'
+    ],
+    hotspots: [
+      { x: 50, y: 20, label: '面', title: '六面六臂六足威德相', desc: '六面觀照六道、六臂行六度萬行、六足踏破六道輪迴生死苦。' },
+      { x: 76, y: 36, label: '戟', title: '三股戟與金剛寶劍', desc: '文殊智慧利劍與三股戟，直斷貪愛與生死魔網。' },
+      { x: 50, y: 74, label: '牛', title: '座下・青色神水牛', desc: '水牛力大無畏且善渡泥沼大水，表大威德明王負荷眾生渡越生死大河。' }
+    ]
+  },
+  vajrayaksa: {
+    id: 'vajrayaksa',
+    name: '北方・金剛夜叉明王',
+    shortName: '金剛夜叉明王',
+    sanskritName: 'Vajrayakṣa Vidyārāja',
+    direction: '北方',
+    buddha: '不空成就如來',
+    bodhisattva: '金剛牙菩薩 (金剛業菩薩)',
+    wisdom: '成所作智（轉疑毒，吞噬一切惡業穢垢）',
+    seed: 'हूं',
+    seedRomaji: 'Hūṃ (吽)',
+    seedMeaning: '象徵成所作智不空妙用，吞盡一切三業染污化為清淨功德。',
+    samayaName: '五股金剛鈴・五股金剛杵',
+    colorPrimary: '#b87aff',
+    colorSecondary: '#e0c3fc',
+    flameHue: 270,
+    philosophy: '北方不空成就如來之教令輪身（台密則常奉烏樞沙摩明王於北方）。金剛夜叉明王以「金剛利牙」吞啖眾生一切惡業、疑忌與不淨穢氣，成就一切世出世間善巧事業。',
+    iconography: '三面六臂，正面具五眼（洞察過去、現在、未來三世及世出世間一切善惡），左右兩面各三眼；口露威猛金剛利牙；六臂持五股金剛杵、劍、弓、箭、金剛輪與五股金剛鈴，左足高舉作金剛舞踏步姿。',
+    benefits: '淨化空間與身心穢氣、消除疑慮與小人障難、成就正當事業與修行善果、護佑行者出入平安。',
+    mantraTitle: '金剛夜叉明王根本真言',
+    mantraSanskrit: 'Oṃ mahā-yakṣa vajra-sattva jaḥ hūṃ vaṃ hoḥ praveśaya hūṃ',
+    mantraPhonetic: '嗡 摩訶藥乞叉 伐折囉薩埵 弱 吽 鍐 斛 鉢囉吠捨耶 吽',
+    mantraMeaning: '歸命大夜叉金剛薩埵！以四攝法（鉤召、引入、繫縛、歡喜）攝入成所作智三昧！',
+    mudraName: '金剛夜叉根本印（金剛利牙印）',
+    mudraSteps: [
+      '雙手外縛（十指於手背側交叉相握）。',
+      '豎立兩手中指與無名指，微曲如金剛夜叉之四利牙。',
+      '觀想本尊五眼放光，金剛利牙啖盡一切業障與疑惑，萬事圓成。'
+    ],
+    hotspots: [
+      { x: 50, y: 22, label: '眼', title: '正面五眼與金剛利牙', desc: '五眼徹見十方三世善惡因緣；金剛利牙能吞噬一切惡業與不淨穢氣。' },
+      { x: 24, y: 40, label: '鈴', title: '五股金剛鈴與五股杵', desc: '鈴聲驚覺無明昏睡，金剛杵摧破疑惑執著，悲智相應。' },
+      { x: 64, y: 76, label: '足', title: '金剛舞踏躍步姿', desc: '左足抬起、右足踏蓮，表不空成就如來赴機度生、迅速無礙之行動力。' }
+    ]
+  },
+  ragaraja: {
+    id: 'ragaraja',
+    name: '別尊・愛染明王',
+    shortName: '愛染明王',
+    sanskritName: 'Rāgarāja Vidyārāja',
+    direction: '別壇・敬愛本尊',
+    buddha: '金剛薩埵 ／ 大日如來',
+    bodhisattva: '金剛王菩薩 ／ 金剛愛菩薩',
+    wisdom: '煩惱即菩提智（轉染愛執著為大悲淨菩提心）',
+    seed: 'हूँ',
+    seedRomaji: 'Hūṃ (吽)',
+    seedMeaning: '象徵染淨不二，將世間情執烈火直接昇華為無上菩提大愛。',
+    samayaName: '金剛弓箭・赤蓮華與摩尼寶瓶',
+    colorPrimary: '#ff3366',
+    colorSecondary: '#ffbd59',
+    flameHue: 350,
+    philosophy: '東密極受尊崇之大明王，出於《金剛峯樓閣一切瑜伽瑜祇經》。核心教義為「煩惱即菩提、愛染即淨菩提心」——不須刻意斷滅世間情感熱力，而是將強烈之愛染心直接轉化為求證佛果與悲愍眾生的大菩提心。',
+    iconography: '一面六臂，身色赤紅如日暉，外現暴怒威猛相，頭戴獅子冠，冠上有五股金剛鉤。安坐於摩尼寶瓶上的赤色百葉蓮華座（寶瓶吐出無盡財寶）；六手分持金剛鈴、五股杵、金剛弓、金剛箭、未敷蓮華，一手作打物印。',
+    benefits: '善緣敬愛和合、家庭圓融、人緣廣結、息滅感情違緣與苦惱、轉情執為大智大悲。',
+    mantraTitle: '愛染明王根本心真言',
+    mantraSanskrit: 'Oṃ mahārāga vajroṣṇīṣa vajrasattva jaḥ hūṃ vaṃ hoḥ',
+    mantraPhonetic: '嗡 摩訶囉伽 伐折囉瑟尼沙 伐折囉薩埵 弱 吽 鍐 斛',
+    mantraMeaning: '歸命大愛染金剛佛頂金剛薩埵！以鉤召、引入、繫縛、歡喜四攝智，圓滿敬愛菩提！',
+    mudraName: '愛染明王根本印（五股外縛印）',
+    mudraSteps: [
+      '雙手外縛，兩手中指豎立交叉成五股鉤狀。',
+      '兩手大拇指與食指各相捻成圓環。',
+      '觀想心月輪中有赤色蓮華與「吽」字，放赤色大光明普攝一切善緣。'
+    ],
+    hotspots: [
+      { x: 50, y: 16, label: '冠', title: '咆哮獅子冠與五股鉤', desc: '頭戴獅子冠表無畏法音，頂上五股金剛鉤能鉤召一切善緣與諸佛加持。' },
+      { x: 76, y: 36, label: '弓', title: '金剛星月弓箭', desc: '射穿眾生無明冷漠與隔閡，成就敬愛和合與菩提道念。' },
+      { x: 50, y: 78, label: '瓶', title: '赤色蓮華與吐寶摩尼瓶', desc: '蓮華出淤泥而不染表「愛染即清淨」；下承寶瓶流出世出世間福德資糧。' }
+    ]
+  },
+  mahamayuri: {
+    id: 'mahamayuri',
+    name: '別尊・佛母大孔雀明王',
+    shortName: '孔雀明王',
+    sanskritName: 'Mahāmāyūrī Vidyārājñī',
+    direction: '別壇・息災佛母',
+    buddha: '毘盧遮那佛 ／ 釋迦牟尼佛',
+    bodhisattva: '慈氏菩薩 ／ 佛母大明王',
+    wisdom: '總攝四智・化毒為藥之慈悲妙智',
+    seed: 'मं',
+    seedRomaji: 'Maṃ (鍐)',
+    seedMeaning: '象徵孔雀吞食百毒反而令羽翼更加璀璨奪目，化三毒煩惱為無量功德。',
+    samayaName: '孔雀尾羽・吉祥果與開敷蓮華',
+    colorPrimary: '#2ec4b6',
+    colorSecondary: '#f5d076',
+    flameHue: 165,
+    philosophy: '明王部中唯一現「慈悲柔和菩薩相」之女性明王（佛母）。孔雀能食毒草毒蟲而無恙，羽毛反增光彩；東密以此表徵行者居於五濁惡世，能將貪瞋癡三毒與災厄轉化為菩提妙果。',
+    iconography: '一面四臂，頭戴寶冠，現慈悲寂靜白衣菩薩相，安坐於白蓮華上並乘騎金色孔雀王。右第一手持開敷蓮華（表敬愛），右第二手持俱緣果（表調伏），左第一手持吉祥果／石榴（表增益），左第二手持孔雀尾羽（表息災），一尊圓具四種修法功德。',
+    benefits: '拔除一切蠱毒、疫病、天災旱澇與身心憂惱，具足息災、增益、敬愛、調伏四種廣大守護。',
+    mantraTitle: '佛母大孔雀明王心真言',
+    mantraSanskrit: 'Oṃ mayūrā krānte svāhā',
+    mantraPhonetic: '嗡 摩愉囉 訖蘭帝 娑婆訶',
+    mantraMeaning: '歸命大孔雀步履尊！超越一切毒害與災厄，令身心法界安樂吉祥圓滿！',
+    mudraName: '孔雀明王根本印（孔雀飛翔印）',
+    mudraSteps: [
+      '雙手內縛，兩手大拇指與小指各自伸直相合，象徵孔雀之首與尾羽。',
+      '兩手食指微曲開展如孔雀張翼飛翔之姿。',
+      '觀想金色孔雀王展開光翼，拂除世間一切毒害、疫病與煩惱障。'
+    ],
+    hotspots: [
+      { x: 24, y: 38, label: '羽', title: '左手・孔雀尾羽與吉祥果', desc: '孔雀尾羽拂除一切災厄病苦（息災），吉祥果圓滿福德智慧（增益）。' },
+      { x: 76, y: 38, label: '蓮', title: '右手・開敷蓮華與俱緣果', desc: '開敷蓮華表敬愛圓融，俱緣果表調伏內心惡念與外魔。' },
+      { x: 50, y: 76, label: '雀', title: '座下・金色孔雀王', desc: '孔雀啖食毒草而羽翼益加璀璨，表轉三毒煩惱為無上菩提妙德。' }
+    ]
+  }
+};
+
+const OFFERINGS = [
+  { id: 'argha', name: '閼伽 (清淨水)', icon: '🥣', paramita: '布施度', desc: '洗滌心地垢染，布施清涼法水' },
+  { id: 'gandha', name: '塗香 (戒香)', icon: '🌿', paramita: '持戒度', desc: '清淨身口意三業，具足戒德芬芳' },
+  { id: 'puspa', name: '華鬘 (蓮華)', icon: '🪷', paramita: '忍辱度', desc: '萬行因華莊嚴，柔和忍辱不瞋' },
+  { id: 'dhupa', name: '燒香 (精進香)', icon: '♨️', paramita: '精進度', desc: '香氣遍滿十方，精進修持不懈' },
+  { id: 'naivedya', name: '飲食 (法喜食)', icon: '🍚', paramita: '禪定度', desc: '禪悅為食，身心安住三摩地' },
+  { id: 'dipa', name: '燈明 (般若燈)', icon: '🕯️', paramita: '般若度', desc: '破除千年暗室，顯發本具智慧光' }
+];
+
+const HEARTH_TYPES = {
+  shantika: {
+    title: '【息災護摩（Śāntika）】除障安樂・消融災厄',
+    desc: '面向北方，築白色圓形爐壇，以本尊智慧火焚燒煩惱薪柴，祈願息滅病苦、災障與內心憂惱。',
+    hue: 45
+  },
+  paustika: {
+    title: '【增益護摩（Pauṣṭika）】福慧增長・資糧圓滿',
+    desc: '面向東方，築金黃色方形爐壇，供養五穀與蘇油，祈願壽命、福德、智慧與道業廣大增上。',
+    hue: 38
+  },
+  vasikarana: {
+    title: '【敬愛護摩（Vaśīkaraṇa）】善緣和合・慈悲攝受',
+    desc: '面向西方，築赤紅色蓮華形爐壇，供養赤華與妙香，祈願人際圓融、怨親平息、諸佛護念。',
+    hue: 348
+  },
+  abhicaraka: {
+    title: '【調伏護摩（Abhicāraka）】折伏無明・破除魔障',
+    desc: '面向南方，築青黑色三角形金剛爐壇，以猛烈金剛智火斬斷三毒習氣與重大修行違緣。',
+    hue: 215
+  }
+};
+
+/**
+ * Web Audio API 梵音與法器合成引擎（零外部音檔依賴，純數學泛音合成）
+ */
+const SoundEngine = {
+  ctx: null,
+  droneNodes: null,
+  isDronePlaying: false,
+
+  init() {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      this.ctx = new AudioCtx();
+    }
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+  },
+
+  // 振金剛鈴 (Vajra Bell: High shimmering metallic partials)
+  playVajraBell() {
+    this.init();
+    const now = this.ctx.currentTime;
+    const freqs = [1046.5, 1567.98, 2217.46, 3135.96, 4186.01];
+    freqs.forEach((f, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+      osc.frequency.setValueAtTime(f + (Math.random() * 4 - 2), now);
+      gain.gain.setValueAtTime(0.12 / (idx + 1), now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.2 - idx * 0.35);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 3.3);
+    });
+    App.showToast('🔔 金剛鈴聲徹法界：驚覺無明，顯發本有菩提心');
+    FlameEngine.boost(1.45);
+  },
+
+  // 吹法螺 (Dharma Conch: Warm resonant brass-like fifths)
+  playConch() {
+    this.init();
+    const now = this.ctx.currentTime;
+    const base = 196.0; // G3
+    [base, base * 1.5, base * 2, base * 2.5].forEach((f, i) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = i === 0 ? 'sawtooth' : 'sine';
+      osc.frequency.setValueAtTime(f * 0.96, now);
+      osc.frequency.exponentialRampToValueAtTime(f, now + 0.45);
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.09 / (i + 1), now + 0.5);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.6);
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(900, now);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 3.7);
+    });
+    App.showToast('🐚 法螺遠聞：普召十方護法聖眾，妙音宣流');
+    FlameEngine.boost(1.55);
+  },
+
+  // 撥珠引罄／木魚音
+  playBeadClick(isGuruBead = false) {
+    this.init();
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(isGuruBead ? 880 : 528, now);
+    gain.gain.setValueAtTime(isGuruBead ? 0.14 : 0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + (isGuruBead ? 1.8 : 0.35));
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + (isGuruBead ? 1.9 : 0.4));
+  },
+
+  // 護摩投木火焰爆裂音
+  playFireWhoosh() {
+    this.init();
+    const now = this.ctx.currentTime;
+    const bufferSize = this.ctx.sampleRate * 0.65;
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (this.ctx.sampleRate * 0.22));
+    }
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(420, now);
+    filter.Q.setValueAtTime(1.2, now);
+
+    const gain = this.ctx.createGain();
+    gain.gain.setValueAtTime(0.24, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.ctx.destination);
+    noise.start(now);
+  },
+
+  // 低頻梵唄共鳴 (Om / Hum Drone)
+  toggleDrone() {
+    this.init();
+    const btn = document.getElementById('btn-drone');
+    if (this.isDronePlaying) {
+      if (this.droneNodes) {
+        this.droneNodes.forEach(n => {
+          try { n.stop(); } catch (e) {}
+        });
+      }
+      this.isDronePlaying = false;
+      btn.classList.remove('playing');
+      btn.textContent = '🕉️ 梵唄共鳴：關閉';
+      return;
+    }
+
+    const baseFreq = 108; // Sacred 108 Hz resonant drone
+    const freqs = [baseFreq, baseFreq * 1.5, baseFreq * 2];
+    this.droneNodes = [];
+    freqs.forEach((f, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = idx === 0 ? 'sawtooth' : 'sine';
+      osc.frequency.setValueAtTime(f, this.ctx.currentTime);
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(320, this.ctx.currentTime);
+
+      gain.gain.setValueAtTime(0.045 / (idx + 1), this.ctx.currentTime);
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start();
+      this.droneNodes.push(osc);
+    });
+    this.isDronePlaying = true;
+    btn.classList.add('playing');
+    btn.textContent = '🕉️ 梵唄共鳴：開啟 (108Hz)';
+    App.showToast('🕉️ 已開啟 108Hz 梵唄低頻共鳴，助益入定觀想');
+  }
+};
+
+/**
+ * 迦樓羅焰光背與大殿粒子視覺引擎 (Canvas Flame & Siddham Particle Engine)
+ */
+const FlameEngine = {
+  bgCanvas: null,
+  bgCtx: null,
+  flameCanvas: null,
+  flameCtx: null,
+  bgParticles: [],
+  flameParticles: [],
+  hue: 14,
+  intensity: 1.0,
+
+  init() {
+    this.bgCanvas = document.getElementById('bg-canvas');
+    this.bgCtx = this.bgCanvas.getContext('2d');
+    this.flameCanvas = document.getElementById('flame-canvas');
+    this.flameCtx = this.flameCanvas.getContext('2d');
+
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+
+    // Create ambient hall floating golden particles
+    const seeds = ['हूँ', 'हूं', 'ह्रीः', 'मं', 'अ', 'ॐ'];
+    for (let i = 0; i < 36; i++) {
+      this.bgParticles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vy: 0.22 + Math.random() * 0.45,
+        size: 10 + Math.random() * 14,
+        alpha: 0.08 + Math.random() * 0.22,
+        char: seeds[i % seeds.length]
+      });
+    }
+
+    // Create Garuda flame particles around central deity
+    for (let i = 0; i < 95; i++) {
+      this.flameParticles.push(this.makeFlameParticle());
+    }
+
+    requestAnimationFrame(() => this.loop());
+  },
+
+  resize() {
+    this.bgCanvas.width = window.innerWidth;
+    this.bgCanvas.height = window.innerHeight;
+    const rect = this.flameCanvas.parentElement.getBoundingClientRect();
+    this.flameCanvas.width = rect.width || 600;
+    this.flameCanvas.height = rect.height || 400;
+  },
+
+  makeFlameParticle() {
+    const w = this.flameCanvas ? this.flameCanvas.width : 600;
+    const h = this.flameCanvas ? this.flameCanvas.height : 400;
+    const angle = Math.random() * Math.PI * 2;
+    const radiusX = 65 + Math.random() * 75;
+    const radiusY = 85 + Math.random() * 85;
+    return {
+      x: w / 2 + Math.cos(angle) * radiusX * 0.75,
+      y: h / 2 + 25 + Math.sin(angle) * radiusY * 0.65,
+      vx: (Math.random() - 0.5) * 0.9,
+      vy: -(1.1 + Math.random() * 2.2),
+      radius: 14 + Math.random() * 28,
+      life: Math.random(),
+      decay: 0.008 + Math.random() * 0.014
+    };
+  },
+
+  boost(multiplier = 1.6) {
+    this.intensity = Math.min(2.6, Math.max(this.intensity, multiplier));
+    const badge = document.getElementById('flame-intensity-badge');
+    if (badge) {
+      badge.textContent = this.intensity > 1.8 ? '迦樓羅焰：大威猛火' : (this.intensity > 1.25 ? '迦樓羅焰：熾盛光明' : '迦樓羅焰：常寂光');
+    }
+  },
+
+  loop() {
+    // Decay boost smoothly back toward baseline
+    const offeredBonus = App.offeredSet.size * 0.08;
+    const baseLevel = 1.0 + offeredBonus;
+    if (this.intensity > baseLevel) {
+      this.intensity -= 0.008;
+    } else {
+      this.intensity = baseLevel;
+    }
+
+    // 1. Render Ambient Hall Background
+    const bw = this.bgCanvas.width;
+    const bh = this.bgCanvas.height;
+    this.bgCtx.clearRect(0, 0, bw, bh);
+    this.bgParticles.forEach(p => {
+      p.y -= p.vy;
+      if (p.y < -20) {
+        p.y = bh + 20;
+        p.x = Math.random() * bw;
+      }
+      this.bgCtx.fillStyle = `rgba(245, 208, 118, ${p.alpha})`;
+      this.bgCtx.font = `${p.size}px serif`;
+      this.bgCtx.fillText(p.char, p.x, p.y);
+    });
+
+    // 2. Render Central Garuda Flame Halo
+    const fw = this.flameCanvas.width;
+    const fh = this.flameCanvas.height;
+    this.flameCtx.clearRect(0, 0, fw, fh);
+
+    // Subtle sacred mandala aura circle behind the flame
+    const cx = fw / 2;
+    const cy = fh / 2 + 10;
+    const grad = this.flameCtx.createRadialGradient(cx, cy, 20, cx, cy, 175 * this.intensity);
+    grad.addColorStop(0, `hsla(${this.hue}, 95%, 58%, 0.42)`);
+    grad.addColorStop(0.55, `hsla(${this.hue}, 85%, 35%, 0.18)`);
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    this.flameCtx.fillStyle = grad;
+    this.flameCtx.beginPath();
+    this.flameCtx.arc(cx, cy, 185 * this.intensity, 0, Math.PI * 2);
+    this.flameCtx.fill();
+
+    // Render rising Garuda flame tongues
+    this.flameCtx.globalCompositeOperation = 'lighter';
+    this.flameParticles.forEach((fp, i) => {
+      fp.x += fp.vx + Math.sin(fp.life * 8 + i) * 0.45;
+      fp.y += fp.vy * this.intensity;
+      fp.life -= fp.decay;
+
+      if (fp.life <= 0) {
+        this.flameParticles[i] = this.makeFlameParticle();
+        this.flameParticles[i].life = 1.0;
+        return;
+      }
+
+      const r = fp.radius * fp.life * Math.min(1.45, this.intensity);
+      const pGrad = this.flameCtx.createRadialGradient(fp.x, fp.y, 1, fp.x, fp.y, r);
+      const lightHue = (this.hue + (1 - fp.life) * 28) % 360;
+      pGrad.addColorStop(0, `hsla(${lightHue}, 100%, 72%, ${fp.life * 0.55})`);
+      pGrad.addColorStop(0.5, `hsla(${this.hue}, 92%, 46%, ${fp.life * 0.32})`);
+      pGrad.addColorStop(1, 'rgba(0,0,0,0)');
+
+      this.flameCtx.fillStyle = pGrad;
+      this.flameCtx.beginPath();
+      this.flameCtx.arc(fp.x, fp.y, r, 0, Math.PI * 2);
+      this.flameCtx.fill();
+    });
+    this.flameCtx.globalCompositeOperation = 'source-over';
+
+    requestAnimationFrame(() => this.loop());
+  }
+};
+
+/**
+ * 精緻東密尊容法相、三昧耶形與悉曇種子字 SVG 繪製器
+ */
+const ArtworkRenderer = {
+  renderDeitySVG(deity, mode) {
+    if (mode === 'seed') {
+      return `
+        <svg viewBox="0 0 300 320" width="100%" height="100%">
+          <defs>
+            <radialGradient id="moonGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fffdf2"/>
+              <stop offset="68%" stop-color="#f5d076"/>
+              <stop offset="92%" stop-color="${deity.colorPrimary}"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </radialGradient>
+          </defs>
+          <!-- 八葉白蓮月輪座 -->
+          <circle cx="150" cy="145" r="108" fill="url(#moonGrad)" opacity="0.92"/>
+          <circle cx="150" cy="145" r="95" fill="none" stroke="#5e1914" stroke-width="2" stroke-dasharray="6,4"/>
+          <text x="150" y="175" text-anchor="middle" font-size="96" font-weight="700" fill="#2b0d08" font-family="serif">${deity.seed}</text>
+          <text x="150" y="220" text-anchor="middle" font-size="15" font-weight="600" fill="#4a1c10">${deity.seedRomaji}</text>
+          <!-- 蓮華底座 -->
+          <path d="M70,260 Q150,295 230,260 Q195,235 150,242 Q105,235 70,260 Z" fill="${deity.colorPrimary}" stroke="#f5d076" stroke-width="2"/>
+          <text x="150" y="302" text-anchor="middle" font-size="13" fill="#f5d076">【悉曇月輪觀】${deity.shortName}種子字</text>
+        </svg>
+      `;
+    }
+
+    if (mode === 'samaya') {
+      return this.renderSamayaSVG(deity);
+    }
+
+    // Default: Full Iconographic Form (尊容法相 SVG)
+    return this.renderIconographySVG(deity);
+  },
+
+  renderSamayaSVG(deity) {
+    const c1 = deity.colorPrimary;
+    const c2 = deity.colorSecondary;
+    let centerGraphic = '';
+
+    if (deity.id === 'acala') {
+      // 俱利伽羅龍劍與羂索
+      centerGraphic = `
+        <!-- 金剛羂索環 -->
+        <circle cx="150" cy="155" r="76" fill="none" stroke="${c2}" stroke-width="4" stroke-dasharray="10,5"/>
+        <!-- 俱利伽羅劍 -->
+        <polygon points="150,26 161,195 139,195" fill="#e8eef5" stroke="${c2}" stroke-width="2"/>
+        <line x1="150" y1="30" x2="150" y2="195" stroke="#99aab8" stroke-width="1.5"/>
+        <!-- 纏劍俱利伽羅火龍紋 -->
+        <path d="M132,175 Q175,145 135,115 Q175,85 150,48" fill="none" stroke="${c1}" stroke-width="6" stroke-linecap="round"/>
+        <!-- 三股劍柄 -->
+        <path d="M122,195 Q150,212 178,195 L165,208 L135,208 Z" fill="${c2}"/>
+        <rect x="144" y="208" width="12" height="44" rx="4" fill="#8b2518" stroke="${c2}" stroke-width="2"/>
+        <circle cx="150" cy="258" r="10" fill="${c2}"/>
+      `;
+    } else if (deity.id === 'trailokyavijaya' || deity.id === 'vajrayaksa') {
+      // 五股金剛杵與金剛鈴
+      centerGraphic = `
+        <circle cx="150" cy="150" r="78" fill="none" stroke="${c1}" stroke-width="2.5" stroke-dasharray="6,6"/>
+        <!-- 中股 -->
+        <line x1="150" y1="38" x2="150" y2="262" stroke="${c2}" stroke-width="8" stroke-linecap="round"/>
+        <!-- 上下五股叉 -->
+        <path d="M150,42 C110,55 112,105 144,122" fill="none" stroke="${c2}" stroke-width="5"/>
+        <path d="M150,42 C190,55 188,105 156,122" fill="none" stroke="${c2}" stroke-width="5"/>
+        <path d="M150,258 C110,245 112,195 144,178" fill="none" stroke="${c2}" stroke-width="5"/>
+        <path d="M150,258 C190,245 188,195 156,178" fill="none" stroke="${c2}" stroke-width="5"/>
+        <!-- 中央鬼目與蓮華 -->
+        <circle cx="150" cy="150" r="18" fill="${c1}" stroke="${c2}" stroke-width="3"/>
+        <text x="150" y="156" text-anchor="middle" font-size="16" fill="#fff" font-weight="bold">${deity.seed}</text>
+      `;
+    } else if (deity.id === 'kundali') {
+      // 甘露寶瓶與靈蛇三股戟
+      centerGraphic = `
+        <path d="M128,110 L172,110 L162,135 Q198,160 188,215 Q180,252 150,252 Q120,252 112,215 Q102,160 138,135 Z" fill="${c1}" stroke="${c2}" stroke-width="3"/>
+        <ellipse cx="150" cy="110" rx="26" ry="7" fill="${c2}"/>
+        <!-- 三股戟頂 -->
+        <line x1="150" y1="38" x2="150" y2="110" stroke="${c2}" stroke-width="5"/>
+        <path d="M126,56 Q126,88 150,88 Q174,88 174,56" fill="none" stroke="${c2}" stroke-width="4"/>
+        <!-- 白蛇盤繞 -->
+        <path d="M115,195 Q150,170 185,195 Q150,225 118,215" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+      `;
+    } else if (deity.id === 'yamantaka') {
+      // 三股金剛戟與水牛角月輪
+      centerGraphic = `
+        <path d="M95,180 Q85,105 130,72 Q112,135 150,152 Q188,135 170,72 Q215,105 205,180 Q180,225 150,225 Q120,225 95,180 Z" fill="${c1}" opacity="0.4" stroke="${c2}" stroke-width="2.5"/>
+        <line x1="150" y1="35" x2="150" y2="265" stroke="${c2}" stroke-width="6"/>
+        <path d="M118,62 Q122,110 150,110 Q178,110 182,62" fill="none" stroke="${c2}" stroke-width="5"/>
+        <circle cx="150" cy="155" r="22" fill="#3a101d" stroke="${c2}" stroke-width="3"/>
+        <text x="150" y="162" text-anchor="middle" font-size="18" fill="${c2}" font-weight="bold">${deity.seed}</text>
+      `;
+    } else if (deity.id === 'ragaraja') {
+      // 金剛弓箭與赤蓮寶瓶
+      centerGraphic = `
+        <path d="M112,55 Q198,145 112,235" fill="none" stroke="${c2}" stroke-width="6"/>
+        <line x1="112" y1="55" x2="112" y2="235" stroke="#fff" stroke-width="2"/>
+        <line x1="75" y1="145" x2="218" y2="145" stroke="${c1}" stroke-width="5"/>
+        <polygon points="228,145 206,135 206,155" fill="${c2}"/>
+        <circle cx="145" cy="145" r="22" fill="${c1}" stroke="${c2}" stroke-width="2.5"/>
+        <text x="145" y="152" text-anchor="middle" font-size="18" fill="#fff" font-weight="bold">${deity.seed}</text>
+      `;
+    } else {
+      // 孔雀尾羽與開敷蓮華
+      centerGraphic = `
+        <ellipse cx="150" cy="135" rx="52" ry="78" fill="#1b4d48" stroke="${c2}" stroke-width="3"/>
+        <ellipse cx="150" cy="125" rx="34" ry="48" fill="${c1}"/>
+        <circle cx="150" cy="120" r="20" fill="#1e2a5e" stroke="${c2}" stroke-width="3"/>
+        <text x="150" y="127" text-anchor="middle" font-size="18" fill="${c2}" font-weight="bold">${deity.seed}</text>
+        <line x1="150" y1="213" x2="150" y2="268" stroke="${c2}" stroke-width="5"/>
+      `;
+    }
+
+    return `
+      <svg viewBox="0 0 300 320" width="100%" height="100%">
+        ${centerGraphic}
+        <path d="M62,272 Q150,302 238,272 Q195,248 150,256 Q105,248 62,272 Z" fill="rgba(201,154,62,0.28)" stroke="${c2}" stroke-width="2"/>
+        <text x="150" y="308" text-anchor="middle" font-size="13" fill="#f5d076">【三昧耶形】${deity.samayaName}</text>
+      </svg>
+    `;
+  },
+
+  renderIconographySVG(deity) {
+    const c1 = deity.colorPrimary;
+    const c2 = deity.colorSecondary;
+
+    // Distinct body hue per Wisdom King
+    const bodyColors = {
+      acala: '#2d3a4b',           // 青黑磐石色
+      trailokyavijaya: '#243b55', // 東方青金剛色
+      kundali: '#1f4e3d',         // 南方深翠青色
+      yamantaka: '#3b1e2e',       // 西方赫威暗紫紅
+      vajrayaksa: '#31234b',      // 北方金剛紫青
+      ragaraja: '#9e1f28',        // 愛染赤紅日暉色
+      mahamayuri: '#f3e7d3'       // 孔雀明王慈悲白金色
+    };
+    const skin = bodyColors[deity.id] || '#2d3a4b';
+    const isGentle = deity.id === 'mahamayuri';
+
+    return `
+      <svg viewBox="0 0 300 330" width="100%" height="100%">
+        <defs>
+          <radialGradient id="haloRing" cx="50%" cy="42%" r="48%">
+            <stop offset="0%" stop-color="${c2}" stop-opacity="0.45"/>
+            <stop offset="65%" stop-color="${c1}" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="${c1}" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- 頭光與身光曼荼羅輪 -->
+        <circle cx="150" cy="135" r="115" fill="url(#haloRing)"/>
+        <circle cx="150" cy="102" r="52" fill="none" stroke="${c2}" stroke-width="2" stroke-dasharray="5,3"/>
+
+        <!-- 多臂象徵光輪 (依本尊臂數繪製後臂與法器) -->
+        ${deity.id !== 'acala' ? `
+          <!-- 左後臂與右後臂 -->
+          <path d="M115,152 Q62,115 48,82" fill="none" stroke="${skin}" stroke-width="11" stroke-linecap="round"/>
+          <path d="M185,152 Q238,115 252,82" fill="none" stroke="${skin}" stroke-width="11" stroke-linecap="round"/>
+          <path d="M112,168 Q54,162 42,145" fill="none" stroke="${skin}" stroke-width="10" stroke-linecap="round"/>
+          <path d="M188,168 Q246,162 258,145" fill="none" stroke="${skin}" stroke-width="10" stroke-linecap="round"/>
+          <!-- 左後法器（金剛弓／蓮華／羽） -->
+          <path d="M35,55 Q65,85 35,115" fill="none" stroke="${c2}" stroke-width="3.5"/>
+          <!-- 右後法器（三股戟／寶輪） -->
+          <line x1="252" y1="45" x2="252" y2="120" stroke="${c2}" stroke-width="3.5"/>
+          <circle cx="252" cy="58" r="12" fill="none" stroke="${c2}" stroke-width="3"/>
+        ` : ''}
+
+        <!-- 底座：盤石座 / 踏大自在天 / 水牛座 / 赤蓮寶瓶 / 金色孔雀 -->
+        ${deity.id === 'acala' ? `
+          <!-- 金剛盤石座 -->
+          <polygon points="52,258 85,232 215,232 248,258 232,292 68,292" fill="#3a3330" stroke="${c2}" stroke-width="2"/>
+          <polygon points="68,262 105,244 195,244 232,262 212,286 88,286" fill="#26201e" stroke="#7a5818" stroke-width="1.5"/>
+        ` : deity.id === 'yamantaka' ? `
+          <!-- 青色水牛座 -->
+          <ellipse cx="150" cy="264" rx="76" ry="26" fill="#1e3545" stroke="${c2}" stroke-width="2"/>
+          <path d="M82,252 Q65,230 85,222 M218,252 Q235,230 215,222" fill="none" stroke="${c2}" stroke-width="4" stroke-linecap="round"/>
+        ` : deity.id === 'mahamayuri' ? `
+          <!-- 金色孔雀王座 -->
+          <ellipse cx="150" cy="265" rx="74" ry="24" fill="#1b5e55" stroke="${c2}" stroke-width="2.5"/>
+          <path d="M150,248 Q150,218 164,212" fill="none" stroke="${c2}" stroke-width="5" stroke-linecap="round"/>
+        ` : `
+          <!-- 蓮華寶座 -->
+          <path d="M58,262 Q150,296 242,262 Q202,232 150,238 Q98,232 58,262 Z" fill="${c1}" stroke="${c2}" stroke-width="2.5"/>
+          <path d="M78,255 Q150,278 222,255" fill="none" stroke="${c2}" stroke-width="2"/>
+        `}
+
+        <!-- 本尊軀幹與天衣瓔珞 -->
+        <path d="M108,142 L192,142 L178,228 L122,228 Z" fill="${skin}" stroke="${c2}" stroke-width="2"/>
+        <!-- 瓔珞胸飾 -->
+        <path d="M118,146 Q150,178 182,146" fill="none" stroke="${c2}" stroke-width="3"/>
+        <circle cx="150" cy="164" r="6" fill="${c1}" stroke="${c2}" stroke-width="1.5"/>
+
+        <!-- 結跏趺坐或立姿雙腿 -->
+        <path d="M92,236 Q150,256 208,236 Q192,214 150,220 Q108,214 92,236 Z" fill="${skin}" stroke="${c2}" stroke-width="2"/>
+        <!-- 腰間虎皮／赤蓮裙裳 -->
+        <path d="M114,205 L186,205 L196,240 L104,240 Z" fill="${c1}" opacity="0.85" stroke="${c2}" stroke-width="1.8"/>
+
+        <!-- 多面側臉 (若為三面或六面明王) -->
+        ${['trailokyavijaya', 'yamantaka', 'vajrayaksa'].includes(deity.id) ? `
+          <circle cx="112" cy="104" r="20" fill="${skin}" stroke="${c2}" stroke-width="1.8"/>
+          <circle cx="188" cy="104" r="20" fill="${skin}" stroke="${c2}" stroke-width="1.8"/>
+        ` : ''}
+
+        <!-- 主尊頭部與寶冠／怒髮 -->
+        <path d="M114,82 Q150,34 186,82 Z" fill="${deity.id === 'acala' ? '#1c1817' : c1}" stroke="${c2}" stroke-width="2"/>
+        <!-- 五智寶冠 -->
+        <polygon points="116,82 128,58 140,76 150,50 160,76 172,58 184,82" fill="${c2}" stroke="#4a1c10" stroke-width="1.2"/>
+
+        <!-- 本尊面相 -->
+        <circle cx="150" cy="104" r="28" fill="${skin}" stroke="${c2}" stroke-width="2.2"/>
+
+        ${isGentle ? `
+          <!-- 孔雀明王慈悲寂靜菩薩面相 -->
+          <circle cx="150" cy="94" r="3" fill="#c93b2b"/>
+          <path d="M135,102 Q141,98 146,102" fill="none" stroke="#2c1d14" stroke-width="2"/>
+          <path d="M154,102 Q159,98 165,102" fill="none" stroke="#2c1d14" stroke-width="2"/>
+          <path d="M144,116 Q150,121 156,116" fill="none" stroke="#c93b2b" stroke-width="2"/>
+        ` : `
+          <!-- 明王忿怒威猛三目與獠牙相 -->
+          <!-- 額中第三智慧眼 -->
+          <ellipse cx="150" cy="90" rx="3.5" ry="6" fill="#f5d076"/>
+          <!-- 左右雙目（不動明王左眼微眇、右眼圓睜） -->
+          <circle cx="138" cy="103" r="4.5" fill="#f5d076"/>
+          <circle cx="138" cy="103" r="2" fill="#8b0000"/>
+          ${deity.id === 'acala' ? `
+            <line x1="156" y1="103" x2="167" y2="104" stroke="#f5d076" stroke-width="3" stroke-linecap="round"/>
+          ` : `
+            <circle cx="162" cy="103" r="4.5" fill="#f5d076"/>
+            <circle cx="162" cy="103" r="2" fill="#8b0000"/>
+          `}
+          <!-- 忿怒眉與上下獠牙 -->
+          <path d="M130,96 L145,100 M170,96 L155,100" stroke="${c2}" stroke-width="2.2"/>
+          <path d="M138,118 Q150,113 162,118" fill="none" stroke="#f5d076" stroke-width="2.2"/>
+          <polygon points="140,117 143,110 146,117" fill="#fff"/>
+          <polygon points="154,117 157,124 160,117" fill="#fff"/>
+        `}
+
+        <!-- 不動明王特有：垂左肩莎髻七結辮髮 -->
+        ${deity.id === 'acala' ? `
+          <path d="M124,112 Q112,145 118,175" fill="none" stroke="#181312" stroke-width="8" stroke-linecap="round"/>
+          <path d="M124,112 Q112,145 118,175" fill="none" stroke="${c2}" stroke-width="2" stroke-dasharray="4,6"/>
+        ` : ''}
+
+        <!-- 主二臂與手持核心三昧耶法器 -->
+        ${deity.id === 'acala' ? `
+          <!-- 右手執俱利伽羅劍 -->
+          <path d="M188,150 Q218,158 222,135" fill="none" stroke="${skin}" stroke-width="12" stroke-linecap="round"/>
+          <polygon points="222,42 229,130 215,130" fill="#e8eef5" stroke="${c2}" stroke-width="1.8"/>
+          <rect x="218" y="130" width="8" height="22" fill="${c2}"/>
+          <!-- 左手執金剛羂索 -->
+          <path d="M112,150 Q82,162 76,142" fill="none" stroke="${skin}" stroke-width="12" stroke-linecap="round"/>
+          <circle cx="72" cy="142" r="18" fill="none" stroke="${c2}" stroke-width="3.5" stroke-dasharray="6,3"/>
+        ` : `
+          <!-- 胸前結根本大印雙臂 -->
+          <path d="M112,152 Q132,175 148,162" fill="none" stroke="${skin}" stroke-width="12" stroke-linecap="round"/>
+          <path d="M188,152 Q168,175 152,162" fill="none" stroke="${skin}" stroke-width="12" stroke-linecap="round"/>
+          <circle cx="150" cy="162" r="10" fill="${c2}"/>
+        `}
+
+        <text x="150" y="316" text-anchor="middle" font-size="12.5" fill="#f5d076" letter-spacing="1">${deity.name}（${deity.direction}・${deity.buddha.split(' ')[0]}教令輪身）</text>
+      </svg>
+    `;
+  },
+
+  renderMudraSVG(deity) {
+    const c2 = deity.colorSecondary;
+    return `
+      <svg viewBox="0 0 240 110" width="220" height="100">
+        <rect x="4" y="4" width="232" height="102" rx="10" fill="rgba(0,0,0,0.45)" stroke="rgba(201,154,62,0.35)"/>
+        <circle cx="120" cy="55" r="38" fill="none" stroke="${c2}" stroke-width="1.5" stroke-dasharray="4,4"/>
+        <!-- 雙手結印幾何示意圖 -->
+        <path d="M72,82 Q96,45 116,32 L120,22 L124,32 Q144,45 168,82" fill="none" stroke="${c2}" stroke-width="4" stroke-linecap="round"/>
+        <path d="M88,85 Q120,52 152,85" fill="none" stroke="${deity.colorPrimary}" stroke-width="3.5"/>
+        <circle cx="120" cy="22" r="5" fill="#fff"/>
+        <text x="120" y="98" text-anchor="middle" font-size="11" fill="#f3ece0">三密結契・${deity.seedRomaji}</text>
+      </svg>
+    `;
+  }
+};
+
+/**
+ * 互動式東密明王殿主控制器
+ */
+const App = {
+  currentDeityId: 'acala',
+  visualMode: 'form',
+  altarLayout: 'mandala',
+  offeredSet: new Set(),
+  malaCount: 0,
+  malaRounds: 0,
+  autoChantTimer: null,
+  breathingTimer: null,
+  isBreathing: false,
+  currentHearth: 'shantika',
+  homaLogs: [
+    { hearth: '息災法', text: '祈願十方法界眾生離苦得樂、災障悉除', time: '開壇初願' }
+  ],
+
+  init() {
+    this.renderRoster();
+    this.renderLineup();
+    this.renderOfferings();
+    this.renderMatrixTable();
+    this.renderMalaRing();
+    this.renderHomaLogs();
+    this.selectDeity('acala', false);
+    FlameEngine.init();
+
+    // Spacebar shortcut for chanting
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' && document.activeElement.tagName !== 'INPUT') {
+        e.preventDefault();
+        this.chantOnce();
+      }
+    });
+  },
+
+  selectDeity(id, playSound = true) {
+    const d = DEITIES[id];
+    if (!d) return;
+    this.currentDeityId = id;
+
+    if (playSound) {
+      SoundEngine.playBeadClick(true);
+      FlameEngine.boost(1.45);
+    }
+
+    // Update CSS root accent & Flame hue
+    document.documentElement.style.setProperty('--accent-color', d.colorPrimary);
+    FlameEngine.hue = d.flameHue;
+
+    // Header & Badges
+    document.getElementById('header-seed-seal').textContent = d.seed;
+    document.getElementById('current-dir-badge').textContent = `${d.direction}・${d.wisdom.split('（')[0]}`;
+    document.getElementById('main-deity-name').textContent = d.name;
+    document.getElementById('main-deity-subtitle').textContent = `${d.sanskritName} ｜ ${d.buddha}教令輪身`;
+
+    // Highlight active nodes in Mandala, Lineup, Roster, and Matrix
+    document.querySelectorAll('.mandala-node').forEach(el => {
+      el.classList.toggle('active', el.dataset.id === id);
+    });
+    document.querySelectorAll('.lineup-item').forEach(el => {
+      el.classList.toggle('active', el.dataset.id === id);
+    });
+    document.querySelectorAll('.roster-card').forEach(el => {
+      el.classList.toggle('active', el.dataset.id === id);
+    });
+    document.querySelectorAll('#matrix-tbody tr').forEach(el => {
+      el.classList.toggle('active-row', el.dataset.id === id);
+    });
+
+    // Render SVG Artwork & Hotspots
+    this.updateArtworkAndHotspots();
+
+    // Update Lore Tab
+    const attrGrid = document.getElementById('deity-attr-grid');
+    attrGrid.innerHTML = `
+      <div class="attr-box"><span class="attr-label">曼荼羅方位</span><span class="attr-val">${d.direction}</span></div>
+      <div class="attr-box"><span class="attr-label">自性輪身（本地佛）</span><span class="attr-val">${d.buddha}</span></div>
+      <div class="attr-box"><span class="attr-label">悉曇種子字</span><span class="attr-val">${d.seed} (${d.seedRomaji})</span></div>
+      <div class="attr-box"><span class="attr-label">三昧耶形</span><span class="attr-val">${d.samayaName}</span></div>
+    `;
+    document.getElementById('lore-philosophy').textContent = d.philosophy;
+    document.getElementById('lore-iconography').textContent = d.iconography;
+    document.getElementById('lore-benefits').textContent = d.benefits;
+
+    // Update Mantra Tab
+    document.getElementById('mantra-title-label').textContent = d.mantraTitle;
+    document.getElementById('mantra-sanskrit').textContent = d.mantraSanskrit;
+    document.getElementById('mantra-phonetic').textContent = `【唐密／東密音譯】${d.mantraPhonetic}`;
+    document.getElementById('mantra-meaning').textContent = `【真言密意】${d.mantraMeaning}`;
+
+    // Update Mudra & Ajikan Tab
+    document.getElementById('mudra-name').textContent = d.mudraName;
+    document.getElementById('mudra-svg-box').innerHTML = ArtworkRenderer.renderMudraSVG(d);
+    document.getElementById('mudra-steps').innerHTML = d.mudraSteps.map((s, idx) => `<li><strong>步驟 ${idx + 1}：</strong>${s}</li>`).join('');
+    document.getElementById('moon-disc').textContent = d.seed;
+    document.getElementById('meditation-guide-text').textContent = `觀想胸間清淨滿月輪中安立金色「${d.seed}（${d.seedRomaji}）」字：${d.seedMeaning}`;
+  },
+
+  updateArtworkAndHotspots() {
+    const d = DEITIES[this.currentDeityId];
+    const mount = document.getElementById('deity-svg-mount');
+    mount.innerHTML = ArtworkRenderer.renderDeitySVG(d, this.visualMode);
+
+    const layer = document.getElementById('hotspot-layer');
+    if (this.visualMode !== 'form') {
+      layer.innerHTML = '';
+      document.getElementById('callout-title').textContent = this.visualMode === 'samaya' ? `【三昧耶形：${d.samayaName}】` : `【悉曇種子字：${d.seed} (${d.seedRomaji})】`;
+      document.getElementById('callout-desc').textContent = this.visualMode === 'samaya'
+        ? '密教以法器象徵本尊之本誓願力（三昧耶形），見法器即同見本尊法身。'
+        : d.seedMeaning;
+      return;
+    }
+
+    layer.innerHTML = d.hotspots.map((h, idx) => `
+      <button class="hotspot-pin" style="left:${h.x}%; top:${h.y}%;" onclick="App.inspectHotspot(${idx})" title="${h.title}">
+        ${h.label}
+      </button>
+    `).join('');
+
+    // Show first hotspot info by default
+    if (d.hotspots.length > 0) {
+      this.inspectHotspot(0, false);
+    }
+  },
+
+  inspectHotspot(idx, chime = true) {
+    const d = DEITIES[this.currentDeityId];
+    const h = d.hotspots[idx];
+    if (!h) return;
+    if (chime) SoundEngine.playBeadClick(false);
+    document.getElementById('callout-title').textContent = `【${h.title}】`;
+    document.getElementById('callout-desc').textContent = h.desc;
+  },
+
+  setVisualMode(mode) {
+    this.visualMode = mode;
+    document.getElementById('vis-form').classList.toggle('active', mode === 'form');
+    document.getElementById('vis-samaya').classList.toggle('active', mode === 'samaya');
+    document.getElementById('vis-seed').classList.toggle('active', mode === 'seed');
+    SoundEngine.playBeadClick(false);
+    this.updateArtworkAndHotspots();
+  },
+
+  setAltarLayout(layout) {
+    this.altarLayout = layout;
+    document.getElementById('btn-view-mandala').classList.toggle('active', layout === 'mandala');
+    document.getElementById('btn-view-lineup').classList.toggle('active', layout === 'lineup');
+    document.getElementById('mandala-stage').style.display = layout === 'mandala' ? 'flex' : 'none';
+    document.getElementById('lineup-stage').style.display = layout === 'lineup' ? 'flex' : 'none';
+  },
+
+  renderRoster() {
+    const container = document.getElementById('deity-roster');
+    container.innerHTML = Object.values(DEITIES).map(d => `
+      <div class="roster-card" data-id="${d.id}" onclick="App.selectDeity('${d.id}')">
+        <div class="roster-left">
+          <div class="roster-seed">${d.seed}</div>
+          <div class="roster-info">
+            <h4>${d.shortName}</h4>
+            <span>${d.buddha.split(' ')[0]}化身・${d.samayaName.split('・')[0]}</span>
+          </div>
+        </div>
+        <span class="roster-tag">${d.direction.split('・')[0]}</span>
+      </div>
+    `).join('');
+  },
+
+  renderLineup() {
+    // Traditional To-ji Lecture Hall Five Great Wisdom Kings horizontal order
+    const order = ['yamantaka', 'trailokyavijaya', 'acala', 'kundali', 'vajrayaksa'];
+    const row = document.getElementById('lineup-row');
+    row.innerHTML = order.map(id => {
+      const d = DEITIES[id];
+      return `
+        <div class="lineup-item" data-id="${d.id}" onclick="App.selectDeity('${d.id}')">
+          <div style="font-size:1.1rem; color:var(--gold-bright); font-weight:700;">${d.seed}</div>
+          <div style="font-size:0.75rem; font-weight:600; margin-top:2px;">${d.shortName.replace('明王','')}</div>
+          <div style="font-size:0.64rem; color:var(--text-muted);">${d.direction}</div>
+        </div>
+      `;
+    }).join('');
+  },
+
+  renderOfferings() {
+    const grid = document.getElementById('offerings-grid');
+    grid.innerHTML = OFFERINGS.map(o => `
+      <button class="offering-btn" id="off-${o.id}" onclick="App.toggleOffering('${o.id}')">
+        <span class="offering-icon">${o.icon}</span>
+        <span class="offering-name">${o.name}</span>
+        <span class="offering-meaning">${o.paramita}</span>
+      </button>
+    `).join('');
+  },
+
+  toggleOffering(id) {
+    const item = OFFERINGS.find(o => o.id === id);
+    const btn = document.getElementById(`off-${id}`);
+    if (this.offeredSet.has(id)) {
+      this.offeredSet.delete(id);
+      btn.classList.remove('offered');
+    } else {
+      this.offeredSet.add(id);
+      btn.classList.add('offered');
+      SoundEngine.playBeadClick(true);
+      FlameEngine.boost(1.7);
+      this.showToast(`${item.icon} 獻供【${item.name}（${item.paramita}）】：${item.desc}`);
+    }
+    document.getElementById('offering-counter-text').textContent = `已獻供：${this.offeredSet.size} / 6 供具`;
+  },
+
+  switchTab(tabId) {
+    const tabs = ['lore', 'mantra', 'mudra', 'homa'];
+    document.querySelectorAll('.prac-tab').forEach((btn, idx) => {
+      btn.classList.toggle('active', tabs[idx] === tabId);
+    });
+    tabs.forEach(t => {
+      document.getElementById(`pane-${t}`).classList.toggle('active', t === tabId);
+    });
+  },
+
+  renderMalaRing() {
+    const svg = document.getElementById('mala-svg');
+    const totalShown = 27; // 27 visual beads (4 cycles = 108 beads)
+    const cx = 105, cy = 105, r = 82;
+    let circles = '';
+    for (let i = 0; i < totalShown; i++) {
+      const angle = (i / totalShown) * Math.PI * 2 - Math.PI / 2;
+      const x = cx + Math.cos(angle) * r;
+      const y = cy + Math.sin(angle) * r;
+      const isGuru = i === 0;
+      const activeBead = (this.malaCount % totalShown) === i && this.malaCount > 0;
+      const passedBead = (this.malaCount % totalShown) > i;
+      const fill = isGuru ? '#ff5733' : (activeBead ? '#fffbe6' : (passedBead ? '#f5d076' : '#3a2b42'));
+      const radius = isGuru ? 7.5 : (activeBead ? 6.5 : 4.8);
+      circles += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${radius}" fill="${fill}" stroke="#c99a3e" stroke-width="1.2"/>`;
+    }
+
+    const d = DEITIES[this.currentDeityId];
+    svg.innerHTML = `
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(201,154,62,0.35)" stroke-width="1.5"/>
+      ${circles}
+      <text x="${cx}" y="${cy - 8}" text-anchor="middle" font-size="28" fill="#f5d076" font-weight="700">${this.malaCount % 108}</text>
+      <text x="${cx}" y="${cy + 16}" text-anchor="middle" font-size="11" fill="#b8ab99">/ 108 珠 (${d ? d.shortName : ''})</text>
+    `;
+  },
+
+  chantOnce() {
+    this.malaCount++;
+    const isComplete108 = this.malaCount % 108 === 0;
+    if (isComplete108) {
+      this.malaRounds++;
+      SoundEngine.playVajraBell();
+      this.showToast(`☸️ 圓滿第 ${this.malaRounds} 遍百八真言持誦！功德無量！`);
+    } else {
+      SoundEngine.playBeadClick(this.malaCount % 27 === 0);
+    }
+    FlameEngine.boost(1.3);
+    document.getElementById('mala-round-text').textContent = `第 ${this.malaRounds} 遍 / 累計 ${this.malaCount} 珠`;
+    this.renderMalaRing();
+  },
+
+  toggleAutoChant() {
+    const btn = document.getElementById('btn-auto-chant');
+    if (this.autoChantTimer) {
+      clearInterval(this.autoChantTimer);
+      this.autoChantTimer = null;
+      btn.textContent = '自動共修';
+      return;
+    }
+    btn.textContent = '⏸ 暫停共修';
+    this.chantOnce();
+    this.autoChantTimer = setInterval(() => this.chantOnce(), 1500);
+  },
+
+  resetMala() {
+    if (this.autoChantTimer) this.toggleAutoChant();
+    this.malaCount = 0;
+    this.malaRounds = 0;
+    document.getElementById('mala-round-text').textContent = '第 0 遍 / 累計 0 珠';
+    this.renderMalaRing();
+  },
+
+  toggleBreathing() {
+    const btn = document.getElementById('btn-breath');
+    const disc = document.getElementById('moon-disc');
+    const guide = document.getElementById('meditation-guide-text');
+    if (this.isBreathing) {
+      clearInterval(this.breathingTimer);
+      this.isBreathing = false;
+      disc.style.transform = 'scale(1)';
+      btn.textContent = '啟動三密調息';
+      return;
+    }
+    this.isBreathing = true;
+    btn.textContent = '⏹ 結束調息';
+    let step = 0;
+    const runCycle = () => {
+      if (step % 3 === 0) {
+        disc.style.transform = 'scale(1.28)';
+        guide.innerHTML = '<strong style="color:var(--gold-bright);">【吸氣・攝入佛光】</strong>觀想本尊種子字放大光明，吸入清淨法界正氣...';
+      } else if (step % 3 === 1) {
+        disc.style.transform = 'scale(1.28)';
+        guide.innerHTML = '<strong style="color:var(--gold-bright);">【住氣・三密合一】</strong>心月輪與本尊種子字安住不動，妄念自然消融...';
+      } else {
+        disc.style.transform = 'scale(0.88)';
+        guide.innerHTML = '<strong style="color:var(--gold-bright);">【呼氣・息滅塵勞】</strong>將身心無明煩惱與濁氣隨息吐出，化為清涼光明...';
+      }
+      step++;
+    };
+    runCycle();
+    this.breathingTimer = setInterval(runCycle, 3500);
+  },
+
+  selectHearth(key) {
+    const h = HEARTH_TYPES[key];
+    if (!h) return;
+    this.currentHearth = key;
+    document.querySelectorAll('.hearth-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.hearth === key);
+    });
+    document.getElementById('hearth-title').textContent = h.title;
+    document.getElementById('hearth-desc').textContent = h.desc;
+    FlameEngine.hue = h.hue;
+    FlameEngine.boost(1.55);
+    SoundEngine.playBeadClick(true);
+  },
+
+  setGomagiText(text) {
+    document.getElementById('gomagi-input').value = text;
+  },
+
+  castGomagi() {
+    const input = document.getElementById('gomagi-input');
+    const text = (input.value || '').trim() || '祈願斷除無明煩惱・圓證菩提智慧';
+    const hearthNames = { shantika: '息災法', paustika: '增益法', vasikarana: '敬愛法', abhicaraka: '調伏法' };
+    const d = DEITIES[this.currentDeityId];
+
+    SoundEngine.playFireWhoosh();
+    FlameEngine.boost(2.4);
+
+    this.homaLogs.unshift({
+      hearth: `${d.shortName}・${hearthNames[this.currentHearth]}`,
+      text,
+      time: new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    });
+    this.renderHomaLogs();
+    this.showToast(`🔥 護摩木已投入【${d.shortName}】智慧火壇：「${text}」`);
+  },
+
+  pourGhee() {
+    SoundEngine.playFireWhoosh();
+    FlameEngine.boost(2.6);
+    this.showToast('🥄 投獻清淨蘇油（Ghee）入爐！迦樓羅智慧猛火頓時熾盛大明！');
+  },
+
+  renderHomaLogs() {
+    const box = document.getElementById('homa-log');
+    document.getElementById('homa-count-label').textContent = `已焚修 ${this.homaLogs.length} 支護摩木`;
+    box.innerHTML = this.homaLogs.map(item => `
+      <div class="homa-log-item">
+        <div><strong style="color:var(--gold-bright);">[${item.hearth}]</strong> ${item.text}</div>
+        <span style="color:var(--text-dim); font-size:0.7rem; white-space:nowrap; margin-left:8px;">${item.time}</span>
+      </div>
+    `).join('');
+  },
+
+  renderMatrixTable() {
+    const tbody = document.getElementById('matrix-tbody');
+    tbody.innerHTML = Object.values(DEITIES).map(d => `
+      <tr data-id="${d.id}" onclick="App.selectDeity('${d.id}')">
+        <td><strong style="color:var(--gold-bright);">${d.shortName}</strong></td>
+        <td>${d.direction}</td>
+        <td>${d.buddha}</td>
+        <td>${d.bodhisattva}</td>
+        <td>${d.wisdom}</td>
+        <td><span style="font-size:1.1rem; color:var(--gold-bright); font-weight:700;">${d.seed}</span> (${d.seedRomaji})</td>
+        <td>${d.samayaName}</td>
+        <td style="color:var(--text-muted);">${d.benefits.slice(0, 26)}…</td>
+      </tr>
+    `).join('');
+  },
+
+  showToast(msg) {
+    const t = document.getElementById('ritual-toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+  }
+};
+
+window.addEventListener('DOMContentLoaded', () => App.init());
+</script>
+</body>
+</html>
