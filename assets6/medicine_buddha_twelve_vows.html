@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>藥師琉璃光如來十二大願｜互動修持・點燈祈福・經文恭誦</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts: Noto Serif TC 與 Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Inter"', '"PingFang TC"', '"Microsoft JhengHei"', 'sans-serif'],
+                    },
+                    colors: {
+                        lapis: {
+                            950: '#040b16',
+                            900: '#071428',
+                            800: '#0d2342',
+                            700: '#153763',
+                            600: '#1e4e8c',
+                        },
+                        cyanGlow: {
+                            300: '#67e8f9',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                        },
+                        gold: {
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#f3c663',
+                            500: '#d9a441',
+                            600: '#b7791f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-deep: #040b16;
+            --lapis-core: #0d2342;
+            --cyan-aura: #22d3ee;
+            --gold-primary: #f3c663;
+            --gold-bright: #ffd700;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(14, 65, 118, 0.55) 0%, rgba(4, 11, 22, 0.95) 70%),
+                radial-gradient(circle at 85% 20%, rgba(34, 211, 238, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 15% 80%, rgba(243, 198, 99, 0.08) 0%, transparent 50%);
+            color: #f1f5f9;
+            font-family: 'Noto Serif TC', serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* 琉璃光暈呼吸動畫 */
+        @keyframes lapisBreathe {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 22px rgba(34, 211, 238, 0.6)) drop-shadow(0 0 45px rgba(14, 116, 144, 0.4));
+            }
+            50% {
+                transform: scale(1.05);
+                filter: drop-shadow(0 0 35px rgba(103, 232, 249, 0.85)) drop-shadow(0 0 70px rgba(243, 198, 99, 0.45));
+            }
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes pulseGold {
+            0%, 100% { box-shadow: 0 0 15px rgba(243, 198, 99, 0.25), inset 0 0 15px rgba(34, 211, 238, 0.1); }
+            50% { box-shadow: 0 0 28px rgba(255, 215, 0, 0.55), inset 0 0 22px rgba(243, 198, 99, 0.2); }
+        }
+
+        .lapis-halo {
+            animation: lapisBreathe 5s infinite ease-in-out;
+        }
+
+        .float-item {
+            animation: floatSlow 4s infinite ease-in-out;
+        }
+
+        /* 卡片東方琉璃邊框與質感 */
+        .vow-card {
+            background: linear-gradient(155deg, rgba(13, 35, 66, 0.82) 0%, rgba(7, 20, 40, 0.92) 100%);
+            border: 1px solid rgba(103, 232, 249, 0.22);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .vow-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(243, 198, 99, 0.6);
+            box-shadow: 0 16px 36px -5px rgba(0, 0, 0, 0.65), 0 0 20px rgba(34, 211, 238, 0.18);
+        }
+
+        .vow-card.lit {
+            background: linear-gradient(155deg, rgba(20, 52, 92, 0.9) 0%, rgba(38, 34, 18, 0.88) 100%);
+            border: 1px solid rgba(253, 211, 77, 0.75);
+            animation: pulseGold 4s infinite ease-in-out;
+        }
+
+        .vow-card.speaking {
+            border: 2px solid #22d3ee;
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.5);
+        }
+
+        /* 莊嚴四角古典裝飾紋 */
+        .corner-ornament {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-color: rgba(243, 198, 99, 0.45);
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .vow-card.lit .corner-ornament {
+            border-color: rgba(253, 211, 77, 0.95);
+        }
+        .corner-tl { top: 8px; left: 8px; border-top: 2px solid; border-left: 2px solid; border-top-left-radius: 4px; }
+        .corner-tr { top: 8px; right: 8px; border-top: 2px solid; border-right: 2px solid; border-top-right-radius: 4px; }
+        .corner-bl { bottom: 8px; left: 8px; border-bottom: 2px solid; border-left: 2px solid; border-bottom-left-radius: 4px; }
+        .corner-br { bottom: 8px; right: 8px; border-bottom: 2px solid; border-right: 2px solid; border-bottom-right-radius: 4px; }
+
+        /* 訂製捲軸 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #040b16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e4e8c;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f3c663;
+        }
+
+        /* 難字注音提示虛線 */
+        .ruby-term {
+            border-bottom: 1px dashed rgba(243, 198, 99, 0.55);
+            cursor: help;
+            position: relative;
+            transition: color 0.2s;
+        }
+        .ruby-term:hover {
+            color: #fcd34d;
+        }
+    </style>
+</head>
+<body class="relative selection:bg-cyanGlow-500 selection:text-lapis-950">
+
+    <!-- 背景琉璃光點粒子畫布 -->
+    <canvas id="lapis-particles" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- 頂部導覽與音效狀態列 -->
+    <nav class="sticky top-0 z-40 backdrop-blur-md bg-lapis-950/80 border-b border-cyanGlow-400/20 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-cyanGlow-400 to-lapis-700 flex items-center justify-center shadow-lg shadow-cyanGlow-500/30 border border-gold-300/60">
+                    <span class="text-lapis-950 font-black text-lg">琉</span>
+                </div>
+                <div>
+                    <span class="text-gold-300 font-bold tracking-wider text-base sm:text-lg block leading-none">藥師琉璃光如來</span>
+                    <span class="text-xs text-cyanGlow-300/80 font-sans tracking-widest">BHAIṢAJYAGURU VAIḌŪRYAPRABHA</span>
+                </div>
+            </div>
+
+            <!-- 頂部互動工具按鈕群 -->
+            <div class="flex items-center flex-wrap gap-2 sm:gap-3">
+                <!-- 敲擊頌缽按鈕 -->
+                <button onclick="strikeBowl(true)" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-lapis-800/90 hover:bg-lapis-700 border border-gold-400/40 text-gold-200 text-xs sm:text-sm transition shadow-sm active:scale-95" title="敲擊琉璃頌缽靜心">
+                    <span>🔔</span>
+                    <span>靜心引磬</span>
+                    <span id="chant-count-badge" class="ml-1 px-1.5 py-0.2 bg-gold-500/20 text-gold-300 rounded-full text-xs font-sans">0</span>
+                </button>
+
+                <!-- 連續恭誦全部大願 -->
+                <button id="btn-read-all" onclick="toggleReadAllVows()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-lapis-800/90 hover:bg-lapis-700 border border-cyanGlow-400/40 text-cyanGlow-300 text-xs sm:text-sm transition shadow-sm active:scale-95">
+                    <span id="read-all-icon">🔊</span>
+                    <span id="read-all-text">連誦十二願</span>
+                </button>
+
+                <!-- 音效開關 -->
+                <button id="btn-sound-toggle" onclick="toggleSoundEnabled()" class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-lapis-800/80 hover:bg-lapis-700 border border-slate-600 text-slate-200 text-xs sm:text-sm transition" title="切換法器音效">
+                    <span id="sound-icon">🎵 音效開</span>
+                </button>
+
+                <!-- 祈福迴向卡按鈕 -->
+                <button onclick="openDedicationModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 text-lapis-950 font-bold text-xs sm:text-sm shadow-md shadow-gold-500/20 hover:brightness-110 transition active:scale-95">
+                    <span>🙏</span>
+                    <span>祈福迴向卡</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主視覺區 (Hero Header) -->
+    <header class="relative z-10 pt-10 pb-8 px-4 text-center max-w-5xl mx-auto">
+        <!-- 琉璃蓮華寶珠 SVG 圖騰 -->
+        <div class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-6 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full bg-cyanGlow-400/20 blur-xl lapis-halo"></div>
+            <svg viewBox="0 0 120 120" class="w-full h-full relative z-10 lapis-halo">
+                <defs>
+                    <radialGradient id="lapisOrb" cx="50%" cy="40%" r="55%">
+                        <stop offset="0%" stop-color="#e0f2fe"/>
+                        <stop offset="30%" stop-color="#38bdf8"/>
+                        <stop offset="70%" stop-color="#0369a1"/>
+                        <stop offset="100%" stop-color="#082f49"/>
+                    </radialGradient>
+                    <linearGradient id="goldLotus" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#fef08a"/>
+                        <stop offset="50%" stop-color="#f59e0b"/>
+                        <stop offset="100%" stop-color="#b45309"/>
+                    </linearGradient>
+                </defs>
+                <!-- 外層金色焰網背光 -->
+                <circle cx="60" cy="60" r="54" fill="none" stroke="url(#goldLotus)" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.75"/>
+                <circle cx="60" cy="60" r="46" fill="none" stroke="#67e8f9" stroke-width="0.8" opacity="0.5"/>
+                <!-- 琉璃摩尼寶珠 -->
+                <circle cx="60" cy="56" r="30" fill="url(#lapisOrb)" stroke="url(#goldLotus)" stroke-width="2"/>
+                <!-- 寶珠內蓮花紋與光澤 -->
+                <path d="M48 42 C52 34, 68 34, 72 42" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
+                <!-- 蓮花寶座 -->
+                <path d="M30 82 Q60 98 90 82 Q75 96 60 96 Q45 96 30 82 Z" fill="url(#goldLotus)"/>
+                <path d="M38 78 Q60 62 82 78 Q60 90 38 78 Z" fill="url(#goldLotus)" opacity="0.9"/>
+                <path d="M60 66 L50 82 L70 82 Z" fill="#fef08a"/>
+                <!-- 梵文種子字「바이 (Bhai)」意象或「琉」字 -->
+                <text x="60" y="63" text-anchor="middle" fill="#fef08a" font-size="22" font-weight="bold" font-family="Noto Serif TC, serif">琉</text>
+            </svg>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gold-200 via-gold-400 to-gold-200 drop-shadow-md mb-4">
+            藥師琉璃光如來十二大願
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-6">
+            「身如琉璃，內外明徹，淨無瑕穢，光明廣大」—— 藥師如來因地修菩薩道時，發十二大微妙上願，護念眾生現世身心安康、資生無缺、回邪歸正，乃至速證無上菩提。
+        </p>
+
+        <!-- 聖號持誦與難字讀音切換列 -->
+        <div class="inline-flex flex-wrap items-center justify-center gap-3 bg-lapis-900/90 border border-cyanGlow-400/30 rounded-2xl px-4 py-2.5 shadow-lg">
+            <span class="text-cyanGlow-300 text-xs sm:text-sm font-medium">🌟 聖號修持：南無藥師琉璃光如來</span>
+            <span class="text-slate-600 hidden sm:inline">|</span>
+            <label class="inline-flex items-center gap-2 cursor-pointer text-xs sm:text-sm text-gold-200 select-none">
+                <input type="checkbox" id="toggle-pronunciation" onchange="togglePronunciationHint()" class="accent-gold-400 w-4 h-4 rounded cursor-pointer" checked>
+                <span>顯示經文難字讀音提示</span>
+            </label>
+        </div>
+    </header>
+
+    <!-- 十二琉璃心燈進度與互動盤 -->
+    <section class="relative z-10 max-w-6xl mx-auto px-4 mb-8">
+        <div class="bg-lapis-900/75 border border-gold-400/30 rounded-2xl p-4 sm:p-6 backdrop-blur-md shadow-xl">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h2 class="text-lg sm:text-xl font-bold text-gold-300 tracking-wide">🏮 十二大願琉璃心燈壇城</h2>
+                        <span id="lit-badge" class="px-2.5 py-0.5 text-xs font-sans font-semibold rounded-full bg-cyanGlow-500/20 text-cyanGlow-300 border border-cyanGlow-400/30">
+                            已點亮 0 / 12 盞
+                        </span>
+                    </div>
+                    <p id="dedication-status-text" class="text-xs sm:text-sm text-slate-300 mt-1">
+                        點擊下方燈座或各願卡片的「點亮琉璃燈」，每點一燈皆有清淨頌缽音聲供養。
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2.5">
+                    <button onclick="lightAllLamps()" class="px-3.5 py-2 rounded-xl bg-lapis-800 hover:bg-lapis-700 border border-gold-400/50 text-gold-200 text-xs sm:text-sm font-medium transition active:scale-95">
+                        ✨ 一鍵點亮十二燈
+                    </button>
+                    <button onclick="drawRandomVow()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyanGlow-500 to-blue-600 hover:from-cyanGlow-400 hover:to-blue-500 text-lapis-950 font-bold text-xs sm:text-sm shadow-lg shadow-cyanGlow-500/25 transition active:scale-95">
+                        🎋 抽取今日相應大願
+                    </button>
+                </div>
+            </div>
+
+            <!-- 12 盞小琉璃燈視覺互動列 -->
+            <div id="mini-lamps-bar" class="grid grid-cols-6 sm:grid-cols-12 gap-2 py-2 mb-3">
+                <!-- 由 JS 動態生成 12 盞迷你燈座 -->
+            </div>
+
+            <!-- 點燈進度條 -->
+            <div class="w-full h-2.5 bg-lapis-950 rounded-full overflow-hidden border border-slate-800">
+                <div id="progress-fill" class="h-full w-0 bg-gradient-to-r from-cyanGlow-400 via-gold-300 to-gold-500 transition-all duration-500 shadow-[0_0_12px_#ffd700]"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 四大悲願分類篩選控制列 -->
+    <section class="relative z-10 max-w-6xl mx-auto px-4 mb-8">
+        <div class="flex flex-wrap items-center justify-center sm:justify-between gap-3">
+            <div class="flex flex-wrap items-center justify-center gap-2" id="category-filters">
+                <button onclick="filterVows('all', this)" class="filter-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition border bg-gold-400 text-lapis-950 border-gold-300 shadow-md shadow-gold-400/20">
+                    全部十二大願 (12)
+                </button>
+                <button onclick="filterVows('light', this)" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition border bg-lapis-900/80 text-slate-200 border-cyanGlow-400/30 hover:border-gold-400/60">
+                    ✨ 光明莊嚴（1-2願）
+                </button>
+                <button onclick="filterVows('abundance', this)" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition border bg-lapis-900/80 text-slate-200 border-cyanGlow-400/30 hover:border-gold-400/60">
+                    🌾 資生無缺（3, 11-12願）
+                </button>
+                <button onclick="filterVows('healing', this)" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition border bg-lapis-900/80 text-slate-200 border-cyanGlow-400/30 hover:border-gold-400/60">
+                    🌿 身心療癒（6-8, 10願）
+                </button>
+                <button onclick="filterVows('wisdom', this)" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition border bg-lapis-900/80 text-slate-200 border-cyanGlow-400/30 hover:border-gold-400/60">
+                    ☸️ 正見戒行（4-5, 9願）
+                </button>
+            </div>
+
+            <button onclick="toggleAllInsights()" id="btn-expand-all" class="text-xs sm:text-sm text-cyanGlow-300 hover:text-gold-300 underline underline-offset-4 transition">
+                展開全部白話深意
+            </button>
+        </div>
+    </section>
+
+    <!-- 十二大願卡片網格區 -->
+    <main class="relative z-10 max-w-6xl mx-auto px-4 pb-16">
+        <div id="vows-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 由 JS 渲染 12 大願卡片 -->
+        </div>
+    </main>
+
+    <!-- 十二大願結構總覽與藥師灌頂真言區 -->
+    <section class="relative z-10 max-w-6xl mx-auto px-4 pb-20">
+        <div class="bg-lapis-900/80 border border-cyanGlow-400/25 rounded-2xl p-6 sm:p-8 backdrop-blur-md">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <div class="lg:col-span-2">
+                    <h3 class="text-xl font-bold text-gold-300 mb-2 flex items-center gap-2">
+                        <span>☸️</span>
+                        <span>藥師灌頂真言（藥師咒）</span>
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-3">出自《藥師琉璃光如來本願功德經》，常誦此咒能消災除障、所求滿願：</p>
+                    <div class="bg-lapis-950/90 border border-gold-400/30 rounded-xl p-4 text-gold-200 text-base sm:text-lg leading-loose tracking-wider font-medium">
+                        南謨薄伽伐帝・鞞殺社・窶嚕薜琉璃・鉢喇婆・喝囉闍也・怛他揭多也・阿囉喝帝・三藐三勃陀耶・怛姪他・唵・鞞殺逝・鞞殺逝・鞞殺社・三沒揭帝・莎訶。
+                    </div>
+                </div>
+                <div class="bg-lapis-950/70 border border-cyanGlow-400/20 rounded-xl p-5 text-center">
+                    <div class="text-cyanGlow-300 text-sm font-medium mb-1">藥師法門核心精神</div>
+                    <div class="text-gold-300 text-lg font-bold mb-2">「先以欲鉤牽，後令入佛智」</div>
+                    <p class="text-xs text-slate-300 leading-relaxed text-justify">
+                        藥師如來不僅關懷出世間的解脫，更深切體恤眾生在人間的病苦、貧乏、飢寒、憂惱與災厄。透過十二大願的慈悲攝受，令眾生先得現世身心安隱豐足，進而安住菩提正道。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="relative z-10 border-t border-slate-800/80 py-8 text-center text-xs sm:text-sm text-slate-400 px-4">
+        <p class="mb-1 text-gold-300/90 font-medium">願以此功德，普及於一切，我等與眾生，皆共成佛道。</p>
+        <p>藥師琉璃光如來十二大願・互動修持法寶（完整收錄玄奘大師譯本原文）</p>
+    </footer>
+
+    <!-- 彈窗 1：今日相應大願抽籤 Modal -->
+    <div id="oracle-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4" onclick="closeOracleModal()">
+        <div class="relative w-full max-w-lg bg-gradient-to-b from-lapis-800 to-lapis-950 border-2 border-gold-400 rounded-2xl p-6 sm:p-8 shadow-[0_0_50px_rgba(34,211,238,0.3)] text-center" onclick="event.stopPropagation()">
+            <div class="corner-ornament corner-tl"></div>
+            <div class="corner-ornament corner-tr"></div>
+            <div class="corner-ornament corner-bl"></div>
+            <div class="corner-ornament corner-br"></div>
+
+            <div class="inline-block px-3 py-1 rounded-full bg-gold-500/20 border border-gold-400/40 text-gold-300 text-xs font-medium mb-3">
+                🎋 今日相應修持大願
+            </div>
+            <h3 id="oracle-title" class="text-2xl font-bold text-gold-300 mb-4"></h3>
+            
+            <div id="oracle-original" class="bg-lapis-950/90 border border-cyanGlow-400/30 rounded-xl p-4 text-left text-slate-100 text-base leading-relaxed mb-4"></div>
+            
+            <div class="bg-lapis-900/90 border-l-4 border-gold-400 rounded-r-xl p-4 text-left text-sm text-slate-200 space-y-2 mb-6">
+                <div id="oracle-meaning"></div>
+                <div id="oracle-practice" class="text-cyanGlow-300 font-medium pt-1"></div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <button id="oracle-speak-btn" class="px-4 py-2 rounded-xl bg-lapis-700 hover:bg-lapis-600 text-cyanGlow-300 border border-cyanGlow-400/40 text-sm transition">
+                    🔊 恭誦此願
+                </button>
+                <button id="oracle-light-btn" class="px-5 py-2 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 text-lapis-950 font-bold text-sm shadow-lg hover:brightness-110 transition">
+                    🏮 點亮此願心燈並信受
+                </button>
+                <button onclick="closeOracleModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm transition">
+                    關閉
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 彈窗 2：琉璃光明祈福迴向卡生成 Modal -->
+    <div id="dedication-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-sm p-4 overflow-y-auto" onclick="closeDedicationModal()">
+        <div class="relative w-full max-w-2xl bg-gradient-to-b from-lapis-800 via-lapis-900 to-lapis-950 border-2 border-gold-400 rounded-2xl p-6 sm:p-8 shadow-[0_0_60px_rgba(243,198,99,0.3)] my-8" onclick="event.stopPropagation()">
+            <div class="corner-ornament corner-tl"></div>
+            <div class="corner-ornament corner-tr"></div>
+            <div class="corner-ornament corner-bl"></div>
+            <div class="corner-ornament corner-br"></div>
+
+            <div class="flex items-center justify-between border-b border-gold-400/20 pb-4 mb-5">
+                <div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-gold-300">🙏 琉璃光明祈福迴向卡</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 mt-0.5">填寫祈福資訊，生成專屬莊嚴迴向卡，可複製迴向文或下載圖卡保存</p>
+                </div>
+                <button onclick="closeDedicationModal()" class="text-slate-400 hover:text-white text-2xl leading-none px-2">&times;</button>
+            </div>
+
+            <!-- 輸入表單 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5 font-sans">
+                <div>
+                    <label class="block text-xs text-gold-200 mb-1">祈福弟子／功德主姓名</label>
+                    <input type="text" id="input-donor" value="三寶弟子" oninput="updateDedicationPreview()" placeholder="例如：王小明 闔家" class="w-full px-3.5 py-2 rounded-xl bg-lapis-950 border border-cyanGlow-400/40 text-white text-sm focus:outline-none focus:border-gold-400">
+                </div>
+                <div>
+                    <label class="block text-xs text-gold-200 mb-1">迴向對象</label>
+                    <input type="text" id="input-target" value="法界一切有情眾生、歷代父母師長" oninput="updateDedicationPreview()" placeholder="例如：母親陳氏、累劫冤親債主" class="w-full px-3.5 py-2 rounded-xl bg-lapis-950 border border-cyanGlow-400/40 text-white text-sm focus:outline-none focus:border-gold-400">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs text-gold-200 mb-1">祈福心願（可自由修改或點選下方快捷心願）</label>
+                    <input type="text" id="input-wish" value="眾病悉除，身心安樂，家屬資具，悉皆豐足，速證無上菩提。" oninput="updateDedicationPreview()" class="w-full px-3.5 py-2 rounded-xl bg-lapis-950 border border-cyanGlow-400/40 text-white text-sm focus:outline-none focus:border-gold-400">
+                    <div class="flex flex-wrap gap-1.5 mt-2">
+                        <button type="button" onclick="setQuickWish('眾病悉除，身心安樂，早日康復，福壽綿長。')" class="text-xs px-2.5 py-1 rounded-full bg-lapis-800 hover:bg-lapis-700 text-cyanGlow-300 border border-cyanGlow-400/30">🌿 病苦消除・身心康泰</button>
+                        <button type="button" onclick="setQuickWish('智慧開曉，事業順遂，資生無缺，闔家平安。')" class="text-xs px-2.5 py-1 rounded-full bg-lapis-800 hover:bg-lapis-700 text-cyanGlow-300 border border-cyanGlow-400/30">🌾 事業開曉・資具豐足</button>
+                        <button type="button" onclick="setQuickWish('遠離災厄憂苦，解脫一切纏縛，常隨佛學，安住菩提正道。')" class="text-xs px-2.5 py-1 rounded-full bg-lapis-800 hover:bg-lapis-700 text-cyanGlow-300 border border-cyanGlow-400/30">☸️ 消災解厄・正見菩提</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 莊嚴迴向卡視覺預覽區 -->
+            <div id="dedication-card-preview" class="relative rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#0a2346] via-[#06152d] to-[#1a180d] border-2 border-gold-400/80 shadow-inner mb-5 text-center overflow-hidden">
+                <div class="text-xs tracking-[0.25em] text-cyanGlow-300 mb-1">南無藥師琉璃光如來・十二大願</div>
+                <h4 class="text-xl sm:text-2xl font-black text-gold-300 tracking-wider mb-4">琉璃光明祈福迴向疏</h4>
+                <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mb-4"></div>
+                <p id="preview-body" class="text-sm sm:text-base text-slate-100 leading-loose text-justify max-w-lg mx-auto mb-4"></p>
+                <div class="flex items-center justify-between text-xs text-gold-300/80 border-t border-gold-400/20 pt-3 max-w-lg mx-auto">
+                    <span id="preview-lamps-count">已點亮琉璃燈：12 / 12 盞</span>
+                    <span id="preview-date"></span>
+                </div>
+            </div>
+
+            <!-- 操作按鈕與訊息回饋 -->
+            <div id="copy-toast" class="hidden mb-3 text-center py-2 px-4 rounded-xl bg-emerald-900/70 border border-emerald-400/50 text-emerald-200 text-xs sm:text-sm"></div>
+
+            <div class="flex flex-wrap items-center justify-end gap-3">
+                <button onclick="copyDedicationText()" class="px-4 py-2.5 rounded-xl bg-lapis-700 hover:bg-lapis-600 border border-cyanGlow-400/50 text-cyanGlow-200 text-xs sm:text-sm font-medium transition">
+                    📋 複製迴向文
+                </button>
+                <button onclick="downloadDedicationImage()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 text-lapis-950 font-bold text-xs sm:text-sm shadow-lg hover:brightness-110 transition">
+                    🖼️ 下載祈福圖卡 (PNG)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================
+         * 1. 藥師琉璃光如來十二大願 完整原文與解析資料庫
+         *    (嚴格保留使用者提供之原文，一字不改)
+         * ========================================== */
+        const vowsData = [
+            {
+                id: 1,
+                shortTitle: "生佛平等願",
+                category: "light",
+                categoryName: "✨ 光明莊嚴",
+                original: "第一大願：願我來世得阿耨多羅三藐三菩提時，自身光明，熾然照耀無量無數無邊世界，以三十二大丈夫相、八十隨形，莊嚴其身，令一切有情，如我無異。",
+                meaning: "佛陀成道證得無上正等正覺時，自身散發熾盛光明，遍照無量無邊的世界；並以三十二相、八十隨形好莊嚴法身，更發願令一切眾生都能獲得與佛陀完全無異的圓滿果德與莊嚴身相。",
+                practice: "修持啟示：破除自卑與分別心，深信自己與一切眾生皆具足如來智慧德相，在日常中莊嚴自己的言行與心念。"
+            },
+            {
+                id: 2,
+                shortTitle: "開曉事業願",
+                category: "light",
+                categoryName: "✨ 光明莊嚴",
+                original: "第二大願：願我來世得菩提時，身如琉璃，內外明徹，淨無瑕穢，光明廣大，功德巍巍，身善安住，焰網莊嚴，過於日月；幽冥眾生，悉蒙開曉，隨意所趣，作諸事業。",
+                meaning: "佛身猶如清淨寶琉璃，內外透明澄澈、毫無瑕疵污穢，廣大光明超越日月；能令處於黑暗幽冥或心靈迷惘中的眾生蒙受照耀、心開意解，順利前往理想方向，成就種種善妙事業。",
+                practice: "修持啟示：學習「身如琉璃，內外明徹」的真誠坦蕩，表裡如一；當遭遇人生低谷或方向不明時，祈請琉璃光開啟智慧。"
+            },
+            {
+                id: 3,
+                shortTitle: "無盡資生願",
+                category: "abundance",
+                categoryName: "🌾 資生無缺",
+                original: "第三大願：願我來世得菩提時，以無量無邊智慧方便，令諸有情，皆得無盡所受用物，莫令眾生有所乏少。",
+                meaning: "以無量無邊的智慧與善巧方便，使一切眾生都能獲得受用不盡的生活資具，不讓任何眾生因為物質匱乏而陷入貧苦憂愁。",
+                practice: "修持啟示：以智慧與正命經營生活，並樂於布施分享；知足感恩即是開啟無盡富足的鑰匙。"
+            },
+            {
+                id: 4,
+                shortTitle: "安立大乘願",
+                category: "wisdom",
+                categoryName: "☸️ 正見戒行",
+                original: "第四大願：願我來世得菩提時，若諸有情行邪道者，悉令安住菩提道中；若行聲聞獨覺乘者，皆以大乘而安立之。",
+                meaning: "若眾生誤入偏差邪道，皆引導其回歸覺悟的菩提正道；若修行者僅停留在自利自度的聲聞、獨覺小乘境界，皆以自利利他的大乘菩薩道安立之。",
+                practice: "修持啟示：拓寬生命格局，從「只求自己安好」提升為「願眾生共好」，在利他中完成自利。"
+            },
+            {
+                id: 5,
+                shortTitle: "戒行清淨願",
+                category: "wisdom",
+                categoryName: "☸️ 正見戒行",
+                original: "第五大願：願我來世得菩提時，若有無量無邊有情，於我法中修行梵行，一切皆令得不缺戒，具三聚戒。設有毀犯，聞我名已，還得清淨，不墮惡趣。",
+                meaning: "護念在佛法中修持清淨梵行的眾生，皆得圓滿不缺的「三聚淨戒」（攝律儀戒、攝善法戒、饒益有情戒）。假使一時失念毀犯戒律，只要聽聞並至誠稱念藥師佛名號、真心懺悔，便能重獲清淨，不墮三惡道。",
+                practice: "修持啟示：持戒是保護身心的良藥；面對過失不陷入絕望自責，透過真誠懺悔與念佛，隨時都能重啟清淨人生。"
+            },
+            {
+                id: 6,
+                shortTitle: "諸根完具願",
+                category: "healing",
+                categoryName: "🌿 身心療癒",
+                original: "第六大願：願我來世得菩提時，若諸有情，其身下劣，諸根不具，醜陋、頑愚、盲、聾、瘖、瘂、攣、躄、背僂、白癩、癲狂，種種病苦；聞我名已，一切皆得端正黠慧。諸根完具，無諸疾苦。",
+                meaning: "若眾生身體孱弱、感官殘缺，或有頑愚、失明、失聰、瘖瘂、手腳蜷曲、駝背、皮膚重症、精神錯亂等種種病苦；聽聞藥師佛名號後，皆得相貌端正、聰明智慧、六根完具，遠離一切疾苦。",
+                practice: "修持啟示：珍愛身心健康，更以慈悲尊重的心關懷身心障礙與病患，協助他們獲得醫療與尊嚴。"
+            },
+            {
+                id: 7,
+                shortTitle: "身心康樂願",
+                category: "healing",
+                categoryName: "🌿 身心療癒",
+                original: "第七大願：願我來世得菩提時，若諸有情，眾病逼切，無救無歸，無醫無藥，無親無家，貧窮多苦，我之名號，一經其耳，眾病悉除，身心安樂，家屬資具，悉皆豐足，乃至證得無上菩提。",
+                meaning: "對於重病纏身、求助無門、缺乏醫藥、孤苦無依且貧困交迫的眾生，只要藥師佛名號一經其耳，即能眾病消除、身心安樂，家庭眷屬與生活資具悉皆豐足，直至證得無上菩提。",
+                practice: "修持啟示：此願展現「大醫王」最深切的悲心；我們也可隨學藥師佛，成為孤苦病弱者的溫暖助緣。"
+            },
+            {
+                id: 8,
+                shortTitle: "轉女成男願",
+                category: "healing",
+                categoryName: "🌿 身心療癒",
+                original: "第八大願：願我來世得菩提時，若有女人，為女百惡之所逼惱，極生厭離，願捨女身；聞我名已，一切皆得轉女成男，具丈夫相，乃至證得無上菩提。",
+                meaning: "體恤古代或特定處境下女性受生理病痛與社會不平等待遇之百般逼惱，若聞藥師佛名號，皆能解脫性別枷鎖與苦惱，具足大丈夫剛健無畏之氣概，直至成佛。",
+                practice: "修持啟示：超越生理性別與世俗框架的束縛，在修行與生活中展現勇敢、獨立、承擔的大丈夫精神。"
+            },
+            {
+                id: 9,
+                shortTitle: "回邪歸正願",
+                category: "wisdom",
+                categoryName: "☸️ 正見戒行",
+                original: "第九大願：願我來世得菩提時，令諸有情，出魔羂網，解脫一切外道纏縛；若墮種種惡見稠林，皆當引攝置於正見，漸令修習諸菩薩行，速證無上正等菩提。",
+                meaning: "拔濟眾生脫離煩惱魔網與外道邪說的束縛；若落入各種錯誤知見的濃密叢林，皆引導攝受其安住於正知正見，循序漸進修習六度萬行等菩薩道，速證無上菩提。",
+                practice: "修持啟示：在資訊紛亂的現代社會，培養明辨是非的法眼，不盲從迷信、不執著偏見，常保正念。"
+            },
+            {
+                id: 10,
+                shortTitle: "解脫憂苦願",
+                category: "healing",
+                categoryName: "🌿 身心療癒",
+                original: "第十大願：願我來世得菩提時，若諸有情，王法所錄，縲縛鞭撻，繫閉牢獄，或當刑戮，及餘無量災難，凌辱，悲愁煎逼，身心受苦；若聞我名，以我福德威神力故，皆得解脫一切憂苦。",
+                meaning: "若眾生遭遇官司牢獄、綑綁鞭打、刑罰，或種種天災人禍、欺凌侮辱，導致悲傷憂愁日夜煎熬、身心受苦；只要聽聞受持藥師佛名號，仰仗佛陀福德威神力，皆能解脫一切憂苦厄難。",
+                practice: "修持啟示：面對突如其來的逆境、委屈或高壓焦慮時，透過專念佛號安定心神，以慈悲與智慧化解苦厄。"
+            },
+            {
+                id: 11,
+                shortTitle: "得妙飲食願",
+                category: "abundance",
+                categoryName: "🌾 資生無缺",
+                original: "第十一大願：願我來世得菩提時，若諸有情，飢渴所惱，為求食故造諸惡業；得聞我名，專念受持，我當先以上妙飲食，飽足其身；後以法味，畢竟安樂而建立之。",
+                meaning: "悲憫眾生因飢餓口渴所逼迫，為了求取溫飽而造下惡業；若能聽聞並專念受持藥師佛名號，佛陀先以上妙飲食飽足其身體，隨後再以佛法真理的「法味」滋養心靈，建立究竟永恆的安樂。",
+                practice: "修持啟示：體現人間佛教「先解決民生溫飽，再提昇心靈境界」的務實慈悲；每一餐飯食皆存感恩與正念。"
+            },
+            {
+                id: 12,
+                shortTitle: "得妙衣具願",
+                category: "abundance",
+                categoryName: "🌾 資生無缺",
+                original: "第十二大願：願我來世得菩提時，若諸有情，貧無衣服，蚊虻寒熱，晝夜逼惱；若聞我名，專念受持，如其所好，即得種種上妙衣服，亦得一切寶莊嚴具，華鬘塗香，鼓樂眾伎，隨心所翫，皆令滿足。",
+                meaning: "若眾生貧困無衣，日夜受蚊蟲叮咬與嚴寒酷暑逼惱；只要專念受持藥師佛名號，便能隨其喜好獲得種種美好衣物、珍寶莊嚴具、香花與雅樂，令生活具備尊嚴、美感與歡喜。",
+                practice: "修持啟示：藥師法門肯定正當的生活美學與身心愉悅，以莊嚴歡喜之心生活，並將富足與美善迴向大眾。"
+            }
+        ];
+
+        // 經文難字讀音字典（僅在顯示層加上輔助提示，完全不改動原文內容）
+        const pronunciationDict = [
+            { word: "阿耨多羅三藐三菩提", note: "ā nòu duō luó sān miǎo sān pú tí（無上正等正覺）" },
+            { word: "瘖", note: "yīn（失聲不能言）" },
+            { word: "瘂", note: "yǎ（同「啞」）" },
+            { word: "攣", note: "luán（手腳蜷曲痙攣）" },
+            { word: "躄", note: "bì（兩腿跛足不良於行）" },
+            { word: "背僂", note: "bèi lóu（駝背彎曲）" },
+            { word: "白癩", note: "bái lài（嚴重皮膚疾患）" },
+            { word: "羂網", note: "juàn wǎng（捕捉鳥獸的羅網，喻煩惱魔網）" },
+            { word: "縲縛", note: "léi fù（以黑索捆綁拘禁）" },
+            { word: "鞭撻", note: "biān tà（鞭打刑罰）" },
+            { word: "蚊虻", note: "wén méng（蚊蟲與牛虻）" },
+            { word: "華鬘", note: "huā mán（以鮮花穿綴成的莊嚴花環）" },
+            { word: "翫", note: "wàn（通「玩」，觀賞受用）" }
+        ];
+
+        // 狀態管理
+        const litVows = new Set();
+        let currentFilter = 'all';
+        let showPronunciation = true;
+        let allInsightsExpanded = false;
+        let soundEnabled = true;
+        let chantCount = 0;
+        let isReadingAll = false;
+        let currentReadingIndex = -1;
+        let audioCtx = null;
+
+        /* ==========================================
+         * 2. Web Audio API 合成琉璃頌缽與引磬音效
+         * ========================================== */
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        // 敲擊頌缽 / 引磬合成音 (支援五聲音階頻率)
+        function playSingingBowl(baseFreq = 432, duration = 3.2) {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+
+                const now = ctx.currentTime;
+                // 頌缽泛音結構：基音 + 2.756倍泛音 + 5.404倍清脆引磬泛音
+                const partials = [
+                    { ratio: 1, gain: 0.28, decay: duration },
+                    { ratio: 2.756, gain: 0.14, decay: duration * 0.75 },
+                    { ratio: 5.404, gain: 0.06, decay: duration * 0.45 }
+                ];
+
+                partials.forEach(p => {
+                    const osc = ctx.createOscillator();
+                    const gainNode = ctx.createGain();
+
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(baseFreq * p.ratio, now);
+
+                    gainNode.gain.setValueAtTime(0.0001, now);
+                    gainNode.gain.exponentialRampToValueAtTime(p.gain, now + 0.025);
+                    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + p.decay);
+
+                    osc.connect(gainNode);
+                    gainNode.connect(ctx.destination);
+
+                    osc.start(now);
+                    osc.stop(now + p.decay + 0.05);
+                });
+            } catch (e) {
+                // 忽略瀏覽器未互動前的自動播放限制錯誤
+            }
+        }
+
+        function strikeBowl(incrementChant = false) {
+            playSingingBowl(528, 3.8);
+            if (incrementChant) {
+                chantCount++;
+                document.getElementById('chant-count-badge').innerText = chantCount;
+            }
+        }
+
+        function toggleSoundEnabled() {
+            soundEnabled = !soundEnabled;
+            const iconEl = document.getElementById('sound-icon');
+            iconEl.innerText = soundEnabled ? '🎵 音效開' : '🔇 音效關';
+            if (soundEnabled) playSingingBowl(528, 1.8);
+        }
+
+        /* ==========================================
+         * 3. 格式化經文（保留完整原文，選擇性加上難字讀音提示）
+         * ========================================== */
+        function formatOriginalText(rawText) {
+            if (!showPronunciation) return rawText;
+            let formatted = rawText;
+            pronunciationDict.forEach(item => {
+                const regex = new RegExp(item.word, 'g');
+                formatted = formatted.replace(
+                    regex,
+                    `<span class="ruby-term" title="讀音與釋義：${item.note}">${item.word}</span>`
+                );
+            });
+            return formatted;
+        }
+
+        function togglePronunciationHint() {
+            showPronunciation = document.getElementById('toggle-pronunciation').checked;
+            renderVows();
+        }
+
+        /* ==========================================
+         * 4. 渲染十二心燈壇城與大願卡片
+         * ========================================== */
+        function renderMiniLamps() {
+            const bar = document.getElementById('mini-lamps-bar');
+            bar.innerHTML = '';
+            vowsData.forEach(vow => {
+                const isLit = litVows.has(vow.id);
+                const btn = document.createElement('button');
+                btn.onclick = () => toggleLamp(vow.id);
+                btn.title = `第${vow.id}願：${vow.shortTitle}（點擊${isLit ? '熄滅' : '點亮'}）`;
+                btn.className = `flex flex-col items-center justify-center py-2 px-1 rounded-xl border transition-all ${
+                    isLit 
+                    ? 'bg-gradient-to-b from-gold-500/30 to-lapis-800 border-gold-300 text-gold-200 shadow-[0_0_12px_rgba(253,211,77,0.4)] scale-105' 
+                    : 'bg-lapis-950/70 border-slate-800 text-slate-400 hover:border-cyanGlow-400/40 hover:text-slate-200'
+                }`;
+                btn.innerHTML = `
+                    <span class="text-base sm:text-lg mb-0.5">${isLit ? '🏮' : '🕯️'}</span>
+                    <span class="text-[11px] font-sans font-medium">第${vow.id}願</span>
+                `;
+                bar.appendChild(btn);
+            });
+        }
+
+        function renderVows() {
+            const grid = document.getElementById('vows-grid');
+            grid.innerHTML = '';
+
+            const filtered = currentFilter === 'all' 
+                ? vowsData 
+                : vowsData.filter(v => v.category === currentFilter);
+
+            filtered.forEach(vow => {
+                const isLit = litVows.has(vow.id);
+                const isSpeakingThis = currentReadingIndex === vow.id;
+                const card = document.createElement('article');
+                card.id = `vow-card-${vow.id}`;
+                card.className = `vow-card relative rounded-2xl p-6 flex flex-col justify-between ${isLit ? 'lit' : ''} ${isSpeakingThis ? 'speaking' : ''}`;
+
+                card.innerHTML = `
+                    <div class="corner-ornament corner-tl"></div>
+                    <div class="corner-ornament corner-tr"></div>
+                    <div class="corner-ornament corner-bl"></div>
+                    <div class="corner-ornament corner-br"></div>
+
+                    <div>
+                        <!-- 卡片頂部資訊列 -->
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyanGlow-500/15 text-cyanGlow-300 border border-cyanGlow-400/30">
+                                ${vow.categoryName}
+                            </span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-sans text-gold-300/90 font-semibold tracking-wider">
+                                    VOW ${String(vow.id).padStart(2, '0')} · ${vow.shortTitle}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- 經文原文（完整無刪改） -->
+                        <div class="text-base sm:text-[17px] text-slate-100 leading-relaxed tracking-wide text-justify mb-4 font-medium">
+                            ${formatOriginalText(vow.original)}
+                        </div>
+
+                        <!-- 可展開之白話深意與現代生活修持啟示 -->
+                        <div id="insight-panel-${vow.id}" class="${allInsightsExpanded ? 'block' : 'hidden'} mt-3 mb-4 rounded-xl bg-lapis-950/85 border-l-4 border-gold-400 p-4 text-sm space-y-2.5 transition-all">
+                            <div>
+                                <span class="text-gold-300 font-bold block mb-0.5">【白話深意】</span>
+                                <p class="text-slate-200 leading-relaxed text-justify">${vow.meaning}</p>
+                            </div>
+                            <div class="pt-1 border-t border-slate-800">
+                                <span class="text-cyanGlow-300 font-bold block mb-0.5">【現代生活修持】</span>
+                                <p class="text-cyanGlow-300/90 leading-relaxed text-justify">${vow.practice}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 卡片底部互動按鈕列 -->
+                    <div class="pt-3 border-t border-slate-700/50 flex items-center justify-between gap-2 font-sans">
+                        <button onclick="toggleInsight(${vow.id})" id="btn-insight-${vow.id}" class="flex-1 py-2 px-2.5 rounded-xl bg-lapis-900/90 hover:bg-lapis-800 border border-slate-700 text-slate-200 text-xs font-medium transition flex items-center justify-center gap-1">
+                            <span>📖</span>
+                            <span>${allInsightsExpanded ? '收合解析' : '白話深意'}</span>
+                        </button>
+
+                        <button onclick="speakSingleVow(${vow.id})" class="py-2 px-3 rounded-xl bg-lapis-900/90 hover:bg-lapis-800 border border-cyanGlow-400/30 text-cyanGlow-300 text-xs font-medium transition flex items-center justify-center gap-1" title="語音恭誦此願原文">
+                            <span>${isSpeakingThis ? '⏹️ 停止' : '🔊 恭誦'}</span>
+                        </button>
+
+                        <button onclick="toggleLamp(${vow.id})" class="flex-1 py-2 px-2.5 rounded-xl border text-xs font-bold transition flex items-center justify-center gap-1 ${
+                            isLit 
+                            ? 'bg-gradient-to-r from-gold-500/30 to-amber-500/20 border-gold-300 text-gold-200 shadow-[0_0_15px_rgba(253,211,77,0.3)]' 
+                            : 'bg-lapis-900/90 hover:bg-lapis-800 border-gold-400/40 text-gold-300'
+                        }">
+                            <span>${isLit ? '🏮 已點燈' : '🕯️ 點琉璃燈'}</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleInsight(id) {
+            const panel = document.getElementById(`insight-panel-${id}`);
+            const btn = document.getElementById(`btn-insight-${id}`);
+            if (!panel) return;
+            const isHidden = panel.classList.contains('hidden');
+            if (isHidden) {
+                panel.classList.remove('hidden');
+                btn.innerHTML = '<span>📖</span><span>收合解析</span>';
+            } else {
+                panel.classList.add('hidden');
+                btn.innerHTML = '<span>📖</span><span>白話深意</span>';
+            }
+        }
+
+        function toggleAllInsights() {
+            allInsightsExpanded = !allInsightsExpanded;
+            document.getElementById('btn-expand-all').innerText = allInsightsExpanded ? '收合全部白話深意' : '展開全部白話深意';
+            renderVows();
+        }
+
+        function filterVows(category, btnEl) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.className = 'filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition border bg-lapis-900/80 text-slate-200 border-cyanGlow-400/30 hover:border-gold-400/60';
+            });
+            btnEl.className = 'filter-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition border bg-gold-400 text-lapis-950 border-gold-300 shadow-md shadow-gold-400/20';
+            renderVows();
+        }
+
+        /* ==========================================
+         * 5. 點亮琉璃心燈邏輯與五聲音階頌缽回饋
+         * ========================================== */
+        // 東方五聲音階頻率（宮商角徵羽，隨點燈數遞升）
+        const pentatonicFreqs = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99, 880.00, 1046.50, 1174.66];
+
+        function toggleLamp(id) {
+            const wasLit = litVows.has(id);
+            if (wasLit) {
+                litVows.delete(id);
+            } else {
+                litVows.add(id);
+                const freq = pentatonicFreqs[(litVows.size - 1) % pentatonicFreqs.length];
+                playSingingBowl(freq, 2.8);
+            }
+            updateLampProgress();
+            renderMiniLamps();
+            renderVows();
+
+            // 若剛點滿12盞燈，播放圓滿和弦並開啟祈福迴向卡
+            if (!wasLit && litVows.size === 12) {
+                setTimeout(() => {
+                    playSingingBowl(523.25, 4.0);
+                    playSingingBowl(659.25, 4.0);
+                    playSingingBowl(783.99, 4.5);
+                    openDedicationModal();
+                }, 400);
+            }
+        }
+
+        function lightAllLamps() {
+            vowsData.forEach(v => litVows.add(v.id));
+            playSingingBowl(523.25, 3.5);
+            setTimeout(() => playSingingBowl(783.99, 4.0), 220);
+            updateLampProgress();
+            renderMiniLamps();
+            renderVows();
+            setTimeout(() => openDedicationModal(), 600);
+        }
+
+        function updateLampProgress() {
+            const count = litVows.size;
+            document.getElementById('lit-badge').innerText = `已點亮 ${count} / 12 盞`;
+            document.getElementById('progress-fill').style.width = `${(count / 12) * 100}%`;
+            const statusText = document.getElementById('dedication-status-text');
+            if (count === 12) {
+                statusText.innerHTML = `<span class="text-gold-300 font-semibold">🌟 十二大願琉璃心燈已圓滿點亮！請點擊右上角或彈窗撰寫「祈福迴向卡」。</span>`;
+            } else {
+                statusText.innerText = `再點亮 ${12 - count} 盞琉璃心燈，即可圓滿十二大願光明總迴向。`;
+            }
+        }
+
+        /* ==========================================
+         * 6. 語音朗讀恭誦經文 (Web Speech API)
+         * ========================================== */
+        function speakSingleVow(id) {
+            if (!('speechSynthesis' in window)) return;
+
+            // 若正在讀同一願，則停止
+            if (currentReadingIndex === id) {
+                stopSpeech();
+                return;
+            }
+
+            stopSpeech();
+            const vow = vowsData.find(v => v.id === id);
+            if (!vow) return;
+
+            currentReadingIndex = id;
+            renderVows();
+            playSingingBowl(432, 2.0);
+
+            const utterance = new SpeechSynthesisUtterance(vow.original);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.88; // 莊嚴緩慢語速
+            utterance.pitch = 0.95;
+
+            utterance.onend = () => {
+                currentReadingIndex = -1;
+                renderVows();
+            };
+            utterance.onerror = () => {
+                currentReadingIndex = -1;
+                renderVows();
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function toggleReadAllVows() {
+            if (!('speechSynthesis' in window)) return;
+            if (isReadingAll) {
+                stopSpeech();
+                return;
+            }
+            stopSpeech();
+            isReadingAll = true;
+            document.getElementById('read-all-icon').innerText = '⏹️';
+            document.getElementById('read-all-text').innerText = '停止連誦';
+            playSingingBowl(528, 3.0);
+            readNextInSequence(0);
+        }
+
+        function readNextInSequence(index) {
+            if (!isReadingAll || index >= vowsData.length) {
+                stopSpeech();
+                return;
+            }
+            const vow = vowsData[index];
+            currentReadingIndex = vow.id;
+            renderVows();
+
+            const cardEl = document.getElementById(`vow-card-${vow.id}`);
+            if (cardEl) {
+                cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            const utterance = new SpeechSynthesisUtterance(vow.original);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.9;
+            utterance.onend = () => {
+                if (!litVows.has(vow.id)) {
+                    litVows.add(vow.id);
+                    updateLampProgress();
+                    renderMiniLamps();
+                }
+                playSingingBowl(528, 1.8);
+                setTimeout(() => {
+                    if (isReadingAll) readNextInSequence(index + 1);
+                }, 650);
+            };
+            utterance.onerror = () => stopSpeech();
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function stopSpeech() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            isReadingAll = false;
+            currentReadingIndex = -1;
+            document.getElementById('read-all-icon').innerText = '🔊';
+            document.getElementById('read-all-text').innerText = '連誦十二願';
+            renderVows();
+        }
+
+        /* ==========================================
+         * 7. 今日相應大願抽籤功能
+         * ========================================== */
+        function drawRandomVow() {
+            playSingingBowl(659.25, 3.2);
+            const randomIndex = Math.floor(Math.random() * vowsData.length);
+            const vow = vowsData[randomIndex];
+
+            document.getElementById('oracle-title').innerText = `第${vow.id}願・${vow.shortTitle}`;
+            document.getElementById('oracle-original').innerText = vow.original;
+            document.getElementById('oracle-meaning').innerHTML = `<strong class="text-gold-300">【白話深意】</strong>${vow.meaning}`;
+            document.getElementById('oracle-practice').innerText = `💡 ${vow.practice}`;
+
+            document.getElementById('oracle-speak-btn').onclick = () => speakSingleVow(vow.id);
+            document.getElementById('oracle-light-btn').onclick = () => {
+                if (!litVows.has(vow.id)) {
+                    toggleLamp(vow.id);
+                } else {
+                    playSingingBowl(528, 2.5);
+                }
+                closeOracleModal();
+                const targetCard = document.getElementById(`vow-card-${vow.id}`);
+                if (targetCard) targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            };
+
+            const modal = document.getElementById('oracle-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeOracleModal() {
+            const modal = document.getElementById('oracle-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        /* ==========================================
+         * 8. 琉璃光明祈福迴向卡生成、複製與 Canvas 下載
+         * ========================================== */
+        function openDedicationModal() {
+            updateDedicationPreview();
+            const modal = document.getElementById('dedication-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDedicationModal() {
+            const modal = document.getElementById('dedication-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.getElementById('copy-toast').classList.add('hidden');
+        }
+
+        function setQuickWish(wishText) {
+            document.getElementById('input-wish').value = wishText;
+            updateDedicationPreview();
+        }
+
+        function getFormattedDate() {
+            const d = new Date();
+            return `佛曆 ${d.getFullYear() + 544} 年（西元 ${d.getFullYear()} 年 ${d.getMonth() + 1} 月 ${d.getDate()} 日）`;
+        }
+
+        function updateDedicationPreview() {
+            const donor = document.getElementById('input-donor').value.trim() || '三寶弟子';
+            const target = document.getElementById('input-target').value.trim() || '法界一切有情眾生';
+            const wish = document.getElementById('input-wish').value.trim() || '眾病悉除，身心安樂，速證菩提。';
+
+            const bodyText = `弟子「${donor}」至誠頂禮藥師琉璃光如來，恭誦十二大願並點亮琉璃心燈。願以此清淨功德，迴向予「${target}」：祈願仰仗藥師如來本願威神力，${wish}`;
+            document.getElementById('preview-body').innerText = bodyText;
+            document.getElementById('preview-lamps-count').innerText = `已點亮琉璃心燈：${litVows.size} / 12 盞`;
+            document.getElementById('preview-date').innerText = getFormattedDate();
+        }
+
+        function copyDedicationText() {
+            const text = `【藥師琉璃光如來・琉璃光明祈福迴向疏】\n${document.getElementById('preview-body').innerText}\n（${document.getElementById('preview-lamps-count').innerText}｜${getFormattedDate()}）\n南無藥師琉璃光如來 🙏`;
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('✨ 已將祈福迴向疏複製到剪貼簿，可張貼分享功德！');
+            } catch (err) {
+                showToast('複製完成');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('copy-toast');
+            toast.innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 4000);
+        }
+
+        // 使用 HTML5 Canvas 繪製高解析度莊嚴迴向卡並下載
+        function downloadDedicationImage() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 960;
+            canvas.height = 600;
+            const ctx = canvas.getContext('2d');
+
+            // 1. 琉璃漸層背景
+            const grad = ctx.createLinearGradient(0, 0, 960, 600);
+            grad.addColorStop(0, '#071936');
+            grad.addColorStop(0.5, '#0c2952');
+            grad.addColorStop(1, '#1a1a0e');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 960, 600);
+
+            // 2. 琉璃光暈圓
+            const radial = ctx.createRadialGradient(480, 120, 10, 480, 120, 260);
+            radial.addColorStop(0, 'rgba(34, 211, 238, 0.25)');
+            radial.addColorStop(1, 'rgba(34, 211, 238, 0)');
+            ctx.fillStyle = radial;
+            ctx.fillRect(0, 0, 960, 600);
+
+            // 3. 莊嚴雙層金框
+            ctx.strokeStyle = '#f3c663';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(28, 28, 904, 544);
+            ctx.strokeStyle = 'rgba(103, 232, 249, 0.45)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(38, 38, 884, 524);
+
+            // 4. 標題與副標
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#67e8f9';
+            ctx.font = '500 18px "Noto Serif TC", serif';
+            ctx.fillText('南無藥師琉璃光如來・十二大願', 480, 95);
+
+            ctx.fillStyle = '#fcd34d';
+            ctx.font = 'bold 38px "Noto Serif TC", serif';
+            ctx.fillText('琉 璃 光 明 祈 福 迴 向 疏', 480, 150);
+
+            // 分隔金線
+            ctx.strokeStyle = '#f3c663';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(280, 175);
+            ctx.lineTo(680, 175);
+            ctx.stroke();
+
+            // 5. 內文自動斷行繪製
+            const bodyText = document.getElementById('preview-body').innerText;
+            ctx.fillStyle = '#f8fafc';
+            ctx.font = '500 24px "Noto Serif TC", serif';
+            ctx.textAlign = 'left';
+
+            const maxWidth = 760;
+            const startX = 100;
+            let startY = 235;
+            const lineHeight = 44;
+
+            let line = '';
+            for (let i = 0; i < bodyText.length; i++) {
+                const testLine = line + bodyText[i];
+                const metrics = ctx.measureText(testLine);
+                if (metrics.width > maxWidth && i > 0) {
+                    ctx.fillText(line, startX, startY);
+                    line = bodyText[i];
+                    startY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, startX, startY);
+
+            // 6. 底部資訊
+            ctx.fillStyle = '#fcd34d';
+            ctx.font = '500 18px "Noto Serif TC", serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(`🏮 已點亮琉璃心燈：${litVows.size} / 12 盞`, 100, 515);
+
+            ctx.textAlign = 'right';
+            ctx.fillText(getFormattedDate(), 860, 515);
+
+            // 7. 觸發下載
+            const link = document.createElement('a');
+            link.download = '藥師如來琉璃光明祈福迴向卡.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            showToast('🖼️ 祈福迴向圖卡已開始下載！');
+        }
+
+        /* ==========================================
+         * 9. 背景琉璃光點粒子動畫
+         * ========================================== */
+        function initParticles() {
+            const canvas = document.getElementById('lapis-particles');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const count = Math.min(45, Math.floor(window.innerWidth / 28));
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: Math.random() * 2.2 + 0.6,
+                    vy: -(Math.random() * 0.35 + 0.1),
+                    vx: (Math.random() - 0.5) * 0.25,
+                    alpha: Math.random() * 0.6 + 0.2,
+                    isGold: Math.random() > 0.45
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.y < -10) {
+                        p.y = height + 10;
+                        p.x = Math.random() * width;
+                    }
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.isGold 
+                        ? `rgba(253, 211, 77, ${p.alpha})` 
+                        : `rgba(103, 232, 249, ${p.alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        // 啟動初始化
+        window.onload = function () {
+            renderMiniLamps();
+            renderVows();
+            initParticles();
+        };
+    </script>
+</body>
+</html>
