@@ -1,0 +1,2024 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>臺南善化東密明王殿｜四季法會時間軸與五大科儀數位導覽</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Noto Serif TC & Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@500;600;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0f172a',
+            charcoal: '#1c1917',
+            rice: '#faf8f5',
+            parchment: '#f3efe6',
+            flame: {
+              DEFAULT: '#dc2626',
+              dark: '#991b1b',
+              light: '#fef2f2'
+            },
+            lapis: {
+              DEFAULT: '#d97706',
+              gold: '#f59e0b',
+              pale: '#fffbeb'
+            }
+          },
+          fontFamily: {
+            serif: ['"Noto Serif TC"', 'serif'],
+            sans: ['"Noto Sans TC"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #faf8f5;
+      color: #1c1917;
+    }
+    .font-serif-tc {
+      font-family: 'Noto Serif TC', serif;
+    }
+    /* Subtle Oriental Pattern Background */
+    .bg-zen-pattern {
+      background-color: #0f172a;
+      background-image: 
+        radial-gradient(circle at 20% 25%, rgba(220, 38, 38, 0.16) 0%, transparent 45%),
+        radial-gradient(circle at 80% 75%, rgba(245, 158, 11, 0.15) 0%, transparent 50%),
+        linear-gradient(135deg, #0f172a 0%, #1c1917 100%);
+    }
+    .bg-paper-texture {
+      background-color: #faf8f5;
+      background-image: radial-gradient(#d97706 0.45px, transparent 0.45px);
+      background-size: 24px 24px;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f3efe6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d97706;
+      border-radius: 9999px;
+    }
+    /* Flame glow animation */
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.45)); }
+      50% { filter: drop-shadow(0 0 18px rgba(220, 38, 38, 0.75)); }
+    }
+    .flame-glow {
+      animation: pulseGlow 4s infinite ease-in-out;
+    }
+    .card-transition {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-transition:hover {
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-amber-600 selection:text-white">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-obsidian/95 backdrop-blur-md border-b border-amber-500/20 text-rice shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        <!-- Brand Logo -->
+        <a href="#hero" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-red-700 via-red-600 to-amber-500 flex items-center justify-center shadow-md border border-amber-300/40 group-hover:scale-105 transition">
+            <span class="font-serif-tc font-bold text-lg sm:text-xl text-white">明</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-serif-tc font-bold text-base sm:text-lg tracking-wider text-amber-400">善化東密明王殿</span>
+              <span class="hidden md:inline-block text-[11px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">創立於 2003 年</span>
+            </div>
+            <p class="text-xs text-stone-400 tracking-wide">不動尊明王主祀・四季法會與五大科儀數位導覽</p>
+          </div>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <nav class="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium">
+          <a href="#origin" class="px-3 py-2 rounded-lg text-stone-300 hover:text-amber-400 hover:bg-white/5 transition">道場緣起與宗旨</a>
+          <a href="#deities" class="px-3 py-2 rounded-lg text-stone-300 hover:text-amber-400 hover:bg-white/5 transition">諸尊圖鑑</a>
+          <a href="#timeline" class="px-3 py-2 rounded-lg text-stone-300 hover:text-amber-400 hover:bg-white/5 transition">四季每月法會</a>
+          <a href="#rituals" class="px-3 py-2 rounded-lg text-stone-300 hover:text-amber-400 hover:bg-white/5 transition">五大核心科儀</a>
+          <a href="#matcher" class="px-3 py-2 rounded-lg text-stone-300 hover:text-amber-400 hover:bg-white/5 transition">祈願配對指南</a>
+          <a href="#visit" class="px-3 py-2 rounded-lg text-stone-300 hover:text-amber-400 hover:bg-white/5 transition">參拜資訊</a>
+        </nav>
+
+        <!-- Live Open Status Pill & Mobile Menu Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <a href="#visit" id="nav-status-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-stone-800 border border-stone-700 text-stone-300 hover:border-amber-500/50 transition">
+            <span id="nav-status-dot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <span id="nav-status-text">載入狀態...</span>
+          </a>
+
+          <button id="mobile-menu-btn" aria-label="開啟選單" class="lg:hidden p-2.5 rounded-xl bg-stone-800/80 text-stone-200 hover:text-amber-400 hover:bg-stone-700/80 focus:outline-none">
+            <i id="mobile-menu-icon" class="fa-solid fa-bars text-lg"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-obsidian border-b border-amber-500/20 px-4 pt-2 pb-5 space-y-1">
+      <a href="#origin" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-stone-200 hover:bg-white/10 hover:text-amber-400 transition">1. 道場緣起與四大宗旨</a>
+      <a href="#deities" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-stone-200 hover:bg-white/10 hover:text-amber-400 transition">2. 主祀與同祀神尊圖鑑</a>
+      <a href="#timeline" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-stone-200 hover:bg-white/10 hover:text-amber-400 transition">3. 《四季明光》每月法會時間軸</a>
+      <a href="#rituals" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-stone-200 hover:bg-white/10 hover:text-amber-400 transition">4. 五大核心科儀深度探索</a>
+      <a href="#matcher" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-stone-200 hover:bg-white/10 hover:text-amber-400 transition">5. 祈願需求配對與參拜指南</a>
+      <a href="#visit" class="mobile-nav-link block px-4 py-2.5 rounded-xl text-stone-200 hover:bg-white/10 hover:text-amber-400 transition">6. 參拜時間與交通資訊</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative bg-zen-pattern text-rice overflow-hidden py-14 sm:py-20 lg:py-24 border-b-4 border-amber-600">
+    <!-- Decorative Dharma Wheel SVG in Background -->
+    <div class="absolute inset-0 pointer-events-none opacity-10 flex items-center justify-center overflow-hidden">
+      <svg class="w-[620px] h-[620px] text-amber-500 animate-[spin_120s_linear_infinite]" viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="90" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+        <circle cx="100" cy="100" r="70" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="24" stroke="currentColor" stroke-width="2"/>
+        <line x1="100" y1="10" x2="100" y2="190" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="10" y1="100" x2="190" y2="100" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="36" y1="36" x2="164" y2="164" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="164" y1="36" x2="36" y2="164" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <!-- Left Column: Title & Introduction -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-300 text-xs sm:text-sm">
+            <i class="fa-solid fa-fire-flame-curved text-red-400"></i>
+            <span>創立於西元 2003 年（民國 92 年）｜臺南善化在地修行弘法道場</span>
+          </div>
+
+          <h1 class="font-serif-tc text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
+            臺南善化<span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-red-400">東密明王殿</span>
+          </h1>
+
+          <p class="font-serif-tc text-lg sm:text-xl text-amber-200/90 tracking-wide">
+            「明以弘法渡陰陽・修以禪宗解六界・定以蓮師揚佛法・靜以待之渡同門」
+          </p>
+
+          <p class="text-stone-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            融合<strong>東密</strong>、<strong>藏密</strong>與<strong>漢傳禪宗</strong>三大法脈精神，主祀大日如來教令輪身<strong>不動尊明王</strong>。透過每月最後一個週六的例行消災祈福法會與《四季明光》歲時專案大法會，以智慧火焰破除無明暗障，廣渡冥陽三界有情。
+          </p>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
+            <a href="#timeline" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-red-700 via-red-600 to-amber-600 text-white font-medium text-sm sm:text-base shadow-lg shadow-red-900/40 hover:brightness-110 transition flex items-center gap-2">
+              <i class="fa-regular fa-calendar-check"></i>
+              <span>探索四季每月法會</span>
+            </a>
+            <a href="#matcher" class="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-amber-300 border border-amber-400/40 font-medium text-sm sm:text-base transition flex items-center gap-2">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>個人祈願需求配對</span>
+            </a>
+            <a href="#rituals" class="px-5 py-3.5 rounded-xl bg-stone-800/90 hover:bg-stone-700 text-stone-200 text-sm sm:text-base transition flex items-center gap-2">
+              <i class="fa-solid fa-layer-group text-amber-400"></i>
+              <span>五大科儀解析</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Emblem & Live Next Dharma Assembly Card -->
+        <div class="lg:col-span-5">
+          <div class="bg-stone-900/90 border border-amber-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-16 -right-16 w-40 h-40 bg-red-600/20 rounded-full blur-2xl pointer-events-none"></div>
+
+            <!-- Custom Fudo Myo-o Wisdom Sword & Flame SVG Illustration -->
+            <div class="flex items-center gap-4 pb-6 border-b border-stone-700/80">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-b from-red-950 to-stone-900 border border-amber-500/40 flex items-center justify-center shrink-0 flame-glow">
+                <svg class="w-12 h-12 sm:w-14 sm:h-14" viewBox="0 0 64 64" fill="none">
+                  <!-- Flame Halo -->
+                  <path d="M32 4C26 14 14 20 14 35C14 47 22 56 32 58C42 56 50 47 50 35C50 22 39 15 32 4Z" fill="url(#flameGrad)" opacity="0.85"/>
+                  <path d="M32 14C28 22 21 26 21 37C21 45 26 51 32 53C38 51 43 45 43 37C43 26 36 22 32 14Z" fill="#f59e0b" opacity="0.6"/>
+                  <!-- Wisdom Sword (Kurikara) -->
+                  <rect x="30.5" y="12" width="3" height="34" rx="1.5" fill="#fef3c7"/>
+                  <polygon points="32,7 29,14 35,14" fill="#fef3c7"/>
+                  <path d="M24 44H40L38 47H26L24 44Z" fill="#fbbf24"/>
+                  <rect x="30" y="47" width="4" height="9" rx="1" fill="#d97706"/>
+                  <defs>
+                    <linearGradient id="flameGrad" x1="32" y1="4" x2="32" y2="58" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#ef4444"/>
+                      <stop offset="0.6" stop-color="#dc2626"/>
+                      <stop offset="1" stop-color="#7f1d1d"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-widest text-amber-400">Monthly Routine Assembly</span>
+                <h2 class="font-serif-tc text-xl sm:text-2xl font-bold text-white mt-0.5">每月例行消災解厄祈福法會</h2>
+                <p class="text-xs sm:text-sm text-stone-300 mt-1">固定於<strong class="text-amber-300">每月最後一個星期六 18:30</strong> 啟建</p>
+              </div>
+            </div>
+
+            <!-- Dynamic Next Ceremony Info -->
+            <div class="py-5 space-y-4">
+              <div class="bg-stone-800/80 rounded-2xl p-4 border border-amber-500/20">
+                <div class="flex items-center justify-between text-xs text-stone-400 mb-1">
+                  <span>近期下一場例行法會日期</span>
+                  <span id="hero-countdown-badge" class="px-2.5 py-0.5 rounded-full bg-red-600/30 text-red-300 border border-red-500/30 font-medium">計算中...</span>
+                </div>
+                <div id="hero-next-date" class="font-serif-tc text-xl sm:text-2xl font-bold text-amber-300">
+                  --
+                </div>
+                <p id="hero-next-subtext" class="text-xs text-stone-400 mt-1">
+                  晚間 18:30 準時開壇・涵蓋五大核心祈福超薦科儀
+                </p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
+                <div class="bg-stone-800/50 rounded-xl p-3 border border-stone-700">
+                  <div class="text-stone-400 text-xs">本月最後週六</div>
+                  <div id="hero-this-month-sat" class="font-semibold text-stone-100 mt-0.5">--</div>
+                </div>
+                <div class="bg-stone-800/50 rounded-xl p-3 border border-stone-700">
+                  <div class="text-stone-400 text-xs">下月最後週六</div>
+                  <div id="hero-next-month-sat" class="font-semibold text-stone-100 mt-0.5">--</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-stone-800 flex items-center justify-between text-xs text-stone-400">
+              <span><i class="fa-solid fa-location-dot text-amber-400 mr-1.5"></i>臺南市善化區中山路377號店面22號1樓</span>
+              <a href="#timeline" class="text-amber-400 hover:underline font-medium">查看全年曆表 →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: 道場緣起與四大宗旨互動區 -->
+  <section id="origin" class="py-16 sm:py-20 bg-paper-texture border-b border-stone-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold tracking-widest uppercase mb-3">Origin & Core Philosophy</span>
+        <h2 class="font-serif-tc text-3xl sm:text-4xl font-bold text-obsidian">道場緣起與四大弘法宗旨</h2>
+        <p class="text-stone-600 mt-3 text-sm sm:text-base">
+          從日常公職服務走入密教禪修殿堂，實踐「人間修行、慈悲濟世」的在地行願精神。
+        </p>
+      </div>
+
+      <!-- Founder Story & Three Lineages -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-14">
+        <!-- Founder Story Card -->
+        <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-stone-200/90 flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-4">
+              <span class="px-3 py-1 rounded-lg bg-red-50 text-red-700 text-xs font-bold border border-red-200">創辦人緣起</span>
+              <span class="px-3 py-1 rounded-lg bg-amber-50 text-amber-800 text-xs font-medium border border-amber-200">師承新化佛顓寺 釋正妙老師父</span>
+            </div>
+
+            <h3 class="font-serif-tc text-2xl sm:text-3xl font-bold text-obsidian mb-4">
+              方明法（法名「釋明法」・信眾尊稱「大師兄」）
+            </h3>
+
+            <div class="space-y-4 text-stone-700 text-sm sm:text-base leading-relaxed">
+              <p>
+                善化東密明王殿創立於<strong>西元 2003 年（民國 92 年）</strong>。創辦人方明法居士（法名「釋明法」，地方信眾親切尊稱為「大師兄」），為新化佛顓寺住持<strong>釋正妙老師父</strong>座下弟子。
+              </p>
+              <p>
+                大師兄早年任職於<strong>善化區公所與善化市場管理員</strong>，平時熱心公務、貼近基層百工。某次經歷一場大病出院後，於每日早晚課誦與禪坐定中，深切感應<strong>不動尊明王</strong>與諸佛菩薩慈悲指引，體悟生命無常與眾生苦難，遂發願於四十歲時在善化設立道場。
+              </p>
+              <p>
+                創立以來，大師兄長年實踐<strong class="text-red-700">「白天服務大眾、下班後化身法師弘法渡眾」</strong>的菩提行願，將深奧的經典義理與密教儀軌轉化為貼近生活的除障與修心法門。
+              </p>
+            </div>
+          </div>
+
+          <!-- Timeline Milestones inside Founder Card -->
+          <div class="mt-6 pt-6 border-t border-stone-100 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-parchment/70 rounded-2xl p-3.5 border border-stone-200/70">
+              <div class="text-xs font-bold text-amber-800">師門傳承</div>
+              <div class="font-serif-tc font-bold text-obsidian text-sm mt-0.5">新化佛顓寺法脈</div>
+              <p class="text-xs text-stone-600 mt-1">每年浴佛節率眾三步一拜朝山報師恩。</p>
+            </div>
+            <div class="bg-parchment/70 rounded-2xl p-3.5 border border-stone-200/70">
+              <div class="text-xs font-bold text-red-700">大病感應立願</div>
+              <div class="font-serif-tc font-bold text-obsidian text-sm mt-0.5">四十歲於善化建殿</div>
+              <p class="text-xs text-stone-600 mt-1">西元 2003 年正式啟建東密明王殿。</p>
+            </div>
+            <div class="bg-parchment/70 rounded-2xl p-3.5 border border-stone-200/70">
+              <div class="text-xs font-bold text-amber-800">入世行願</div>
+              <div class="font-serif-tc font-bold text-obsidian text-sm mt-0.5">日服務・夜弘法</div>
+              <p class="text-xs text-stone-600 mt-1">融合東密、藏密與漢傳禪宗渡化有緣。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Three Spiritual Lineages Integration Card -->
+        <div class="lg:col-span-5 bg-obsidian text-rice rounded-3xl p-6 sm:p-8 shadow-xl border border-amber-500/30 flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-widest text-amber-400">Three Lineages In Harmony</span>
+            <h3 class="font-serif-tc text-2xl font-bold text-white mt-1 mb-4">三乘合一的修行特色</h3>
+            <p class="text-stone-300 text-sm leading-relaxed mb-6">
+              明王殿不拘泥於單一宗派門戶，而是擷取東密之莊嚴事相、藏密之度母與蓮師傳承，以及漢傳禪宗之明心見性，形成獨具特色的修持體系：
+            </p>
+
+            <div class="space-y-4">
+              <div class="p-4 rounded-2xl bg-white/5 border border-amber-500/20 flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-red-600/20 border border-red-500/40 text-red-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <i class="fa-solid fa-fire"></i>
+                </div>
+                <div>
+                  <h4 class="font-serif-tc font-bold text-amber-300 text-base">東密（真言密教）｜不動明王護摩與神印</h4>
+                  <p class="text-xs text-stone-300 mt-1 leading-relaxed">以大日如來教令輪身「不動尊明王」為主尊，透過三密相應（身結印、口誦真言、意觀想）破除魔障與流年關煞。</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-white/5 border border-amber-500/20 flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shrink-0 mt-0.5">
+                  <i class="fa-solid fa-spa"></i>
+                </div>
+                <div>
+                  <h4 class="font-serif-tc font-bold text-amber-300 text-base">藏密（蓮師與度母）｜慈悲救度與薈供</h4>
+                  <p class="text-xs text-stone-300 mt-1 leading-relaxed">同祀蓮花生大士與二十一度母（綠度母、白度母），修持藥懺薈供與孝道月超薦，迅速救度事業疾苦、增長福壽。</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-white/5 border border-amber-500/20 flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 flex items-center justify-center shrink-0 mt-0.5">
+                  <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div>
+                  <h4 class="font-serif-tc font-bold text-amber-300 text-base">漢傳禪宗｜清靜經講解與禪坐修心</h4>
+                  <p class="text-xs text-stone-300 mt-1 leading-relaxed">平日開設《清靜經》等經典開示與早晚禪修，引導弟子在日常生活中調伏妄心、解開六道執著。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-stone-800 text-xs text-stone-400 flex items-center justify-between">
+            <span>點擊下方「四大宗旨」卡片探索深層法義</span>
+            <i class="fa-solid fa-arrow-down text-amber-400 animate-bounce"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive 4 Pillars (四大宗旨互動展示) -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-lg border border-amber-600/20">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-200">
+          <div>
+            <h3 class="font-serif-tc text-2xl font-bold text-obsidian flex items-center gap-2.5">
+              <span class="w-2 h-6 rounded-full bg-red-600 inline-block"></span>
+              道場四大宗旨互動賞析
+            </h3>
+            <p class="text-xs sm:text-sm text-stone-600 mt-1">請點擊任一宗旨卡片，深入了解其法脈精神、修持心要與對應的法會實踐</p>
+          </div>
+          <span class="text-xs px-3 py-1.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-medium self-start sm:self-auto">
+            <i class="fa-regular fa-hand-pointer mr-1"></i>點擊下方四張字訣卡片切換
+          </span>
+        </div>
+
+        <!-- 4 Pillar Selector Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-6" id="pillars-grid">
+          <!-- Populated dynamically by JS -->
+        </div>
+
+        <!-- Active Pillar Detail Panel -->
+        <div id="pillar-detail-box" class="bg-gradient-to-br from-obsidian via-stone-900 to-obsidian text-rice rounded-2xl p-6 sm:p-8 border border-amber-500/30 transition-all">
+          <!-- Populated dynamically by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1.5: 主祀與同祀神尊互動圖鑑 -->
+  <section id="deities" class="py-16 sm:py-20 bg-obsidian text-rice border-b border-amber-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold tracking-widest uppercase mb-3 border border-amber-500/30">Sacred Pantheon</span>
+          <h2 class="font-serif-tc text-3xl sm:text-4xl font-bold text-white">主祀與同祀神尊互動圖鑑</h2>
+          <p class="text-stone-300 mt-2 text-sm sm:text-base max-w-2xl">
+            殿內主祀大日如來教令輪身「不動尊明王」，並同祀顯密諸佛菩薩與護法尊神。點擊下方神尊名號可查閱聖像象徵與祈願面向。
+          </p>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="filterDeities('all')" id="deity-filter-all" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-amber-500 text-obsidian transition">全部諸尊 (8)</button>
+          <button onclick="filterDeities('main')" id="deity-filter-main" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-stone-800 text-stone-300 hover:bg-stone-700 transition">主祀本尊</button>
+          <button onclick="filterDeities('buddha')" id="deity-filter-buddha" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-stone-800 text-stone-300 hover:bg-stone-700 transition">佛陀與大士</button>
+          <button onclick="filterDeities('protector')" id="deity-filter-protector" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-stone-800 text-stone-300 hover:bg-stone-700 transition">度母與護法</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Left: Deity Selection Cards Grid -->
+        <div id="deities-list" class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Right: Selected Deity Spotlight Card -->
+        <div class="lg:col-span-5 lg:sticky lg:top-24">
+          <div id="deity-spotlight" class="bg-gradient-to-b from-stone-900 to-stone-950 rounded-3xl p-6 sm:p-8 border-2 border-amber-500/40 shadow-2xl">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: 《四季明光》每月法會互動時間軸 -->
+  <section id="timeline" class="py-16 sm:py-20 bg-paper-texture border-b border-stone-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="inline-block px-3 py-1 rounded-full bg-red-100 text-red-800 text-xs font-bold tracking-widest uppercase mb-3">Seasonal & Monthly Dharma Calendar</span>
+        <h2 class="font-serif-tc text-3xl sm:text-4xl font-bold text-obsidian">《四季明光》每月法會互動時間軸</h2>
+        <p class="text-stone-600 mt-3 text-sm sm:text-base">
+          明王殿將一年十二個月的修行與法會譜寫為《四季明光》歲時循環，結合<strong>每月最後一個週六例行祈福法會</strong>與<strong>年度專案大法會</strong>。
+        </p>
+      </div>
+
+      <!-- Interactive Last-Saturday Routine Calculator Bar -->
+      <div class="bg-obsidian text-rice rounded-3xl p-6 sm:p-8 shadow-xl border border-amber-500/30 mb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-5 space-y-2">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/20 border border-red-500/40 text-red-300 text-xs font-semibold">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+              <span>例行法會自動計算器（每月最後一個週六 18:30）</span>
+            </div>
+            <h3 class="font-serif-tc text-2xl font-bold text-white">近期例行消災解厄祈福法會日程</h3>
+            <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
+              系統已根據您的當前裝置時間，自動推算<strong>本月與下個月最後一個星期六</strong>之確切國曆日期，並提供全年任意月份查詢。
+            </p>
+          </div>
+
+          <!-- Calculated Cards -->
+          <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-stone-900/90 border border-amber-500/30 rounded-2xl p-4">
+              <span class="text-xs text-stone-400 block">本月最後一個星期六</span>
+              <div id="calc-current-month-date" class="font-serif-tc text-lg sm:text-xl font-bold text-amber-300 mt-1">--</div>
+              <span id="calc-current-month-status" class="inline-block mt-2 text-[11px] px-2.5 py-0.5 rounded-full bg-stone-800 text-stone-300">--</span>
+            </div>
+
+            <div class="bg-stone-900/90 border border-amber-500/30 rounded-2xl p-4">
+              <span class="text-xs text-stone-400 block">下個月最後一個星期六</span>
+              <div id="calc-next-month-date" class="font-serif-tc text-lg sm:text-xl font-bold text-amber-300 mt-1">--</div>
+              <span class="inline-block mt-2 text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300">晚上 18:30 開壇</span>
+            </div>
+
+            <!-- Custom Month Picker -->
+            <div class="bg-stone-900/90 border border-stone-700 rounded-2xl p-4 flex flex-col justify-between">
+              <label for="custom-month-select" class="text-xs text-stone-400 block">查詢今年其他月份最後週六：</label>
+              <select id="custom-month-select" class="mt-1.5 w-full bg-stone-800 border border-stone-600 rounded-xl px-3 py-1.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-400">
+                <!-- Populated by JS -->
+              </select>
+              <div id="custom-month-result" class="text-xs font-semibold text-amber-400 mt-2">--</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seasonal Filter Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8" id="season-filter-bar">
+        <button onclick="selectSeason('all')" data-season="all" class="season-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-obsidian text-amber-400 shadow-md transition">
+          全部時序（農曆一至十二月）
+        </button>
+        <button onclick="selectSeason('spring')" data-season="spring" class="season-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-white text-stone-700 border border-stone-300 hover:border-amber-500 transition">
+          🌱 春季（農曆 1–3 月）
+        </button>
+        <button onclick="selectSeason('early-summer')" data-season="early-summer" class="season-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-white text-stone-700 border border-stone-300 hover:border-amber-500 transition">
+          🪷 初夏（農曆 4–5 月）
+        </button>
+        <button onclick="selectSeason('mid-summer')" data-season="mid-summer" class="season-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-white text-stone-700 border border-stone-300 hover:border-amber-500 transition">
+          🌿 盛夏至孟秋（農曆 6–7 月）
+        </button>
+        <button onclick="selectSeason('mid-autumn')" data-season="mid-autumn" class="season-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-white text-stone-700 border border-stone-300 hover:border-amber-500 transition">
+          🔥 仲秋（農曆 8 月・明王聖誕）
+        </button>
+        <button onclick="selectSeason('autumn-winter')" data-season="autumn-winter" class="season-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-white text-stone-700 border border-stone-300 hover:border-amber-500 transition">
+          🏮 秋冬（農曆 9–12 月）
+        </button>
+      </div>
+
+      <!-- 12 Lunar Months Interactive Timeline Nodes -->
+      <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-md border border-stone-200 mb-8">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-bold text-stone-500 uppercase tracking-wider">農曆十二月令快速點選器（點擊任一月份查看當月修持細節）</span>
+          <span id="active-lunar-indicator" class="text-xs font-semibold text-red-700">目前檢視：農曆八月（仲秋主尊聖誕）</span>
+        </div>
+        <div id="lunar-months-bar" class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-2">
+          <!-- 12 Month Nodes populated by JS -->
+        </div>
+      </div>
+
+      <!-- Active Lunar Month / Season Spotlight Detail Card -->
+      <div id="timeline-spotlight" class="mb-10">
+        <!-- Populated dynamically by JS -->
+      </div>
+
+      <!-- 5 Seasonal Overview Cards Grid -->
+      <div>
+        <h3 class="font-serif-tc text-xl sm:text-2xl font-bold text-obsidian mb-5 flex items-center gap-2">
+          <i class="fa-solid fa-compass text-red-600"></i>
+          <span>《四季明光》五大時序主題總覽</span>
+        </h3>
+        <div id="seasonal-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Populated dynamically by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: 五大核心科儀深度探索 (5 Core Rituals Interactive Explorer) -->
+  <section id="rituals" class="py-16 sm:py-20 bg-obsidian text-rice border-b border-amber-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold tracking-widest uppercase mb-3 border border-amber-500/30">Five Core Ritual Modules</span>
+        <h2 class="font-serif-tc text-3xl sm:text-4xl font-bold text-white">五大核心科儀深度探索</h2>
+        <p class="text-stone-300 mt-3 text-sm sm:text-base">
+          明王殿每場法會由淺入深結合五大核心科儀，從外層「掃除流年障礙」到內層「安定元辰、廣結善緣、藥懺消業」，最終圓滿「法船超薦三界」，兼顧陽世祈福與幽冥超渡。
+        </p>
+      </div>
+
+      <!-- Step-by-Step Interactive Progress Tabs -->
+      <div id="ritual-steps-nav" class="grid grid-cols-1 sm:grid-cols-5 gap-3 mb-8">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Active Ritual Interactive Detail Panel -->
+      <div id="ritual-detail-panel" class="bg-gradient-to-br from-stone-900 via-stone-900 to-stone-950 rounded-3xl p-6 sm:p-10 border-2 border-amber-500/40 shadow-2xl mb-10">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Toggle to View All 5 Rituals Comparison Table / Cards -->
+      <div class="bg-stone-900/70 rounded-2xl p-5 sm:p-6 border border-stone-800">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="font-serif-tc text-lg font-bold text-amber-300">五大科儀一覽對照表</h3>
+            <p class="text-xs text-stone-400 mt-0.5">快速檢視五項科儀的順序次第、核心目標與祈福紅包袋填寫要點</p>
+          </div>
+          <button id="toggle-all-rituals-btn" onclick="toggleAllRitualsTable()" class="px-4 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 text-xs sm:text-sm font-medium border border-amber-500/30 transition self-start sm:self-auto">
+            <i class="fa-solid fa-table-list mr-1.5"></i>展開完整對照表
+          </button>
+        </div>
+
+        <div id="all-rituals-table-container" class="hidden mt-6 overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-stone-700 text-amber-400 font-serif-tc">
+                <th class="py-3 px-3">次第</th>
+                <th class="py-3 px-3">科儀名稱</th>
+                <th class="py-3 px-3">核心定位</th>
+                <th class="py-3 px-3">主要適用對象</th>
+                <th class="py-3 px-3">報名準備要點</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-stone-800 text-stone-300">
+              <tr>
+                <td class="py-3 px-3 font-bold text-red-400">第一階</td>
+                <td class="py-3 px-3 font-bold text-white">城隍祭改（除障解厄）</td>
+                <td class="py-3 px-3">掃除外在關煞與流年阻滯</td>
+                <td class="py-3 px-3">犯太歲、運勢低迷、口舌是非多者</td>
+                <td class="py-3 px-3">祈福人姓名、農曆生辰、現居地址</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 font-bold text-amber-400">第二階</td>
+                <td class="py-3 px-3 font-bold text-white">神印護身（加持護佑）</td>
+                <td class="py-3 px-3">不動明王與護法神印安定元辰</td>
+                <td class="py-3 px-3">心神不寧、夜睡不安、常出遠門或值夜班者</td>
+                <td class="py-3 px-3">可攜帶隨身平安符或乾淨衣物用印加持</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 font-bold text-amber-400">第三階</td>
+                <td class="py-3 px-3 font-bold text-white">因緣善緣（和合貴人）</td>
+                <td class="py-3 px-3">圓滿家庭人際、廣結事業善緣</td>
+                <td class="py-3 px-3">祈求家庭和睦、業務拓展、貴人扶助者</td>
+                <td class="py-3 px-3">填寫祈願人資料並誠心默念善緣願望</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 font-bold text-amber-400">第四階</td>
+                <td class="py-3 px-3 font-bold text-white">藥懺薈供（身心安康）</td>
+                <td class="py-3 px-3">禮拜藥師佛與度母、懺悔宿業增福慧</td>
+                <td class="py-3 px-3">久病調養、身心俱疲、為長輩祈求福壽者</td>
+                <td class="py-3 px-3">隨喜供燈、供花果薈供品，虔誠禮懺</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 font-bold text-red-400">第五階</td>
+                <td class="py-3 px-3 font-bold text-white">法船引渡（冥陽兩利）</td>
+                <td class="py-3 px-3">超薦歷代祖先、冤親債主離苦得樂</td>
+                <td class="py-3 px-3">欲報祖德、化解累世冤結、普渡三界眾生者</td>
+                <td class="py-3 px-3">填寫陽上報恩人及超薦對象（某姓歷代祖先／冤親債主）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: 互動式「祈願需求配對與參拜指南產生器」 -->
+  <section id="matcher" class="py-16 sm:py-20 bg-paper-texture border-b border-stone-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold tracking-widest uppercase mb-3">Interactive Prayer Matcher</span>
+        <h2 class="font-serif-tc text-3xl sm:text-4xl font-bold text-obsidian">祈願需求配對與參拜指南產生器</h2>
+        <p class="text-stone-600 mt-3 text-sm sm:text-base">
+          請勾選您目前最關心的祈願面向（可複選），系統將即時為您配對<strong>推薦優先參與的科儀、殿內頂禮神尊與重點法會月份</strong>，並可一鍵複製成個人參拜備忘錄。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Left Column: Multi-select Intention Checkboxes -->
+        <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-stone-200">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-serif-tc text-xl font-bold text-obsidian">1. 勾選您的祈願需求（可複選）</h3>
+            <button onclick="resetMatcher()" class="text-xs text-stone-500 hover:text-red-600 transition">
+              <i class="fa-solid fa-rotate-left mr-1"></i>重設選項
+            </button>
+          </div>
+
+          <div id="intentions-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-6">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Optional Personal Note Input -->
+          <div class="pt-5 border-t border-stone-100">
+            <label for="prayer-user-name" class="block text-xs font-bold text-stone-700 mb-2">
+              2. 選填祈願人稱呼或備註（將自動帶入您的專屬備忘錄）：
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input id="prayer-user-name" type="text" placeholder="例如：王小明 敬立" oninput="renderMatcherReport()" class="w-full px-3.5 py-2.5 rounded-xl bg-parchment/60 border border-stone-300 text-sm focus:outline-none focus:border-amber-600" />
+              <input id="prayer-user-note" type="text" placeholder="備註（如：替父母祈求健康）" oninput="renderMatcherReport()" class="w-full px-3.5 py-2.5 rounded-xl bg-parchment/60 border border-stone-300 text-sm focus:outline-none focus:border-amber-600" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Dynamic Generated Recommendation Report -->
+        <div class="lg:col-span-6">
+          <div class="bg-obsidian text-rice rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-amber-500/40 relative">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-stone-800">
+              <div>
+                <span class="text-xs text-amber-400 font-semibold uppercase tracking-wider">Personalized Temple Guide</span>
+                <h3 class="font-serif-tc text-2xl font-bold text-white">專屬參拜與法會建議報告</h3>
+              </div>
+              <button onclick="copyPrayerMemo()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-obsidian font-bold text-xs sm:text-sm shadow-md transition flex items-center gap-2">
+                <i class="fa-regular fa-copy"></i>
+                <span>一鍵複製個人參拜備忘錄</span>
+              </button>
+            </div>
+
+            <!-- Dynamic Report Content -->
+            <div id="matcher-report-body" class="py-5 space-y-5">
+              <!-- Populated by JS -->
+            </div>
+
+            <!-- Copy Toast Notification inside Card -->
+            <div id="copy-toast" class="hidden mt-2 p-3 rounded-xl bg-emerald-900/90 border border-emerald-400/50 text-emerald-200 text-xs sm:text-sm flex items-center justify-between">
+              <span><i class="fa-solid fa-circle-check text-emerald-400 mr-2"></i>已成功複製「善化東密明王殿個人參拜備忘錄」至剪貼簿！</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: 參拜資訊與即時開放狀態看板 -->
+  <section id="visit" class="py-16 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="inline-block px-3 py-1 rounded-full bg-red-100 text-red-800 text-xs font-bold tracking-widest uppercase mb-3">Visit & Live Status</span>
+        <h2 class="font-serif-tc text-3xl sm:text-4xl font-bold text-obsidian">參拜資訊與即時開放狀態看板</h2>
+        <p class="text-stone-600 mt-3 text-sm sm:text-base">
+          前往道場參拜、請益或報名每月法會前，可先透過下方即時看板確認開放狀態與開放時段。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Left: Live Status & Address Card -->
+        <div class="lg:col-span-6 bg-obsidian text-rice rounded-3xl p-6 sm:p-8 shadow-xl border border-amber-500/30 flex flex-col justify-between">
+          <div class="space-y-6">
+            <!-- Live Status Box -->
+            <div id="live-status-card" class="rounded-2xl p-5 border border-stone-700 bg-stone-900/90">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs text-stone-400">道場即時開放狀態（依臺灣時間判定）</span>
+                <span id="live-clock-display" class="text-xs font-mono text-amber-300">--:--</span>
+              </div>
+              <div class="flex items-center gap-3 mt-1">
+                <span id="live-status-indicator" class="w-3.5 h-3.5 rounded-full bg-amber-400 animate-ping"></span>
+                <h3 id="live-status-title" class="font-serif-tc text-2xl sm:text-3xl font-bold text-white">狀態載入中...</h3>
+              </div>
+              <p id="live-status-desc" class="text-xs sm:text-sm text-stone-300 mt-2">
+                正在比對今日星期與開放時段...
+              </p>
+            </div>
+
+            <!-- Address & Directions -->
+            <div class="space-y-4">
+              <div class="flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shrink-0 mt-0.5">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="flex-1">
+                  <div class="text-xs text-stone-400">道場地址</div>
+                  <div class="font-serif-tc text-lg font-bold text-white mt-0.5">臺南市善化區中山路 377 號店面 22 號一樓</div>
+                  <div class="flex flex-wrap gap-2 mt-3">
+                    <button onclick="copyTempleAddress()" class="px-3.5 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-amber-300 text-xs font-medium border border-amber-500/30 transition">
+                      <i class="fa-regular fa-copy mr-1"></i>複製地址
+                    </button>
+                    <a href="https://www.google.com/maps/search/?api=1&query=臺南市善化區中山路377號東密明王殿" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-red-700 hover:bg-red-600 text-white text-xs font-medium transition">
+                      <i class="fa-solid fa-diamond-turn-right mr-1"></i>開啟 Google 地圖導航
+                    </a>
+                  </div>
+                  <div id="address-copy-msg" class="hidden text-xs text-emerald-400 mt-2">
+                    <i class="fa-solid fa-check mr-1"></i>地址已複製到剪貼簿！
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3.5 pt-2">
+                <div class="w-10 h-10 rounded-xl bg-red-500/20 border border-red-400/40 text-red-300 flex items-center justify-center shrink-0 mt-0.5">
+                  <i class="fa-solid fa-Hands-praying"></i>
+                </div>
+                <div>
+                  <div class="text-xs text-stone-400">參拜與法會報名須知</div>
+                  <p class="text-xs sm:text-sm text-stone-300 mt-1 leading-relaxed">
+                    平時開放時段歡迎十方善信入殿禮佛、點燈祈福或請益修持；每月最後一個週六 18:30 例行消災祈福法會，建議提前於開放日時親臨殿內填寫祈福／超薦紅包袋完成報名。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-stone-800 text-xs text-stone-400 flex items-center justify-between">
+            <span>主祀：不動尊明王菩薩</span>
+            <span>創辦人：釋明法（大師兄）</span>
+          </div>
+        </div>
+
+        <!-- Right: Weekly Schedule Table -->
+        <div class="lg:col-span-6 bg-parchment rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-md flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-serif-tc text-2xl font-bold text-obsidian">每週開放時間表</h3>
+                <p class="text-xs sm:text-sm text-stone-600 mt-0.5">每週二、三、五、六、日 14:30–22:00 開放（週一、週四公休）</p>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold">午後至夜間開放</span>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm">
+              <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                <thead>
+                  <tr class="bg-stone-100 text-stone-700 border-b border-stone-200">
+                    <th class="py-3 px-4 font-bold">星期</th>
+                    <th class="py-3 px-4 font-bold">開放狀態</th>
+                    <th class="py-3 px-4 font-bold">開放時段與備註</th>
+                  </tr>
+                </thead>
+                <tbody id="weekly-schedule-tbody" class="divide-y divide-stone-100">
+                  <!-- Populated dynamically by JS with current day highlight -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="mt-6 p-4 rounded-2xl bg-amber-50 border border-amber-200/80 text-xs sm:text-sm text-amber-950 flex items-start gap-3">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-0.5 text-base"></i>
+            <div>
+              <strong>溫馨提醒：</strong>體現創辦人「白天服務大眾、下班後化身法師弘法渡眾」之傳統，道場固定於午後 <strong>14:30 至晚間 22:00</strong> 開放；若逢農曆四月八日朝山浴佛或特殊大型法會，依殿內最新公告為準。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-obsidian text-stone-400 py-10 border-t border-amber-500/20 text-xs sm:text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-700 to-amber-500 flex items-center justify-center text-white font-serif-tc font-bold">明</div>
+        <div>
+          <span class="text-rice font-serif-tc font-bold">臺南善化東密明王殿</span>
+          <span class="mx-2 text-stone-600">|</span>
+          <span>四季法會時間軸與五大科儀數位導覽</span>
+        </div>
+      </div>
+      <div class="text-center sm:text-right text-stone-500">
+        臺南市善化區中山路 377 號店面 22 號一樓・每週二、三、五、六、日 14:30–22:00
+      </div>
+    </div>
+  </footer>
+
+  <!-- Complete Interactive Logic (Vanilla JavaScript) -->
+  <script>
+    // =========================================================================
+    // 1. DATA: 四大宗旨 (Four Core Pillars)
+    // =========================================================================
+    const pillarsData = [
+      {
+        id: 'ming',
+        char: '明',
+        title: '明以弘法渡陰陽',
+        subtitle: '以大日與明王智慧光明，普渡陽世與幽冥眾生',
+        lineage: '東密（真言宗）本尊行願',
+        practice: '每月最後週六例行祈福法會、農曆八月不動尊明王無量光明渡拔法會',
+        description: '「明」即大日如來與不動尊明王背後熊熊燃燒的「迦樓羅智慧火焰」，代表能破除一切無明愚痴與暗障。道場不僅為陽世信眾消災解厄、指點迷津，更透過法船引渡與超薦科儀，將佛陀光明照入幽冥法界，實踐冥陽兩利的慈悲願行。'
+      },
+      {
+        id: 'xiu',
+        char: '修',
+        title: '修以禪宗解六界',
+        subtitle: '以漢傳禪定心法，化解六道輪迴之業障執著',
+        lineage: '漢傳禪宗・心性修持',
+        practice: '早晚課禪坐共修、《清靜經》課程開示講解、日常觀心反省',
+        description: '外在的祭改與加持能掃除一時之障，而根本解脫則須回歸自心。釋明法法師承襲漢傳禪門精神，引導信眾透過禪坐與經典熏修，看破貪、瞋、痴、慢、疑等習氣，從內心解開六道（天、人、阿修羅、畜生、餓鬼、地獄）的業力糾纏。'
+      },
+      {
+        id: 'ding',
+        char: '定',
+        title: '定以蓮師揚佛法',
+        subtitle: '依止蓮花生大士三昧耶定慧，弘揚正法眼藏',
+        lineage: '藏密寧瑪／度母與蓮師傳承',
+        practice: '蓮師心咒共修、綠度母與白度母福壽祥富科儀、藥懺薈供',
+        description: '蓮花生大士象徵降伏一切魔難、堅固菩提道心的無上定力。明王殿依止蓮師與二十一度母的慈悲願力，在五濁惡世中堅守正法道場，幫助修持者在面對人生逆境時維持如如不動的禪定智慧。'
+      },
+      {
+        id: 'jing',
+        char: '靜',
+        title: '靜以待之渡同門',
+        subtitle: '以清靜忍辱之心，廣結法緣、度化有緣同修',
+        lineage: '人間佛教・師徒同行願力',
+        practice: '農曆四月八日三步一拜朝山浴佛、平日時段入殿請益共修',
+        description: '修行貴在長遠與清靜。道場不強求、不喧嘩，以寧靜安詳的道風等待每一位有緣同門的到來；並透過每年返回新化佛顓寺「三步一拜、九步一跪」的朝山行腳，淬鍊謙卑清淨的道心，凝聚同門師兄姐的菩提道情。'
+      }
+    ];
+
+    let activePillarId = 'ming';
+
+    function renderPillars() {
+      const grid = document.getElementById('pillars-grid');
+      const detailBox = document.getElementById('pillar-detail-box');
+      if (!grid || !detailBox) return;
+
+      grid.innerHTML = pillarsData.map((p, idx) => {
+        const isActive = p.id === activePillarId;
+        return `
+          <button onclick="selectPillar('${p.id}')" class="text-left rounded-2xl p-5 border-2 transition-all card-transition ${
+            isActive
+              ? 'bg-obsidian text-rice border-amber-500 shadow-xl'
+              : 'bg-parchment/70 text-obsidian border-stone-200 hover:border-amber-400'
+          }">
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-11 h-11 rounded-xl font-serif-tc text-2xl font-bold flex items-center justify-center ${
+                isActive ? 'bg-gradient-to-br from-red-600 to-amber-500 text-white' : 'bg-white text-red-700 border border-stone-200'
+              }">${p.char}</span>
+              <span class="text-xs px-2.5 py-0.5 rounded-full ${
+                isActive ? 'bg-amber-500/20 text-amber-300' : 'bg-stone-200 text-stone-600'
+              }">宗旨 0${idx + 1}</span>
+            </div>
+            <h4 class="font-serif-tc text-lg font-bold ${isActive ? 'text-amber-300' : 'text-obsidian'}">${p.title}</h4>
+            <p class="text-xs mt-1.5 leading-relaxed ${isActive ? 'text-stone-300' : 'text-stone-600'}">${p.subtitle}</p>
+          </button>
+        `;
+      }).join('');
+
+      const active = pillarsData.find(p => p.id === activePillarId) || pillarsData[0];
+      detailBox.innerHTML = `
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-8 space-y-3">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold border border-amber-400/30">
+              <span>「${active.char}」字訣深層法義</span>
+              <span>・</span>
+              <span>${active.lineage}</span>
+            </div>
+            <h4 class="font-serif-tc text-2xl sm:text-3xl font-bold text-white">${active.title}</h4>
+            <p class="text-stone-300 text-sm sm:text-base leading-relaxed">${active.description}</p>
+          </div>
+          <div class="lg:col-span-4 bg-white/5 rounded-2xl p-5 border border-amber-500/20 space-y-2">
+            <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">對應道場修持與法會</div>
+            <p class="text-sm text-stone-200 font-medium leading-relaxed">${active.practice}</p>
+            <div class="pt-2 text-xs text-stone-400">
+              <i class="fa-solid fa-dharmachakra text-amber-400 mr-1.5"></i>善化東密明王殿四大弘法綱領
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function selectPillar(id) {
+      activePillarId = id;
+      renderPillars();
+    }
+
+    // =========================================================================
+    // 2. DATA: 主祀與同祀神尊互動圖鑑 (Sacred Pantheon)
+    // =========================================================================
+    const deitiesData = [
+      {
+        id: 'fudo',
+        category: 'main',
+        roleBadge: '主祀本尊',
+        name: '不動尊明王（不動明王菩薩）',
+        title: '大日如來教令輪身・五大明王之首',
+        symbolism: '右手持智慧俱利伽羅劍（斬斷貪瞋痴煩惱），左手持金剛羂索（繫縛難調伏之眾生導入正道），背負迦樓羅猛火（焚盡一切內外魔障與無明業障），安住於盤石座上象徵菩提心堅固不動。',
+        blessingFocus: '降伏內外魔障、破除流年關煞與愚痴暗障、神印護身安定心神、鎮宅除穢。',
+        relatedCeremony: '每月最後週六例行法會、農曆八月十五日不動尊明王聖誕「無量光明渡拔超薦主題科儀法會」。',
+        mantra: '南無・三曼多・伐折羅・赧・悍（不動明王一字心咒）'
+      },
+      {
+        id: 'amitabha',
+        category: 'buddha',
+        roleBadge: '同祀佛陀',
+        name: '阿彌陀佛',
+        title: '西方極樂世界教主・無量光無量壽',
+        symbolism: '以四十八大願接引十方念佛眾生往生淨土，放無量光明照耀三界。',
+        blessingFocus: '超薦歷代祖先、累世冤親債主及三界幽冥有情往生善道、法船引渡冥陽兩利。',
+        relatedCeremony: '每月法船引渡超薦科儀、農曆七月與八月大型超薦法會。',
+        mantra: '南無阿彌陀佛'
+      },
+      {
+        id: 'bhaisajyaguru',
+        category: 'buddha',
+        roleBadge: '同祀佛陀',
+        name: '藥師琉璃光如來',
+        title: '東方淨琉璃世界教主・大醫王佛',
+        symbolism: '身如琉璃內外明澈，發十二大願拔除眾生身病與心病，令諸根具足、資生無缺。',
+        blessingFocus: '消除病苦疾厄、身心安康、延壽增福、秋冬藥懺消業。',
+        relatedCeremony: '每場法會之「藥懺薈供」科儀、農曆九月至十一月藥師琉璃祈福法會。',
+        mantra: '南無消災延壽藥師佛'
+      },
+      {
+        id: 'ksitigarbha',
+        category: 'buddha',
+        roleBadge: '同祀菩薩',
+        name: '地藏王菩薩',
+        title: '幽冥教主・大願地藏菩薩',
+        symbolism: '手持錫杖振開地獄之門，手托摩尼寶珠照亮幽冥黑暗，秉持「地獄不空，誓不成佛」之大孝大願。',
+        blessingFocus: '超渡先亡祖先、化解冤親債主、庇佑家宅平安與地基安穩。',
+        relatedCeremony: '農曆七月孝道月渡拔超薦法會、每月法船引渡科儀。',
+        mantra: '南無大願地藏王菩薩'
+      },
+      {
+        id: 'padmasambhava',
+        category: 'buddha',
+        roleBadge: '同祀大士',
+        name: '蓮花生大士',
+        title: '藏密祖師・三世諸佛總集化現',
+        symbolism: '手持金剛杵、嘎巴拉碗與卡杖嘎，象徵定慧雙運、降伏世間與出世間一切魔難障礙。',
+        blessingFocus: '道場四大宗旨「定以蓮師揚佛法」之依止本尊，護持修行者道心堅固、遣除修道違緣。',
+        relatedCeremony: '日常禪定密法共修、藥懺薈供加持。',
+        mantra: '嗡・阿・吽・班雜・咕嚕・貝瑪・悉地・吽'
+      },
+      {
+        id: 'tara',
+        category: 'protector',
+        roleBadge: '同祀本尊',
+        name: '二十一度母（綠度母、白度母）',
+        title: '觀世音菩薩悲淚化現・諸佛事業與長壽總集',
+        symbolism: '綠度母右足微伸象徵隨時起身迅速救度眾生苦難；白度母具足七眼，象徵觀照三界、賜予長壽與智慧。',
+        blessingFocus: '綠度母主「迅速救度事業阻礙與災難、廣結善緣」；白度母主「賜予長壽、健康與福慧增長」。',
+        relatedCeremony: '農曆六至七月綠度母、白度母「福壽祥富・渡拔超薦科儀法會」。',
+        mantra: '嗡・達列・都達列・都列・梭哈'
+      },
+      {
+        id: 'brahma',
+        category: 'protector',
+        roleBadge: '同祀尊神',
+        name: '四面佛（大梵天王）',
+        title: '慈、悲、喜、捨四無量心護世尊神',
+        symbolism: '四面分別代表事業功名、感情婚姻、財富福祿與健康平安，以四無量心普應世間善信祈求。',
+        blessingFocus: '事業拓展、人際桃花善緣、正偏財運亨通、出入平安。',
+        relatedCeremony: '每月「因緣善緣（和合貴人）」科儀、新春開運點燈。',
+        mantra: '以慈悲喜捨四無量心虔誠頂禮'
+      },
+      {
+        id: 'guansheng',
+        category: 'protector',
+        roleBadge: '同祀護法',
+        name: '關聖帝君（伽藍尊者）',
+        title: '忠義護法・正氣除邪財神尊',
+        symbolism: '浩然正氣威震三界，於佛教中尊為護持正法道場的伽藍菩薩，亦為庇佑百工商業信義之守護神。',
+        blessingFocus: '驅邪除煞、小人遠離、職場升遷、商貿守信興隆。',
+        relatedCeremony: '城隍祭改除障、神印護身與職場貴人祈福。',
+        mantra: '恭敬頂禮護法伽藍關聖帝君'
+      }
+    ];
+
+    let currentDeityFilter = 'all';
+    let selectedDeityId = 'fudo';
+
+    function filterDeities(category) {
+      currentDeityFilter = category;
+      ['all', 'main', 'buddha', 'protector'].forEach(cat => {
+        const btn = document.getElementById(`deity-filter-${cat}`);
+        if (btn) {
+          if (cat === category) {
+            btn.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-amber-500 text-obsidian transition';
+          } else {
+            btn.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-medium bg-stone-800 text-stone-300 hover:bg-stone-700 transition';
+          }
+        }
+      });
+
+      const filtered = category === 'all' ? deitiesData : deitiesData.filter(d => d.category === category);
+      if (!filtered.some(d => d.id === selectedDeityId) && filtered.length > 0) {
+        selectedDeityId = filtered[0].id;
+      }
+      renderDeities();
+    }
+
+    function selectDeity(id) {
+      selectedDeityId = id;
+      renderDeities();
+    }
+
+    function renderDeities() {
+      const listEl = document.getElementById('deities-list');
+      const spotlightEl = document.getElementById('deity-spotlight');
+      if (!listEl || !spotlightEl) return;
+
+      const filtered = currentDeityFilter === 'all'
+        ? deitiesData
+        : deitiesData.filter(d => d.category === currentDeityFilter);
+
+      listEl.innerHTML = filtered.map(d => {
+        const isSelected = d.id === selectedDeityId;
+        const isMain = d.id === 'fudo';
+        return `
+          <button onclick="selectDeity('${d.id}')" class="text-left p-5 rounded-2xl border transition-all card-transition ${
+            isSelected
+              ? 'bg-gradient-to-br from-amber-500/20 via-red-900/30 to-stone-900 border-amber-400 shadow-lg'
+              : 'bg-stone-900/80 border-stone-800 hover:border-stone-600'
+          }">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
+                isMain ? 'bg-red-600 text-white' : 'bg-stone-800 text-amber-300 border border-amber-500/30'
+              }">${d.roleBadge}</span>
+              ${isSelected ? '<span class="text-xs text-amber-400"><i class="fa-solid fa-circle-check"></i> 檢視中</span>' : ''}
+            </div>
+            <h3 class="font-serif-tc text-lg font-bold text-white">${d.name}</h3>
+            <p class="text-xs text-stone-400 mt-1 line-clamp-2">${d.title}</p>
+          </button>
+        `;
+      }).join('');
+
+      const active = deitiesData.find(d => d.id === selectedDeityId) || deitiesData[0];
+      spotlightEl.innerHTML = `
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <span class="px-3 py-1 rounded-full text-xs font-bold ${
+            active.id === 'fudo' ? 'bg-red-600 text-white' : 'bg-amber-500/20 text-amber-300 border border-amber-400/30'
+          }">${active.roleBadge}</span>
+          <span class="text-xs text-stone-400">殿內奉祀尊神詳解</span>
+        </div>
+        <h3 class="font-serif-tc text-2xl sm:text-3xl font-bold text-amber-300">${active.name}</h3>
+        <p class="text-xs sm:text-sm text-stone-300 font-medium mt-1 pb-4 border-b border-stone-800">${active.title}</p>
+
+        <div class="space-y-4 mt-4 text-xs sm:text-sm">
+          <div>
+            <div class="text-amber-400 font-bold mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-dharmachakra"></i>法相與聖德象徵
+            </div>
+            <p class="text-stone-300 leading-relaxed">${active.symbolism}</p>
+          </div>
+
+          <div class="bg-stone-800/70 rounded-2xl p-4 border border-stone-700">
+            <div class="text-red-400 font-bold mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-hands-praying"></i>主要祈願面向
+            </div>
+            <p class="text-stone-200 leading-relaxed">${active.blessingFocus}</p>
+          </div>
+
+          <div>
+            <div class="text-amber-400 font-bold mb-1 flex items-center gap-1.5">
+              <i class="fa-regular fa-calendar-check"></i>對應重點法會與科儀
+            </div>
+            <p class="text-stone-300 leading-relaxed">${active.relatedCeremony}</p>
+          </div>
+
+          <div class="pt-3 border-t border-stone-800 flex items-center justify-between text-xs text-stone-400">
+            <span>稱念聖號／心咒：</span>
+            <span class="font-serif-tc text-amber-200 font-semibold">${active.mantra}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 3. DATA & LOGIC: 《四季明光》每月法會時間軸 & 例行法會自動計算器
+    // =========================================================================
+    // Helper: Get the last Saturday of a given (year, monthIndex 0-11)
+    function getLastSaturdayOfMonth(year, monthIndex) {
+      // Last day of the month
+      const lastDay = new Date(year, monthIndex + 1, 0);
+      const dayOfWeek = lastDay.getDay(); // 0=Sun ... 6=Sat
+      const diff = (dayOfWeek >= 6) ? (dayOfWeek - 6) : (dayOfWeek + 1);
+      const lastSatDate = lastDay.getDate() - diff;
+      return new Date(year, monthIndex, lastSatDate, 18, 30, 0);
+    }
+
+    function formatDateChinese(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const d = String(dateObj.getDate()).padStart(2, '0');
+      return `${y} 年 ${m} 月 ${d} 日（週六）`;
+    }
+
+    function initRoutineCalculator() {
+      const now = new Date();
+      const curYear = now.getFullYear();
+      const curMonth = now.getMonth();
+
+      const thisMonthSat = getLastSaturdayOfMonth(curYear, curMonth);
+      const nextMonthDateObj = new Date(curYear, curMonth + 1, 1);
+      const nextMonthSat = getLastSaturdayOfMonth(nextMonthDateObj.getFullYear(), nextMonthDateObj.getMonth());
+
+      // Determine upcoming ceremony
+      const upcomingSat = (now <= thisMonthSat) ? thisMonthSat : nextMonthSat;
+      const diffMs = upcomingSat - now;
+      const diffDays = Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
+
+      // Update Hero Card
+      const heroNextDate = document.getElementById('hero-next-date');
+      const heroCountdownBadge = document.getElementById('hero-countdown-badge');
+      const heroThisSat = document.getElementById('hero-this-month-sat');
+      const heroNextSat = document.getElementById('hero-next-month-sat');
+
+      if (heroNextDate) heroNextDate.textContent = `${formatDateChinese(upcomingSat)} 18:30`;
+      if (heroCountdownBadge) {
+        heroCountdownBadge.textContent = diffDays === 0 ? '今日晚間 18:30 開壇！' : `距離開壇還有 ${diffDays} 天`;
+      }
+      if (heroThisSat) heroThisSat.textContent = `${thisMonthSat.getMonth() + 1}/${thisMonthSat.getDate()}（週六）18:30`;
+      if (heroNextSat) heroNextSat.textContent = `${nextMonthSat.getMonth() + 1}/${nextMonthSat.getDate()}（週六）18:30`;
+
+      // Update Timeline Calculator Section
+      const calcCurEl = document.getElementById('calc-current-month-date');
+      const calcCurStatus = document.getElementById('calc-current-month-status');
+      const calcNextEl = document.getElementById('calc-next-month-date');
+
+      if (calcCurEl) calcCurEl.textContent = formatDateChinese(thisMonthSat);
+      if (calcCurStatus) {
+        if (now > thisMonthSat) {
+          calcCurStatus.textContent = '本月場次已圓滿結束';
+          calcCurStatus.className = 'inline-block mt-2 text-[11px] px-2.5 py-0.5 rounded-full bg-stone-800 text-stone-400';
+        } else {
+          calcCurStatus.textContent = `即將舉行（倒數 ${diffDays} 天）`;
+          calcCurStatus.className = 'inline-block mt-2 text-[11px] px-2.5 py-0.5 rounded-full bg-red-600/30 text-red-300 border border-red-500/40';
+        }
+      }
+      if (calcNextEl) calcNextEl.textContent = formatDateChinese(nextMonthSat);
+
+      // Populate Custom Month Select for the whole year
+      const selectEl = document.getElementById('custom-month-select');
+      const resultEl = document.getElementById('custom-month-result');
+      if (selectEl && resultEl) {
+        selectEl.innerHTML = Array.from({ length: 12 }, (_, idx) => {
+          return `<option value="${idx}" ${idx === curMonth ? 'selected' : ''}>${curYear} 年 ${idx + 1} 月</option>`;
+        }).join('');
+
+        const updateCustomMonth = () => {
+          const mIdx = parseInt(selectEl.value, 10);
+          const sat = getLastSaturdayOfMonth(curYear, mIdx);
+          resultEl.textContent = `該月例行法會：${sat.getMonth() + 1} 月 ${sat.getDate()} 日（週六）18:30`;
+        };
+        selectEl.addEventListener('change', updateCustomMonth);
+        updateCustomMonth();
+      }
+    }
+
+    // Seasonal & 12 Lunar Months Data
+    const seasonsData = [
+      {
+        id: 'spring',
+        badge: '春季（農曆一月至三月）',
+        title: '新春開運與慈悲禮懺法會',
+        deity: '不動尊明王・大梵天王（四面佛）・十方諸佛',
+        months: [1, 2, 3],
+        highlight: '新春點燈植福田、城隍祭改化流年太歲、慈悲禮懺洗滌宿業',
+        description: '一年之計在於春。農曆一至三月每月月底週六的例行法會，以「新春開運點燈」與「懺悔消業」為主軸，帶領善信透過布施、供燈與禮懺，洗滌過去一年的無明業障，化解流年關煞，開啟全年度的光明運勢。',
+        ritualFocus: ['城隍祭改（流年太歲解厄）', '神印護身（開春元辰加固）', '因緣善緣（全年貴人廣結）']
+      },
+      {
+        id: 'early-summer',
+        badge: '初夏（農曆四月至五月）',
+        title: '浴佛報恩與三步一拜朝山',
+        deity: '釋迦牟尼佛・新化佛顓寺師門傳承・藥師如來',
+        months: [4, 5],
+        highlight: '農曆四月八日浴佛節「三步一拜、九步一跪」返回新化佛顓寺朝山浴佛',
+        description: '農曆四月八日（浴佛節）為善化東密明王殿年度最具代表性的行腳盛事！創辦人釋明法法師每年必率領弟子以「三步一拜、九步一跪」的大禮，返回師門新化佛顓寺朝山浴佛，感念佛陀慈悲與釋正妙老師父法乳深恩；四、五月月底週六法會則延續浴佛清淨功德，舉行消災祈安與藥懺共修。',
+        ritualFocus: ['三步一拜朝山行腳（淬鍊道心）', '浴佛淨心報師恩', '藥懺薈供（初夏祛疫祈安）']
+      },
+      {
+        id: 'mid-summer',
+        badge: '盛夏至孟秋（農曆六月至七月）',
+        title: '綠度母、白度母「福壽祥富・渡拔超薦科儀法會」',
+        deity: '綠度母（救度事業災難）・白度母（賜予長壽福慧）・地藏王菩薩',
+        months: [6, 7],
+        highlight: '孝道月專案大法會・恭迎綠度母與白度母慈悲護念，完整結合五大科儀冥陽兩利',
+        description: '迎接農曆七月孝道月，道場恭迎藏密二十一度母之主尊「綠度母」與「白度母」慈悲護念。法會完整結合城隍祭改、神印護身、因緣善緣、藥懺薈供與法船引渡五大科儀，一面為陽世信眾祈求福壽祥富，一面廣設法船超薦歷代祖先、冤親債主及三界幽冥有情。',
+        ritualFocus: ['綠度母迅速救度事業阻礙', '白度母長壽健康福慧加持', '法船引渡（孝道月超薦祖先與冤親）']
+      },
+      {
+        id: 'mid-autumn',
+        badge: '仲秋（農曆八月・年度主尊慶典）',
+        title: '不動尊明王聖誕「無量光明渡拔超薦主題科儀法會」',
+        deity: '主祀本尊：不動尊明王菩薩（農曆八月十五日聖誕）',
+        months: [8],
+        highlight: '恭逢農曆八月十五日主神不動尊明王聖誕，於當月最後週六盛大啟建年度主題大法會',
+        description: '農曆八月十五日為明王殿主神「不動尊明王」聖誕千秋！道場於八月最後一個星期六盛大啟建年度最高規格之「無量光明渡拔超薦主題科儀法會」，祈仰不動明王威猛慈悲之大願力，廣放無量智慧光明破除眾生愚痴與暗障，替三界眾生渡拔祈福、消災延壽。',
+        ritualFocus: ['不動明王無量光明總加持', '神印護身與大除障祭解', '三界眾生渡拔超薦大法船']
+      },
+      {
+        id: 'autumn-winter',
+        badge: '秋冬（農曆九月至十二月）',
+        title: '藥師琉璃祈福與歲末圓燈迴向',
+        deity: '藥師琉璃光如來・不動尊明王・十方護法諸尊',
+        months: [9, 10, 11, 12],
+        highlight: '九至十一月藥師琉璃消業護摩；十二月歲末圓燈謝恩總迴向',
+        description: '農曆九月至十一月恭逢藥師琉璃光如來聖誕與秋冬節氣轉換，法會著重於「身心安頓、藥懺消業與護摩祈福」，為長輩與信眾祈求安康暖順；農曆十二月則舉辦「歲末圓滿法會」，匯聚全年無數法會的梵音、信眾點燈與超薦功德，進行歲末謝佛恩與總迴向。',
+        ritualFocus: ['藥懺薈供（藥師佛琉璃光加持）', '護摩祈福安定身心', '歲末圓燈謝恩與功德總迴向']
+      }
+    ];
+
+    const lunarMonthsDetails = [
+      { month: 1, name: '農曆正月', seasonId: 'spring', tag: '新春開運', summary: '新春點燈祈福、安奉流年、月底週六新春首場消災解厄祈福法會。' },
+      { month: 2, name: '農曆二月', seasonId: 'spring', tag: '慈悲禮懺', summary: '春季禮懺消業共修，掃除開春職場與家庭阻滯，廣結貴人善緣。' },
+      { month: 3, name: '農曆三月', seasonId: 'spring', tag: '植福除障', summary: '暮春消災祭改與藥懺薈供，為年度計畫奠定穩固元辰與福田。' },
+      { month: 4, name: '農曆四月', seasonId: 'early-summer', tag: '朝山浴佛', summary: '農曆四月八日浴佛節！釋明法法師率眾「三步一拜、九步一跪」返回新化佛顓寺朝山浴佛報師恩。' },
+      { month: 5, name: '農曆五月', seasonId: 'early-summer', tag: '端陽祛疫', summary: '延續浴佛清淨功德，於五月底週六舉行午時淨水除穢、消災祈安與藥懺共修。' },
+      { month: 6, name: '農曆六月', seasonId: 'mid-summer', tag: '度母護念', summary: '盛夏轉運祈福，啟建綠度母、白度母「福壽祥富」前行修持與月底例行科儀。' },
+      { month: 7, name: '農曆七月', seasonId: 'mid-summer', tag: '孝道超薦', summary: '綠度母、白度母「福壽祥富・渡拔超薦科儀法會」，五大科儀齊備，普渡歷代祖先與三界孤魂。' },
+      { month: 8, name: '農曆八月', seasonId: 'mid-autumn', tag: '明王聖誕', summary: '農曆八月十五日主神不動尊明王聖誕！當月最後週六盛大啟建「無量光明渡拔超薦主題科儀法會」。' },
+      { month: 9, name: '農曆九月', seasonId: 'autumn-winter', tag: '藥師聖誕', summary: '恭逢農曆九月三十日藥師琉璃光如來聖誕，舉行藥懺薈供與消災延壽祈福。' },
+      { month: 10, name: '農曆十月', seasonId: 'autumn-winter', tag: '秋冬安頓', summary: '秋冬轉節養生護摩祈福，祈請神印護身、安定元神並超薦冤親。' },
+      { month: 11, name: '農曆十一月', seasonId: 'autumn-winter', tag: '冬至添壽', summary: '冬至時節禮拜藥師佛與白度母，修持藥懺薈供，為父母長輩祈求福壽綿長。' },
+      { month: 12, name: '農曆十二月', seasonId: 'autumn-winter', tag: '歲末圓燈', summary: '歲末圓滿大法會！匯聚全年梵音、點燈與超薦功德進行謝恩總迴向，迎接新歲。' }
+    ];
+
+    let selectedSeasonFilter = 'all';
+    let selectedLunarMonth = 8; // Default to Lunar 8th Month (Fudo Myo-o Birthday)
+
+    function selectSeason(seasonId) {
+      selectedSeasonFilter = seasonId;
+      // Update filter button styles
+      document.querySelectorAll('.season-btn').forEach(btn => {
+        const isCurrent = btn.getAttribute('data-season') === seasonId;
+        btn.className = isCurrent
+          ? 'season-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-obsidian text-amber-400 shadow-md transition'
+          : 'season-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-white text-stone-700 border border-stone-300 hover:border-amber-500 transition';
+      });
+
+      if (seasonId !== 'all') {
+        const targetSeason = seasonsData.find(s => s.id === seasonId);
+        if (targetSeason && !targetSeason.months.includes(selectedLunarMonth)) {
+          selectedLunarMonth = targetSeason.months[0];
+        }
+      }
+      renderTimeline();
+    }
+
+    function selectLunarMonth(monthNum) {
+      selectedLunarMonth = monthNum;
+      renderTimeline();
+    }
+
+    function renderTimeline() {
+      const monthsBar = document.getElementById('lunar-months-bar');
+      const indicator = document.getElementById('active-lunar-indicator');
+      const spotlight = document.getElementById('timeline-spotlight');
+      const cardsGrid = document.getElementById('seasonal-cards-grid');
+
+      const activeMonthObj = lunarMonthsDetails.find(m => m.month === selectedLunarMonth) || lunarMonthsDetails[7];
+      const activeSeasonObj = seasonsData.find(s => s.id === activeMonthObj.seasonId) || seasonsData[3];
+
+      if (indicator) {
+        indicator.textContent = `目前檢視：${activeMonthObj.name}（${activeMonthObj.tag}）`;
+      }
+
+      if (monthsBar) {
+        monthsBar.innerHTML = lunarMonthsDetails.map(m => {
+          const isSelected = m.month === selectedLunarMonth;
+          const isInFilteredSeason = selectedSeasonFilter === 'all' || m.seasonId === selectedSeasonFilter;
+          return `
+            <button onclick="selectLunarMonth(${m.month})" class="p-2.5 rounded-2xl border text-center transition-all ${
+              isSelected
+                ? 'bg-gradient-to-b from-red-700 to-obsidian text-white border-amber-400 shadow-md scale-[1.03]'
+                : isInFilteredSeason
+                  ? 'bg-parchment/80 hover:bg-amber-50 text-obsidian border-stone-300'
+                  : 'bg-stone-100 text-stone-400 border-stone-200 opacity-60 hover:opacity-100'
+            }">
+              <div class="text-[11px] font-medium ${isSelected ? 'text-amber-300' : 'text-stone-500'}">${m.name}</div>
+              <div class="font-serif-tc text-xs sm:text-sm font-bold mt-0.5">${m.tag}</div>
+            </button>
+          `;
+        }).join('');
+      }
+
+      if (spotlight) {
+        spotlight.innerHTML = `
+          <div class="bg-gradient-to-br from-obsidian via-stone-900 to-obsidian text-rice rounded-3xl p-6 sm:p-8 border-2 border-amber-500/40 shadow-xl">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              <div class="lg:col-span-8 space-y-3">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="px-3 py-1 rounded-full bg-red-600 text-white text-xs font-bold">${activeMonthObj.name}・${activeMonthObj.tag}</span>
+                  <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold border border-amber-400/30">${activeSeasonObj.badge}</span>
+                </div>
+                <h3 class="font-serif-tc text-2xl sm:text-3xl font-bold text-amber-300">${activeSeasonObj.title}</h3>
+                <p class="text-white font-medium text-sm sm:text-base bg-white/5 p-3.5 rounded-xl border border-white/10">
+                  <i class="fa-solid fa-star text-amber-400 mr-2"></i><strong>當月修持焦點：</strong>${activeMonthObj.summary}
+                </p>
+                <p class="text-stone-300 text-xs sm:text-sm leading-relaxed">${activeSeasonObj.description}</p>
+              </div>
+
+              <div class="lg:col-span-4 bg-stone-800/80 rounded-2xl p-5 border border-amber-500/20 space-y-4">
+                <div>
+                  <span class="text-xs text-stone-400 block">該時序主尊法門</span>
+                  <div class="font-serif-tc font-bold text-amber-300 text-sm sm:text-base mt-0.5">${activeSeasonObj.deity}</div>
+                </div>
+                <div>
+                  <span class="text-xs text-stone-400 block mb-2">重點修持與科儀組合</span>
+                  <ul class="space-y-1.5 text-xs sm:text-sm text-stone-200">
+                    ${activeSeasonObj.ritualFocus.map(r => `<li class="flex items-center gap-2"><i class="fa-solid fa-flame text-red-400 text-xs"></i><span>${r}</span></li>`).join('')}
+                  </ul>
+                </div>
+                <div class="pt-3 border-t border-stone-700 text-xs text-stone-400">
+                  例行時間：當月最後一個星期六晚上 18:30
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (cardsGrid) {
+        const displaySeasons = selectedSeasonFilter === 'all'
+          ? seasonsData
+          : seasonsData.filter(s => s.id === selectedSeasonFilter);
+
+        cardsGrid.innerHTML = displaySeasons.map(s => {
+          const isCurrentSeason = s.id === activeSeasonObj.id;
+          return `
+            <div onclick="selectSeason('${s.id}')" class="cursor-pointer bg-white rounded-3xl p-6 border-2 transition-all card-transition flex flex-col justify-between ${
+              isCurrentSeason ? 'border-amber-500 shadow-lg' : 'border-stone-200 hover:border-amber-400 shadow-sm'
+            }">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                  <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-900">${s.badge}</span>
+                  ${s.id === 'mid-autumn' ? '<span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-red-600 text-white">主尊聖誕</span>' : ''}
+                </div>
+                <h4 class="font-serif-tc text-xl font-bold text-obsidian mb-2">${s.title}</h4>
+                <p class="text-xs font-semibold text-red-700 mb-3">${s.highlight}</p>
+                <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">${s.description}</p>
+              </div>
+              <div class="mt-5 pt-4 border-t border-stone-100 flex items-center justify-between text-xs">
+                <span class="text-stone-500">涵蓋農曆：${s.months.map(m => m + '月').join('、')}</span>
+                <span class="text-amber-700 font-bold">點擊切換檢視 →</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    // =========================================================================
+    // 4. DATA & LOGIC: 五大核心科儀深度探索 (5 Core Rituals)
+    // =========================================================================
+    const ritualsData = [
+      {
+        step: 1,
+        id: 'chenghuang',
+        name: '城隍祭改',
+        subtitle: '除障解厄・掃除流年關煞',
+        icon: 'fa-shield-halved',
+        meaning: '每場法會的第一道前行除障工序。祈請主祀神尊與城隍尊神作主，針對信眾流年所犯之太歲、白虎、天狗、五鬼等關煞，以及日常運途阻滯、口舌是非、莫名病痛進行祭解，猶如先將心田與運途上的雜草荊棘清除乾淨。',
+        scenarios: [
+          '正值犯太歲、偏沖太歲或感覺近期諸事不順、小人頻傳者',
+          '工作職場屢遇莫名阻礙、口舌是非或官司糾紛者',
+          '出入醫院、喪家後感覺運勢低落、氣場混濁者'
+        ],
+        benefits: '掃除外在流年關煞與日常障礙，化大事為小、化小事為無，令後續加持力得以順利納受。',
+        preparation: '於祈福紅包袋正面清楚填寫：祈福人姓名、農曆出生年月日時（若不知時辰可填吉時）、現居詳細地址。'
+      },
+      {
+        step: 2,
+        id: 'shenyin',
+        name: '神印護身',
+        subtitle: '加持護佑・安定元辰心神',
+        icon: 'fa-stamp',
+        meaning: '在掃除外障之後，祈請大日如來教令輪身「不動尊明王」與殿內護法尊神降臨，以神聖法印（神印）為善信加持護佑。神印代表諸佛菩薩的金剛三昧耶戒印與威德結界，能鞏固個人元辰光彩，阻絕外靈與負面能量侵擾。',
+        scenarios: [
+          '容易心神不寧、夜睡多夢驚醒、精神緊繃焦慮者',
+          '經常需要出遠門、跑業務、值夜班或從事高風險工作者',
+          '孩童容易受驚嚇、長輩元氣虛弱需要護身安定者'
+        ],
+        benefits: '安定心神、鞏固元辰光彩、出入平安順遂，形塑隨身無形的金剛護法結界。',
+        preparation: '本人親臨法會現場領受神印加持最為殊勝；亦可攜帶平日配戴之平安符或乾淨上衣請法師用印加持。'
+      },
+      {
+        step: 3,
+        id: 'yinyuan',
+        name: '因緣善緣',
+        subtitle: '和合貴人・圓滿家庭事業',
+        icon: 'fa-handshake-angle',
+        meaning: '外障已除、元神已定後，進一步祈求「善緣匯聚」。佛法講究萬法因緣生，透過明王、綠度母與四面佛之和合加持，轉化惡緣為善緣、化逆增上緣為菩提法緣，讓家庭內部和睦、職場人際融洽，並感召善知識與貴人主動扶助。',
+        scenarios: [
+          '從事商業經營、業務開發、創業或需要廣結客戶善緣者',
+          '祈求家庭夫妻和睦、親子溝通順暢、人際關係破冰者',
+          '期待在學業、轉職或修行路上遇見良師貴人提攜者'
+        ],
+        benefits: '家庭圓滿和合、人際關係順暢、事業廣結十方善緣並得貴人扶助。',
+        preparation: '於紅包袋勾選或註明「因緣善緣／貴人祈福」，並於法會誦經時誠心觀想與身邊親友、同事和合共榮。'
+      },
+      {
+        step: 4,
+        id: 'yaochan',
+        name: '藥懺薈供',
+        subtitle: '身心安康・禮懺消業增福慧',
+        icon: 'fa-bowl-rice',
+        meaning: '結合顯教「慈悲藥師寶懺」與密教「廣大薈供」之殊勝法門。虔誠禮拜東方藥師琉璃光如來與白度母、綠度母，先至誠懺悔往昔身口意所造宿業，再以清淨燈燭、花果、飲食廣修薈供上供諸佛菩薩、下施六道，祈求身心病苦消除。',
+        scenarios: [
+          '身體欠安、慢性病調養、手術前後祈求早日康復者',
+          '長期處於高壓疲憊狀態，希望洗滌業障、增長福報與智慧者',
+          '欲為高齡父母、長輩祈求福壽綿長、無病安康者'
+        ],
+        benefits: '宿業清淨、病苦消除、身心安康、福慧資糧快速增長。',
+        preparation: '可隨喜報名藥懺功德主或隨喜贊助法會薈供供品（鮮花、素果、餅乾、明燈），法會圓滿後領受平安供品。'
+      },
+      {
+        step: 5,
+        id: 'fachuan',
+        name: '法船引渡',
+        subtitle: '冥陽兩利・超薦祖先與三界眾生',
+        icon: 'fa-sailboat',
+        meaning: '呼應道場首宗「明以弘法渡陰陽」，於法會圓滿階次啟建慈悲法船。仰仗不動尊明王無量光明、阿彌陀佛接引願力與地藏王菩薩慈悲威神，為陽世報恩人之歷代祖先、累世冤親債主、地基主及三界無祀孤魂設壇超薦，引渡其登上般若法船、離苦得樂。',
+        scenarios: [
+          '欲盡孝道超薦某姓歷代祖先、已故親人往生善道淨土者',
+          '感覺累世冤親債主牽纏，希望透過佛法超渡解冤釋結者',
+          '農曆七月孝道月、八月明王聖誕或歲末欲廣修普渡陰德者'
+        ],
+        benefits: '先亡離苦得樂、冤結化解、祖德庇佑子孫平安興旺，達成真正的「冥陽兩利」。',
+        preparation: '填寫超薦專用紅包袋：詳列「陽上報恩人姓名、地址」及「超薦對象（如：某姓歷代祖先／個人累世冤親債主）」。'
+      }
+    ];
+
+    let activeRitualStep = 1;
+
+    function selectRitualStep(stepNum) {
+      activeRitualStep = stepNum;
+      renderRituals();
+    }
+
+    function renderRituals() {
+      const navEl = document.getElementById('ritual-steps-nav');
+      const panelEl = document.getElementById('ritual-detail-panel');
+      if (!navEl || !panelEl) return;
+
+      navEl.innerHTML = ritualsData.map(r => {
+        const isActive = r.step === activeRitualStep;
+        return `
+          <button onclick="selectRitualStep(${r.step})" class="text-left p-4 rounded-2xl border-2 transition-all card-transition ${
+            isActive
+              ? 'bg-gradient-to-br from-red-700 via-red-800 to-stone-900 border-amber-400 text-white shadow-xl'
+              : 'bg-stone-900/90 border-stone-800 text-stone-300 hover:border-amber-500/50'
+          }">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded-full ${
+                isActive ? 'bg-amber-400 text-obsidian' : 'bg-stone-800 text-amber-400'
+              }">次第 0${r.step}</span>
+              <i class="fa-solid ${r.icon} ${isActive ? 'text-amber-300' : 'text-stone-500'}"></i>
+            </div>
+            <div class="font-serif-tc text-lg font-bold text-white">${r.name}</div>
+            <div class="text-xs mt-1 ${isActive ? 'text-amber-200' : 'text-stone-400'}">${r.subtitle}</div>
+          </button>
+        `;
+      }).join('');
+
+      const active = ritualsData.find(r => r.step === activeRitualStep) || ritualsData[0];
+      const prevStep = active.step > 1 ? active.step - 1 : 5;
+      const nextStep = active.step < 5 ? active.step + 1 : 1;
+
+      panelEl.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-stone-800">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-600 to-amber-500 text-white flex items-center justify-center text-2xl shadow-lg">
+              <i class="fa-solid ${active.icon}"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-amber-400">法會科儀第 ${active.step} 階（共 5 階）</span>
+              </div>
+              <h3 class="font-serif-tc text-2xl sm:text-3xl font-bold text-white mt-0.5">${active.name}｜${active.subtitle}</h3>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="selectRitualStep(${prevStep})" class="px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-medium transition">
+              <i class="fa-solid fa-chevron-left mr-1"></i>上一科儀
+            </button>
+            <button onclick="selectRitualStep(${nextStep})" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-obsidian text-xs font-bold transition">
+              下一科儀<i class="fa-solid fa-chevron-right ml-1"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-6">
+          <div class="lg:col-span-7 space-y-5">
+            <div>
+              <h4 class="text-amber-400 font-serif-tc font-bold text-base mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-book-open"></i>科儀深層意涵
+              </h4>
+              <p class="text-stone-200 text-sm sm:text-base leading-relaxed">${active.meaning}</p>
+            </div>
+
+            <div>
+              <h4 class="text-amber-400 font-serif-tc font-bold text-base mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-user-check"></i>適用情境與對象
+              </h4>
+              <ul class="space-y-2 text-xs sm:text-sm text-stone-300">
+                ${active.scenarios.map(s => `
+                  <li class="flex items-start gap-2.5 bg-stone-800/50 p-3 rounded-xl border border-stone-800">
+                    <i class="fa-solid fa-check text-red-400 mt-1"></i>
+                    <span>${s}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 space-y-4">
+            <div class="bg-gradient-to-br from-red-950/60 to-stone-900 rounded-2xl p-5 border border-red-500/30">
+              <h4 class="text-red-300 font-serif-tc font-bold text-base mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-sparkles"></i>修持殊勝利益
+              </h4>
+              <p class="text-stone-200 text-xs sm:text-sm leading-relaxed">${active.benefits}</p>
+            </div>
+
+            <div class="bg-stone-800/80 rounded-2xl p-5 border border-amber-500/30">
+              <h4 class="text-amber-300 font-serif-tc font-bold text-base mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-envelope-open-text"></i>參與準備與紅包袋填寫規範
+              </h4>
+              <p class="text-stone-300 text-xs sm:text-sm leading-relaxed">${active.preparation}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleAllRitualsTable() {
+      const container = document.getElementById('all-rituals-table-container');
+      const btn = document.getElementById('toggle-all-rituals-btn');
+      if (!container || !btn) return;
+
+      const isHidden = container.classList.contains('hidden');
+      if (isHidden) {
+        container.classList.remove('hidden');
+        btn.innerHTML = '<i class="fa-solid fa-chevron-up mr-1.5"></i>收合對照表';
+      } else {
+        container.classList.add('hidden');
+        btn.innerHTML = '<i class="fa-solid fa-table-list mr-1.5"></i>展開完整對照表';
+      }
+    }
+
+    // =========================================================================
+    // 5. DATA & LOGIC: 互動式「祈願需求配對與參拜指南產生器」
+    // =========================================================================
+    const prayerIntentions = [
+      {
+        id: 'obstacle',
+        label: '流年除障／犯太歲化解',
+        desc: '掃除運途阻滯、口舌是非與流年關煞',
+        icon: 'fa-fire-flame-Simple',
+        rituals: ['城隍祭改（除障解厄）', '神印護身（加持護佑）'],
+        deities: ['不動尊明王（斬斷無明魔障）', '關聖帝君（正氣除煞遠小人）'],
+        months: '農曆一至三月（新春開運禮懺法會）、農曆八月（不動明王聖誕法會）及每月月底週六例行法會',
+        prepTip: '準備祈福人姓名、農曆生辰與現居地址，填寫城隍祭改祈福紅包袋。'
+      },
+      {
+        id: 'health',
+        label: '健康病苦消除／長壽安康',
+        desc: '久病調養、手術康復、為父母長輩祈福延壽',
+        icon: 'fa-heart-pulse',
+        rituals: ['藥懺薈供（身心安康）', '神印護身（元辰加固）'],
+        deities: ['藥師琉璃光如來（拔除身心疾苦）', '白度母（賜予長壽、健康與福慧）'],
+        months: '農曆四至五月（浴佛祈安與藥懺）、農曆六至七月（白度母福壽祥富法會）、農曆九至十一月（藥師琉璃祈福）',
+        prepTip: '建議報名「藥懺薈供」並隨喜供燈、供花果，至誠禮拜藥師佛與白度母。'
+      },
+      {
+        id: 'career',
+        label: '事業人際貴人／家庭和合',
+        desc: '業務拓展、職場升遷、人際融洽與家庭圓滿',
+        icon: 'fa-users-rays',
+        rituals: ['因緣善緣（和合貴人）', '藥懺薈供（增長福慧資糧）'],
+        deities: ['綠度母（迅速救度事業阻礙）', '四面佛（慈悲喜捨廣結善緣）', '關聖帝君（商貿守信興隆）'],
+        months: '農曆一至三月（新春開運點燈）、農曆六至七月（綠度母福壽祥富科儀）及每月例行法會',
+        prepTip: '填寫「因緣善緣」祈福紅包袋，參拜時向不動明王、綠度母與四面佛稟報事業或家庭祈願目標。'
+      },
+      {
+        id: 'protection',
+        label: '心神安定／出入護身加持',
+        desc: '改善夜睡不安、驚嚇焦慮、遠行或夜班平安',
+        icon: 'fa-shield-heart',
+        rituals: ['神印護身（加持護佑）', '城隍祭改（淨化氣場）'],
+        deities: ['不動尊明王（盤石座安住不動、金剛火院護身）', '蓮花生大士（遣除內外違緣）'],
+        months: '每月最後一個星期六 18:30 例行法會、農曆八月（不動尊明王聖誕法會）',
+        prepTip: '建議親自出席法會領受「神印護身」加持，或攜帶乾淨隨身衣物、平安符請法師蓋印加持。'
+      },
+      {
+        id: 'ancestors',
+        label: '超薦歷代祖先／冤親債主',
+        desc: '報答祖德、化解累世冤結、普渡三界幽冥',
+        icon: 'fa-lotus',
+        rituals: ['法船引渡（冥陽兩利）', '藥懺薈供（功德迴向先亡）'],
+        deities: ['阿彌陀佛（無量光接引淨土）', '地藏王菩薩（幽冥教主拔苦）', '不動尊明王（無量光明破除幽暗）'],
+        months: '農曆六至七月（孝道月渡拔超薦大法會）、農曆八月（不動明王無量光明渡拔法會）、農曆十二月（歲末圓燈總迴向）',
+        prepTip: '填寫超薦專用紅包袋，註明「陽上報恩人姓名地址」與「超薦對象（某姓歷代祖先／個人累世冤親債主）」。'
+      },
+      {
+        id: 'meditation',
+        label: '修行禪定／經典共修解惑',
+        desc: '學習《清靜經》、禪坐修心、調伏煩惱習氣',
+        icon: 'fa-om',
+        rituals: ['藥懺薈供（懺悔清淨）', '日常《清靜經》課程與禪坐共修'],
+        deities: ['不動尊明王（菩提心堅固）', '蓮花生大士（定以蓮師揚佛法）'],
+        months: '農曆四月八日（三步一拜返回新化佛顓寺朝山浴佛）及每週開放時段入殿共修請益',
+        prepTip: '可於每週二、三、五、六、日 14:30–22:00 開放時間親臨道場，向釋明法法師（大師兄）與同門請益共修。'
+      }
+    ];
+
+    let selectedIntentions = new Set(['obstacle', 'protection']);
+
+    function toggleIntention(id) {
+      if (selectedIntentions.has(id)) {
+        selectedIntentions.delete(id);
+      } else {
+        selectedIntentions.add(id);
+      }
+      renderIntentionsGrid();
+      renderMatcherReport();
+    }
+
+    function resetMatcher() {
+      selectedIntentions = new Set(['obstacle']);
+      const nameInput = document.getElementById('prayer-user-name');
+      const noteInput = document.getElementById('prayer-user-note');
+      if (nameInput) nameInput.value = '';
+      if (noteInput) noteInput.value = '';
+      renderIntentionsGrid();
+      renderMatcherReport();
+    }
+
+    function renderIntentionsGrid() {
+      const grid = document.getElementById('intentions-grid');
+      if (!grid) return;
+
+      grid.innerHTML = prayerIntentions.map(item => {
+        const isChecked = selectedIntentions.has(item.id);
+        return `
+          <button type="button" onclick="toggleIntention('${item.id}')" class="text-left p-4 rounded-2xl border-2 transition-all flex items-start gap-3 ${
+            isChecked
+              ? 'bg-amber-50/90 border-amber-600 shadow-sm'
+              : 'bg-parchment/40 border-stone-200 hover:border-stone-400'
+          }">
+            <div class="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
+              isChecked ? 'bg-red-600 text-white' : 'bg-white border border-stone-300 text-transparent'
+            }">
+              <i class="fa-solid fa-check text-xs"></i>
+            </div>
+            <div>
+              <div class="font-serif-tc font-bold text-sm sm:text-base text-obsidian">${item.label}</div>
+              <p class="text-xs text-stone-600 mt-1 leading-relaxed">${item.desc}</p>
+            </div>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function generateReportData() {
+      const chosen = prayerIntentions.filter(i => selectedIntentions.has(i.id));
+      const userName = (document.getElementById('prayer-user-name')?.value || '').trim();
+      const userNote = (document.getElementById('prayer-user-note')?.value || '').trim();
+
+      const now = new Date();
+      const thisSat = getLastSaturdayOfMonth(now.getFullYear(), now.getMonth());
+      const nextMonthDate = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+      const nextSat = getLastSaturdayOfMonth(nextMonthDate.getFullYear(), nextMonthDate.getMonth());
+      const upcomingSat = (now <= thisSat) ? thisSat : nextSat;
+
+      const ritualsSet = new Set();
+      const deitiesSet = new Set();
+      const monthsList = [];
+      const prepList = [];
+
+      chosen.forEach(c => {
+        c.rituals.forEach(r => ritualsSet.add(r));
+        c.deities.forEach(d => deitiesSet.add(d));
+        monthsList.push(`【${c.label}】${c.months}`);
+        prepList.push(c.prepTip);
+      });
+
+      return {
+        chosen,
+        userName,
+        userNote,
+        upcomingSatStr: `${formatDateChinese(upcomingSat)} 晚上 18:30`,
+        rituals: Array.from(ritualsSet),
+        deities: Array.from(deitiesSet),
+        monthsList,
+        prepList
+      };
+    }
+
+    function renderMatcherReport() {
+      const reportBody = document.getElementById('matcher-report-body');
+      if (!reportBody) return;
+
+      const data = generateReportData();
+
+      if (data.chosen.length === 0) {
+        reportBody.innerHTML = `
+          <div class="text-center py-10 text-stone-400">
+            <i class="fa-solid fa-hand-pointer text-3xl text-amber-400 mb-3"></i>
+            <p class="text-base font-medium text-white">請至少於左側勾選一項您的祈願需求</p>
+            <p class="text-xs mt-1">系統將即時為您配對專屬科儀、頂禮神尊與法會日程建議。</p>
+          </div>
+        `;
+        return;
+      }
+
+      reportBody.innerHTML = `
+        ${(data.userName || data.userNote) ? `
+          <div class="bg-white/5 rounded-xl p-3.5 border border-amber-500/30 text-xs sm:text-sm flex flex-wrap items-center justify-between gap-2">
+            <div><span class="text-amber-400 font-bold">祈願人：</span>${data.userName || '十方善信'}</div>
+            ${data.userNote ? `<div class="text-stone-300"><span class="text-amber-400 font-bold">備註：</span>${data.userNote}</div>` : ''}
+          </div>
+        ` : ''}
+
+        <div>
+          <div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">
+            <i class="fa-solid fa-fire text-red-400 mr-1.5"></i>推薦優先關注的科儀（共 ${data.rituals.length} 項）
+          </div>
+          <div class="flex flex-wrap gap-2">
+            ${data.rituals.map(r => `<span class="px-3 py-1.5 rounded-xl bg-red-600/30 border border-red-500/40 text-amber-200 text-xs sm:text-sm font-bold">${r}</span>`).join('')}
+          </div>
+        </div>
+
+        <div>
+          <div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">
+            <i class="fa-solid fa-hands-praying text-amber-300 mr-1.5"></i>建議入殿重點頂禮神尊
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            ${data.deities.map(d => `
+              <div class="bg-stone-900/90 px-3.5 py-2.5 rounded-xl border border-stone-700 text-xs sm:text-sm text-stone-200 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>
+                <span>${d}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="bg-stone-900/90 rounded-2xl p-4 border border-amber-500/20 space-y-2">
+          <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">
+            <i class="fa-regular fa-calendar-check mr-1.5"></i>適合參與的法會月份與近期場次
+          </div>
+          <div class="text-xs sm:text-sm text-white font-semibold">
+            近期下一場例行法會：<span class="text-amber-300">${data.upcomingSatStr}</span>
+          </div>
+          <ul class="space-y-1 text-xs text-stone-300 pt-1">
+            ${data.monthsList.map(m => `<li>・${m}</li>`).join('')}
+          </ul>
+        </div>
+
+        <div>
+          <div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">
+            <i class="fa-solid fa-clipboard-check mr-1.5"></i>報名與現場參拜準備建議
+          </div>
+          <ul class="space-y-1.5 text-xs sm:text-sm text-stone-300">
+            ${data.prepList.map(p => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-400 mt-1 text-xs"></i><span>${p}</span></li>`).join('')}
+          </ul>
+        </div>
+      `;
+    }
+
+    function copyTextFallback(text, onSuccess) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        if (onSuccess) onSuccess();
+      } catch (err) {
+        console.error('Copy failed', err);
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function copyPrayerMemo() {
+      const data = generateReportData();
+      if (data.chosen.length === 0) return;
+
+      const lines = [
+        '【臺南善化東密明王殿｜個人參拜與法會備忘錄】',
+        data.userName ? `祈願人：${data.userName}` : '祈願人：十方善信',
+        data.userNote ? `祈願備註：${data.userNote}` : '',
+        `勾選祈願面向：${data.chosen.map(c => c.label).join('、')}`,
+        '----------------------------------------',
+        `★ 推薦參與科儀：${data.rituals.join('、')}`,
+        `★ 建議頂禮神尊：${data.deities.join('、')}`,
+        `★ 近期下一場例行法會：${data.upcomingSatStr}`,
+        '★ 參拜與報名準備：',
+        ...data.prepList.map((p, i) => `  ${i + 1}. ${p}`),
+        '----------------------------------------',
+        '道場地址：臺南市善化區中山路 377 號店面 22 號一樓',
+        '開放時間：每週二、三、五、六、日 14:30–22:00（週一、週四公休）'
+      ].filter(Boolean).join('\n');
+
+      copyTextFallback(lines, () => {
+        const toast = document.getElementById('copy-toast');
+        if (toast) {
+          toast.classList.remove('hidden');
+          setTimeout(() => toast.classList.add('hidden'), 4000);
+        }
+      });
+    }
+
+    function copyTempleAddress() {
+      const addr = '臺南市善化區中山路377號店面22號一樓';
+      copyTextFallback(addr, () => {
+        const msg = document.getElementById('address-copy-msg');
+        if (msg) {
+          msg.classList.remove('hidden');
+          setTimeout(() => msg.classList.add('hidden'), 3500);
+        }
+      });
+    }
+
+    // =========================================================================
+    // 6. LOGIC: 參拜資訊與即時開放狀態看板 (Live Open/Closed Status)
+    // =========================================================================
+    // Schedule: Open Tue(2), Wed(3), Fri(5), Sat(6), Sun(0) 14:30 - 22:00. Closed Mon(1), Thu(4).
+    const openDaysSet = new Set([0, 2, 3, 5, 6]);
+    const dayNames = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+
+    function findNextOpenTimeDescription(now) {
+      const curDay = now.getDay();
+      const curMinutes = now.getHours() * 60 + now.getMinutes();
+      const openMinutes = 14 * 60 + 30; // 14:30 (870)
+      const closeMinutes = 22 * 60;     // 22:00 (1320)
+
+      // If today is an open day and before 14:30
+      if (openDaysSet.has(curDay) && curMinutes < openMinutes) {
+        return `今日（${dayNames[curDay]}）下午 14:30 開放參拜`;
+      }
+
+      // Otherwise check subsequent days (1 to 7 days ahead)
+      for (let offset = 1; offset <= 7; offset++) {
+        const nextDay = (curDay + offset) % 7;
+        if (openDaysSet.has(nextDay)) {
+          const prefix = offset === 1 ? '明日' : `下個開放日`;
+          return `${prefix}（${dayNames[nextDay]}）下午 14:30 開放參拜`;
+        }
+      }
+      return '每週二、三、五、六、日 14:30 開放';
+    }
+
+    function updateLiveTempleStatus() {
+      const now = new Date();
+      const curDay = now.getDay();
+      const curMinutes = now.getHours() * 60 + now.getMinutes();
+      const openMinutes = 14 * 60 + 30; // 14:30
+      const closeMinutes = 22 * 60;     // 22:00
+
+      const isOpenNow = openDaysSet.has(curDay) && curMinutes >= openMinutes && curMinutes < closeMinutes;
+      const timeStr = `${dayNames[curDay]} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      // Navbar badge
+      const navDot = document.getElementById('nav-status-dot');
+      const navText = document.getElementById('nav-status-text');
+
+      // Visit section card
+      const clockDisplay = document.getElementById('live-clock-display');
+      const statusIndicator = document.getElementById('live-status-indicator');
+      const statusTitle = document.getElementById('live-status-title');
+      const statusDesc = document.getElementById('live-status-desc');
+
+      if (clockDisplay) clockDisplay.textContent = `目前時間：${timeStr}`;
+
+      if (isOpenNow) {
+        if (navDot) navDot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-ping';
+        if (navText) navText.textContent = '開放參拜中 (至 22:00)';
+        if (statusIndicator) statusIndicator.className = 'w-3.5 h-3.5 rounded-full bg-emerald-400 animate-ping';
+        if (statusTitle) {
+          statusTitle.textContent = '🟢 目前開放參拜中';
+          statusTitle.className = 'font-serif-tc text-2xl sm:text-3xl font-bold text-emerald-400';
+        }
+        if (statusDesc) {
+          statusDesc.textContent = `今日（${dayNames[curDay]}）開放時段為 14:30–22:00，歡迎十方善信入殿禮佛、點燈或報名每月法會。`;
+        }
+      } else {
+        const nextOpenText = findNextOpenTimeDescription(now);
+        if (navDot) navDot.className = 'w-2 h-2 rounded-full bg-amber-400';
+        if (navText) navText.textContent = '目前休館中';
+        if (statusIndicator) statusIndicator.className = 'w-3.5 h-3.5 rounded-full bg-amber-400';
+        if (statusTitle) {
+          statusTitle.textContent = '🌙 目前休館中';
+          statusTitle.className = 'font-serif-tc text-2xl sm:text-3xl font-bold text-amber-300';
+        }
+        if (statusDesc) {
+          const reason = !openDaysSet.has(curDay) ? `今日（${dayNames[curDay]}）為道場固定公休日。` : '目前已非開放時段（開放時間為 14:30–22:00）。';
+          statusDesc.textContent = `${reason} 下次開放時間：${nextOpenText}。`;
+        }
+      }
+
+      // Render Weekly Schedule Table with Today Highlight
+      const tbody = document.getElementById('weekly-schedule-tbody');
+      if (tbody) {
+        const order = [1, 2, 3, 4, 5, 6, 0]; // Mon to Sun
+        tbody.innerHTML = order.map(d => {
+          const isToday = d === curDay;
+          const isOpenDay = openDaysSet.has(d);
+          const note = d === 6
+            ? '14:30 – 22:00（每月最後週六 18:30 舉辦例行法會）'
+            : isOpenDay ? '14:30 – 22:00（開放禮佛、請益、點燈報名）' : '全天公休（週一、週四固定休館）';
+
+          return `
+            <tr class="${isToday ? 'bg-amber-50/90 font-semibold' : ''}">
+              <td class="py-3 px-4 text-obsidian flex items-center gap-2">
+                <span>${dayNames[d]}</span>
+                ${isToday ? '<span class="text-[11px] px-2 py-0.5 rounded-full bg-red-600 text-white font-bold">今日</span>' : ''}
+              </td>
+              <td class="py-3 px-4">
+                ${isOpenDay
+                  ? '<span class="inline-flex items-center gap-1 text-emerald-700 font-bold"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>開放參拜</span>'
+                  : '<span class="inline-flex items-center gap-1 text-stone-400"><span class="w-2 h-2 rounded-full bg-stone-400"></span>固定公休</span>'}
+              </td>
+              <td class="py-3 px-4 text-stone-600">${note}</td>
+            </tr>
+          `;
+        }).join('');
+      }
+    }
+
+    // =========================================================================
+    // 7. INITIALIZATION & MOBILE MENU EVENTS
+    // =========================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      // Mobile menu toggle
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuIcon = document.getElementById('mobile-menu-icon');
+
+      if (menuBtn && mobileMenu && menuIcon) {
+        menuBtn.addEventListener('click', () => {
+          const isHidden = mobileMenu.classList.contains('hidden');
+          if (isHidden) {
+            mobileMenu.classList.remove('hidden');
+            menuIcon.className = 'fa-solid fa-xmark text-xl';
+          } else {
+            mobileMenu.classList.add('hidden');
+            menuIcon.className = 'fa-solid fa-bars text-lg';
+          }
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            menuIcon.className = 'fa-solid fa-bars text-lg';
+          });
+        });
+      }
+
+      // Initialize all interactive modules
+      renderPillars();
+      renderDeities();
+      initRoutineCalculator();
+      renderTimeline();
+      renderRituals();
+      renderIntentionsGrid();
+      renderMatcherReport();
+      updateLiveTempleStatus();
+
+      // Refresh live status every minute
+      setInterval(updateLiveTempleStatus, 60000);
+    });
+  </script>
+</body>
+</html>
