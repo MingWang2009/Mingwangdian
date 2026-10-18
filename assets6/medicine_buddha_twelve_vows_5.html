@@ -1,0 +1,2268 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>藥師琉璃光如來十二大願｜3D 立體切割紙藝・陶瓷光澤環繞空間</title>
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="藥師琉璃光如來十二大願">
+	<meta property="og:description" content="3D立體切割紙藝・陶瓷光澤環繞空間・十二大願互動壇城">
+	<meta property="og:image" content="https://mingwang2009.github.io/Mingwangdian/assets6/medicine_buddha_twelve_vows_5.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta name="twitter:card" content="summary_large_image">
+	
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Three.js r128 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- 引入 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Inter"', '"PingFang TC"', '"Microsoft JhengHei"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Noto Serif TC', serif;
+            transition: background 0.6s ease;
+        }
+
+        /* 3D 畫布容器：隨三種陶瓷主題切換攝影棚柔和漸層背景 */
+        #canvas-container {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            transition: background 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .bg-theme-porcelain {
+            background: radial-gradient(circle at 50% 32%, #eef4fb 0%, #d5e3f3 52%, #b8cde6 100%);
+        }
+        .bg-theme-celadon {
+            background: radial-gradient(circle at 50% 32%, #f4f7f4 0%, #dce7e2 52%, #bfd2ca 100%);
+        }
+        .bg-theme-obsidian {
+            background: radial-gradient(circle at 50% 32%, #162238 0%, #0b1220 55%, #050811 100%);
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+        canvas:active {
+            cursor: grabbing;
+        }
+
+        /* 3D 龕位上方懸浮陶瓷名牌投影層 */
+        #labels-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        /* 陶瓷浮雕感膠囊名牌 */
+        .ceramic-pill-label {
+            position: absolute;
+            transform: translate(-50%, -100%);
+            pointer-events: auto;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background 0.3s ease;
+            background: rgba(255, 255, 255, 0.90);
+            color: #0f172a;
+            border: 1.5px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.14), inset 0 2px 3px rgba(255, 255, 255, 1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .ceramic-pill-label:hover {
+            transform: translate(-50%, -110%) scale(1.08);
+            box-shadow: 0 10px 25px rgba(29, 78, 216, 0.25), inset 0 2px 4px #ffffff;
+            z-index: 40 !important;
+        }
+
+        .ceramic-pill-label.lit {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-color: #f59e0b;
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35), inset 0 2px 4px #ffffff;
+        }
+
+        .ceramic-pill-label.active-shrine {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+            color: #ffffff;
+            border-color: #93c5fd;
+            transform: translate(-50%, -115%) scale(1.12);
+            box-shadow: 0 12px 28px rgba(29, 78, 216, 0.45);
+        }
+
+        /* 陶瓷光澤 UI 面板（宛如拋光白瓷與壓克力層疊） */
+        .porcelain-card {
+            background: rgba(255, 255, 255, 0.86);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(255, 255, 255, 0.95);
+            box-shadow:
+                0 18px 40px -10px rgba(15, 35, 65, 0.16),
+                0 4px 12px rgba(15, 35, 65, 0.08),
+                inset 0 2px 3px rgba(255, 255, 255, 0.95);
+            color: #0f172a;
+        }
+
+        .obsidian-mode .porcelain-card {
+            background: rgba(15, 23, 42, 0.86);
+            border-color: rgba(255, 215, 0, 0.35);
+            box-shadow:
+                0 18px 45px rgba(0, 0, 0, 0.65),
+                inset 0 1px 2px rgba(255, 255, 255, 0.15);
+            color: #f8fafc;
+        }
+
+        /* 3D 拋光膠囊按鈕 */
+        .glossy-btn {
+            position: relative;
+            transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08), inset 0 1.5px 2px rgba(255, 255, 255, 0.9);
+        }
+        .glossy-btn:hover {
+            transform: translateY(-1.5px);
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.13), inset 0 2px 3px rgba(255, 255, 255, 1);
+        }
+        .glossy-btn:active {
+            transform: translateY(0.5px) scale(0.98);
+        }
+
+        /* 難字注音標記 */
+        .ruby-term {
+            border-bottom: 2px dotted #d97706;
+            color: #b45309;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0 2px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+        .obsidian-mode .ruby-term {
+            color: #fbbf24;
+            border-bottom-color: #fbbf24;
+        }
+        .ruby-term:hover {
+            background-color: rgba(245, 158, 11, 0.18);
+        }
+
+        .selectable-text {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        /* 自訂捲軸 */
+        .custom-scroll::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(148, 163, 184, 0.12);
+            border-radius: 9999px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(100, 116, 139, 0.35);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="bg-theme-porcelain">
+
+    <!-- 1. Three.js 3D 立體切割紙藝環繞空間容器 -->
+    <div id="canvas-container" class="bg-theme-porcelain"></div>
+
+    <!-- 2. 3D 龕位懸浮陶瓷名牌投影層 -->
+    <div id="labels-container"></div>
+
+    <!-- 3. 頂部導覽與「視角 / 陶瓷材質 / 紙藝展開度」控制列 -->
+    <header class="fixed top-0 left-0 right-0 z-30 pointer-events-none p-2.5 sm:p-4">
+        <div class="max-w-7xl mx-auto flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-2.5">
+            
+            <!-- 左側：品牌標識與點燈計數 -->
+            <div class="porcelain-card rounded-2xl px-4 py-2.5 flex items-center justify-between sm:justify-start gap-3.5 pointer-events-auto">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-700 via-blue-600 to-cyan-500 flex items-center justify-center shadow-md border-2 border-white shrink-0">
+                        <span class="text-white font-black text-lg">琉</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-sm sm:text-base font-black tracking-wide">
+                                藥師琉璃光如來十二大願
+                            </h1>
+                            <span class="hidden md:inline-block text-[10px] font-sans font-semibold px-2.5 py-0.5 rounded-full bg-blue-600/10 text-blue-700 border border-blue-600/20">
+                                3D 立體切割・多層次紙藝環繞空間
+                            </span>
+                        </div>
+                        <p class="text-[11px] opacity-75 font-sans">
+                            拖曳 360° 環視十二座 5 層立體切割瓷雕龕位・點擊龕位觀賞紙藝景深展開
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 點燈進度與祈福卡按鈕 -->
+                <div class="flex items-center gap-2.5 pl-3 border-l border-slate-300/60 shrink-0 font-sans">
+                    <div class="text-right">
+                        <div class="text-[10px] opacity-65">瓷光心燈</div>
+                        <div id="hud-lit-count" class="text-xs sm:text-sm font-extrabold text-amber-600">0 / 12 盞</div>
+                    </div>
+                    <button onclick="openDedicationModal()" class="glossy-btn px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold text-xs">
+                        🙏 藝境祈福卡
+                    </button>
+                </div>
+            </div>
+
+            <!-- 右側：三大 3D 環繞空間視角 + 三種陶瓷釉面主題切換 -->
+            <div class="porcelain-card rounded-2xl p-1.5 flex flex-wrap items-center justify-between gap-1.5 pointer-events-auto font-sans">
+                <!-- 三種 3D 空間互動視角 -->
+                <div class="flex items-center gap-1 overflow-x-auto custom-scroll">
+                    <button id="view-btn-surround" onclick="switchCameraMode('surround')" class="glossy-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-700 text-white whitespace-nowrap flex items-center gap-1">
+                        <span>🔄</span><span>360° 環繞空間內景</span>
+                    </button>
+                    <button id="view-btn-diorama" onclick="switchCameraMode('diorama')" class="glossy-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/80 text-slate-700 hover:bg-white whitespace-nowrap flex items-center gap-1">
+                        <span>🏛️</span><span>立體劇場全景</span>
+                    </button>
+                    <button id="view-btn-closeup" onclick="switchCameraMode('closeup')" class="glossy-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/80 text-slate-700 hover:bg-white whitespace-nowrap flex items-center gap-1">
+                        <span>🔍</span><span>龕位微距特寫</span>
+                    </button>
+                    <button id="btn-tour" onclick="toggleAutoTour()" class="glossy-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/80 text-slate-700 hover:bg-white whitespace-nowrap flex items-center gap-1">
+                        <span id="tour-icon">🔭</span><span id="tour-text">自動巡禮</span>
+                    </button>
+                </div>
+
+                <!-- 材質色彩主題切換 (青金白瓷 / 汝窯天青 / 曜黑鎏金) -->
+                <div class="flex items-center gap-1 pl-2 border-l border-slate-300/60">
+                    <span class="text-[11px] opacity-65 hidden sm:inline px-1">陶瓷釉色：</span>
+                    <button onclick="applyMaterialTheme('porcelain', this)" class="theme-btn glossy-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-50 text-blue-800 border border-blue-300 flex items-center gap-1" title="純白亮面陶瓷與青金石藍釉">
+                        <span class="w-2.5 h-2.5 rounded-full bg-blue-600 inline-block"></span><span>青金白瓷</span>
+                    </button>
+                    <button onclick="applyMaterialTheme('celadon', this)" class="theme-btn glossy-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-white/70 text-slate-700 border border-transparent flex items-center gap-1" title="溫潤天青瓷與象牙白樹脂">
+                        <span class="w-2.5 h-2.5 rounded-full bg-teal-600 inline-block"></span><span>汝窯天青</span>
+                    </button>
+                    <button onclick="applyMaterialTheme('obsidian', this)" class="theme-btn glossy-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-white/70 text-slate-700 border border-transparent flex items-center gap-1" title="高光黑釉與鎏金">
+                        <span class="w-2.5 h-2.5 rounded-full bg-slate-900 inline-block"></span><span>曜黑鎏金</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二排：四大悲願分類篩選 + 立體紙藝層次展開控制 + 一鍵點亮 -->
+        <div class="max-w-7xl mx-auto mt-2 flex flex-wrap items-center justify-between gap-2 pointer-events-none font-sans">
+            <!-- 四大分類 -->
+            <div class="porcelain-card rounded-full px-2 py-1 flex items-center gap-1 overflow-x-auto custom-scroll pointer-events-auto">
+                <button onclick="filterCategory('all', this)" class="cat-pill px-3 py-1 rounded-full text-xs font-bold bg-blue-700 text-white transition whitespace-nowrap">
+                    全部十二大願 (12)
+                </button>
+                <button onclick="filterCategory('light', this)" class="cat-pill px-3 py-1 rounded-full text-xs font-medium opacity-80 hover:opacity-100 transition whitespace-nowrap">
+                    ✨ 光明莊嚴 (1-2)
+                </button>
+                <button onclick="filterCategory('abundance', this)" class="cat-pill px-3 py-1 rounded-full text-xs font-medium opacity-80 hover:opacity-100 transition whitespace-nowrap">
+                    🌾 資生無缺 (3,11-12)
+                </button>
+                <button onclick="filterCategory('healing', this)" class="cat-pill px-3 py-1 rounded-full text-xs font-medium opacity-80 hover:opacity-100 transition whitespace-nowrap">
+                    🌿 身心療癒 (6-8,10)
+                </button>
+                <button onclick="filterCategory('wisdom', this)" class="cat-pill px-3 py-1 rounded-full text-xs font-medium opacity-80 hover:opacity-100 transition whitespace-nowrap">
+                    ☸️ 正見戒行 (4-5,9)
+                </button>
+            </div>
+
+            <!-- 紙藝層次視差展開切換 & 一鍵點燈 & 瓷磬音效 -->
+            <div class="flex items-center gap-1.5 pointer-events-auto">
+                <button id="btn-expand-layers" onclick="toggleGlobalLayerExpansion()" class="porcelain-card glossy-btn px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5">
+                    <span>📐</span><span id="expand-layers-text">展開 5 層紙藝景深</span>
+                </button>
+                <button onclick="igniteAllShrines()" class="porcelain-card glossy-btn px-3 py-1.5 rounded-full text-xs font-bold text-amber-700 flex items-center gap-1">
+                    <span>✨</span><span>全點亮流金光帶</span>
+                </button>
+                <button onclick="drawRandomVow()" class="porcelain-card glossy-btn px-3 py-1.5 rounded-full text-xs font-semibold text-blue-700 flex items-center gap-1">
+                    <span>🎲</span><span class="hidden sm:inline">今日相應願</span>
+                </button>
+                <button id="btn-audio-mute" onclick="toggleAudioMute()" class="porcelain-card glossy-btn px-2.5 py-1.5 rounded-full text-xs font-semibold" title="開關清脆瓷磬與琉璃頌缽音">
+                    🔔
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 4. 右側「多層次紙藝浮雕・大願經文詳情面板」 -->
+    <aside id="vow-detail-drawer" class="fixed z-30 right-3 sm:right-5 top-32 sm:top-36 bottom-20 sm:bottom-24 w-[calc(100vw-1.5rem)] sm:w-[440px] porcelain-card rounded-3xl p-5 flex flex-col justify-between transition-all duration-500 translate-x-[120%] opacity-0 pointer-events-none">
+        
+        <!-- 頂部：願序、5層紙藝結構解說與關閉按鈕 -->
+        <div class="flex items-start justify-between gap-2 border-b border-slate-300/60 pb-3 shrink-0">
+            <div>
+                <div class="flex flex-wrap items-center gap-1.5 mb-1 font-sans">
+                    <span id="panel-cat-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-600/15 text-blue-700">
+                        ✨ 光明莊嚴
+                    </span>
+                    <span id="panel-lit-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-200/80 text-slate-600">
+                        🕯️ 待點亮瓷燈
+                    </span>
+                </div>
+                <h2 id="panel-vow-title" class="text-xl sm:text-2xl font-black tracking-wide">
+                    第一大願・生佛平等願
+                </h2>
+                <p id="panel-sculpture-desc" class="text-[11px] opacity-75 font-sans mt-0.5">
+                    3D 立體切層雕塑：十二道熾然日輪 × 三十二相幾何寶冠
+                </p>
+            </div>
+            <button onclick="closeVowDetailDrawer()" class="glossy-btn w-8 h-8 rounded-full bg-slate-200/70 hover:bg-slate-300/80 flex items-center justify-center text-slate-700 font-bold text-lg leading-none shrink-0" title="關閉詳情面板">
+                &times;
+            </button>
+        </div>
+
+        <!-- 中段：經文原文（含難字讀音提示）、白話深意、現代修持 -->
+        <div class="my-3 overflow-y-auto custom-scroll pr-1.5 space-y-3.5 flex-1 selectable-text">
+            <!-- 經文原文立體內凹卡 -->
+            <div class="rounded-2xl p-4 bg-slate-500/10 border border-slate-400/25 shadow-inner">
+                <div class="flex items-center justify-between text-[11px] opacity-75 mb-2 font-sans">
+                    <span>📜 《藥師琉璃光如來本願功德經》原文</span>
+                    <span class="text-amber-600 font-semibold">點擊底線字顯示讀音</span>
+                </div>
+                <p id="panel-vow-original" class="text-base sm:text-[17px] leading-relaxed tracking-wide text-justify font-semibold"></p>
+                <div id="pronunciation-box" class="hidden mt-3 pt-2.5 border-t border-amber-500/30 text-xs font-sans text-amber-700 bg-amber-500/10 p-2.5 rounded-xl"></div>
+            </div>
+
+            <!-- 白話深意 -->
+            <div class="rounded-2xl p-3.5 bg-blue-500/10 border-l-4 border-blue-600 text-sm">
+                <div class="font-bold text-blue-700 mb-1 flex items-center gap-1.5 font-sans">
+                    <span>🪷</span><span>白話深意解析</span>
+                </div>
+                <p id="panel-vow-meaning" class="leading-relaxed text-justify opacity-90"></p>
+            </div>
+
+            <!-- 現代生活修持啟示 -->
+            <div class="rounded-2xl p-3.5 bg-amber-500/10 border-l-4 border-amber-500 text-sm">
+                <div class="font-bold text-amber-700 mb-1 flex items-center gap-1.5 font-sans">
+                    <span>🌿</span><span>現代生活修持啟示</span>
+                </div>
+                <p id="panel-vow-practice" class="leading-relaxed text-justify opacity-90"></p>
+            </div>
+        </div>
+
+        <!-- 底部：點亮流金光帶、語音恭誦、前後龕位切換 -->
+        <div class="pt-3 border-t border-slate-300/60 space-y-2 shrink-0 font-sans">
+            <div class="flex items-center gap-2">
+                <button id="panel-btn-light" onclick="toggleActiveShrineLight()" class="glossy-btn flex-1 py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 flex items-center justify-center gap-1.5">
+                    <span>🕯️</span><span id="panel-btn-light-text">點亮此龕位・連結流金光帶</span>
+                </button>
+                <button onclick="speakCurrentVow()" class="glossy-btn py-2.5 px-3.5 rounded-xl bg-blue-600/15 text-blue-700 font-bold text-xs sm:text-sm flex items-center gap-1">
+                    <span id="speak-icon">🔊</span><span id="speak-text">恭誦</span>
+                </button>
+            </div>
+
+            <div class="flex items-center justify-between gap-2 text-xs font-semibold">
+                <button onclick="stepVow(-1)" class="glossy-btn flex-1 py-1.5 px-3 rounded-xl bg-slate-500/10 hover:bg-slate-500/20">
+                    ◀ 上一座龕位
+                </button>
+                <button onclick="switchCameraMode('surround')" class="glossy-btn py-1.5 px-3 rounded-xl bg-slate-500/10 hover:bg-slate-500/20 text-blue-700">
+                    🔄 環繞內景
+                </button>
+                <button onclick="stepVow(1)" class="glossy-btn flex-1 py-1.5 px-3 rounded-xl bg-slate-500/10 hover:bg-slate-500/20">
+                    下一座龕位 ▶
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 5. 底部 360° 環繞空間十二龕位快速導覽列 -->
+    <footer class="fixed bottom-0 left-0 right-0 z-20 p-2.5 sm:p-3.5 pointer-events-none">
+        <div class="max-w-6xl mx-auto">
+            <div id="bottom-shrines-dock" class="porcelain-card rounded-2xl p-2 flex items-center gap-1.5 sm:gap-2 overflow-x-auto custom-scroll pointer-events-auto">
+                <!-- 由 JS 動態生成 1~12 龕位陶瓷按鈕 -->
+            </div>
+        </div>
+    </footer>
+
+    <!-- 6. 十二大願全數點亮慶祝橫幅 -->
+    <div id="grand-completion-banner" class="fixed top-32 left-1/2 -translate-x-1/2 z-40 hidden pointer-events-auto">
+        <div class="porcelain-card rounded-full px-5 py-2.5 flex items-center gap-3 border-2 border-amber-400 shadow-2xl animate-bounce font-sans">
+            <span class="text-xl">🌟</span>
+            <div class="text-xs sm:text-sm">
+                <span class="font-black text-amber-600">十二大願瓷光壇城大圓滿！</span>
+                <span class="opacity-80 hidden sm:inline">十二道立體流金光帶已匯聚中央琉璃寶塔</span>
+            </div>
+            <button onclick="openDedicationModal()" class="glossy-btn px-3 py-1 rounded-full bg-amber-400 text-slate-950 font-bold text-xs">
+                匯出 3D 藝境祈福卡
+            </button>
+            <button onclick="document.getElementById('grand-completion-banner').classList.add('hidden')" class="opacity-60 hover:opacity-100 text-base px-1">&times;</button>
+        </div>
+    </div>
+
+    <!-- 7. 彈窗：3D 立體紙藝瓷光祈福卡生成 Modal -->
+    <div id="dedication-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-md p-3 sm:p-6 overflow-y-auto" onclick="closeDedicationModal()">
+        <div class="relative w-full max-w-2xl porcelain-card rounded-3xl p-5 sm:p-7 my-auto" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between border-b border-slate-300/60 pb-3.5 mb-4">
+                <div>
+                    <h3 class="text-lg sm:text-2xl font-black flex items-center gap-2">
+                        <span>🙏</span><span>3D 立體切割瓷光・祈福迴向卡</span>
+                    </h3>
+                    <p class="text-xs opacity-75 font-sans mt-0.5">
+                        擷取當前 3D 立體紙藝陶瓷空間畫面，結合多層次立體邊框合成高解析度 PNG 圖卡
+                    </p>
+                </div>
+                <button onclick="closeDedicationModal()" class="text-2xl leading-none opacity-60 hover:opacity-100 px-2">&times;</button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 font-sans">
+                <div>
+                    <label class="block text-xs font-bold opacity-80 mb-1">祈福弟子／功德主姓名</label>
+                    <input type="text" id="input-donor" value="三寶弟子" oninput="renderBlessingCardCanvas()" class="w-full px-3 py-2 rounded-xl bg-white/90 border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-blue-600 selectable-text">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold opacity-80 mb-1">迴向對象</label>
+                    <input type="text" id="input-target" value="法界一切有情眾生、闔家眷屬" oninput="renderBlessingCardCanvas()" class="w-full px-3 py-2 rounded-xl bg-white/90 border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-blue-600 selectable-text">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-bold opacity-80 mb-1">祈福迴向願文</label>
+                    <input type="text" id="input-wish" value="身如琉璃內外明徹，眾病悉除，身心安樂，資具豐足，速證菩提。" oninput="renderBlessingCardCanvas()" class="w-full px-3 py-2 rounded-xl bg-white/90 border border-slate-300 text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-blue-600 selectable-text">
+                </div>
+            </div>
+
+            <!-- 祈福卡預覽 Canvas -->
+            <div class="rounded-2xl overflow-hidden border-2 border-white shadow-xl mb-4 bg-slate-100 flex justify-center">
+                <canvas id="blessing-card-canvas" width="960" height="580" class="w-full h-auto max-h-[280px] object-contain"></canvas>
+            </div>
+
+            <div id="modal-toast" class="hidden mb-3 py-2 px-3 rounded-xl bg-emerald-600 text-white text-xs text-center font-sans font-semibold"></div>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 font-sans">
+                <button onclick="capture3DSnapshot()" class="glossy-btn px-3.5 py-2 rounded-xl bg-slate-200/80 text-slate-800 text-xs font-semibold">
+                    📸 重新擷取當前 3D 畫面
+                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="copyDedicationText()" class="glossy-btn px-4 py-2 rounded-xl bg-blue-600/15 text-blue-800 text-xs sm:text-sm font-bold">
+                        📋 複製迴向文
+                    </button>
+                    <button onclick="downloadBlessingCard()" class="glossy-btn px-5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-bold text-xs sm:text-sm">
+                        🖼️ 下載 3D 藝境祈福卡 (PNG)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* =========================================================================
+         * 壹、藥師琉璃光如來十二大願 完整原文與專屬 3D 立體切層雕塑設定
+         * ========================================================================= */
+        const vowsData = [
+            {
+                id: 1,
+                shortTitle: "生佛平等願",
+                category: "light",
+                categoryName: "✨ 光明莊嚴",
+                sculptureDesc: "3D 立體切層雕塑：十二道熾然日輪 × 三十二相幾何寶冠",
+                original: "第一大願：願我來世得阿耨多羅三藐三菩提時，自身光明，熾然照耀無量無數無邊世界，以三十二大丈夫相、八十隨形，莊嚴其身，令一切有情，如我無異。",
+                meaning: "佛陀成道證得無上正等正覺時，自身散發熾盛光明，遍照無量無邊的世界；並以三十二大丈夫相、八十隨形好莊嚴法身，更發願令一切眾生都能獲得與佛陀完全無異的圓滿智慧與莊嚴身相。",
+                practice: "破除自卑與分別心，肯定自己與一切眾生皆具足如來本具的清淨佛性，在日常生活中以慈悲威儀莊嚴自身。"
+            },
+            {
+                id: 2,
+                shortTitle: "開曉事業願",
+                category: "light",
+                categoryName: "✨ 光明莊嚴",
+                sculptureDesc: "3D 立體切層雕塑：內外明徹多層切割琉璃寶塔 × 日月雙輪",
+                original: "第二大願：願我來世得菩提時，身如琉璃，內外明徹，淨無瑕穢，光明廣大，功德巍巍，身善安住，焰網莊嚴，過於日月；幽冥眾生，悉蒙開曉，隨意所趣，作諸事業。",
+                meaning: "佛身猶如清淨寶琉璃，內外透明澄澈、毫無瑕疵污穢，廣大光明超越日月；能令處於黑暗幽冥或心靈迷惘中的眾生蒙受開曉、心開意解，順利前往理想方向，成就種種善妙事業。",
+                practice: "修習「身如琉璃，內外明徹」的真誠坦蕩、表裡如一；當遭遇人生迷茫或低谷時，安住正念祈請琉璃光明指引方向。"
+            },
+            {
+                id: 3,
+                shortTitle: "無盡資生願",
+                category: "abundance",
+                categoryName: "🌾 資生無缺",
+                sculptureDesc: "3D 立體切層雕塑：無盡如意寶瓶 × 湧泉豐饒幾何波紋",
+                original: "第三大願：願我來世得菩提時，以無量無邊智慧方便，令諸有情，皆得無盡所受用物，莫令眾生有所乏少。",
+                meaning: "以無量無邊的智慧與善巧方便，使一切眾生都能獲得受用不盡的生活資具，不讓任何眾生因為物質匱乏而陷入貧苦憂愁。",
+                practice: "將佛法智慧運用於正當工作與資源管理，常懷知足感恩並樂於布施分享，便是開啟無盡富足的泉源。"
+            },
+            {
+                id: 4,
+                shortTitle: "安立大乘願",
+                category: "wisdom",
+                categoryName: "☸️ 正見戒行",
+                sculptureDesc: "3D 立體切層雕塑：八正道菩提星羅盤 × 大乘雙翼拱門",
+                original: "第四大願：願我來世得菩提時，若諸有情行邪道者，悉令安住菩提道中；若行聲聞獨覺乘者，皆以大乘而安立之。",
+                meaning: "若眾生誤入偏差邪道，皆引導其回歸覺悟的菩提正道；若修行者僅停留在自利自度的聲聞、獨覺小乘境界，皆以自利利他的大乘菩薩道安立之。",
+                practice: "拓寬生命格局，從「只求自己安穩」提升為「願與眾生共好」，在日常服務與關懷他人中實踐大乘菩薩行。"
+            },
+            {
+                id: 5,
+                shortTitle: "戒行清淨願",
+                category: "wisdom",
+                categoryName: "☸️ 正見戒行",
+                sculptureDesc: "3D 立體切層雕塑：三聚淨戒立體交錯同心玉環 × 清淨白蓮",
+                original: "第五大願：願我來世得菩提時，若有無量無邊有情，於我法中修行梵行，一切皆令得不缺戒，具三聚戒。設有毀犯，聞我名已，還得清淨，不墮惡趣。",
+                meaning: "護念在佛法中修持清淨梵行的眾生，皆得圓滿不缺的「三聚淨戒」（攝律儀戒、攝善法戒、饒益有情戒）。假使一時失念毀犯，只要聽聞並至誠稱念藥師佛名號、真心懺悔，便能重獲清淨，不墮惡趣。",
+                practice: "持戒是保護身心的良藥；面對過失不陷入絕望自責，只要真誠發露懺悔、稱念佛號改過自新，隨時都能重啟清淨人生。"
+            },
+            {
+                id: 6,
+                shortTitle: "諸根完具願",
+                category: "healing",
+                categoryName: "🌿 身心療癒",
+                sculptureDesc: "3D 立體切層雕塑：六根圓滿對稱盛開六瓣蓮華 × 慧眼明珠",
+                original: "第六大願：願我來世得菩提時，若諸有情，其身下劣，諸根不具，醜陋、頑愚、盲、聾、瘖、瘂、攣、躄、背僂、白癩、癲狂，種種病苦；聞我名已，一切皆得端正黠慧。諸根完具，無諸疾苦。",
+                meaning: "若眾生身體孱弱、感官殘缺，或有頑愚、失明、失聰、瘖瘂、手腳蜷曲、駝背、皮膚重症、精神錯亂等種種病苦；聽聞藥師佛名號後，皆得相貌端正、聰明黠慧、諸根完具，遠離一切疾苦。",
+                practice: "愛惜自身健康，更以平等尊重的慈悲心關懷身心障礙者與病苦大眾，協助他們獲得良好醫療與生活尊嚴。"
+            },
+            {
+                id: 7,
+                shortTitle: "身心康樂願",
+                category: "healing",
+                categoryName: "🌿 身心療癒",
+                sculptureDesc: "3D 立體切層雕塑：大醫王藥師寶葫蘆 × 靈草舒葉紙雕",
+                original: "第七大願：願我來世得菩提時，若諸有情，眾病逼切，無救無歸，無醫無藥，無親無家，貧窮多苦，我之名號，一經其耳，眾病悉除，身心安樂，家屬資具，悉皆豐足，乃至證得無上菩提。",
+                meaning: "對於重病纏身、無救無歸、缺醫少藥、孤苦無依且貧窮多苦的眾生，只要藥師佛名號一經其耳，即能眾病悉除、身心安樂，家屬與生活資具悉皆豐足，乃至證得無上菩提。",
+                practice: "體現藥師如來「大醫王」最深切的救苦悲心；我們在人間也能成為孤苦病弱者的溫暖依靠，布施醫藥與關懷。"
+            },
+            {
+                id: 8,
+                shortTitle: "轉女成男願",
+                category: "healing",
+                categoryName: "🌿 身心療癒",
+                sculptureDesc: "3D 立體切層雕塑：大丈夫剛毅金剛冠 × 昇華蓮台切面",
+                original: "第八大願：願我來世得菩提時，若有女人，為女百惡之所逼惱，極生厭離，願捨女身；聞我名已，一切皆得轉女成男，具丈夫相，乃至證得無上菩提。",
+                meaning: "體恤古代或特定環境下女性受生理病痛與社會不平等待遇之百般逼惱，若聞藥師佛名號，皆能解脫性別枷鎖與苦惱，具足大丈夫剛健無畏之氣概，直至證得無上菩提。",
+                practice: "超越生理性別與世俗刻板標籤的束縛，在修行與人生道路上展現勇敢、自主、無畏承擔的「大丈夫相」。"
+            },
+            {
+                id: 9,
+                shortTitle: "回邪歸正願",
+                category: "wisdom",
+                categoryName: "☸️ 正見戒行",
+                sculptureDesc: "3D 立體切層雕塑：正見智慧寶劍 × 破網開明幾何光芒",
+                original: "第九大願：願我來世得菩提時，令諸有情，出魔羂網，解脫一切外道纏縛；若墮種種惡見稠林，皆當引攝置於正見，漸令修習諸菩薩行，速證無上正等菩提。",
+                meaning: "拔濟眾生脫離煩惱魔網與外道邪見的纏縛；若落入各種錯誤知見的濃密叢林，皆引導攝受其安住於正知正見，漸次修習菩薩行，速證無上正等菩提。",
+                practice: "在資訊紛亂的現代社會保持獨立思考與清明正念，不迷信盲從、不落入偏激惡見，以正見導引生活。"
+            },
+            {
+                id: 10,
+                shortTitle: "解脫憂苦願",
+                category: "healing",
+                categoryName: "🌿 身心療癒",
+                sculptureDesc: "3D 立體切層雕塑：開啟解脫雙環 × 自由飛昇祥雲翼",
+                original: "第十大願：願我來世得菩提時，若諸有情，王法所錄，縲縛鞭撻，繫閉牢獄，或當刑戮，及餘無量災難，凌辱，悲愁煎逼，身心受苦；若聞我名，以我福德威神力故，皆得解脫一切憂苦。",
+                meaning: "若眾生遭遇官司牢獄、綑綁鞭打、刑罰，或種種災難、欺凌侮辱，導致悲愁煎逼、身心受苦；只要聽聞藥師佛名號，仰仗佛陀福德威神力，皆得逢凶化吉、解脫一切憂苦。",
+                practice: "面對人生突如其來的逆境、委屈或情緒煎熬時，專念藥師佛名號安定身心，以智慧、善行與法律正道化解危難。"
+            },
+            {
+                id: 11,
+                shortTitle: "得妙飲食願",
+                category: "abundance",
+                categoryName: "🌾 資生無缺",
+                sculptureDesc: "3D 立體切層雕塑：上妙甘露豐盛寶缽 × 法味蓮華雲滴",
+                original: "第十一大願：願我來世得菩提時，若諸有情，飢渴所惱，為求食故造諸惡業；得聞我名，專念受持，我當先以上妙飲食，飽足其身；後以法味，畢竟安樂而建立之。",
+                meaning: "悲憫眾生因飢渴所逼、為了求取飲食而造作惡業；若能聽聞並專念受持藥師佛名號，佛陀先以上妙飲食飽足其身，隨後再以佛法真理的「法味」滋養心靈，建立畢竟安樂。",
+                practice: "實踐「先解決民生溫飽，再分享心靈法味」的務實慈悲；日常飲食常存感恩正念，不為口腹之慾造作惡業。"
+            },
+            {
+                id: 12,
+                shortTitle: "得妙衣具願",
+                category: "abundance",
+                categoryName: "🌾 資生無缺",
+                sculptureDesc: "3D 立體切層雕塑：華鬘寶瓔珞切層 × 鼓樂琵琶立體紙雕",
+                original: "第十二大願：願我來世得菩提時，若諸有情，貧無衣服，蚊虻寒熱，晝夜逼惱；若聞我名，專念受持，如其所好，即得種種上妙衣服，亦得一切寶莊嚴具，華鬘塗香，鼓樂眾伎，隨心所翫，皆令滿足。",
+                meaning: "若眾生貧困無衣，晝夜受蚊蟲寒熱逼惱；只要專念受持藥師佛名號，便能隨其所好獲得上妙衣服、珍寶莊嚴具、華鬘塗香與鼓樂眾伎，使生活具有尊嚴、美感與歡喜滿足。",
+                practice: "藥師法門重視人間生活品質與美感，修行不必枯燥苦悶，而是在莊嚴、喜悅、感恩中安心修持。"
+            }
+        ];
+
+        // 難字注音辭典
+        const pronunciationDict = [
+            { word: "阿耨多羅三藐三菩提", note: "讀音：ā nòu duō luó sān miǎo sān pú tí｜釋義：梵語無上正等正覺。" },
+            { word: "瘖", note: "讀音：音「因」（yīn）｜釋義：失聲不能言語。" },
+            { word: "瘂", note: "讀音：音「啞」（yǎ）｜釋義：同「啞」，口不能言。" },
+            { word: "攣", note: "讀音：音「巒」（luán）｜釋義：手腳蜷曲痙攣。" },
+            { word: "躄", note: "讀音：音「必」（bì）｜釋義：兩腿跛足、行動不便。" },
+            { word: "背僂", note: "讀音：音「背樓」（bèi lóu）｜釋義：脊柱彎曲駝背。" },
+            { word: "白癩", note: "讀音：音「白賴」（bái lài）｜釋義：頑固嚴重的皮膚疾患。" },
+            { word: "黠慧", note: "讀音：音「俠會」（xiá huì）｜釋義：聰明敏慧、通達事理。" },
+            { word: "羂網", note: "讀音：音「眷網」（juàn wǎng）｜釋義：捕捉鳥獸的羅網，比喻魔障之網。" },
+            { word: "縲縛", note: "讀音：音「雷服」（léi fù）｜釋義：以黑索綑綁拘禁。" },
+            { word: "鞭撻", note: "讀音：音「邊踏」（biān tà）｜釋義：鞭打刑罰。" },
+            { word: "蚊虻", note: "讀音：音「文萌」（wén méng）｜釋義：叮咬人畜的蚊蟲與牛虻。" },
+            { word: "華鬘", note: "讀音：音「花蠻」（huā mán）｜釋義：鮮花穿綴而成的莊嚴花環。" },
+            { word: "眾伎", note: "讀音：音「眾技」（zhòng jì）｜釋義：美好雅致的音樂與技藝。" },
+            { word: "翫", note: "讀音：音「玩」（wàn）｜釋義：通「玩」，欣賞、受用。" }
+        ];
+
+        /* =========================================================================
+         * 貳、Web Audio API 陶瓷風鈴 / 琉璃頌缽清脆泛音合成器
+         * ========================================================================= */
+        const litVows = new Set();
+        let activeVowId = 1;
+        let currentCategory = 'all';
+        let currentTheme = 'porcelain';
+        let globalLayersExpanded = false;
+        let isAudioMuted = false;
+        let isAutoTour = false;
+        let tourInterval = null;
+        let captured3DImage = null;
+        let audioCtx = null;
+
+        const ceramicScale = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50, 1174.66, 1318.51, 1567.98, 1760.00, 2093.00, 2349.32];
+
+        function playCeramicChime(freq = 880, duration = 2.2) {
+            if (isAudioMuted) return;
+            try {
+                if (!audioCtx) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContextClass) audioCtx = new AudioContextClass();
+                }
+                if (!audioCtx) return;
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const now = audioCtx.currentTime;
+                // 模擬清脆陶瓷風鈴與琉璃磬的高頻泛音比例
+                const overtones = [
+                    { ratio: 1.0, amp: 0.18, decay: duration },
+                    { ratio: 2.41, amp: 0.09, decay: duration * 0.55 },
+                    { ratio: 4.12, amp: 0.04, decay: duration * 0.3 }
+                ];
+
+                overtones.forEach(o => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq * o.ratio, now);
+
+                    gain.gain.setValueAtTime(0.0001, now);
+                    gain.gain.exponentialRampToValueAtTime(o.amp, now + 0.012);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + o.decay);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + o.decay + 0.04);
+                });
+            } catch (e) {}
+        }
+
+        function toggleAudioMute() {
+            isAudioMuted = !isAudioMuted;
+            document.getElementById('btn-audio-mute').innerText = isAudioMuted ? '🔇' : '🔔';
+            if (!isAudioMuted) playCeramicChime(1046.5, 1.6);
+        }
+
+        /* =========================================================================
+         * 叁、Three.js 3D 立體切割紙藝 & 拋光陶瓷釉面材質系統
+         * ========================================================================= */
+        let scene, camera, renderer, raycaster, mouse;
+        let sharedMaterials = {};
+        let centralPagodaGroup;
+        let centralRings = [];
+        let shrineObjects = []; // 12 座 5 層立體切割龕位
+        let floatingCutoutParticles = [];
+
+        // 三種陶瓷/拋光樹脂配色主題定義
+        const materialThemes = {
+            porcelain: {
+                frameWhite: 0xf8fafc,      // 純白亮面陶瓷
+                cloudLayer: 0xe2ecf8,      // 淺冰藍紙藝切層
+                primaryGlaze: 0x1d4ed8,    // 青金石藍釉
+                secondaryGlaze: 0x06b6d4,  // 琉璃青瓷釉
+                goldTrim: 0xf59e0b,        // 拋光香檳金
+                pedestalBase: 0xf1f5f9,    // 瓷白階梯座
+                fogColor: 0xd5e3f3
+            },
+            celadon: {
+                frameWhite: 0xfdfbf7,      // 溫潤象牙白樹脂
+                cloudLayer: 0xe4efe9,      // 淺天青切層
+                primaryGlaze: 0x4a7c74,    // 汝窯天青釉
+                secondaryGlaze: 0xe07a5f,  // 珊瑚粉釉
+                goldTrim: 0xd4a373,        // 暖金釉
+                pedestalBase: 0xf4f1ea,    // 暖白底座
+                fogColor: 0xdce7e2
+            },
+            obsidian: {
+                frameWhite: 0x1e293b,      // 曜石黑亮面烤漆
+                cloudLayer: 0x0f172a,      // 深邃墨藍切層
+                primaryGlaze: 0x00e5ff,    // 電光琉璃青
+                secondaryGlaze: 0x3b82f6,  // 寶石藍釉
+                goldTrim: 0xffd700,        // 鎏金
+                pedestalBase: 0x111827,    // 曜黑底座
+                fogColor: 0x0b1220
+            }
+        };
+
+        // 鏡頭控制狀態：支援 3 種空間互動視角 ('surround' 360環繞內景 | 'diorama' 立體劇場全景 | 'closeup' 龕位微距特寫)
+        const camControl = {
+            mode: 'surround',
+            azimuth: 0,
+            targetAzimuth: 0,
+            polar: 0.05,
+            targetPolar: 0.05,
+            dioramaDistance: 36,
+            targetDioramaDistance: 36,
+            currentPos: new THREE.Vector3(0, 2.2, 0.1),
+            targetPos: new THREE.Vector3(0, 2.2, 0.1),
+            currentLookAt: new THREE.Vector3(0, 2.2, -16),
+            targetLookAt: new THREE.Vector3(0, 2.2, -16),
+            isDragging: false,
+            dragMoved: false,
+            prevPointer: { x: 0, y: 0 },
+            hoveredShrineId: null
+        };
+
+        // 建立攝影棚柔光箱環境貼圖 (Studio Softbox Environment Map for High-Gloss Clearcoat Reflections)
+        function createStudioEnvironmentMap(rendererInstance) {
+            const pmremGenerator = new THREE.PMREMGenerator(rendererInstance);
+            pmremGenerator.compileEquirectangularShader();
+
+            const envScene = new THREE.Scene();
+            envScene.background = new THREE.Color(0xdbeafe);
+
+            // 頂部大型柔光箱 (讓陶瓷與拋光塑料邊緣呈現銳利漂亮的高光帶)
+            const topSoftbox = new THREE.Mesh(
+                new THREE.PlaneGeometry(60, 60),
+                new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide })
+            );
+            topSoftbox.position.set(0, 30, 0);
+            topSoftbox.rotation.x = Math.PI / 2;
+            envScene.add(topSoftbox);
+
+            // 左右兩側柔光燈條
+            const sideStripGeo = new THREE.PlaneGeometry(18, 45);
+            const warmStripMat = new THREE.MeshBasicMaterial({ color: 0xfff7ed, side: THREE.DoubleSide });
+            const coolStripMat = new THREE.MeshBasicMaterial({ color: 0xe0f2fe, side: THREE.DoubleSide });
+
+            const leftStrip = new THREE.Mesh(sideStripGeo, warmStripMat);
+            leftStrip.position.set(-32, 8, 10);
+            leftStrip.lookAt(0, 0, 0);
+            envScene.add(leftStrip);
+
+            const rightStrip = new THREE.Mesh(sideStripGeo, coolStripMat);
+            rightStrip.position.set(32, 8, -10);
+            rightStrip.lookAt(0, 0, 0);
+            envScene.add(rightStrip);
+
+            const envMap = pmremGenerator.fromScene(envScene, 0.03).texture;
+            pmremGenerator.dispose();
+            return envMap;
+        }
+
+        // 初始化拋光陶瓷與烤漆樹脂材質庫 (High Clearcoat, Crisp Specular)
+        function initSharedMaterials() {
+            const palette = materialThemes[currentTheme];
+
+            sharedMaterials.framePorcelain = new THREE.MeshPhysicalMaterial({
+                color: palette.frameWhite,
+                roughness: 0.14,
+                metalness: 0.04,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.06,
+                reflectivity: 0.95
+            });
+
+            sharedMaterials.cloudPaper = new THREE.MeshPhysicalMaterial({
+                color: palette.cloudLayer,
+                roughness: 0.22,
+                metalness: 0.02,
+                clearcoat: 0.85,
+                clearcoatRoughness: 0.1
+            });
+
+            sharedMaterials.primaryGlaze = new THREE.MeshPhysicalMaterial({
+                color: palette.primaryGlaze,
+                roughness: 0.12,
+                metalness: 0.08,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.04,
+                reflectivity: 1.0
+            });
+
+            sharedMaterials.secondaryGlaze = new THREE.MeshPhysicalMaterial({
+                color: palette.secondaryGlaze,
+                roughness: 0.15,
+                metalness: 0.06,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.05
+            });
+
+            sharedMaterials.goldLacquer = new THREE.MeshPhysicalMaterial({
+                color: palette.goldTrim,
+                emissive: 0x3b2300,
+                emissiveIntensity: 0.2,
+                roughness: 0.16,
+                metalness: 0.55,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.05
+            });
+
+            sharedMaterials.pedestalPorcelain = new THREE.MeshPhysicalMaterial({
+                color: palette.pedestalBase,
+                roughness: 0.18,
+                metalness: 0.05,
+                clearcoat: 0.9,
+                clearcoatRoughness: 0.08
+            });
+
+            sharedMaterials.litGoldGlow = new THREE.MeshPhysicalMaterial({
+                color: 0xffd700,
+                emissive: 0xffa000,
+                emissiveIntensity: 0.55,
+                roughness: 0.1,
+                metalness: 0.35,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.03
+            });
+        }
+
+        function init3DScene() {
+            const container = document.getElementById('canvas-container');
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(materialThemes[currentTheme].fogColor, 0.0085);
+
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 160);
+
+            renderer = new THREE.WebGLRenderer({
+                antialias: true,
+                alpha: true,
+                preserveDrawingBuffer: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.12;
+            container.appendChild(renderer.domElement);
+
+            // 套用攝影棚柔光箱反射環境
+            scene.environment = createStudioEnvironmentMap(renderer);
+
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            initSharedMaterials();
+            setupStudioLights();
+
+            // 1. 建立中央「東方琉璃多層次立體切割寶塔壇城」與多層次同心圓紙藝地面
+            buildCentralCutArtPagoda();
+
+            // 2. 建立 360° 環繞空間的「十二座 5 層立體切割陶瓷藝術龕位」
+            buildTwelveSurroundShrines();
+
+            // 3. 建立空間中懸浮的立體切割雲片與幾何瓷珠
+            buildFloatingCutArtPieces();
+
+            // 4. 綁定滑鼠與觸控互動
+            bindPointerEvents(renderer.domElement);
+            window.addEventListener('resize', onWindowResize);
+        }
+
+        function setupStudioLights() {
+            const hemiLight = new THREE.HemisphereLight(0xffffff, 0x94a3b8, 0.85);
+            hemiLight.position.set(0, 35, 0);
+            scene.add(hemiLight);
+
+            // 主攝影棚頂光（投射柔和立體紙藝層次陰影）
+            const mainDirLight = new THREE.DirectionalLight(0xfffbeb, 1.15);
+            mainDirLight.position.set(16, 32, 20);
+            mainDirLight.castShadow = true;
+            mainDirLight.shadow.mapSize.width = 2048;
+            mainDirLight.shadow.mapSize.height = 2048;
+            mainDirLight.shadow.camera.near = 2;
+            mainDirLight.shadow.camera.far = 75;
+            const d = 24;
+            mainDirLight.shadow.camera.left = -d;
+            mainDirLight.shadow.camera.right = d;
+            mainDirLight.shadow.camera.top = d;
+            mainDirLight.shadow.camera.bottom = -d;
+            mainDirLight.shadow.bias = -0.0005;
+            scene.add(mainDirLight);
+
+            // 補光與邊緣高光燈
+            const rimLight1 = new THREE.DirectionalLight(0xe0f2fe, 0.75);
+            rimLight1.position.set(-20, 18, -18);
+            scene.add(rimLight1);
+
+            const centerWarmLight = new THREE.PointLight(0xffedd5, 1.1, 35);
+            centerWarmLight.position.set(0, 5, 0);
+            scene.add(centerWarmLight);
+        }
+
+        /* =========================================================================
+         * 肆、幾何切割建模工具（Crisp Beveled ExtrudeGeometry）
+         * ========================================================================= */
+        // 建立乾淨斜角導角的立體切割幾何體
+        function createBeveledExtrude(shapes, depth = 0.22, bevelSize = 0.045) {
+            const geo = new THREE.ExtrudeGeometry(shapes, {
+                depth: depth,
+                bevelEnabled: true,
+                bevelSegments: 4,
+                steps: 1,
+                bevelSize: bevelSize,
+                bevelThickness: bevelSize
+            });
+            geo.center();
+            return geo;
+        }
+
+        // 波浪花邊圓盤 / 鏤空花環 Shape
+        function createScallopedRingShape(outerR = 1.6, innerR = 0.9, petals = 12, waveAmp = 0.12) {
+            const shape = new THREE.Shape();
+            const steps = 120;
+            for (let i = 0; i <= steps; i++) {
+                const theta = (i / steps) * Math.PI * 2;
+                const r = outerR + Math.cos(theta * petals) * waveAmp;
+                const x = Math.cos(theta) * r;
+                const y = Math.sin(theta) * r;
+                if (i === 0) shape.moveTo(x, y);
+                else shape.lineTo(x, y);
+            }
+            if (innerR > 0) {
+                const hole = new THREE.Path();
+                for (let i = 0; i <= 64; i++) {
+                    const theta = (i / 64) * Math.PI * 2;
+                    const x = Math.cos(theta) * innerR;
+                    const y = Math.sin(theta) * innerR;
+                    if (i === 0) hole.moveTo(x, y);
+                    else hole.lineTo(x, y);
+                }
+                shape.holes.push(hole);
+            }
+            return shape;
+        }
+
+        // 第 1 層外框：拱形蓮瓣鏤空立體切割框 Shape
+        function createShrineArchFrameShape(w = 3.1, h = 4.2, holeR = 1.18) {
+            const shape = new THREE.Shape();
+            const hw = w / 2;
+            const hh = h / 2;
+            shape.moveTo(-hw, -hh);
+            shape.lineTo(hw, -hh);
+            shape.lineTo(hw, hh * 0.25);
+            shape.quadraticCurveTo(hw, hh * 0.92, 0, hh * 1.08);
+            shape.quadraticCurveTo(-hw, hh * 0.92, -hw, hh * 0.25);
+            shape.closePath();
+
+            // 內部花邊鏤空視窗
+            const hole = new THREE.Path();
+            const steps = 80;
+            for (let i = 0; i <= steps; i++) {
+                const theta = (i / steps) * Math.PI * 2;
+                const r = holeR + Math.cos(theta * 12) * 0.05;
+                const x = Math.cos(theta) * r;
+                const y = Math.sin(theta) * r * 1.12 + 0.12;
+                if (i === 0) hole.moveTo(x, y);
+                else hole.lineTo(x, y);
+            }
+            shape.holes.push(hole);
+            return shape;
+        }
+
+        // 多層次紙藝祥雲立體切層 Shape
+        function createCloudCutoutShape(scale = 1.0) {
+            const s = new THREE.Shape();
+            s.moveTo(-1.1 * scale, -0.25 * scale);
+            s.lineTo(1.1 * scale, -0.25 * scale);
+            s.bezierCurveTo(1.35 * scale, -0.25 * scale, 1.35 * scale, 0.22 * scale, 0.92 * scale, 0.25 * scale);
+            s.bezierCurveTo(0.85 * scale, 0.62 * scale, 0.35 * scale, 0.65 * scale, 0.22 * scale, 0.36 * scale);
+            s.bezierCurveTo(0.0 * scale, 0.75 * scale, -0.48 * scale, 0.68 * scale, -0.55 * scale, 0.32 * scale);
+            s.bezierCurveTo(-0.95 * scale, 0.42 * scale, -1.25 * scale, 0.08 * scale, -1.1 * scale, -0.25 * scale);
+            return s;
+        }
+
+        // 依十二大願主題，為每一座龕位打造專屬的第 3 層「3D 立體切割主題雕塑」
+        function createVowBespokeSculptureGroup(vowId) {
+            const group = new THREE.Group();
+
+            // 輔助函式：建立星芒或花瓣切層
+            const makeStarOrLotusShape = (points, outerR, innerR) => {
+                const shape = new THREE.Shape();
+                const total = points * 2;
+                for (let i = 0; i <= total; i++) {
+                    const angle = (i / total) * Math.PI * 2 - Math.PI / 2;
+                    const r = i % 2 === 0 ? outerR : innerR;
+                    const x = Math.cos(angle) * r;
+                    const y = Math.sin(angle) * r;
+                    if (i === 0) shape.moveTo(x, y);
+                    else shape.lineTo(x, y);
+                }
+                return shape;
+            };
+
+            switch (vowId) {
+                case 1: {
+                    // 第1願：十二道熾然日輪 + 三十二相幾何寶冠
+                    const sunGeo = createBeveledExtrude(makeStarOrLotusShape(12, 0.92, 0.62), 0.16, 0.035);
+                    const sunMesh = new THREE.Mesh(sunGeo, sharedMaterials.goldLacquer);
+                    group.add(sunMesh);
+
+                    const centerGem = new THREE.Mesh(
+                        createBeveledExtrude(makeStarOrLotusShape(8, 0.45, 0.32), 0.22, 0.04),
+                        sharedMaterials.primaryGlaze
+                    );
+                    centerGem.position.z = 0.14;
+                    group.add(centerGem);
+                    break;
+                }
+                case 2: {
+                    // 第2願：內外明徹多層切割琉璃寶塔 + 日月雙輪
+                    const tiers = [
+                        { w: 1.1, h: 0.25, y: -0.42 },
+                        { w: 0.85, h: 0.25, y: -0.1 },
+                        { w: 0.6, h: 0.25, y: 0.22 },
+                        { w: 0.25, h: 0.42, y: 0.55 }
+                    ];
+                    tiers.forEach((t, i) => {
+                        const rect = new THREE.Shape();
+                        rect.moveTo(-t.w / 2, -t.h / 2);
+                        rect.lineTo(t.w / 2, -t.h / 2);
+                        rect.lineTo(t.w * 0.38, t.h / 2);
+                        rect.lineTo(-t.w * 0.38, t.h / 2);
+                        rect.closePath();
+                        const mesh = new THREE.Mesh(
+                            createBeveledExtrude(rect, 0.18, 0.035),
+                            i % 2 === 0 ? sharedMaterials.primaryGlaze : sharedMaterials.goldLacquer
+                        );
+                        mesh.position.set(0, t.y, i * 0.04);
+                        group.add(mesh);
+                    });
+                    break;
+                }
+                case 3: {
+                    // 第3願：無盡如意寶瓶 + 湧泉波紋切層
+                    const vasePts = [
+                        new THREE.Vector2(0, -0.65),
+                        new THREE.Vector2(0.45, -0.62),
+                        new THREE.Vector2(0.62, -0.2),
+                        new THREE.Vector2(0.28, 0.25),
+                        new THREE.Vector2(0.42, 0.48),
+                        new THREE.Vector2(0, 0.52)
+                    ];
+                    const vaseGeo = new THREE.LatheGeometry(vasePts, 24);
+                    const vaseMesh = new THREE.Mesh(vaseGeo, sharedMaterials.goldLacquer);
+                    vaseMesh.scale.set(1, 1, 0.55);
+                    group.add(vaseMesh);
+
+                    const waveMesh = new THREE.Mesh(
+                        createBeveledExtrude(createCloudCutoutShape(0.65), 0.14, 0.03),
+                        sharedMaterials.secondaryGlaze
+                    );
+                    waveMesh.position.set(0, -0.58, 0.15);
+                    group.add(waveMesh);
+                    break;
+                }
+                case 4: {
+                    // 第4願：八正道菩提星羅盤
+                    const starMesh = new THREE.Mesh(
+                        createBeveledExtrude(makeStarOrLotusShape(8, 0.95, 0.42), 0.16, 0.035),
+                        sharedMaterials.primaryGlaze
+                    );
+                    group.add(starMesh);
+                    const innerCompass = new THREE.Mesh(
+                        createBeveledExtrude(makeStarOrLotusShape(4, 0.62, 0.22), 0.2, 0.035),
+                        sharedMaterials.goldLacquer
+                    );
+                    innerCompass.position.z = 0.12;
+                    group.add(innerCompass);
+                    break;
+                }
+                case 5: {
+                    // 第5願：三聚淨戒立體交錯同心玉環
+                    [0.85, 0.58, 0.32].forEach((r, idx) => {
+                        const ringShape = createScallopedRingShape(r, r - 0.14, 12, 0.02);
+                        const ringMesh = new THREE.Mesh(
+                            createBeveledExtrude(ringShape, 0.16, 0.03),
+                            idx === 1 ? sharedMaterials.goldLacquer : sharedMaterials.secondaryGlaze
+                        );
+                        ringMesh.position.z = idx * 0.09;
+                        group.add(ringMesh);
+                    });
+                    break;
+                }
+                case 6: {
+                    // 第6願：六根圓滿對稱盛開六瓣蓮華
+                    const lotus6 = new THREE.Mesh(
+                        createBeveledExtrude(createScallopedRingShape(0.82, 0.2, 6, 0.16), 0.18, 0.04),
+                        sharedMaterials.secondaryGlaze
+                    );
+                    group.add(lotus6);
+                    const corePearl = new THREE.Mesh(
+                        new THREE.SphereGeometry(0.28, 24, 24),
+                        sharedMaterials.goldLacquer
+                    );
+                    corePearl.position.z = 0.15;
+                    group.add(corePearl);
+                    break;
+                }
+                case 7: {
+                    // 第7願：藥師寶葫蘆與靈草層疊雕
+                    const lowerBulb = new THREE.Mesh(
+                        createBeveledExtrude(createScallopedRingShape(0.55, 0, 16, 0.01), 0.2, 0.05),
+                        sharedMaterials.goldLacquer
+                    );
+                    lowerBulb.position.y = -0.25;
+                    group.add(lowerBulb);
+
+                    const upperBulb = new THREE.Mesh(
+                        createBeveledExtrude(createScallopedRingShape(0.38, 0, 16, 0.01), 0.2, 0.05),
+                        sharedMaterials.primaryGlaze
+                    );
+                    upperBulb.position.set(0, 0.32, 0.04);
+                    group.add(upperBulb);
+                    break;
+                }
+                case 8: {
+                    // 第8願：大丈夫剛毅金剛寶冠與蓮台
+                    const crown = new THREE.Mesh(
+                        createBeveledExtrude(makeStarOrLotusShape(5, 0.85, 0.45), 0.18, 0.04),
+                        sharedMaterials.goldLacquer
+                    );
+                    crown.position.y = 0.08;
+                    group.add(crown);
+                    const baseLotus = new THREE.Mesh(
+                        createBeveledExtrude(createCloudCutoutShape(0.72), 0.16, 0.035),
+                        sharedMaterials.primaryGlaze
+                    );
+                    baseLotus.position.set(0, -0.45, 0.12);
+                    group.add(baseLotus);
+                    break;
+                }
+                case 9: {
+                    // 第9願：正見智慧寶劍破魔網幾何切面
+                    const webRing = new THREE.Mesh(
+                        createBeveledExtrude(createScallopedRingShape(0.82, 0.56, 8, 0.06), 0.12, 0.025),
+                        sharedMaterials.secondaryGlaze
+                    );
+                    group.add(webRing);
+
+                    const bladeShape = new THREE.Shape();
+                    bladeShape.moveTo(0, 0.95);
+                    bladeShape.lineTo(0.18, 0.1);
+                    bladeShape.lineTo(0.42, 0.05);
+                    bladeShape.lineTo(0.14, -0.15);
+                    bladeShape.lineTo(0.14, -0.75);
+                    bladeShape.lineTo(-0.14, -0.75);
+                    bladeShape.lineTo(-0.14, -0.15);
+                    bladeShape.lineTo(-0.42, 0.05);
+                    bladeShape.lineTo(-0.18, 0.1);
+                    bladeShape.closePath();
+
+                    const swordMesh = new THREE.Mesh(
+                        createBeveledExtrude(bladeShape, 0.2, 0.04),
+                        sharedMaterials.goldLacquer
+                    );
+                    swordMesh.position.z = 0.12;
+                    group.add(swordMesh);
+                    break;
+                }
+                case 10: {
+                    // 第10願：開啟解脫雙環與和平飛雲
+                    [-0.32, 0.32].forEach((offsetX, i) => {
+                        const ringMesh = new THREE.Mesh(
+                            createBeveledExtrude(createScallopedRingShape(0.48, 0.28, 12, 0.015), 0.16, 0.035),
+                            i === 0 ? sharedMaterials.goldLacquer : sharedMaterials.secondaryGlaze
+                        );
+                        ringMesh.position.set(offsetX, 0.1, i * 0.08);
+                        group.add(ringMesh);
+                    });
+                    const cloud = new THREE.Mesh(
+                        createBeveledExtrude(createCloudCutoutShape(0.68), 0.15, 0.03),
+                        sharedMaterials.framePorcelain
+                    );
+                    cloud.position.set(0, -0.42, 0.14);
+                    group.add(cloud);
+                    break;
+                }
+                case 11: {
+                    // 第11願：上妙飲食甘露寶缽
+                    const bowlShape = new THREE.Shape();
+                    bowlShape.absarc(0, 0.05, 0.72, Math.PI, Math.PI * 2, false);
+                    bowlShape.closePath();
+                    const bowlMesh = new THREE.Mesh(
+                        createBeveledExtrude(bowlShape, 0.22, 0.045),
+                        sharedMaterials.primaryGlaze
+                    );
+                    group.add(bowlMesh);
+
+                    const nectarDrop = new THREE.Mesh(
+                        createBeveledExtrude(makeStarOrLotusShape(6, 0.42, 0.24), 0.18, 0.035),
+                        sharedMaterials.goldLacquer
+                    );
+                    nectarDrop.position.set(0, 0.35, 0.1);
+                    group.add(nectarDrop);
+                    break;
+                }
+                case 12:
+                default: {
+                    // 第12願：華鬘寶瓔珞切層與鼓樂立體紙雕
+                    const garland = new THREE.Mesh(
+                        createBeveledExtrude(createScallopedRingShape(0.86, 0.48, 10, 0.08), 0.16, 0.035),
+                        sharedMaterials.goldLacquer
+                    );
+                    group.add(garland);
+
+                    const jewelCenter = new THREE.Mesh(
+                        createBeveledExtrude(makeStarOrLotusShape(8, 0.45, 0.25), 0.22, 0.04),
+                        sharedMaterials.secondaryGlaze
+                    );
+                    jewelCenter.position.z = 0.12;
+                    group.add(jewelCenter);
+                    break;
+                }
+            }
+
+            group.traverse(c => {
+                if (c.isMesh) {
+                    c.castShadow = true;
+                    c.receiveShadow = true;
+                }
+            });
+            return group;
+        }
+
+        /* =========================================================================
+         * 伍、建構中央「東方琉璃多層次立體切割寶塔壇城」與「360° 環繞十二龕位」
+         * ========================================================================= */
+        function buildCentralCutArtPagoda() {
+            centralPagodaGroup = new THREE.Group();
+            scene.add(centralPagodaGroup);
+
+            // 1. 地面多層次紙藝同心圓波浪階梯舞台 (4層立體切割圓盤)
+            const stageLevels = [
+                { r: 19.5, y: -2.55, mat: sharedMaterials.pedestalPorcelain, petals: 24, amp: 0.15 },
+                { r: 13.5, y: -2.30, mat: sharedMaterials.cloudPaper, petals: 18, amp: 0.18 },
+                { r: 7.2,  y: -2.05, mat: sharedMaterials.framePorcelain, petals: 12, amp: 0.15 },
+                { r: 4.2,  y: -1.78, mat: sharedMaterials.goldLacquer, petals: 12, amp: 0.12 }
+            ];
+
+            stageLevels.forEach(st => {
+                const shape = createScallopedRingShape(st.r, 0, st.petals, st.amp);
+                const geo = createBeveledExtrude(shape, 0.24, 0.045);
+                const mesh = new THREE.Mesh(geo, st.mat);
+                mesh.rotation.x = Math.PI / 2;
+                mesh.position.y = st.y;
+                mesh.receiveShadow = true;
+                centralPagodaGroup.add(mesh);
+            });
+
+            // 2. 中央多層次切割蓮瓣寶座 (2層交錯立體切割瓷蓮瓣)
+            const lotusGroup = new THREE.Group();
+            lotusGroup.position.y = -1.2;
+            centralPagodaGroup.add(lotusGroup);
+
+            const petalShape = new THREE.Shape();
+            petalShape.moveTo(0, -0.6);
+            petalShape.quadraticCurveTo(0.55, 0, 0, 0.85);
+            petalShape.quadraticCurveTo(-0.55, 0, 0, -0.6);
+            const petalGeo = createBeveledExtrude(petalShape, 0.16, 0.04);
+
+            for (let i = 0; i < 12; i++) {
+                const angle = (i / 12) * Math.PI * 2;
+                const pMesh = new THREE.Mesh(petalGeo, i % 2 === 0 ? sharedMaterials.primaryGlaze : sharedMaterials.framePorcelain);
+                pMesh.position.set(Math.cos(angle) * 2.4, 0.2, Math.sin(angle) * 2.4);
+                pMesh.rotation.y = -angle + Math.PI / 2;
+                pMesh.rotation.x = 0.55;
+                pMesh.castShadow = true;
+                lotusGroup.add(pMesh);
+            }
+
+            // 3. 中央拋光陶瓷琉璃摩尼寶珠 (High-Gloss Lapis Ceramic Jewel)
+            const jewelGeo = new THREE.OctahedronGeometry(1.45, 2);
+            const jewelMesh = new THREE.Mesh(jewelGeo, sharedMaterials.primaryGlaze);
+            jewelMesh.position.y = 1.65;
+            jewelMesh.castShadow = true;
+            centralPagodaGroup.add(jewelMesh);
+            centralPagodaGroup.userData.jewelMesh = jewelMesh;
+
+            // 4. 環繞寶珠的三道「多層次紙藝鏤空雕刻光環」
+            const ringSpecs = [
+                { outer: 2.35, inner: 1.85, petals: 12, mat: sharedMaterials.goldLacquer },
+                { outer: 3.05, inner: 2.55, petals: 16, mat: sharedMaterials.framePorcelain },
+                { outer: 3.70, inner: 3.25, petals: 20, mat: sharedMaterials.secondaryGlaze }
+            ];
+
+            ringSpecs.forEach((spec, idx) => {
+                const rShape = createScallopedRingShape(spec.outer, spec.inner, spec.petals, 0.09);
+                const rGeo = createBeveledExtrude(rShape, 0.12, 0.035);
+                const rMesh = new THREE.Mesh(rGeo, spec.mat);
+                rMesh.position.y = 1.65;
+                rMesh.rotation.y = (idx * Math.PI) / 3;
+                rMesh.castShadow = true;
+                centralPagodaGroup.add(rMesh);
+                centralRings.push(rMesh);
+            });
+        }
+
+        // 建立 360° 環繞式「十二座 5 層立體切割紙藝陶瓷龕位」
+        function buildTwelveSurroundShrines() {
+            const surroundRadius = 15.6;
+            const labelsContainer = document.getElementById('labels-container');
+            labelsContainer.innerHTML = '';
+
+            vowsData.forEach((vow, idx) => {
+                // 以 360 度環繞排列，面向圓心
+                const angle = (idx / 12) * Math.PI * 2;
+                const x = Math.sin(angle) * surroundRadius;
+                const z = -Math.cos(angle) * surroundRadius;
+
+                const shrineGroup = new THREE.Group();
+                shrineGroup.position.set(x, 0.75, z);
+                shrineGroup.lookAt(0, 0.75, 0); // 面向環繞空間中央
+                shrineGroup.userData = { vowId: vow.id, angle: angle };
+                scene.add(shrineGroup);
+
+                // ===== 每一座龕位由前後交錯的 5 個立體切割層組成 (支援 Z 軸視差展開動畫) =====
+                const layers = [];
+
+                // 【第 1 層（最前層）】：拋光白瓷拱門蓮瓣鏤空外框
+                const layer1FrameGeo = createBeveledExtrude(createShrineArchFrameShape(3.15, 4.25, 1.18), 0.22, 0.045);
+                const layer1Mesh = new THREE.Mesh(layer1FrameGeo, sharedMaterials.framePorcelain);
+                layer1Mesh.castShadow = true;
+                layer1Mesh.receiveShadow = true;
+                shrineGroup.add(layer1Mesh);
+                layers.push({ mesh: layer1Mesh, baseZ: 0.56, expandZ: 1.25 });
+
+                // 【第 2 層】：多層次紙藝祥雲與金色鏤空內環切層
+                const layer2Group = new THREE.Group();
+                const innerRingGeo = createBeveledExtrude(createScallopedRingShape(1.42, 1.02, 12, 0.06), 0.16, 0.035);
+                const innerRingMesh = new THREE.Mesh(innerRingGeo, sharedMaterials.goldLacquer);
+                layer2Group.add(innerRingMesh);
+
+                const cloudGeo = createBeveledExtrude(createCloudCutoutShape(0.95), 0.18, 0.04);
+                const cloudMesh = new THREE.Mesh(cloudGeo, sharedMaterials.cloudPaper);
+                cloudMesh.position.set(0, -1.05, 0.08);
+                layer2Group.add(cloudMesh);
+
+                layer2Group.traverse(c => { if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; } });
+                shrineGroup.add(layer2Group);
+                layers.push({ mesh: layer2Group, baseZ: 0.22, expandZ: 0.55 });
+
+                // 【第 3 層（核心主題層）】：各願專屬 3D 立體切割主題雕塑
+                const layer3Sculpture = createVowBespokeSculptureGroup(vow.id);
+                layer3Sculpture.position.y = 0.12;
+                shrineGroup.add(layer3Sculpture);
+                layers.push({ mesh: layer3Sculpture, baseZ: -0.08, expandZ: -0.05 });
+
+                // 【第 4 層】：流光內襯花邊浮雕背板（點燈時轉為璀璨金瓷發光材質）
+                const layer4Geo = createBeveledExtrude(createScallopedRingShape(1.52, 0, 16, 0.05), 0.16, 0.035);
+                const layer4Mat = sharedMaterials.primaryGlaze.clone();
+                const layer4Mesh = new THREE.Mesh(layer4Geo, layer4Mat);
+                layer4Mesh.position.y = 0.12;
+                layer4Mesh.receiveShadow = true;
+                shrineGroup.add(layer4Mesh);
+                layers.push({ mesh: layer4Mesh, baseZ: -0.38, expandZ: -0.68 });
+
+                // 【第 5 層（背板與階梯底座層）】：實心拱形陶瓷背板與雙層階梯底座
+                const layer5Group = new THREE.Group();
+                const solidBackShape = createShrineArchFrameShape(3.32, 4.45, 0);
+                const backMesh = new THREE.Mesh(
+                    createBeveledExtrude(solidBackShape, 0.20, 0.045),
+                    sharedMaterials.pedestalPorcelain
+                );
+                layer5Group.add(backMesh);
+
+                // 龕位底部雙層陶瓷階梯台座
+                const step1 = new THREE.Mesh(
+                    new THREE.CylinderGeometry(1.85, 2.05, 0.35, 32),
+                    sharedMaterials.framePorcelain
+                );
+                step1.position.set(0, -2.35, 0.45);
+                layer5Group.add(step1);
+
+                const step2 = new THREE.Mesh(
+                    new THREE.CylinderGeometry(1.55, 1.75, 0.25, 32),
+                    sharedMaterials.goldLacquer
+                );
+                step2.position.set(0, -2.12, 0.45);
+                layer5Group.add(step2);
+
+                layer5Group.traverse(c => { if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; } });
+                shrineGroup.add(layer5Group);
+                layers.push({ mesh: layer5Group, baseZ: -0.68, expandZ: -1.25 });
+
+                // 設定初始 Z 軸位置與點擊標籤
+                layers.forEach(l => { l.mesh.position.z = l.baseZ; });
+                shrineGroup.traverse(child => {
+                    if (child.isMesh) child.userData.vowId = vow.id;
+                });
+
+                // 建立連結該座龕位與中央琉璃寶塔的「3D 拋光流金光帶 (Glossy 3D Ribbon Tube)」
+                const startVec = new THREE.Vector3(x * 0.88, -1.2, z * 0.88);
+                const midVec = new THREE.Vector3(x * 0.45, 2.8, z * 0.45);
+                const endVec = new THREE.Vector3(0, 1.65, 0);
+                const curve = new THREE.QuadraticBezierCurve3(startVec, midVec, endVec);
+                const ribbonGeo = new THREE.TubeGeometry(curve, 36, 0.085, 12, false);
+                const ribbonMesh = new THREE.Mesh(ribbonGeo, sharedMaterials.litGoldGlow);
+                ribbonMesh.castShadow = true;
+                ribbonMesh.visible = false;
+                scene.add(ribbonMesh);
+
+                // 建立懸浮陶瓷名牌 DOM
+                const labelEl = document.createElement('div');
+                labelEl.className = 'ceramic-pill-label px-3 py-1 rounded-full text-xs font-sans flex items-center gap-1.5';
+                labelEl.onclick = (e) => {
+                    e.stopPropagation();
+                    focusOnShrine(vow.id);
+                };
+                labelEl.innerHTML = `
+                    <span id="pill-icon-${vow.id}">🕯️</span>
+                    <span class="font-extrabold">第${vow.id}願</span>
+                    <span class="font-serif font-semibold hidden sm:inline">${vow.shortTitle}</span>
+                `;
+                labelsContainer.appendChild(labelEl);
+
+                shrineObjects.push({
+                    id: vow.id,
+                    vow: vow,
+                    group: shrineGroup,
+                    layers: layers,
+                    layer3Sculpture: layer3Sculpture,
+                    layer4Mat: layer4Mat,
+                    ribbonMesh: ribbonMesh,
+                    labelEl: labelEl,
+                    expansionFactor: 0 // 0 = 收合標準景深, 1 = 完全展開 5 層紙藝視差景深
+                });
+            });
+        }
+
+        // 建立環繞空間中懸浮的立體切割紙藝祥雲與陶瓷圓珠
+        function buildFloatingCutArtPieces() {
+            const cloudGeo = createBeveledExtrude(createCloudCutoutShape(0.55), 0.12, 0.03);
+            const pearlGeo = new THREE.SphereGeometry(0.18, 16, 16);
+
+            for (let i = 0; i < 24; i++) {
+                const angle = (i / 24) * Math.PI * 2;
+                const radius = 9.5 + (i % 3) * 4.2;
+                const isCloud = i % 3 === 0;
+                const mesh = new THREE.Mesh(
+                    isCloud ? cloudGeo : pearlGeo,
+                    isCloud ? sharedMaterials.framePorcelain : sharedMaterials.goldLacquer
+                );
+                const baseY = 2.8 + Math.sin(i * 1.7) * 2.2;
+                mesh.position.set(Math.sin(angle) * radius, baseY, -Math.cos(angle) * radius);
+                mesh.lookAt(0, baseY, 0);
+                scene.add(mesh);
+                floatingCutoutParticles.push({ mesh, baseY, phase: i * 0.6 });
+            }
+        }
+
+        /* =========================================================================
+         * 陸、三種陶瓷材質主題即時切換 & 5 層紙藝景深展開控制
+         * ========================================================================= */
+        function applyMaterialTheme(themeKey, btnEl) {
+            currentTheme = themeKey;
+            const palette = materialThemes[themeKey];
+
+            // 更新背景與深色模式 class
+            const container = document.getElementById('canvas-container');
+            container.className = `bg-theme-${themeKey}`;
+            document.body.className = themeKey === 'obsidian' ? 'bg-theme-obsidian obsidian-mode' : `bg-theme-${themeKey}`;
+
+            // 更新按鈕樣式
+            document.querySelectorAll('.theme-btn').forEach(b => {
+                b.className = 'theme-btn glossy-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-white/70 text-slate-700 border border-transparent flex items-center gap-1';
+            });
+            if (btnEl) {
+                btnEl.className = 'theme-btn glossy-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-50 text-blue-800 border border-blue-400 flex items-center gap-1';
+            }
+
+            // 即時平滑更新 Three.js 陶瓷與烤漆材質顏色
+            sharedMaterials.framePorcelain.color.setHex(palette.frameWhite);
+            sharedMaterials.cloudPaper.color.setHex(palette.cloudLayer);
+            sharedMaterials.primaryGlaze.color.setHex(palette.primaryGlaze);
+            sharedMaterials.secondaryGlaze.color.setHex(palette.secondaryGlaze);
+            sharedMaterials.goldLacquer.color.setHex(palette.goldTrim);
+            sharedMaterials.pedestalPorcelain.color.setHex(palette.pedestalBase);
+            scene.fog.color.setHex(palette.fogColor);
+
+            // 同步更新未點燈龕位的第 4 層內襯釉色
+            shrineObjects.forEach(s => {
+                if (!litVows.has(s.id)) {
+                    s.layer4Mat.color.setHex(palette.primaryGlaze);
+                    s.layer4Mat.emissive.setHex(0x000000);
+                }
+            });
+
+            playCeramicChime(880, 1.8);
+        }
+
+        // 切換全場 12 座龕位的 5 層立體紙藝景深展開狀態
+        function toggleGlobalLayerExpansion() {
+            globalLayersExpanded = !globalLayersExpanded;
+            const txt = document.getElementById('expand-layers-text');
+            const btn = document.getElementById('btn-expand-layers');
+            if (globalLayersExpanded) {
+                txt.innerText = '收合 5 層紙藝景深';
+                btn.classList.add('ring-2', 'ring-blue-500');
+            } else {
+                txt.innerText = '展開 5 層紙藝景深';
+                btn.classList.remove('ring-2', 'ring-blue-500');
+            }
+            playCeramicChime(globalLayersExpanded ? 1174.66 : 783.99, 1.8);
+        }
+
+        /* =========================================================================
+         * 柒、三種 3D 環繞空間視角切換與滑鼠/觸控互動
+         * ========================================================================= */
+        function switchCameraMode(mode) {
+            if (isAutoTour && mode !== 'closeup') stopAutoTour();
+            camControl.mode = mode;
+
+            // 更新視角按鈕高亮
+            const modes = ['surround', 'diorama', 'closeup'];
+            modes.forEach(m => {
+                const b = document.getElementById(`view-btn-${m}`);
+                if (!b) return;
+                if (m === mode) {
+                    b.className = 'glossy-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-700 text-white whitespace-nowrap flex items-center gap-1';
+                } else {
+                    b.className = 'glossy-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/80 text-slate-700 hover:bg-white whitespace-nowrap flex items-center gap-1';
+                }
+            });
+
+            if (mode === 'surround') {
+                // 360° 環繞空間內景：站在中央環視四周龕位
+                camControl.targetPolar = 0.04;
+                closeVowDetailDrawer();
+            } else if (mode === 'diorama') {
+                // 立體劇場全景：斜上方鳥瞰整個 360° 環繞劇場
+                camControl.targetPolar = 0.72;
+                camControl.targetDioramaDistance = 36;
+                closeVowDetailDrawer();
+            } else if (mode === 'closeup') {
+                // 龕位微距特寫
+                focusOnShrine(activeVowId || 1);
+            }
+
+            updateShrineHighlights();
+            playCeramicChime(659.25, 1.6);
+        }
+
+        function focusOnShrine(vowId, fromTour = false) {
+            if (!fromTour && isAutoTour) stopAutoTour();
+            activeVowId = vowId;
+            camControl.mode = 'closeup';
+
+            // 將目標水平角對準該座龕位
+            const idx = vowId - 1;
+            camControl.targetAzimuth = (idx / 12) * Math.PI * 2;
+
+            // 同步更新頂部視角按鈕狀態
+            ['surround', 'diorama', 'closeup'].forEach(m => {
+                const b = document.getElementById(`view-btn-${m}`);
+                if (b) {
+                    b.className = m === 'closeup'
+                        ? 'glossy-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-700 text-white whitespace-nowrap flex items-center gap-1'
+                        : 'glossy-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/80 text-slate-700 hover:bg-white whitespace-nowrap flex items-center gap-1';
+                }
+            });
+
+            openVowDetailDrawer(vowId);
+            renderBottomDock();
+            updateShrineHighlights();
+
+            const freq = ceramicScale[(vowId - 1) % ceramicScale.length];
+            playCeramicChime(freq, 2.2);
+        }
+
+        function stepVow(delta) {
+            let nextId = (activeVowId || 1) + delta;
+            if (nextId > 12) nextId = 1;
+            if (nextId < 1) nextId = 12;
+            focusOnShrine(nextId);
+        }
+
+        function bindPointerEvents(domEl) {
+            domEl.addEventListener('mousedown', (e) => {
+                camControl.isDragging = true;
+                camControl.dragMoved = false;
+                camControl.prevPointer = { x: e.clientX, y: e.clientY };
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                // 處理 Hover 偵測以觸發單一龕位 5 層紙藝視差展開
+                if (!camControl.isDragging) {
+                    detectHoverShrine(e.clientX, e.clientY);
+                    return;
+                }
+
+                const dx = e.clientX - camControl.prevPointer.x;
+                const dy = e.clientY - camControl.prevPointer.y;
+                if (Math.abs(dx) > 3 || Math.abs(dy) > 3) camControl.dragMoved = true;
+
+                // 若在特寫模式大幅拖曳，自動切回 360° 環繞空間內景自由環視
+                if (camControl.mode === 'closeup' && Math.abs(dx) > 14) {
+                    switchCameraMode('surround');
+                }
+
+                camControl.targetAzimuth -= dx * 0.0055;
+                if (camControl.mode === 'surround') {
+                    camControl.targetPolar = Math.max(-0.25, Math.min(0.38, camControl.targetPolar + dy * 0.0035));
+                } else {
+                    camControl.targetPolar = Math.max(0.25, Math.min(1.35, camControl.targetPolar + dy * 0.005));
+                }
+                camControl.prevPointer = { x: e.clientX, y: e.clientY };
+            });
+
+            window.addEventListener('mouseup', (e) => {
+                if (camControl.isDragging && !camControl.dragMoved) {
+                    handleSceneClick(e.clientX, e.clientY);
+                }
+                camControl.isDragging = false;
+            });
+
+            // 滾輪：在環繞內景可水平環視，在劇場全景可遠近縮放
+            domEl.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                if (camControl.mode === 'surround') {
+                    camControl.targetAzimuth += e.deltaY * 0.0015;
+                } else {
+                    camControl.targetDioramaDistance = Math.max(18, Math.min(54, camControl.targetDioramaDistance + e.deltaY * 0.02));
+                }
+            }, { passive: false });
+
+            // 觸控支援
+            domEl.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    camControl.isDragging = true;
+                    camControl.dragMoved = false;
+                    camControl.prevPointer = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                }
+            }, { passive: true });
+
+            domEl.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1 && camControl.isDragging) {
+                    const dx = e.touches[0].clientX - camControl.prevPointer.x;
+                    const dy = e.touches[0].clientY - camControl.prevPointer.y;
+                    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) camControl.dragMoved = true;
+
+                    if (camControl.mode === 'closeup' && Math.abs(dx) > 18) {
+                        switchCameraMode('surround');
+                    }
+                    camControl.targetAzimuth -= dx * 0.006;
+                    camControl.prevPointer = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                }
+            }, { passive: true });
+
+            domEl.addEventListener('touchend', (e) => {
+                if (camControl.isDragging && !camControl.dragMoved && e.changedTouches.length === 1) {
+                    handleSceneClick(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+                }
+                camControl.isDragging = false;
+            });
+        }
+
+        function detectHoverShrine(clientX, clientY) {
+            mouse.x = (clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+
+            const meshes = [];
+            shrineObjects.forEach(s => {
+                s.group.traverse(c => { if (c.isMesh) meshes.push(c); });
+            });
+
+            const hits = raycaster.intersectObjects(meshes, false);
+            if (hits.length > 0 && hits[0].object.userData.vowId) {
+                const hitId = hits[0].object.userData.vowId;
+                if (camControl.hoveredShrineId !== hitId) {
+                    camControl.hoveredShrineId = hitId;
+                    document.body.style.cursor = 'pointer';
+                }
+            } else {
+                if (camControl.hoveredShrineId !== null) {
+                    camControl.hoveredShrineId = null;
+                    document.body.style.cursor = 'default';
+                }
+            }
+        }
+
+        function handleSceneClick(clientX, clientY) {
+            mouse.x = (clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+
+            const meshes = [];
+            shrineObjects.forEach(s => {
+                s.group.traverse(c => { if (c.isMesh) meshes.push(c); });
+            });
+
+            const hits = raycaster.intersectObjects(meshes, false);
+            if (hits.length > 0 && hits[0].object.userData.vowId) {
+                focusOnShrine(hits[0].object.userData.vowId);
+            }
+        }
+
+        /* =========================================================================
+         * 捌、點亮瓷光心燈、3D 流金光帶與大願詳情面板
+         * ========================================================================= */
+        function toggleActiveShrineLight() {
+            if (!activeVowId) return;
+            setShrineLitState(activeVowId, !litVows.has(activeVowId));
+        }
+
+        function setShrineLitState(vowId, isLit) {
+            const shrine = shrineObjects.find(s => s.id === vowId);
+            if (!shrine) return;
+
+            if (isLit) {
+                litVows.add(vowId);
+                shrine.layer4Mat.color.setHex(0xffd700);
+                shrine.layer4Mat.emissive.setHex(0xd97706);
+                shrine.layer4Mat.emissiveIntensity = 0.45;
+                shrine.ribbonMesh.visible = true;
+                shrine.labelEl.classList.add('lit');
+                document.getElementById(`pill-icon-${vowId}`).innerText = '🏮';
+
+                const freq = ceramicScale[(litVows.size - 1) % ceramicScale.length];
+                playCeramicChime(freq, 2.5);
+            } else {
+                litVows.delete(vowId);
+                const palette = materialThemes[currentTheme];
+                shrine.layer4Mat.color.setHex(palette.primaryGlaze);
+                shrine.layer4Mat.emissive.setHex(0x000000);
+                shrine.ribbonMesh.visible = false;
+                shrine.labelEl.classList.remove('lit');
+                document.getElementById(`pill-icon-${vowId}`).innerText = '🕯️';
+            }
+
+            document.getElementById('hud-lit-count').innerText = `${litVows.size} / 12 盞`;
+            if (activeVowId === vowId) updateDrawerLightUI(vowId);
+            renderBottomDock();
+
+            if (litVows.size === 12) {
+                document.getElementById('grand-completion-banner').classList.remove('hidden');
+                playCeramicChime(1046.5, 3.2);
+                setTimeout(() => playCeramicChime(1318.5, 3.2), 180);
+                setTimeout(() => playCeramicChime(1567.98, 3.8), 360);
+            } else {
+                document.getElementById('grand-completion-banner').classList.add('hidden');
+            }
+        }
+
+        function igniteAllShrines() {
+            vowsData.forEach((v, idx) => {
+                setTimeout(() => setShrineLitState(v.id, true), idx * 80);
+            });
+        }
+
+        function drawRandomVow() {
+            const luckyId = Math.floor(Math.random() * 12) + 1;
+            focusOnShrine(luckyId);
+        }
+
+        function toggleAutoTour() {
+            if (isAutoTour) {
+                stopAutoTour();
+                return;
+            }
+            isAutoTour = true;
+            document.getElementById('tour-icon').innerText = '⏹️';
+            document.getElementById('tour-text').innerText = '停止巡禮';
+
+            let current = activeVowId || 1;
+            focusOnShrine(current, true);
+            if (!litVows.has(current)) setShrineLitState(current, true);
+
+            tourInterval = setInterval(() => {
+                if (!isAutoTour) return;
+                current = current < 12 ? current + 1 : 1;
+                focusOnShrine(current, true);
+                if (!litVows.has(current)) setShrineLitState(current, true);
+            }, 4800);
+        }
+
+        function stopAutoTour() {
+            isAutoTour = false;
+            if (tourInterval) clearInterval(tourInterval);
+            document.getElementById('tour-icon').innerText = '🔭';
+            document.getElementById('tour-text').innerText = '自動巡禮';
+        }
+
+        // 詳情面板與難字讀音渲染
+        function formatTextWithRuby(text) {
+            let html = text;
+            pronunciationDict.forEach((item, idx) => {
+                const reg = new RegExp(item.word, 'g');
+                html = html.replace(reg, `<span class="ruby-term" onclick="showPronunciation(${idx})">${item.word}</span>`);
+            });
+            return html;
+        }
+
+        function showPronunciation(idx) {
+            const entry = pronunciationDict[idx];
+            if (!entry) return;
+            const box = document.getElementById('pronunciation-box');
+            box.innerHTML = `<strong>【${entry.word}】</strong> ${entry.note}`;
+            box.classList.remove('hidden');
+            playCeramicChime(1318.5, 1.2);
+        }
+
+        function openVowDetailDrawer(vowId) {
+            const vow = vowsData.find(v => v.id === vowId);
+            if (!vow) return;
+
+            document.getElementById('panel-cat-badge').innerText = vow.categoryName;
+            document.getElementById('panel-vow-title').innerText = `第${vow.id}大願・${vow.shortTitle}`;
+            document.getElementById('panel-sculpture-desc').innerText = vow.sculptureDesc;
+            document.getElementById('panel-vow-original').innerHTML = formatTextWithRuby(vow.original);
+            document.getElementById('panel-vow-meaning').innerText = vow.meaning;
+            document.getElementById('panel-vow-practice').innerText = vow.practice;
+            document.getElementById('pronunciation-box').classList.add('hidden');
+
+            updateDrawerLightUI(vowId);
+
+            const drawer = document.getElementById('vow-detail-drawer');
+            drawer.classList.remove('translate-x-[120%]', 'opacity-0', 'pointer-events-none');
+            drawer.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+        }
+
+        function updateDrawerLightUI(vowId) {
+            const isLit = litVows.has(vowId);
+            const badge = document.getElementById('panel-lit-badge');
+            const btnText = document.getElementById('panel-btn-light-text');
+
+            if (isLit) {
+                badge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-400/30 text-amber-700';
+                badge.innerText = '🏮 瓷燈已點亮・流金光帶連結中';
+                btnText.innerText = '已點亮流金光帶（點擊可熄滅）';
+            } else {
+                badge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-200/80 text-slate-600';
+                badge.innerText = '🕯️ 待點亮瓷燈';
+                btnText.innerText = '點亮此龕位・連結流金光帶';
+            }
+        }
+
+        function closeVowDetailDrawer() {
+            stopSpeech();
+            const drawer = document.getElementById('vow-detail-drawer');
+            drawer.classList.add('translate-x-[120%]', 'opacity-0', 'pointer-events-none');
+            drawer.classList.remove('translate-x-0', 'opacity-100', 'pointer-events-auto');
+        }
+
+        // 語音恭誦
+        let isSpeaking = false;
+        function speakCurrentVow() {
+            if (!('speechSynthesis' in window) || !activeVowId) return;
+            if (isSpeaking) {
+                stopSpeech();
+                return;
+            }
+            const vow = vowsData.find(v => v.id === activeVowId);
+            if (!vow) return;
+
+            window.speechSynthesis.cancel();
+            isSpeaking = true;
+            document.getElementById('speak-icon').innerText = '⏹️';
+            document.getElementById('speak-text').innerText = '停止';
+
+            const utter = new SpeechSynthesisUtterance(vow.original);
+            utter.lang = 'zh-TW';
+            utter.rate = 0.88;
+            utter.onend = () => stopSpeech();
+            utter.onerror = () => stopSpeech();
+            window.speechSynthesis.speak(utter);
+        }
+
+        function stopSpeech() {
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            isSpeaking = false;
+            const icon = document.getElementById('speak-icon');
+            const txt = document.getElementById('speak-text');
+            if (icon) icon.innerText = '🔊';
+            if (txt) txt.innerText = '恭誦';
+        }
+
+        /* =========================================================================
+         * 玖、分類篩選與底部 360° 龕位導覽列
+         * ========================================================================= */
+        function filterCategory(cat, btnEl) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-pill').forEach(b => {
+                b.className = 'cat-pill px-3 py-1 rounded-full text-xs font-medium opacity-80 hover:opacity-100 transition whitespace-nowrap';
+            });
+            btnEl.className = 'cat-pill px-3 py-1 rounded-full text-xs font-bold bg-blue-700 text-white transition whitespace-nowrap';
+
+            updateShrineHighlights();
+            renderBottomDock();
+            playCeramicChime(783.99, 1.5);
+        }
+
+        function updateShrineHighlights() {
+            shrineObjects.forEach(s => {
+                const matchCat = currentCategory === 'all' || s.vow.category === currentCategory;
+                const isSelected = camControl.mode === 'closeup' && activeVowId === s.id;
+
+                s.group.scale.setScalar(matchCat ? 1.0 : 0.72);
+                s.labelEl.style.opacity = matchCat ? '1' : '0.3';
+                if (isSelected) {
+                    s.labelEl.classList.add('active-shrine');
+                } else {
+                    s.labelEl.classList.remove('active-shrine');
+                }
+            });
+        }
+
+        function renderBottomDock() {
+            const dock = document.getElementById('bottom-shrines-dock');
+            dock.innerHTML = '';
+
+            vowsData.forEach(vow => {
+                const isLit = litVows.has(vow.id);
+                const isFocused = camControl.mode === 'closeup' && activeVowId === vow.id;
+                const matchCat = currentCategory === 'all' || vow.category === currentCategory;
+
+                const btn = document.createElement('button');
+                btn.onclick = () => focusOnShrine(vow.id);
+                btn.className = `glossy-btn px-3 py-1.5 rounded-xl text-xs transition flex items-center gap-1.5 shrink-0 font-sans ${
+                    isFocused
+                        ? 'bg-blue-700 text-white font-bold ring-2 ring-blue-300'
+                        : isLit
+                            ? 'bg-amber-100 text-amber-900 border border-amber-400 font-bold'
+                            : 'bg-white/75 text-slate-700 hover:bg-white font-medium'
+                } ${matchCat ? 'opacity-100' : 'opacity-40'}`;
+
+                btn.innerHTML = `
+                    <span>${isLit ? '🏮' : '🕯️'}</span>
+                    <span>${vow.id}願</span>
+                    <span class="hidden md:inline font-serif">${vow.shortTitle}</span>
+                `;
+                dock.appendChild(btn);
+            });
+        }
+
+        /* =========================================================================
+         * 拾、60fps 動畫迴圈：立體紙藝視差展開 (Layer Parallax) 與三視角運鏡
+         * ========================================================================= */
+        const clock = new THREE.Clock();
+        const projVec = new THREE.Vector3();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsed = clock.getElapsedTime();
+
+            // 1. 中央立體切割寶塔與鏤空紙藝光環交錯旋轉
+            if (centralPagodaGroup) {
+                const jewel = centralPagodaGroup.userData.jewelMesh;
+                if (jewel) {
+                    jewel.rotation.y = elapsed * 0.35;
+                    jewel.position.y = 1.65 + Math.sin(elapsed * 2.0) * 0.12;
+                }
+                centralRings.forEach((ring, idx) => {
+                    ring.rotation.z = elapsed * (idx % 2 === 0 ? 0.25 : -0.2);
+                    ring.rotation.x = Math.sin(elapsed * 0.7 + idx) * 0.28;
+                });
+            }
+
+            // 2. 更新 12 座立體切割龕位的「5 層紙藝 Z 軸視差展開動畫 (Layer Parallax Expansion)」
+            shrineObjects.forEach((shrine, idx) => {
+                const isHovered = camControl.hoveredShrineId === shrine.id;
+                const isSelected = camControl.mode === 'closeup' && activeVowId === shrine.id;
+                const shouldExpand = globalLayersExpanded || isHovered || isSelected;
+
+                const targetFactor = shouldExpand ? 1.0 : 0.0;
+                shrine.expansionFactor += (targetFactor - shrine.expansionFactor) * 0.09;
+
+                shrine.layers.forEach(layerObj => {
+                    const targetZ = THREE.MathUtils.lerp(layerObj.baseZ, layerObj.expandZ, shrine.expansionFactor);
+                    layerObj.mesh.position.z = targetZ;
+                });
+
+                // 第 3 層專屬立體切割主題雕塑微幅呼吸浮動
+                shrine.layer3Sculpture.position.y = 0.12 + Math.sin(elapsed * 2.2 + idx) * 0.05;
+                shrine.layer3Sculpture.rotation.z = Math.sin(elapsed * 1.2 + idx) * 0.04;
+            });
+
+            // 3. 更新懸浮紙藝祥雲與瓷珠
+            floatingCutoutParticles.forEach(item => {
+                item.mesh.position.y = item.baseY + Math.sin(elapsed * 1.5 + item.phase) * 0.25;
+            });
+
+            // 4. 計算三種 3D 空間互動視角的鏡頭座標
+            camControl.azimuth += (camControl.targetAzimuth - camControl.azimuth) * 0.08;
+            camControl.polar += (camControl.targetPolar - camControl.polar) * 0.08;
+            camControl.dioramaDistance += (camControl.targetDioramaDistance - camControl.dioramaDistance) * 0.08;
+
+            if (camControl.mode === 'surround') {
+                // 【視角 1：360° 環繞空間內景】鏡頭位於環繞空間內圈，向外環視 360° 四周的十二座立體紙雕龕位
+                const innerR = 4.8;
+                camControl.targetPos.set(
+                    Math.sin(camControl.azimuth) * innerR,
+                    1.35,
+                    -Math.cos(camControl.azimuth) * innerR
+                );
+                const lookR = 15.6;
+                camControl.targetLookAt.set(
+                    Math.sin(camControl.azimuth) * lookR,
+                    1.1 + camControl.polar * 8,
+                    -Math.cos(camControl.azimuth) * lookR
+                );
+            } else if (camControl.mode === 'diorama') {
+                // 【視角 2：立體劇場全景】從斜上方 360° 鳥瞰整個環繞劇場與中央寶塔
+                const dist = camControl.dioramaDistance;
+                camControl.targetPos.set(
+                    dist * Math.sin(camControl.polar) * Math.sin(camControl.azimuth),
+                    dist * Math.cos(camControl.polar),
+                    dist * Math.sin(camControl.polar) * Math.cos(camControl.azimuth)
+                );
+                camControl.targetLookAt.set(0, 0.5, 0);
+            } else if (camControl.mode === 'closeup') {
+                // 【視角 3：龕位微距特寫】飛躍至選中龕位的正前方，並稍微偏左讓右側詳情面板不遮擋龕位
+                const shrine = shrineObjects.find(s => s.id === activeVowId) || shrineObjects[0];
+                const angle = shrine.group.userData.angle;
+                const camR = 8.4; // 位於半徑 8.4 處面向半徑 15.6 的龕位
+                const rightVec = new THREE.Vector3(Math.cos(angle), 0, Math.sin(angle));
+                const sideOffset = window.innerWidth > 640 ? 1.45 : 0;
+
+                camControl.targetPos.set(
+                    Math.sin(angle) * camR + rightVec.x * sideOffset,
+                    1.15,
+                    -Math.cos(angle) * camR + rightVec.z * sideOffset
+                );
+                camControl.targetLookAt.set(
+                    shrine.group.position.x + rightVec.x * (sideOffset * 0.85),
+                    0.85,
+                    shrine.group.position.z + rightVec.z * (sideOffset * 0.85)
+                );
+            }
+
+            camControl.currentPos.lerp(camControl.targetPos, 0.08);
+            camControl.currentLookAt.lerp(camControl.targetLookAt, 0.09);
+            camera.position.copy(camControl.currentPos);
+            camera.lookAt(camControl.currentLookAt);
+
+            renderer.render(scene, camera);
+            updateProjectedLabels();
+        }
+
+        function updateProjectedLabels() {
+            const halfW = window.innerWidth / 2;
+            const halfH = window.innerHeight / 2;
+
+            shrineObjects.forEach(shrine => {
+                projVec.copy(shrine.group.position);
+                projVec.y += 3.25; // 名牌懸浮於拱門龕位頂端
+
+                const dist = camera.position.distanceTo(projVec);
+                projVec.project(camera);
+
+                if (projVec.z > 1) {
+                    shrine.labelEl.style.display = 'none';
+                    return;
+                }
+
+                const x = (projVec.x * halfW) + halfW;
+                const y = -(projVec.y * halfH) + halfH;
+
+                shrine.labelEl.style.display = 'flex';
+                shrine.labelEl.style.left = `${x}px`;
+                shrine.labelEl.style.top = `${y}px`;
+                shrine.labelEl.style.zIndex = Math.round(100 - dist);
+            });
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        /* =========================================================================
+         * 拾壹、匯出「3D 立體切割瓷光祈福迴向卡」
+         * ========================================================================= */
+        function openDedicationModal() {
+            capture3DSnapshot();
+            const modal = document.getElementById('dedication-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDedicationModal() {
+            const modal = document.getElementById('dedication-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.getElementById('modal-toast').classList.add('hidden');
+        }
+
+        function capture3DSnapshot() {
+            if (renderer && scene && camera) {
+                renderer.render(scene, camera);
+                captured3DImage = renderer.domElement.toDataURL('image/png');
+            }
+            renderBlessingCardCanvas();
+        }
+
+        function getBuddhistDate() {
+            const d = new Date();
+            return `佛曆 ${d.getFullYear() + 544} 年・西元 ${d.getFullYear()} 年 ${d.getMonth() + 1} 月 ${d.getDate()} 日`;
+        }
+
+        function renderBlessingCardCanvas() {
+            const canvas = document.getElementById('blessing-card-canvas');
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width;
+            const H = canvas.height;
+
+            const drawPaperCutFrameAndText = () => {
+                // 下半部溫潤白瓷漸層遮罩，襯托多層次紙藝排版
+                const grad = ctx.createLinearGradient(0, H * 0.25, 0, H);
+                grad.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
+                grad.addColorStop(0.45, 'rgba(248, 250, 252, 0.85)');
+                grad.addColorStop(1, 'rgba(255, 255, 255, 0.96)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, W, H);
+
+                // 外層立體紙藝雙層切邊框 (模擬紙雕投影)
+                ctx.save();
+                ctx.shadowColor = 'rgba(15, 23, 42, 0.18)';
+                ctx.shadowBlur = 16;
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 14;
+                ctx.strokeRect(20, 20, W - 40, H - 40);
+                ctx.restore();
+
+                ctx.strokeStyle = '#d97706';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(34, 34, W - 68, H - 68);
+
+                // 標題與內文
+                ctx.textAlign = 'center';
+                ctx.fillStyle = '#1d4ed8';
+                ctx.font = 'bold 16px "Noto Serif TC", serif';
+                ctx.fillText('藥師琉璃光如來十二大願・3D 立體紙藝瓷光環繞空間', W / 2, 315);
+
+                ctx.fillStyle = '#0f172a';
+                ctx.font = '900 32px "Noto Serif TC", serif';
+                ctx.fillText('琉 璃 瓷 光 祈 福 迴 向 卡', W / 2, 358);
+
+                const donor = document.getElementById('input-donor').value.trim() || '三寶弟子';
+                const target = document.getElementById('input-target').value.trim() || '法界一切有情眾生';
+                const wish = document.getElementById('input-wish').value.trim() || '眾病悉除，身心安樂，速證菩提。';
+
+                const bodyText = `弟子「${donor}」於 3D 環繞瓷光壇城恭誦藥師琉璃光如來十二大願，已點亮瓷光心燈（${litVows.size}/12 盞）。願以此功德迴向予「${target}」：祈願${wish}`;
+
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '600 20px "Noto Serif TC", serif';
+                ctx.textAlign = 'left';
+
+                const maxW = W - 150;
+                let x = 75;
+                let y = 408;
+                let line = '';
+                for (let i = 0; i < bodyText.length; i++) {
+                    const test = line + bodyText[i];
+                    if (ctx.measureText(test).width > maxW && i > 0) {
+                        ctx.fillText(line, x, y);
+                        line = bodyText[i];
+                        y += 34;
+                    } else {
+                        line = test;
+                    }
+                }
+                ctx.fillText(line, x, y);
+
+                ctx.fillStyle = '#b45309';
+                ctx.font = 'bold 16px "Noto Serif TC", serif';
+                ctx.fillText(`🏮 點亮瓷光心燈：${litVows.size} / 12 盞`, 75, H - 52);
+
+                ctx.textAlign = 'right';
+                ctx.fillStyle = '#475569';
+                ctx.fillText(getBuddhistDate(), W - 75, H - 52);
+            };
+
+            if (captured3DImage) {
+                const img = new Image();
+                img.onload = () => {
+                    ctx.clearRect(0, 0, W, H);
+                    const scale = Math.max(W / img.width, H / img.height);
+                    const nw = img.width * scale;
+                    const nh = img.height * scale;
+                    ctx.drawImage(img, (W - nw) / 2, (H - nh) / 2, nw, nh);
+                    drawPaperCutFrameAndText();
+                };
+                img.src = captured3DImage;
+            } else {
+                ctx.fillStyle = '#e2ecf8';
+                ctx.fillRect(0, 0, W, H);
+                drawPaperCutFrameAndText();
+            }
+        }
+
+        function copyDedicationText() {
+            const donor = document.getElementById('input-donor').value.trim() || '三寶弟子';
+            const target = document.getElementById('input-target').value.trim() || '法界一切有情眾生';
+            const wish = document.getElementById('input-wish').value.trim() || '眾病悉除，身心安樂。';
+            const text = `【藥師琉璃光如來十二大願・瓷光祈福迴向】\n弟子「${donor}」恭誦十二大願並點亮瓷光心燈（${litVows.size}/12盞），願以此功德迴向予「${target}」：祈願${wish}\n（${getBuddhistDate()}）🙏`;
+
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                showToast('✨ 已複製祈福迴向文至剪貼簿！');
+            } catch (e) {}
+            document.body.removeChild(ta);
+        }
+
+        function downloadBlessingCard() {
+            const canvas = document.getElementById('blessing-card-canvas');
+            const a = document.createElement('a');
+            a.download = '藥師十二大願_3D立體紙藝瓷光祈福卡.png';
+            a.href = canvas.toDataURL('image/png');
+            a.click();
+            showToast('🖼️ 3D 立體紙藝瓷光祈福卡已開始下載！');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('modal-toast');
+            t.innerText = msg;
+            t.classList.remove('hidden');
+            setTimeout(() => t.classList.add('hidden'), 3500);
+        }
+
+        /* =========================================================================
+         * 拾貳、啟動初始化
+         * ========================================================================= */
+        window.onload = function () {
+            init3DScene();
+            renderBottomDock();
+            updateShrineHighlights();
+            animate();
+        };
+    </script>
+</body>
+</html>
