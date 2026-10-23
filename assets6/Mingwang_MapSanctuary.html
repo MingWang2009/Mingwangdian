@@ -52,20 +52,20 @@
 
         .bg-lapis-sanctuary {
             background: 
-                radial-gradient(circle at 50% 35%, rgba(37, 99, 235, 0.28) 0%, transparent 55%),
-                radial-gradient(circle at 50% 50%, rgba(13, 33, 63, 0.85) 0%, #040914 100%);
+                radial-gradient(circle at 50% 30%, rgba(37, 99, 235, 0.26) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(13, 33, 63, 0.88) 0%, #040914 100%);
         }
 
         .zen-card {
-            background: linear-gradient(160deg, rgba(14, 34, 64, 0.78) 0%, rgba(6, 15, 30, 0.92) 100%);
+            background: linear-gradient(160deg, rgba(14, 34, 64, 0.82) 0%, rgba(6, 15, 30, 0.94) 100%);
             border: 1px solid rgba(222, 182, 101, 0.28);
             box-shadow: 0 20px 50px -12px rgba(2, 6, 15, 0.9), inset 0 1px 0 0 rgba(251, 246, 233, 0.15);
             backdrop-filter: blur(14px);
         }
 
         .zen-subcard {
-            background: linear-gradient(145deg, rgba(6, 15, 30, 0.85) 0%, rgba(4, 9, 20, 0.95) 100%);
-            border: 1px solid rgba(222, 182, 101, 0.2);
+            background: linear-gradient(145deg, rgba(8, 19, 38, 0.92) 0%, rgba(4, 9, 20, 0.96) 100%);
+            border: 1px solid rgba(222, 182, 101, 0.22);
         }
 
         .btn-gold-luxury {
@@ -75,19 +75,23 @@
         }
         .btn-gold-luxury:hover { filter: brightness(1.07); }
 
-        /* 地圖節點動畫 */
-        @keyframes guidePulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(235, 208, 149, 0.7); }
-            50% { transform: translate(-50%, -50%) scale(1.06); box-shadow: 0 0 28px 10px rgba(235, 208, 149, 0); }
+        /* 隱藏橫向捲軸但保留滑動功能 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 地圖節點脈衝動畫（移除 translate 避免覆蓋定位） */
+        @keyframes guideGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(253, 224, 71, 0.65), 0 0 20px rgba(253, 224, 71, 0.35); }
+            50% { box-shadow: 0 0 0 8px rgba(253, 224, 71, 0), 0 0 32px rgba(253, 224, 71, 0.6); }
         }
         .node-guided {
-            animation: guidePulse 2.4s infinite ease-in-out;
+            animation: guideGlow 2.2s infinite ease-in-out;
             border-color: #fde047 !important;
         }
 
         @keyframes floatBadge {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
+            0%, 100% { transform: translate(-50%, 0px); }
+            50% { transform: translate(-50%, -5px); }
         }
         .float-guide-badge { animation: floatBadge 1.8s ease-in-out infinite; }
 
@@ -122,6 +126,36 @@
             100% { transform: scale(1) rotate(-4deg); opacity: 1; }
         }
         .seal-stamp-anim { animation: stampSlam 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+        /* =========================================================
+           響應式道場地圖座標系統 (徹底防重疊)
+           手機版 (<768px)：採用直向三層錯位佈局 (高 520px)
+           電腦版 (>=768px)：採用橫向馬蹄形拱門佈局 (16:9)
+           ========================================================= */
+        .map-node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+        .map-node:hover {
+            transform: translate(-50%, -53%) scale(1.03);
+        }
+
+        /* 手機版座標：上1(主殿)、中2(光明塔/功德堂)、下2(淨水池/迴向碑) */
+        #map-node-3 { left: 50%; top: 18%; } /* 3. 藥師琉璃寶殿 (頂層中央) */
+        #map-node-2 { left: 26%; top: 47%; } /* 2. 琉璃光明塔 (中層左) */
+        #map-node-4 { left: 74%; top: 47%; } /* 4. 福田功德堂 (中層右) */
+        #map-node-1 { left: 26%; top: 77%; } /* 1. 琉璃淨水池 (底層左) */
+        #map-node-5 { left: 74%; top: 77%; } /* 5. 圓滿迴向碑 (底層右) */
+
+        /* 平板與電腦版座標 (>=768px) */
+        @media (min-width: 768px) {
+            #map-node-1 { left: 20%; top: 72%; }
+            #map-node-2 { left: 24%; top: 34%; }
+            #map-node-3 { left: 50%; top: 25%; }
+            #map-node-4 { left: 76%; top: 34%; }
+            #map-node-5 { left: 80%; top: 72%; }
+        }
     </style>
 </head>
 <body class="bg-lapis-sanctuary min-h-screen flex flex-col justify-between relative selection:bg-gold-400 selection:text-lapis-950">
@@ -129,193 +163,210 @@
     <!-- 背景琉璃光點 Canvas -->
     <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-    <!-- 頂部導覽與引導進度列 -->
-    <header class="sticky top-0 z-30 bg-lapis-950/85 backdrop-blur-xl border-b border-gold-400/20 px-4 py-3">
-        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
-            <!-- 品牌標題 -->
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-200 to-gold-500 p-[1.5px]">
-                    <div class="w-full h-full bg-lapis-950 rounded-full flex items-center justify-center text-lg">🪷</div>
+    <!-- 頂部導覽與引導進度列 (已優化手機版高度與單行滑動) -->
+    <header class="sticky top-0 z-30 bg-lapis-950/90 backdrop-blur-xl border-b border-gold-400/20 px-3 sm:px-6 py-2.5">
+        <div class="max-w-6xl mx-auto flex flex-col gap-2">
+            
+            <!-- 第一列：品牌標題 + 右側快捷鍵 -->
+            <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-gold-200 to-gold-500 p-[1.5px] shrink-0">
+                        <div class="w-full h-full bg-lapis-950 rounded-full flex items-center justify-center text-base">🪷</div>
+                    </div>
+                    <div class="truncate">
+                        <h1 class="font-zen font-bold text-sm sm:text-lg text-gold-100 tracking-wider leading-tight truncate">明王殿・雲端琉璃壇城</h1>
+                        <p class="text-[10px] sm:text-xs text-gold-300/80 truncate">115年10月31日 藥師佛主題科儀法會</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="font-zen font-bold text-base sm:text-lg text-gold-100 tracking-widest leading-none">明王殿・雲端琉璃壇城</h1>
-                    <p class="text-[11px] text-gold-300/80 mt-1">115年10月31日 藥師佛主題科儀法會｜引導式地圖探索</p>
+
+                <!-- 敲缽與蓮卡按鈕 -->
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button onclick="playZenBowl(432)" class="px-2.5 sm:px-3 py-1.5 rounded-full bg-gold-400/10 hover:bg-gold-400/20 border border-gold-300/35 text-gold-200 text-xs font-zen transition cursor-pointer whitespace-nowrap">
+                        <i class="fa-solid fa-bell text-gold-300 mr-1"></i><span>敲缽靜心</span>
+                    </button>
+                    <button onclick="openBlessingCardModal()" class="px-3 py-1.5 rounded-full btn-gold-luxury font-zen font-bold text-xs cursor-pointer whitespace-nowrap">
+                        <i class="fa-solid fa-image mr-1"></i><span>祈福蓮卡</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- 五重儀軌進度指示器 -->
-            <div class="flex items-center gap-1.5 sm:gap-2 bg-lapis-900/90 border border-gold-400/25 rounded-full px-3 py-1.5 text-xs font-zen">
-                <span class="text-gold-300 hidden sm:inline">參拜進度：</span>
-                <button onclick="openStationModal(1)" id="top-step-1" class="px-2 py-0.5 rounded-full bg-white/5 text-slate-400 hover:text-gold-200 transition">1.琉璃泉</button>
-                <span class="text-slate-600">→</span>
-                <button onclick="openStationModal(2)" id="top-step-2" class="px-2 py-0.5 rounded-full bg-white/5 text-slate-400 hover:text-gold-200 transition">2.光明塔</button>
-                <span class="text-slate-600">→</span>
-                <button onclick="openStationModal(3)" id="top-step-3" class="px-2 py-0.5 rounded-full bg-white/5 text-slate-400 hover:text-gold-200 transition">3.藥師殿</button>
-                <span class="text-slate-600">→</span>
-                <button onclick="openStationModal(4)" id="top-step-4" class="px-2 py-0.5 rounded-full bg-white/5 text-slate-400 hover:text-gold-200 transition">4.功德堂</button>
-                <span class="text-slate-600">→</span>
-                <button onclick="openStationModal(5)" id="top-step-5" class="px-2 py-0.5 rounded-full bg-white/5 text-slate-400 hover:text-gold-200 transition">5.迴向碑</button>
+            <!-- 第二列：五重儀軌單行進度條 (不換行、不撐高 Header) -->
+            <div class="w-full overflow-x-auto no-scrollbar">
+                <div class="inline-flex items-center justify-between min-w-full sm: justify-center gap-1 sm:gap-2 bg-lapis-900/90 border border-gold-400/25 rounded-full px-2.5 py-1 text-[11px] sm:text-xs font-zen whitespace-nowrap">
+                    <span class="text-gold-300 hidden md:inline mr-1">參拜進度：</span>
+                    <button onclick="openStationModal(1)" id="top-step-1" class="px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300 hover:text-gold-200 transition whitespace-nowrap">1.琉璃泉</button>
+                    <span class="text-slate-600 text-[10px]">→</span>
+                    <button onclick="openStationModal(2)" id="top-step-2" class="px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300 hover:text-gold-200 transition whitespace-nowrap">2.光明塔</button>
+                    <span class="text-slate-600 text-[10px]">→</span>
+                    <button onclick="openStationModal(3)" id="top-step-3" class="px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300 hover:text-gold-200 transition whitespace-nowrap">3.藥師殿</button>
+                    <span class="text-slate-600 text-[10px]">→</span>
+                    <button onclick="openStationModal(4)" id="top-step-4" class="px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300 hover:text-gold-200 transition whitespace-nowrap">4.功德堂</button>
+                    <span class="text-slate-600 text-[10px]">→</span>
+                    <button onclick="openStationModal(5)" id="top-step-5" class="px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300 hover:text-gold-200 transition whitespace-nowrap">5.迴向碑</button>
+                </div>
             </div>
 
-            <!-- 敲缽與重置 -->
-            <div class="flex items-center gap-2">
-                <button onclick="playZenBowl(432)" class="px-3 py-1.5 rounded-full bg-gold-400/10 hover:bg-gold-400/20 border border-gold-300/35 text-gold-200 text-xs font-zen transition cursor-pointer">
-                    <i class="fa-solid fa-bell text-gold-300 mr-1"></i>敲缽靜心
-                </button>
-                <button onclick="openBlessingCardModal()" class="px-3.5 py-1.5 rounded-full btn-gold-luxury font-zen font-bold text-xs cursor-pointer">
-                    <i class="fa-solid fa-image mr-1"></i>祈福蓮卡
-                </button>
-            </div>
         </div>
     </header>
 
     <!-- 主視覺：引導式道場地圖區 -->
-    <main class="relative z-10 flex-1 max-w-6xl w-full mx-auto px-4 py-6 flex flex-col justify-center items-center">
+    <main class="relative z-10 flex-1 max-w-5xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 flex flex-col items-center space-y-4">
 
         <!-- 智慧引導橫幅 (Guide Banner) -->
-        <div class="w-full max-w-3xl mb-5 zen-card rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border border-gold-300/40">
-            <div class="flex items-center gap-3.5">
-                <div class="w-11 h-11 rounded-2xl bg-gold-400/15 border border-gold-300/40 flex items-center justify-center text-xl shrink-0">
+        <div class="w-full zen-card rounded-2xl p-3.5 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border border-gold-300/40">
+            <div class="flex items-start sm:items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-gold-400/15 border border-gold-300/40 flex items-center justify-center text-lg shrink-0 mt-0.5 sm:mt-0">
                     🧭
                 </div>
                 <div>
-                    <div class="flex items-center gap-2">
-                        <span id="guideStepTag" class="text-[11px] px-2.5 py-0.5 rounded-full bg-gold-400/20 text-gold-200 font-zen">第一站引導</span>
-                        <h2 id="guideTitle" class="font-zen font-bold text-gold-100 text-sm sm:text-base">請前往【琉璃淨水池】浴佛滌心</h2>
+                    <div class="flex flex-wrap items-center gap-1.5">
+                        <span id="guideStepTag" class="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full bg-gold-400/20 text-gold-200 font-zen">第一站引導</span>
+                        <h2 id="guideTitle" class="font-zen font-bold text-gold-100 text-sm sm:text-base">請前往【1. 琉璃淨水池】浴佛滌心</h2>
                     </div>
-                    <p id="guideDesc" class="text-xs text-slate-300 mt-0.5">入壇城參拜，先以三瓢清泉灌沐佛身、撥珠持咒，洗去塵勞。</p>
+                    <p id="guideDesc" class="text-xs text-slate-300 mt-1 leading-relaxed">入壇城參拜，先以三瓢清泉灌沐佛身、撥珠持咒，洗去塵勞。</p>
                 </div>
             </div>
             <button id="guideActionBtn" onclick="triggerNextGuidedStep()" class="w-full sm:w-auto shrink-0 px-5 py-2.5 rounded-xl btn-gold-luxury font-zen font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer">
-                <span>立即前往參拜</span>
+                <span>前往第 1 站參拜</span>
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
 
-        <!-- 互動式道場地圖容器 (支援響應式比例) -->
-        <div class="relative w-full max-w-5xl aspect-[4/3] sm:aspect-[16/9] zen-card rounded-3xl overflow-hidden border-2 border-gold-300/30 shadow-2xl select-none">
+        <!-- 互動式道場地圖容器 (手機版直向高 520px，電腦版 16:9 寬螢幕，完全不重疊) -->
+        <div class="relative w-full h-[520px] md:h-auto md:aspect-[16/9] zen-card rounded-3xl overflow-hidden border-2 border-gold-300/35 shadow-2xl select-none">
 
-            <!-- 地圖背景裝飾：曼陀羅水紋、山門與參拜路徑 SVG -->
-            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid slice">
+            <!-- 電腦版 SVG 參拜路徑 (僅在 >=768px 顯示) -->
+            <svg class="hidden md:block absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1000 560" preserveAspectRatio="none">
                 <defs>
-                    <radialGradient id="centerMandala" cx="50%" cy="42%" r="48%">
+                    <radialGradient id="centerMandalaDesktop" cx="50%" cy="42%" r="48%">
                         <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.22"/>
                         <stop offset="50%" stop-color="#1e3a8a" stop-opacity="0.12"/>
                         <stop offset="100%" stop-color="#040914" stop-opacity="0"/>
                     </radialGradient>
-                    <linearGradient id="goldRoad" x1="0%" y1="100%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.6"/>
-                        <stop offset="50%" stop-color="#fde047" stop-opacity="0.9"/>
+                    <linearGradient id="goldRoadDesktop" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.65"/>
+                        <stop offset="50%" stop-color="#fde047" stop-opacity="0.95"/>
+                        <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.75"/>
+                    </linearGradient>
+                </defs>
+                <circle cx="500" cy="240" r="240" fill="url(#centerMandalaDesktop)" />
+                <circle cx="500" cy="240" r="180" stroke="#deb665" stroke-opacity="0.15" stroke-width="1" stroke-dasharray="6 6" fill="none"/>
+                <!-- 1(200,403) -> 2(240,190) -> 3(500,140) -> 4(760,190) -> 5(800,403) -->
+                <path d="M 200 403 Q 180 280 240 190 Q 360 120 500 140 Q 640 120 760 190 Q 820 280 800 403" 
+                      stroke="#1e293b" stroke-width="6" fill="none" stroke-linecap="round"/>
+                <path d="M 200 403 Q 180 280 240 190 Q 360 120 500 140 Q 640 120 760 190 Q 820 280 800 403" 
+                      stroke="url(#goldRoadDesktop)" stroke-width="3.5" fill="none" stroke-linecap="round" class="sacred-path-active"/>
+                <g transform="translate(500, 520)">
+                    <rect x="-80" y="-16" width="160" height="28" rx="14" fill="#081326" stroke="#deb665" stroke-opacity="0.4" stroke-width="1.2"/>
+                    <text x="0" y="3" text-anchor="middle" fill="#ebd095" font-size="12" font-family="Noto Serif TC" letter-spacing="2">▲ 明王殿山門入口</text>
+                </g>
+            </svg>
+
+            <!-- 手機版 SVG 參拜路徑 (僅在 <768px 顯示，對齊三層錯位座標) -->
+            <svg class="block md:hidden absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 520" preserveAspectRatio="none">
+                <defs>
+                    <radialGradient id="centerMandalaMobile" cx="50%" cy="35%" r="55%">
+                        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.22"/>
+                        <stop offset="100%" stop-color="#040914" stop-opacity="0"/>
+                    </radialGradient>
+                    <linearGradient id="goldRoadMobile" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.7"/>
+                        <stop offset="50%" stop-color="#fde047" stop-opacity="0.95"/>
                         <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.7"/>
                     </linearGradient>
                 </defs>
-
-                <!-- 中央壇城能量光圈 -->
-                <circle cx="500" cy="240" r="240" fill="url(#centerMandala)" />
-                <circle cx="500" cy="240" r="190" stroke="#deb665" stroke-opacity="0.15" stroke-width="1" stroke-dasharray="6 6" fill="none"/>
-                <circle cx="500" cy="240" r="130" stroke="#7dd3fc" stroke-opacity="0.18" stroke-width="1" fill="none"/>
-
-                <!-- 遠山與祥雲線條 -->
-                <path d="M0 140 Q180 60 350 130 T700 110 T1000 140 L1000 0 L0 0 Z" fill="#081326" opacity="0.65"/>
-                <path d="M80 490 Q260 440 450 485 T880 470" stroke="#38bdf8" stroke-opacity="0.15" stroke-width="2" fill="none"/>
-
-                <!-- 參拜引導底線 (暗色) -->
-                <path d="M 210 420 Q 170 290 250 190 Q 370 110 500 155 Q 630 110 750 190 Q 830 290 790 420" 
-                      stroke="#1e293b" stroke-width="6" fill="none" stroke-linecap="round"/>
-
-                <!-- 參拜引導動態光線 (金色流動) -->
-                <path id="svgGuidedPath" d="M 210 420 Q 170 290 250 190 Q 370 110 500 155 Q 630 110 750 190 Q 830 290 790 420" 
-                      stroke="url(#goldRoad)" stroke-width="3.5" fill="none" stroke-linecap="round" class="sacred-path-active"/>
-
-                <!-- 南方山門入口標示 -->
-                <g transform="translate(500, 515)">
-                    <rect x="-75" y="-18" width="150" height="30" rx="15" fill="#081326" stroke="#deb665" stroke-opacity="0.4" stroke-width="1.2"/>
-                    <text x="0" y="2" text-anchor="middle" fill="#ebd095" font-size="12" font-family="Noto Serif TC" letter-spacing="3">▲ 明王殿山門入口</text>
+                <circle cx="200" cy="220" r="180" fill="url(#centerMandalaMobile)" />
+                <circle cx="200" cy="190" r="130" stroke="#deb665" stroke-opacity="0.14" stroke-width="1" stroke-dasharray="5 5" fill="none"/>
+                <!-- 手機版座標連線：1(104,400) -> 2(104,244) -> 3(200,94) -> 4(296,244) -> 5(296,400) -->
+                <path d="M 104 400 L 104 244 Q 130 140 200 94 Q 270 140 296 244 L 296 400" 
+                      stroke="#1e293b" stroke-width="5" fill="none" stroke-linecap="round"/>
+                <path d="M 104 400 L 104 244 Q 130 140 200 94 Q 270 140 296 244 L 296 400" 
+                      stroke="url(#goldRoadMobile)" stroke-width="3" fill="none" stroke-linecap="round" class="sacred-path-active"/>
+                <g transform="translate(200, 492)">
+                    <rect x="-70" y="-14" width="140" height="24" rx="12" fill="#081326" stroke="#deb665" stroke-opacity="0.35" stroke-width="1"/>
+                    <text x="0" y="2" text-anchor="middle" fill="#ebd095" font-size="11" font-family="Noto Serif TC" letter-spacing="2">▲ 明王殿山門入口</text>
                 </g>
             </svg>
 
             <!-- ================= 地圖互動建築節點 (5 大殿堂) ================= -->
 
-            <!-- 節點 1：琉璃淨水池 (左下) -->
+            <!-- 節點 1：琉璃淨水池 -->
             <div id="map-node-1" onclick="openStationModal(1)" 
-                 style="left: 21%; top: 74%;" 
-                 class="absolute -translate-x-1/2 -translate-y-1/2 w-28 sm:w-36 p-2.5 sm:p-3 rounded-2xl zen-subcard border-2 border-sky-400/40 hover:scale-105 transition cursor-pointer text-center group z-10">
-                <!-- 引導浮動標籤 -->
-                <div id="guide-pin-1" class="hidden absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap px-2.5 py-0.5 rounded-full bg-amber-400 text-lapis-950 font-zen font-bold text-[11px] shadow-lg float-guide-badge">
+                 class="map-node w-[132px] sm:w-36 p-2.5 sm:p-3 rounded-2xl zen-subcard border-2 border-sky-400/40 cursor-pointer text-center z-10">
+                <div id="guide-pin-1" class="hidden absolute -top-7 left-1/2 whitespace-nowrap px-2 py-0.5 rounded-full bg-amber-400 text-lapis-950 font-zen font-bold text-[10px] shadow-lg float-guide-badge z-30">
                     📍 請先至此浴佛
                 </div>
-                <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-2xl bg-sky-500/20 border border-sky-300/40 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
+                <div class="w-9 h-9 sm:w-11 sm:h-11 mx-auto rounded-xl bg-sky-500/20 border border-sky-300/40 flex items-center justify-center text-lg sm:text-xl shadow-inner">
                     🪷
                 </div>
-                <div class="font-zen font-bold text-xs sm:text-sm text-gold-100 mt-1.5">1. 琉璃淨水池</div>
-                <div id="node-status-1" class="text-[10px] text-sky-300/90 mt-0.5">浴佛・撥珠持咒</div>
+                <div class="font-zen font-bold text-xs sm:text-sm text-gold-100 mt-1">1. 琉璃淨水池</div>
+                <div id="node-status-1" class="text-[10px] text-sky-300/90 mt-0.5 truncate">浴佛・撥珠持咒</div>
             </div>
 
-            <!-- 節點 2：琉璃光明燈塔 (左上) -->
+            <!-- 節點 2：琉璃光明塔 -->
             <div id="map-node-2" onclick="openStationModal(2)" 
-                 style="left: 25%; top: 34%;" 
-                 class="absolute -translate-x-1/2 -translate-y-1/2 w-28 sm:w-36 p-2.5 sm:p-3 rounded-2xl zen-subcard border-2 border-gold-400/35 hover:scale-105 transition cursor-pointer text-center group z-10">
-                <div id="guide-pin-2" class="hidden absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap px-2.5 py-0.5 rounded-full bg-amber-400 text-lapis-950 font-zen font-bold text-[11px] shadow-lg float-guide-badge">
+                 class="map-node w-[132px] sm:w-36 p-2.5 sm:p-3 rounded-2xl zen-subcard border-2 border-gold-400/35 cursor-pointer text-center z-10">
+                <div id="guide-pin-2" class="hidden absolute -top-7 left-1/2 whitespace-nowrap px-2 py-0.5 rounded-full bg-amber-400 text-lapis-950 font-zen font-bold text-[10px] shadow-lg float-guide-badge z-30">
                     📍 點燃祈福蓮燈
                 </div>
-                <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-2xl bg-amber-500/20 border border-amber-300/40 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
+                <div class="w-9 h-9 sm:w-11 sm:h-11 mx-auto rounded-xl bg-amber-500/20 border border-amber-300/40 flex items-center justify-center text-lg sm:text-xl shadow-inner">
                     🕯️
                 </div>
-                <div class="font-zen font-bold text-xs sm:text-sm text-gold-100 mt-1.5">2. 琉璃光明塔</div>
-                <div id="node-status-2" class="text-[10px] text-amber-300/90 mt-0.5">引火・供燈祈福</div>
+                <div class="font-zen font-bold text-xs sm:text-sm text-gold-100 mt-1">2. 琉璃光明塔</div>
+                <div id="node-status-2" class="text-[10px] text-amber-300/90 mt-0.5 truncate">引火・供燈祈福</div>
             </div>
 
-            <!-- 節點 3：藥師琉璃寶殿 (正中央主殿) -->
+            <!-- 節點 3：藥師琉璃寶殿 (主殿) -->
             <div id="map-node-3" onclick="openStationModal(3)" 
-                 style="left: 50%; top: 28%;" 
-                 class="absolute -translate-x-1/2 -translate-y-1/2 w-36 sm:w-44 p-3 sm:p-4 rounded-3xl zen-card border-2 border-gold-300/60 hover:scale-105 transition cursor-pointer text-center group z-20 shadow-[0_0_40px_rgba(56,189,248,0.25)]">
-                <div id="guide-pin-3" class="hidden absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap px-2.5 py-0.5 rounded-full bg-amber-400 text-lapis-950 font-zen font-bold text-[11px] shadow-lg float-guide-badge">
+                 class="map-node w-[156px] sm:w-44 p-2.5 sm:p-3.5 rounded-3xl zen-card border-2 border-gold-300/60 cursor-pointer text-center z-20 shadow-[0_0_35px_rgba(56,189,248,0.28)]">
+                <div id="guide-pin-3" class="hidden absolute -top-7 left-1/2 whitespace-nowrap px-2 py-0.5 rounded-full bg-amber-400 text-lapis-950 font-zen font-bold text-[10px] shadow-lg float-guide-badge z-30">
                     📍 求取十二大願籤
                 </div>
-                <div class="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-2xl bg-gradient-to-br from-gold-300/30 via-sky-500/25 to-lapis-900 border border-gold-300/60 flex items-center justify-center text-2xl sm:text-3xl shadow-lg">
+                <div class="w-10 h-10 sm:w-13 sm:h-13 mx-auto rounded-2xl bg-gradient-to-br from-gold-300/30 via-sky-500/25 to-lapis-900 border border-gold-300/60 flex items-center justify-center text-xl sm:text-2xl shadow-lg">
                     📜
                 </div>
-                <div class="font-zen font-bold text-sm sm:text-base text-gold-100 mt-1.5 tracking-wider">3. 藥師琉璃寶殿</div>
-                <div id="node-status-3" class="text-[11px] text-purple-200 mt-0.5">求取十二大願靈籤</div>
+                <div class="font-zen font-bold text-xs sm:text-base text-gold-100 mt-1 tracking-wide">3. 藥師琉璃寶殿</div>
+                <div id="node-status-3" class="text-[10px] sm:text-[11px] text-purple-200 mt-0.5 truncate">求取十二大願靈籤</div>
             </div>
 
-            <!-- 節點 4：福田功德堂 (右上) -->
+            <!-- 節點 4：福田功德堂 -->
             <div id="map-node-4" onclick="openStationModal(4)" 
-                 style="left: 75%; top: 34%;" 
-                 class="absolute -translate-x-1/2 -translate-y-1/2 w-28 sm:w-36 p-2.5 sm:p-3 rounded-2xl zen-subcard border-2 border-emerald-400/35 hover:scale-105 transition cursor-pointer text-center group z-10">
-                <div id="guide-pin-4" class="hidden absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap px-2.5 py-0.5 rounded-full bg-amber-400 text-lapis-950 font-zen font-bold text-[11px] shadow-lg float-guide-badge">
+                 class="map-node w-[132px] sm:w-36 p-2.5 sm:p-3 rounded-2xl zen-subcard border-2 border-emerald-400/35 cursor-pointer text-center z-10">
+                <div id="guide-pin-4" class="hidden absolute -top-7 left-1/2 whitespace-nowrap px-2 py-0.5 rounded-full bg-amber-400 text-lapis-950 font-zen font-bold text-[10px] shadow-lg float-guide-badge z-30">
                     📍 隨喜護持結緣
                 </div>
-                <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-2xl bg-emerald-500/20 border border-emerald-300/40 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
+                <div class="w-9 h-9 sm:w-11 sm:h-11 mx-auto rounded-xl bg-emerald-500/20 border border-emerald-300/40 flex items-center justify-center text-lg sm:text-xl shadow-inner">
                     🌱
                 </div>
-                <div class="font-zen font-bold text-xs sm:text-sm text-gold-100 mt-1.5">4. 福田功德堂</div>
-                <div id="node-status-4" class="text-[10px] text-emerald-300/90 mt-0.5">隨喜護持・報名</div>
+                <div class="font-zen font-bold text-xs sm:text-sm text-gold-100 mt-1">4. 福田功德堂</div>
+                <div id="node-status-4" class="text-[10px] text-emerald-300/90 mt-0.5 truncate">隨喜護持・報名</div>
             </div>
 
-            <!-- 節點 5：圓滿迴向碑林 (右下) -->
+            <!-- 節點 5：圓滿迴向碑 -->
             <div id="map-node-5" onclick="openStationModal(5)" 
-                 style="left: 79%; top: 74%;" 
-                 class="absolute -translate-x-1/2 -translate-y-1/2 w-28 sm:w-36 p-2.5 sm:p-3 rounded-2xl zen-subcard border-2 border-rose-400/35 hover:scale-105 transition cursor-pointer text-center group z-10">
-                <div id="guide-pin-5" class="hidden absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap px-2.5 py-0.5 rounded-full bg-amber-400 text-lapis-950 font-zen font-bold text-[11px] shadow-lg float-guide-badge">
+                 class="map-node w-[132px] sm:w-36 p-2.5 sm:p-3 rounded-2xl zen-subcard border-2 border-rose-400/35 cursor-pointer text-center z-10">
+                <div id="guide-pin-5" class="hidden absolute -top-7 left-1/2 whitespace-nowrap px-2 py-0.5 rounded-full bg-amber-400 text-lapis-950 font-zen font-bold text-[10px] shadow-lg float-guide-badge z-30">
                     📍 蓋印圓滿迴向
                 </div>
-                <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto rounded-2xl bg-rose-500/20 border border-rose-300/40 flex items-center justify-center text-xl sm:text-2xl shadow-inner">
+                <div class="w-9 h-9 sm:w-11 sm:h-11 mx-auto rounded-xl bg-rose-500/20 border border-rose-300/40 flex items-center justify-center text-lg sm:text-xl shadow-inner">
                     💮
                 </div>
-                <div class="font-zen font-bold text-xs sm:text-sm text-gold-100 mt-1.5">5. 圓滿迴向碑</div>
-                <div id="node-status-5" class="text-[10px] text-rose-300/90 mt-0.5">蓋下寶印・蓮卡</div>
+                <div class="font-zen font-bold text-xs sm:text-sm text-gold-100 mt-1">5. 圓滿迴向碑</div>
+                <div id="node-status-5" class="text-[10px] text-rose-300/90 mt-0.5 truncate">蓋下寶印・蓮卡</div>
             </div>
 
-            <!-- 地圖角落圖例與道場資訊按鈕 -->
-            <div class="absolute bottom-3 left-3 hidden sm:flex items-center gap-3 px-3.5 py-1.5 rounded-xl bg-lapis-950/85 border border-gold-400/20 text-[11px] text-slate-300 font-zen">
-                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>引導前往</span>
+        </div>
+
+        <!-- 地圖下方獨立資訊與圖例列 (移出地圖內部，徹底避免遮擋第 1、5 站) -->
+        <div class="w-full flex flex-wrap items-center justify-between gap-3 px-1">
+            <div class="flex items-center gap-4 text-xs text-slate-300 font-zen">
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>引導參拜點</span>
                 <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>已圓滿儀軌</span>
             </div>
 
-            <button onclick="openInfoModal()" class="absolute bottom-3 right-3 px-3.5 py-1.5 rounded-xl bg-lapis-950/90 hover:bg-lapis-800 border border-gold-400/35 text-gold-200 text-xs font-zen flex items-center gap-1.5 cursor-pointer transition">
+            <button onclick="openInfoModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl zen-subcard hover:border-gold-300/60 text-gold-200 text-xs font-zen flex items-center justify-center gap-2 cursor-pointer transition">
                 <i class="fa-solid fa-location-dot text-sky-300"></i>
-                <span>道場交通 & 明真師姐聯繫</span>
+                <span>道場交通導航 & 明真師姐聯繫資訊</span>
             </button>
         </div>
 
@@ -332,28 +383,26 @@
 
             <!-- 【殿堂 1：琉璃淨水池 (浴佛 & 撥珠)】 -->
             <div id="station-content-1" class="station-pane hidden space-y-5">
-                <div class="flex items-center gap-2 text-xs text-sky-300 font-zen">
+                <div class="flex items-center gap-2 text-xs text-sky-300 font-zen pr-8">
                     <span>第一站・琉璃淨水池</span>
                     <span>｜</span>
                     <span>以水洗塵・還原靈魂澄澈</span>
                 </div>
-                <h3 class="font-zen text-2xl font-bold text-gold-100">🪷 浴佛淨心・指尖撥珠持咒</h3>
+                <h3 class="font-zen text-xl sm:text-2xl font-bold text-gold-100">🪷 浴佛淨心・指尖撥珠持咒</h3>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 items-center">
-                    <!-- 浴佛視覺區 -->
-                    <div onclick="performBathBuddha()" class="relative aspect-square rounded-2xl zen-subcard flex flex-col items-center justify-center p-4 cursor-pointer overflow-hidden group">
-                        <div id="ladleContainer" class="absolute top-6 right-6 z-20 pointer-events-none opacity-0">
-                            <span class="text-4xl">🥄💧</span>
+                    <div onclick="performBathBuddha()" class="relative aspect-square max-h-60 mx-auto w-full rounded-2xl zen-subcard flex flex-col items-center justify-center p-4 cursor-pointer overflow-hidden group">
+                        <div id="ladleContainer" class="absolute top-5 right-5 z-20 pointer-events-none opacity-0">
+                            <span class="text-3xl">🥄💧</span>
                         </div>
-                        <div id="buddhaGlowIcon" class="text-7xl transition-all duration-700 select-none">🧘‍♂️</div>
+                        <div id="buddhaGlowIcon" class="text-6xl sm:text-7xl transition-all duration-700 select-none">🧘‍♂️</div>
                         <p id="floatingMantra" class="mt-3 text-xs font-zen text-gold-200 bg-lapis-950/80 px-3 py-1 rounded-full border border-gold-400/30">
                             南無藥師琉璃光如來
                         </p>
                         <span class="text-[11px] text-slate-400 mt-2">（點擊佛像舀水灌沐）</span>
                     </div>
 
-                    <!-- 進度與操作 -->
-                    <div class="space-y-4">
+                    <div class="space-y-3.5">
                         <div class="zen-subcard rounded-2xl p-4 space-y-2">
                             <div class="flex justify-between text-xs font-zen">
                                 <span class="text-sky-200">三瓢清泉浴佛進度</span>
@@ -362,7 +411,7 @@
                             <div class="w-full h-2 bg-lapis-950 rounded-full overflow-hidden">
                                 <div id="bathProgressBar" class="h-full bg-gradient-to-r from-sky-400 to-gold-300 transition-all duration-500" style="width: 0%"></div>
                             </div>
-                            <p id="bathStatusHint" class="text-xs text-slate-300 pt-1">初杓斷煩惱、二杓修善法、三杓沐淨光。</p>
+                            <p class="text-xs text-slate-300 pt-1">初杓斷煩惱、二杓修善法、三杓沐淨光。</p>
                         </div>
 
                         <div class="zen-subcard rounded-2xl p-4 space-y-2">
@@ -384,19 +433,19 @@
                 <div class="pt-3 border-t border-gold-400/20 flex justify-between items-center">
                     <button onclick="closeStationModal()" class="text-xs text-slate-400 hover:text-white font-zen">返回地圖總覽</button>
                     <button onclick="openStationModal(2)" class="px-4 py-2 rounded-xl bg-gold-400/20 hover:bg-gold-400/30 border border-gold-300/50 text-gold-100 text-xs font-zen font-bold cursor-pointer">
-                        前往下一站：琉璃光明塔 →
+                        下一站：琉璃光明塔 →
                     </button>
                 </div>
             </div>
 
             <!-- 【殿堂 2：琉璃光明塔 (點燈祈福)】 -->
             <div id="station-content-2" class="station-pane hidden space-y-5">
-                <div class="flex items-center gap-2 text-xs text-amber-300 font-zen">
+                <div class="flex items-center gap-2 text-xs text-amber-300 font-zen pr-8">
                     <span>第二站・琉璃光明塔</span>
                     <span>｜</span>
                     <span>以燈供佛・照破世間塵勞</span>
                 </div>
-                <h3 class="font-zen text-2xl font-bold text-gold-100">🕯️ 親手引火・點燃祈福蓮燈</h3>
+                <h3 class="font-zen text-xl sm:text-2xl font-bold text-gold-100">🕯️ 親手引火・點燃祈福蓮燈</h3>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="space-y-3">
@@ -419,41 +468,40 @@
                         </button>
                     </div>
 
-                    <!-- 點燈展示台 -->
                     <div id="lampAltarDisplay" class="zen-subcard rounded-2xl p-5 flex flex-col items-center justify-center text-center space-y-3 border border-gold-400/25">
                         <div id="lampVisualIcon" class="text-6xl opacity-40 transition-all duration-700">🪔</div>
                         <div id="lampAltarStatus" class="font-zen text-sm font-bold text-gold-200">琉璃蓮燈・靜候點燃</div>
-                        <p id="lampAltarDetail" class="text-xs text-slate-400 leading-relaxed">填寫左側芳名與心願後點擊引火，您的專屬蓮燈將於光明塔中綻放。</p>
+                        <p id="lampAltarDetail" class="text-xs text-slate-400 leading-relaxed">填寫芳名與心願後點擊引火，您的專屬蓮燈將於光明塔中綻放。</p>
                     </div>
                 </div>
 
                 <div class="pt-3 border-t border-gold-400/20 flex justify-between items-center">
                     <button onclick="openStationModal(1)" class="text-xs text-slate-400 hover:text-white font-zen">← 上一站：琉璃淨水池</button>
                     <button onclick="openStationModal(3)" class="px-4 py-2 rounded-xl bg-gold-400/20 hover:bg-gold-400/30 border border-gold-300/50 text-gold-100 text-xs font-zen font-bold cursor-pointer">
-                        前往下一站：藥師琉璃寶殿 →
+                        下一站：藥師琉璃寶殿 →
                     </button>
                 </div>
             </div>
 
             <!-- 【殿堂 3：藥師琉璃寶殿 (十二大願靈籤)】 -->
             <div id="station-content-3" class="station-pane hidden space-y-5">
-                <div class="flex items-center gap-2 text-xs text-purple-300 font-zen">
+                <div class="flex items-center gap-2 text-xs text-purple-300 font-zen pr-8">
                     <span>第三站・藥師琉璃寶殿</span>
                     <span>｜</span>
                     <span>十二大願・法語加持</span>
                 </div>
-                <h3 class="font-zen text-2xl font-bold text-gold-100">📜 求取藥師如來十二大願守護籤</h3>
+                <h3 class="font-zen text-xl sm:text-2xl font-bold text-gold-100">📜 求取藥師如來十二大願守護籤</h3>
 
-                <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
-                    <div class="sm:col-span-5 zen-subcard rounded-2xl p-5 text-center space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+                    <div class="sm:col-span-5 zen-subcard rounded-2xl p-5 text-center space-y-3">
                         <div id="oracleCylinder" onclick="drawTwelveVowLot()" class="text-6xl cursor-pointer select-none inline-block">🏺</div>
-                        <p class="text-xs text-slate-300 font-zen">合掌默念祈願，點擊籤筒或下方按鈕求籤</p>
+                        <p class="text-xs text-slate-300 font-zen">合掌默念祈願，點擊籤筒求籤</p>
                         <button onclick="drawTwelveVowLot()" class="w-full py-3 rounded-xl btn-gold-luxury font-zen font-bold text-xs sm:text-sm cursor-pointer">
                             ✨ 誠心搖筒求籤
                         </button>
                     </div>
 
-                    <div class="sm:col-span-7 zen-subcard rounded-2xl p-5 min-h-[190px] flex flex-col justify-center space-y-2 border border-gold-300/30">
+                    <div class="sm:col-span-7 zen-subcard rounded-2xl p-5 min-h-[180px] flex flex-col justify-center space-y-2 border border-gold-300/30">
                         <div id="vowTitleBadge" class="text-xs text-gold-300 font-zen">靜候求取今日守護本願法語</div>
                         <div id="vowMainTitle" class="font-zen text-lg font-bold text-gold-100">南無藥師琉璃光如來</div>
                         <p id="vowMeaningText" class="text-xs text-slate-300 leading-relaxed">
@@ -465,19 +513,19 @@
                 <div class="pt-3 border-t border-gold-400/20 flex justify-between items-center">
                     <button onclick="openStationModal(2)" class="text-xs text-slate-400 hover:text-white font-zen">← 上一站：琉璃光明塔</button>
                     <button onclick="openStationModal(4)" class="px-4 py-2 rounded-xl bg-gold-400/20 hover:bg-gold-400/30 border border-gold-300/50 text-gold-100 text-xs font-zen font-bold cursor-pointer">
-                        前往下一站：福田功德堂 →
+                        下一站：福田功德堂 →
                     </button>
                 </div>
             </div>
 
             <!-- 【殿堂 4：福田功德堂 (隨喜護持 & LINE 報名)】 -->
             <div id="station-content-4" class="station-pane hidden space-y-5">
-                <div class="flex items-center gap-2 text-xs text-emerald-300 font-zen">
+                <div class="flex items-center gap-2 text-xs text-emerald-300 font-zen pr-8">
                     <span>第四站・福田功德堂</span>
                     <span>｜</span>
                     <span>一念發心・萬德莊嚴</span>
                 </div>
-                <h3 class="font-zen text-2xl font-bold text-gold-100">🌱 隨喜投入功德箱・法會結緣報名</h3>
+                <h3 class="font-zen text-xl sm:text-2xl font-bold text-gold-100">🌱 隨喜投入功德箱・法會結緣報名</h3>
 
                 <div class="space-y-3">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -515,21 +563,21 @@
                 <div class="pt-3 border-t border-gold-400/20 flex justify-between items-center">
                     <button onclick="openStationModal(3)" class="text-xs text-slate-400 hover:text-white font-zen">← 上一站：藥師琉璃寶殿</button>
                     <button onclick="openStationModal(5)" class="px-4 py-2 rounded-xl bg-gold-400/20 hover:bg-gold-400/30 border border-gold-300/50 text-gold-100 text-xs font-zen font-bold cursor-pointer">
-                        前往圓滿站：圓滿迴向碑 →
+                        圓滿站：圓滿迴向碑 →
                     </button>
                 </div>
             </div>
 
             <!-- 【殿堂 5：圓滿迴向碑林 (蓋寶印 & 祈福卡)】 -->
             <div id="station-content-5" class="station-pane hidden space-y-5">
-                <div class="flex items-center gap-2 text-xs text-rose-300 font-zen">
+                <div class="flex items-center gap-2 text-xs text-rose-300 font-zen pr-8">
                     <span>第五站・圓滿迴向碑林</span>
                     <span>｜</span>
                     <span>功德入疏・同生琉璃國</span>
                 </div>
-                <h3 class="font-zen text-2xl font-bold text-gold-100">💮 功德迴向疏文・蓋下明王殿琉璃寶印</h3>
+                <h3 class="font-zen text-xl sm:text-2xl font-bold text-gold-100">💮 功德迴向疏文・蓋下明王殿琉璃寶印</h3>
 
-                <div class="zen-subcard rounded-2xl p-5 border border-gold-300/35 space-y-3 font-zen text-xs sm:text-sm leading-relaxed">
+                <div class="zen-subcard rounded-2xl p-4 sm:p-5 border border-gold-300/35 space-y-3 font-zen text-xs sm:text-sm leading-relaxed">
                     <p>今有祈福信眾 <strong id="scrollNameText" class="text-gold-200 underline">十方善信 闔家</strong>，於明王殿雲端琉璃壇城修持善法：</p>
                     <ul class="text-sky-200 space-y-1 pl-3 border-l-2 border-gold-400/40 text-xs">
                         <li id="scrollBathLine">・琉璃淨水池：浴佛滌心，持誦聖號</li>
@@ -539,16 +587,16 @@
                     <p class="text-gold-100 pt-1">「願以此功德，莊嚴佛淨土；上報四重恩，下濟三途苦。」</p>
                 </div>
 
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                    <div id="sealStampVisual" class="hidden px-4 py-2 rounded-xl border-2 border-rose-500 bg-rose-950/60 text-rose-300 font-zen font-black text-sm tracking-widest">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div id="sealStampVisual" class="hidden px-3.5 py-2 rounded-xl border-2 border-rose-500 bg-rose-950/60 text-rose-300 font-zen font-black text-xs sm:text-sm tracking-widest">
                         💮 【明王藥師琉璃寶印】已落款
                     </div>
-                    <div class="flex gap-2.5 ml-auto">
-                        <button onclick="stampDedicationScroll()" class="px-5 py-3 rounded-xl btn-gold-luxury font-zen font-bold text-xs sm:text-sm cursor-pointer">
-                            💮 蓋下琉璃寶印・圓滿迴向
+                    <div class="flex flex-wrap gap-2 w-full sm:w-auto sm:ml-auto">
+                        <button onclick="stampDedicationScroll()" class="flex-1 sm:flex-initial px-4 py-3 rounded-xl btn-gold-luxury font-zen font-bold text-xs sm:text-sm cursor-pointer">
+                            💮 蓋下琉璃寶印
                         </button>
-                        <button onclick="openBlessingCardModal()" class="px-4 py-3 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 border border-sky-300/50 text-sky-200 font-zen font-bold text-xs sm:text-sm cursor-pointer">
-                            🖼️ 生成直式祈福蓮卡
+                        <button onclick="openBlessingCardModal()" class="flex-1 sm:flex-initial px-4 py-3 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 border border-sky-300/50 text-sky-200 font-zen font-bold text-xs sm:text-sm cursor-pointer">
+                            🖼️ 生成祈福蓮卡
                         </button>
                     </div>
                 </div>
@@ -592,16 +640,13 @@
     </div>
 
     <!-- Toast 提示 -->
-    <div id="zenToast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300">
-        <div class="px-4 py-2.5 rounded-2xl bg-lapis-900/95 border border-gold-400/60 text-gold-200 text-xs font-zen shadow-2xl">
+    <div id="zenToast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 w-max max-w-[90vw]">
+        <div class="px-4 py-2.5 rounded-2xl bg-lapis-900/95 border border-gold-400/60 text-gold-200 text-xs font-zen shadow-2xl text-center">
             <span id="zenToastMsg">吉祥如意</span>
         </div>
     </div>
 
     <script>
-        // ==========================================
-        // 1. 狀態管理與 LocalStorage 保存
-        // ==========================================
         const STORAGE_KEY = 'mingwang_sanctuary_state_v1';
         let sanctuaryState = {
             bathScoops: 0,
@@ -614,6 +659,14 @@
             meritPledged: false,
             sealStamped: false,
             completedSteps: { 1: false, 2: false, 3: false, 4: false, 5: false }
+        };
+
+        const stepShortLabels = {
+            1: '1.琉璃泉',
+            2: '2.光明塔',
+            3: '3.藥師殿',
+            4: '4.功德堂',
+            5: '5.迴向碑'
         };
 
         function loadState() {
@@ -633,9 +686,6 @@
             syncUIWithState();
         }
 
-        // ==========================================
-        // 2. 引導式地圖導航與狀態渲染
-        // ==========================================
         const guideMetadata = {
             1: { tag: '第一站引導', title: '請前往【1. 琉璃淨水池】浴佛滌心', desc: '入壇城參拜，先以三瓢清泉灌沐佛身、撥珠持咒，洗去塵勞。' },
             2: { tag: '第二站引導', title: '請前往【2. 琉璃光明塔】引火點燈', desc: '浴佛淨心後，於佛前點燃一盞琉璃蓮燈，祈求消災延壽、出入平安。' },
@@ -648,14 +698,13 @@
             for (let i = 1; i <= 5; i++) {
                 if (!sanctuaryState.completedSteps[i]) return i;
             }
-            return 5; // 全部完成
+            return 5;
         }
 
         function syncUIWithState() {
             const nextStep = getNextRecommendedStation();
             const allDone = Object.values(sanctuaryState.completedSteps).every(Boolean);
 
-            // 更新地圖上 5 個節點的外觀與浮動引導標籤
             for (let i = 1; i <= 5; i++) {
                 const nodeEl = document.getElementById(`map-node-${i}`);
                 const pinEl = document.getElementById(`guide-pin-${i}`);
@@ -672,16 +721,20 @@
                     pinEl.classList.toggle('hidden', !(i === nextStep && !allDone));
                 }
                 if (topStepEl) {
+                    const baseLabel = stepShortLabels[i];
                     if (isDone) {
-                        topStepEl.className = 'px-2.5 py-0.5 rounded-full bg-emerald-500/25 border border-emerald-400/50 text-emerald-200 font-bold transition';
-                        topStepEl.innerHTML = `✓ ${topStepEl.textContent.replace('✓ ', '')}`;
+                        topStepEl.className = 'px-2.5 py-0.5 rounded-full bg-emerald-500/25 border border-emerald-400/50 text-emerald-200 font-bold transition whitespace-nowrap';
+                        topStepEl.textContent = `✓ ${baseLabel}`;
                     } else if (i === nextStep) {
-                        topStepEl.className = 'px-2.5 py-0.5 rounded-full bg-amber-400/25 border border-amber-300 text-amber-200 font-bold transition';
+                        topStepEl.className = 'px-2.5 py-0.5 rounded-full bg-amber-400/25 border border-amber-300 text-amber-200 font-bold transition whitespace-nowrap';
+                        topStepEl.textContent = baseLabel;
+                    } else {
+                        topStepEl.className = 'px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300 hover:text-gold-200 transition whitespace-nowrap';
+                        topStepEl.textContent = baseLabel;
                     }
                 }
             }
 
-            // 更新上方智慧引導橫幅
             const tagEl = document.getElementById('guideStepTag');
             const titleEl = document.getElementById('guideTitle');
             const descEl = document.getElementById('guideDesc');
@@ -690,7 +743,7 @@
             if (allDone) {
                 tagEl.textContent = '💮 參拜圓滿';
                 titleEl.textContent = '五重儀軌皆已圓滿！琉璃光明遍照闔家';
-                descEl.textContent = '您可自由點擊地圖各殿堂複習祈願，或點擊右方按鈕查看您的直式祈福蓮卡。';
+                descEl.textContent = '您可自由點擊地圖各殿堂複習祈願，或點擊按鈕查看直式祈福蓮卡。';
                 btnEl.innerHTML = '<span>查看祈福蓮卡</span><i class="fa-solid fa-image"></i>';
                 btnEl.onclick = openBlessingCardModal;
             } else {
@@ -702,11 +755,14 @@
                 btnEl.onclick = () => openStationModal(nextStep);
             }
 
-            // 同步各殿堂內部數值
             const pct = Math.min(100, (sanctuaryState.bathScoops / 3) * 100);
             document.getElementById('bathCountText').textContent = `${Math.min(3, sanctuaryState.bathScoops)} / 3 瓢`;
             document.getElementById('bathProgressBar').style.width = `${pct}%`;
             document.getElementById('malaCountText').textContent = `已持誦 ${sanctuaryState.malaCount} 聲`;
+
+            if (sanctuaryState.completedSteps[1]) {
+                document.getElementById('node-status-1').innerHTML = `<span class="text-emerald-300">✓ 浴佛已圓滿</span>`;
+            }
 
             if (sanctuaryState.lampLit) {
                 document.getElementById('lampVisualIcon').classList.remove('opacity-40');
@@ -723,7 +779,10 @@
                 document.getElementById('node-status-3').innerHTML = `<span class="text-emerald-300">✓ ${sanctuaryState.vowDrawn.num}</span>`;
             }
 
-            // 更新第 5 站迴向疏文摘要
+            if (sanctuaryState.meritPledged) {
+                document.getElementById('node-status-4').innerHTML = `<span class="text-emerald-300">✓ 已發心護持</span>`;
+            }
+
             document.getElementById('scrollNameText').textContent = sanctuaryState.lampName || '十方善信 闔家';
             document.getElementById('scrollBathLine').textContent = `・琉璃淨水池：已浴佛 ${sanctuaryState.bathScoops} 瓢，持誦藥師佛號 ${sanctuaryState.malaCount} 聲`;
             document.getElementById('scrollLampLine').textContent = sanctuaryState.lampLit
@@ -734,6 +793,7 @@
             }
             if (sanctuaryState.sealStamped) {
                 document.getElementById('sealStampVisual').classList.remove('hidden');
+                document.getElementById('node-status-5').innerHTML = `<span class="text-emerald-300">✓ 寶印已圓滿</span>`;
             }
         }
 
@@ -763,9 +823,6 @@
             openStationModal(getNextRecommendedStation());
         }
 
-        // ==========================================
-        // 3. Web Audio API 靜心音效
-        // ==========================================
         let audioCtx = null;
         function getAudioContext() {
             if (!audioCtx) {
@@ -815,9 +872,6 @@
             } catch (e) {}
         }
 
-        // ==========================================
-        // 4. 五大殿堂互動邏輯
-        // ==========================================
         function performBathBuddha() {
             playZenBowl(528);
             const ladle = document.getElementById('ladleContainer');
@@ -828,7 +882,6 @@
             sanctuaryState.bathScoops += 1;
             if (sanctuaryState.bathScoops >= 3) {
                 sanctuaryState.completedSteps[1] = true;
-                document.getElementById('node-status-1').innerHTML = `<span class="text-emerald-300">✓ 三瓢浴佛圓滿</span>`;
                 showToast('🪷 三瓢浴佛圓滿！可前往下一站【琉璃光明塔】點燈。');
             } else {
                 showToast(`💧 第 ${sanctuaryState.bathScoops} 瓢清泉灌沐佛身，身心清涼。`);
@@ -897,7 +950,6 @@
             const msg = `明真師姐您好，阿彌陀佛🙏 我想報名明王殿10月31日【藥師佛主題科儀法會】\n・護持芳名：${name}\n・參與項目：${cat}\n・雲端點燈：${sanctuaryState.lampType}\n・祈願心意：${sanctuaryState.lampWish}`;
             document.getElementById('meritCopyPreview').textContent = msg;
             document.getElementById('meritResultBox').classList.remove('hidden');
-            document.getElementById('node-status-4').innerHTML = `<span class="text-emerald-300">✓ 已發心護持</span>`;
 
             playZenBowl(528);
             saveState();
@@ -918,14 +970,10 @@
             sealEl.classList.remove('hidden', 'seal-stamp-anim');
             void sealEl.offsetWidth;
             sealEl.classList.add('seal-stamp-anim');
-            document.getElementById('node-status-5').innerHTML = `<span class="text-emerald-300">✓ 寶印已圓滿</span>`;
             saveState();
             showToast('💮 已蓋下【明王殿琉璃寶印】，五重儀軌功德圓滿！');
         }
 
-        // ==========================================
-        // 5. Canvas 高畫質直式祈福蓮卡生成
-        // ==========================================
         function renderBlessingCardCanvas() {
             const canvas = document.getElementById('blessingCardCanvas');
             const ctx = canvas.getContext('2d');
@@ -1021,7 +1069,6 @@
             }, 3000);
         }
 
-        // 背景琉璃光粒子
         function initParticles() {
             const c = document.getElementById('particleCanvas');
             const ctx = c.getContext('2d');
