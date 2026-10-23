@@ -69,13 +69,11 @@
         .font-zen {
             font-family: 'Noto Serif TC', serif;
         }
-        /* Refined Lapis Lazuli & Warm Golden Candlelight Sanctuary Background */
         .bg-lapis-sanctuary {
             background: 
                 radial-gradient(circle at 50% 8%, rgba(222, 182, 101, 0.14) 0%, transparent 45%),
                 radial-gradient(circle at 50% 25%, rgba(24, 68, 128, 0.42) 0%, rgba(8, 19, 38, 0.92) 55%, #040914 100%);
         }
-        /* Refined Zen Card with subtle golden inner frame & glassmorphism */
         .zen-card {
             background: linear-gradient(160deg, rgba(14, 34, 64, 0.65) 0%, rgba(6, 15, 30, 0.88) 100%);
             border: 1px solid rgba(222, 182, 101, 0.24);
@@ -118,7 +116,6 @@
             height: 1px;
             background: linear-gradient(90deg, transparent 0%, rgba(222, 182, 101, 0.35) 50%, transparent 100%);
         }
-        /* Halo pulse animation */
         @keyframes haloPulse {
             0%, 100% { transform: scale(1); opacity: 0.65; }
             50% { transform: scale(1.07); opacity: 0.95; }
@@ -126,7 +123,6 @@
         .halo-glow {
             animation: haloPulse 5s ease-in-out infinite;
         }
-        /* Candle flame flicker */
         @keyframes flameFlicker {
             0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.95; }
             25% { transform: scale(1.05, 0.96) rotate(1deg); opacity: 1; }
@@ -137,7 +133,6 @@
             transform-origin: 50% 90%;
             animation: flameFlicker 2.4s ease-in-out infinite;
         }
-        /* Ladle pouring animation */
         @keyframes pourLadle {
             0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
             20% { transform: translate(-15px, -10px) rotate(-15deg); opacity: 1; }
@@ -148,7 +143,6 @@
         .pouring-ladle {
             animation: pourLadle 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
-        /* Merit slip drop animation */
         @keyframes slipDrop {
             0% { transform: translateY(-60px) scale(1); opacity: 1; }
             60% { transform: translateY(15px) scale(0.92); opacity: 1; }
@@ -180,7 +174,33 @@
         .blessing-spark {
             animation: floatSparkUp 2.6s ease-out forwards;
         }
-        /* Custom Scrollbar */
+        @keyframes cylinderShake {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            20% { transform: rotate(-10deg) translateY(-6px); }
+            40% { transform: rotate(10deg) translateY(-10px); }
+            60% { transform: rotate(-8deg) translateY(-4px); }
+            80% { transform: rotate(8deg) translateY(-8px); }
+        }
+        .shake-cylinder {
+            animation: cylinderShake 0.65s ease-in-out infinite;
+        }
+        @keyframes stampSlam {
+            0% { transform: scale(2.8) rotate(-12deg); opacity: 0; }
+            60% { transform: scale(0.92) rotate(-4deg); opacity: 1; }
+            80% { transform: scale(1.04) rotate(-4deg); opacity: 1; }
+            100% { transform: scale(1) rotate(-4deg); opacity: 0.95; }
+        }
+        .seal-stamp-anim {
+            animation: stampSlam 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes beadPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.35); filter: brightness(1.6); }
+            100% { transform: scale(1); }
+        }
+        .bead-active-pulse {
+            animation: beadPulse 0.35s ease-out;
+        }
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -197,10 +217,8 @@
 
 <body class="bg-lapis-sanctuary min-h-screen selection:bg-gold-400 selection:text-lapis-950 relative">
 
-    <!-- Background Ambient Starlight & Lotus Dust Canvas -->
     <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-    <!-- Sticky Navigation Header -->
     <header class="sticky top-0 z-40 bg-lapis-950/80 backdrop-blur-xl border-b border-gold-400/20">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
             <a href="#top" class="flex items-center gap-3.5 group">
@@ -215,30 +233,28 @@
                 </div>
             </a>
 
-            <!-- Quick Ritual Navigation -->
-            <nav class="hidden md:flex items-center gap-1 lg:gap-2 text-sm font-zen tracking-wider">
-                <a href="#bath-buddha" class="px-3.5 py-1.5 rounded-full text-slate-300 hover:text-gold-200 hover:bg-gold-400/10 transition">🪷 浴佛淨心</a>
-                <a href="#light-lamp" class="px-3.5 py-1.5 rounded-full text-slate-300 hover:text-gold-200 hover:bg-gold-400/10 transition">🕯️ 點燈供佛</a>
-                <a href="#merit-box" class="px-3.5 py-1.5 rounded-full text-slate-300 hover:text-gold-200 hover:bg-gold-400/10 transition">🌱 隨喜護持</a>
-                <a href="#sanctuary-info" class="px-3.5 py-1.5 rounded-full text-slate-300 hover:text-gold-200 hover:bg-gold-400/10 transition">📍 留心駐足</a>
+            <nav class="hidden md:flex items-center gap-1 lg:gap-1.5 text-xs lg:text-sm font-zen tracking-wider">
+                <a href="#bath-buddha" class="px-3 py-1.5 rounded-full text-slate-300 hover:text-gold-200 hover:bg-gold-400/10 transition">🪷 浴佛持咒</a>
+                <a href="#light-lamp" class="px-3 py-1.5 rounded-full text-slate-300 hover:text-gold-200 hover:bg-gold-400/10 transition">🕯️ 引火點燈</a>
+                <a href="#twelve-vows" class="px-3 py-1.5 rounded-full text-slate-300 hover:text-gold-200 hover:bg-gold-400/10 transition">📜 十二願籤</a>
+                <a href="#merit-box" class="px-3 py-1.5 rounded-full text-slate-300 hover:text-gold-200 hover:bg-gold-400/10 transition">🌱 隨喜護持</a>
+                <a href="#dedication-scroll" class="px-3 py-1.5 rounded-full text-slate-300 hover:text-gold-200 hover:bg-gold-400/10 transition">💮 蓋印迴向</a>
             </nav>
 
-            <!-- Audio Chime & Bell Trigger -->
             <div class="flex items-center gap-2.5">
-                <button id="chimeBtn" onclick="playZenBowl()" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold-400/10 hover:bg-gold-400/20 border border-gold-300/35 text-gold-200 text-xs sm:text-sm font-zen transition shadow-sm" title="敲擊靜心頌缽">
+                <button id="chimeBtn" type="button" onclick="playZenBowl()" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold-400/10 hover:bg-gold-400/20 border border-gold-300/35 text-gold-200 text-xs sm:text-sm font-zen transition shadow-sm cursor-pointer" title="敲擊靜心頌缽">
                     <i class="fa-solid fa-bell text-gold-300"></i>
                     <span>敲缽靜心</span>
                 </button>
-                <a href="#sanctuary-info" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full btn-gold-luxury font-zen font-bold text-xs sm:text-sm transition">
+                <button type="button" onclick="scrollToRegistration()" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full btn-gold-luxury font-zen font-bold text-xs sm:text-sm transition active:scale-95 cursor-pointer touch-manipulation">
                     <span>結緣報名</span>
-                </a>
+                </button>
             </div>
         </div>
     </header>
 
     <main id="top" class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-24 space-y-16">
 
-        <!-- HERO SECTION -->
         <section class="text-center space-y-7 pt-2 md:pt-6">
             <div class="inline-flex items-center gap-2.5 px-5 py-1.5 rounded-full bg-lapis-900/90 border border-gold-300/30 text-gold-200 text-xs sm:text-sm font-zen tracking-widest shadow-inner">
                 <span>🌿 歲月靜好，琉璃光現。一盞清燈，照破世間塵勞。</span>
@@ -266,7 +282,6 @@
                 這不僅是一場儀式，更是一次為三界眾生祈福、為自己與家人尋求身心安頓的靜心時光。
             </p>
 
-            <!-- Event Date & Countdown Ribbon -->
             <div class="max-w-3xl mx-auto zen-card rounded-3xl p-5 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="text-center md:text-left space-y-1">
                     <div class="text-xs tracking-[0.2em] text-gold-300/90 font-zen">🗓️ 歲次時光・法會啟建吉日</div>
@@ -293,48 +308,58 @@
                 </div>
             </div>
 
-            <!-- Interactive Progress Stepper -->
-            <div class="grid grid-cols-3 gap-2.5 sm:gap-4 max-w-2xl mx-auto pt-1">
-                <a href="#bath-buddha" id="step-badge-1" class="zen-card rounded-2xl p-3.5 flex flex-col sm:flex-row items-center justify-center gap-2.5 hover:border-gold-300/60 transition group">
-                    <span class="w-8 h-8 rounded-full bg-sky-400/15 border border-sky-300/35 flex items-center justify-center text-sm shadow-inner">🪷</span>
-                    <div class="text-center sm:text-left">
-                        <div class="text-[11px] text-sky-300/90 tracking-widest">第一儀軌</div>
-                        <div class="font-zen text-xs sm:text-sm font-semibold text-gold-100 group-hover:text-gold-300 transition">以水洗塵・浴佛</div>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3 max-w-4xl mx-auto pt-1">
+                <a href="#bath-buddha" id="step-badge-1" class="zen-card rounded-2xl p-3 flex items-center justify-center gap-2.5 hover:border-gold-300/60 transition group">
+                    <span class="w-8 h-8 rounded-full bg-sky-400/15 border border-sky-300/35 flex items-center justify-center text-sm shadow-inner shrink-0">🪷</span>
+                    <div class="text-left">
+                        <div class="text-[10px] text-sky-300/90 tracking-widest">第一儀軌</div>
+                        <div class="font-zen text-xs font-semibold text-gold-100 group-hover:text-gold-300 transition">浴佛・撥珠</div>
                     </div>
                 </a>
-                <a href="#light-lamp" id="step-badge-2" class="zen-card rounded-2xl p-3.5 flex flex-col sm:flex-row items-center justify-center gap-2.5 hover:border-gold-300/60 transition group">
-                    <span class="w-8 h-8 rounded-full bg-gold-400/15 border border-gold-300/35 flex items-center justify-center text-sm shadow-inner">🕯️</span>
-                    <div class="text-center sm:text-left">
-                        <div class="text-[11px] text-gold-300/90 tracking-widest">第二儀軌</div>
-                        <div class="font-zen text-xs sm:text-sm font-semibold text-gold-100 group-hover:text-gold-300 transition">以燈供佛・祈福</div>
+                <a href="#light-lamp" id="step-badge-2" class="zen-card rounded-2xl p-3 flex items-center justify-center gap-2.5 hover:border-gold-300/60 transition group">
+                    <span class="w-8 h-8 rounded-full bg-gold-400/15 border border-gold-300/35 flex items-center justify-center text-sm shadow-inner shrink-0">🕯️</span>
+                    <div class="text-left">
+                        <div class="text-[10px] text-gold-300/90 tracking-widest">第二儀軌</div>
+                        <div class="font-zen text-xs font-semibold text-gold-100 group-hover:text-gold-300 transition">引火・點燈</div>
                     </div>
                 </a>
-                <a href="#merit-box" id="step-badge-3" class="zen-card rounded-2xl p-3.5 flex flex-col sm:flex-row items-center justify-center gap-2.5 hover:border-gold-300/60 transition group">
-                    <span class="w-8 h-8 rounded-full bg-emerald-400/15 border border-emerald-300/35 flex items-center justify-center text-sm shadow-inner">🌱</span>
-                    <div class="text-center sm:text-left">
-                        <div class="text-[11px] text-emerald-300/90 tracking-widest">第三儀軌</div>
-                        <div class="font-zen text-xs sm:text-sm font-semibold text-gold-100 group-hover:text-gold-300 transition">隨喜護持・結緣</div>
+                <a href="#twelve-vows" id="step-badge-4" class="zen-card rounded-2xl p-3 flex items-center justify-center gap-2.5 hover:border-gold-300/60 transition group">
+                    <span class="w-8 h-8 rounded-full bg-purple-400/15 border border-purple-300/35 flex items-center justify-center text-sm shadow-inner shrink-0">📜</span>
+                    <div class="text-left">
+                        <div class="text-[10px] text-purple-300/90 tracking-widest">第三儀軌</div>
+                        <div class="font-zen text-xs font-semibold text-gold-100 group-hover:text-gold-300 transition">藥師・靈籤</div>
+                    </div>
+                </a>
+                <a href="#merit-box" id="step-badge-3" class="zen-card rounded-2xl p-3 flex items-center justify-center gap-2.5 hover:border-gold-300/60 transition group">
+                    <span class="w-8 h-8 rounded-full bg-emerald-400/15 border border-emerald-300/35 flex items-center justify-center text-sm shadow-inner shrink-0">🌱</span>
+                    <div class="text-left">
+                        <div class="text-[10px] text-emerald-300/90 tracking-widest">第四儀軌</div>
+                        <div class="font-zen text-xs font-semibold text-gold-100 group-hover:text-gold-300 transition">隨喜・護持</div>
+                    </div>
+                </a>
+                <a href="#dedication-scroll" id="step-badge-5" class="col-span-2 sm:col-span-1 zen-card rounded-2xl p-3 flex items-center justify-center gap-2.5 hover:border-gold-300/60 transition group">
+                    <span class="w-8 h-8 rounded-full bg-rose-400/15 border border-rose-300/35 flex items-center justify-center text-sm shadow-inner shrink-0">💮</span>
+                    <div class="text-left">
+                        <div class="text-[10px] text-rose-300/90 tracking-widest">圓滿儀軌</div>
+                        <div class="font-zen text-xs font-semibold text-gold-100 group-hover:text-gold-300 transition">寶印・迴向</div>
                     </div>
                 </a>
             </div>
         </section>
 
-        <!-- SECTION 1: BATHING THE BUDDHA -->
         <section id="bath-buddha" class="scroll-mt-20 zen-card rounded-3xl p-6 sm:p-10 relative overflow-hidden">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <!-- Left Column: Description & Controls -->
                 <div class="lg:col-span-6 space-y-5">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-400/10 border border-sky-300/30 text-sky-200 text-xs font-zen tracking-widest">
                         <span>第一重靜心儀軌</span>
                     </div>
                     <h2 class="font-zen text-2xl sm:text-3xl font-bold text-gold-100 flex items-center gap-3 tracking-wide">
-                        <span>🪷 以水洗塵｜浴佛淨心</span>
+                        <span>🪷 以水洗塵｜浴佛・撥珠持咒</span>
                     </h2>
                     <p class="text-slate-300 leading-relaxed text-sm sm:text-base font-light">
                         舀起一瓢清泉浴佛，洗去的除了世間塵埃，還有心底的疲憊與無明，還原靈魂深處的澄澈。
                     </p>
 
-                    <!-- 3 Scoops Progress Bar -->
                     <div class="zen-subcard rounded-2xl p-5 space-y-3.5">
                         <div class="flex items-center justify-between text-xs sm:text-sm">
                             <span class="text-sky-200/90 font-zen">浴佛圓滿進度（三瓢清泉祈願）</span>
@@ -344,7 +369,6 @@
                             <div id="bathProgressBar" class="h-full bg-gradient-to-r from-sky-400 via-teal-300 to-gold-300 rounded-full transition-all duration-700" style="width: 0%"></div>
                         </div>
 
-                        <!-- Vow messages for each scoop -->
                         <div class="space-y-2.5 pt-1 text-xs sm:text-sm">
                             <div id="vow-1" class="flex items-center gap-2.5 text-slate-400 transition-colors duration-500">
                                 <span class="w-5 h-5 rounded-full border border-current flex items-center justify-center text-[11px] font-zen shrink-0">一</span>
@@ -361,55 +385,64 @@
                         </div>
                     </div>
 
-                    <!-- Interactive Action Button -->
-                    <div class="flex flex-wrap items-center gap-3 pt-2">
-                        <button id="bathBtn" onclick="performBathBuddha()" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-3 px-7 py-4 rounded-2xl btn-gold-luxury font-zen font-bold text-base sm:text-lg active:scale-95 transition cursor-pointer">
+                    <div class="zen-subcard rounded-2xl p-4 sm:p-5 space-y-3 border border-sky-400/25">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-base">📿</span>
+                                <span class="font-zen text-xs sm:text-sm font-bold text-gold-100">指尖琉璃念珠・靜心持誦藥師佛號</span>
+                            </div>
+                            <span id="malaCounterBadge" class="px-2.5 py-0.5 rounded-full bg-sky-500/20 border border-sky-300/40 text-sky-200 text-xs font-zen">
+                                已持誦 0 / 108 聲
+                            </span>
+                        </div>
+
+                        <div id="malaBeadsTrack" onclick="chantMantraOnce()" class="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-lapis-950/90 border border-gold-400/15 overflow-hidden cursor-pointer select-none group" title="點擊撥動琉璃念珠並敲擊木魚">
+                        </div>
+
+                        <div class="flex items-center justify-between text-[11px] text-slate-400 font-zen">
+                            <span>✨ 每滿 7 聲持誦，藥師如來白毫光即降下甘露加持</span>
+                            <span class="text-gold-300">點擊念珠或下方按鈕撥珠</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3 pt-1">
+                        <button id="bathBtn" onclick="performBathBuddha()" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-3 px-6 py-4 rounded-2xl btn-gold-luxury font-zen font-bold text-base active:scale-95 transition cursor-pointer">
                             <i class="fa-solid fa-droplet text-lapis-950"></i>
                             <span id="bathBtnLabel">舀起清泉・沐浴佛身</span>
                         </button>
-                        <button onclick="chantMantraOnce()" class="px-5 py-4 rounded-2xl zen-subcard hover:border-gold-300/50 text-gold-200 text-sm font-zen transition flex items-center gap-2">
-                            <i class="fa-solid fa-hands-praying text-gold-300"></i>
-                            <span>持誦藥師佛號</span>
+                        <button onclick="chantMantraOnce()" class="flex-1 sm:flex-initial px-5 py-4 rounded-2xl zen-subcard hover:border-gold-300/60 text-gold-200 text-sm font-zen transition flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
+                            <span>📿</span>
+                            <span>撥珠持誦・敲擊木魚</span>
                         </button>
                     </div>
 
-                    <!-- Dynamic Blessing Feedback Box -->
                     <div id="bathFeedback" class="hidden rounded-2xl bg-gradient-to-r from-gold-400/15 via-sky-500/10 to-transparent border-l-4 border-gold-300 p-4 text-sm text-gold-100 font-zen">
                         ✨ 清泉灌沐，琉璃光現。願您身心清涼，塵勞頓消，福慧雙增。
                     </div>
                 </div>
 
-                <!-- Right Column: Interactive Medicine Buddha Sanctuary Visual -->
                 <div class="lg:col-span-6 flex flex-col items-center justify-center relative">
                     <div class="relative w-full max-w-md aspect-square flex items-center justify-center rounded-3xl zen-subcard p-4 overflow-hidden select-none cursor-pointer group" onclick="performBathBuddha()" title="點擊佛像亦可舀水浴佛">
                         
-                        <!-- Subtle corner ornament frame -->
                         <div class="absolute inset-3 border border-gold-300/15 rounded-2xl pointer-events-none"></div>
 
-                        <!-- Floating Mantra Banner -->
                         <div id="floatingMantra" class="absolute top-5 inset-x-4 text-center pointer-events-none opacity-90 transition-all duration-700">
                             <span class="px-4 py-1 rounded-full bg-lapis-950/85 border border-gold-300/35 text-gold-200 font-zen text-xs tracking-widest">
                                 南無藥師琉璃光如來
                             </span>
                         </div>
 
-                        <!-- Wooden Ladle Animation Layer -->
                         <div id="ladleContainer" class="absolute top-10 right-8 z-30 pointer-events-none opacity-0">
                             <svg width="120" height="90" viewBox="0 0 120 90" fill="none">
-                                <!-- Ladle Handle -->
                                 <path d="M55 25 L115 5" stroke="#b07818" stroke-width="7" stroke-linecap="round"/>
-                                <!-- Ladle Cup -->
                                 <path d="M20 20 C20 45, 60 45, 60 20 Z" fill="#d49b27" stroke="#fef9e7" stroke-width="1.5"/>
-                                <!-- Pouring Water Stream -->
                                 <path d="M22 25 Q12 55 8 85" stroke="#7dd3fc" stroke-width="4" stroke-dasharray="6 4" stroke-linecap="round"/>
                                 <path d="M28 28 Q20 58 18 88" stroke="#bae6fd" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round"/>
                             </svg>
                         </div>
 
-                        <!-- Water Droplets Overlay Container -->
                         <div id="waterDropsLayer" class="absolute inset-0 pointer-events-none z-20"></div>
 
-                        <!-- Medicine Buddha (藥師琉璃光如來) Custom SVG -->
                         <svg id="buddhaSvg" class="w-4/5 h-4/5 z-10 transition-all duration-1000" viewBox="0 0 300 320" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <radialGradient id="lapisAura" cx="50%" cy="45%" r="50%">
@@ -433,66 +466,39 @@
                                 </linearGradient>
                             </defs>
 
-                            <!-- Outer Lapis Lazuli Mandorla (身光) -->
                             <circle id="buddhaOuterHalo" cx="150" cy="150" r="130" fill="url(#lapisAura)" class="halo-glow"/>
                             <circle cx="150" cy="150" r="110" stroke="#fde047" stroke-opacity="0.25" stroke-width="1" stroke-dasharray="4 4"/>
-
-                            <!-- Head Halo (頭光) -->
                             <circle cx="150" cy="95" r="46" fill="url(#headHalo)" stroke="#fef08a" stroke-opacity="0.45" stroke-width="1.5"/>
-
-                            <!-- Buddha Ushnisha & Hair (肉髻與螺髮) -->
                             <circle cx="150" cy="58" r="12" fill="#1e293b" stroke="#facc15" stroke-width="1.5"/>
-                            <circle cx="150" cy="61" r="3.5" fill="#fef08a"/> <!--肉髻珠-->
+                            <circle cx="150" cy="61" r="3.5" fill="#fef08a"/>
                             <path d="M123 85 C123 64, 177 64, 177 85 Z" fill="#1e293b" stroke="#facc15" stroke-width="1.5"/>
-
-                            <!-- Buddha Face & Long Ears -->
                             <path d="M122 86 C115 86, 115 118, 124 122" stroke="url(#goldenBody)" stroke-width="4" stroke-linecap="round"/>
                             <path d="M178 86 C185 86, 185 118, 176 122" stroke="url(#goldenBody)" stroke-width="4" stroke-linecap="round"/>
                             <path d="M125 84 C125 122, 175 122, 175 84 Z" fill="url(#goldenBody)"/>
-                            <!-- Urna (白毫光) -->
                             <circle cx="150" cy="88" r="2.5" fill="#fff"/>
-                            <!-- Serene Eyes & Smile -->
                             <path d="M135 96 Q141 99 146 96" stroke="#713f12" stroke-width="1.8" stroke-linecap="round"/>
                             <path d="M154 96 Q159 99 165 96" stroke="#713f12" stroke-width="1.8" stroke-linecap="round"/>
                             <path d="M144 108 Q150 112 156 108" stroke="#713f12" stroke-width="1.8" stroke-linecap="round"/>
-
-                            <!-- Robes & Torso (袈裟) -->
                             <path d="M110 132 C90 155, 85 205, 82 230 L218 230 C215 205, 210 155, 190 132 C175 124, 125 124, 110 132 Z" fill="url(#goldenBody)" stroke="#fef08a" stroke-width="1.2"/>
-                            <!-- Inner Kasaya drape lines -->
                             <path d="M132 128 L150 162 L168 128" stroke="#a16207" stroke-width="2"/>
                             <path d="M115 145 Q150 185 185 145" stroke="#a16207" stroke-width="1.8" fill="none"/>
-
-                            <!-- Meditating Legs -->
                             <path d="M72 228 C72 208, 228 208, 228 228 C232 246, 68 246, 72 228 Z" fill="url(#goldenBody)" stroke="#fef08a" stroke-width="1.5"/>
-
-                            <!-- Medicine Buddha's Lapis Lazuli Bowl (藥師琉璃鉢) in Center -->
                             <ellipse cx="150" cy="188" rx="22" ry="6" fill="#93c5fd"/>
                             <path d="M128 188 C128 212, 172 212, 172 188 Z" fill="url(#lapisBowl)" stroke="#bae6fd" stroke-width="1.5"/>
-                            <!-- Glowing Nectar aura rising from the Medicine Bowl -->
                             <circle cx="150" cy="182" r="10" fill="#7dd3fc" fill-opacity="0.6" class="halo-glow"/>
                             <path d="M134 210 Q150 218 166 210" stroke="#fef08a" stroke-width="3" stroke-linecap="round"/>
-
-                            <!-- Golden Lotus Throne (蓮花寶座) -->
                             <g transform="translate(0, 8)">
                                 <path d="M60 245 Q150 268 240 245 Q220 272 150 272 Q80 272 60 245 Z" fill="#ca8a04" stroke="#fef08a" stroke-width="1.2"/>
-                                <!-- Lotus Petals -->
                                 <path d="M75 245 Q92 222 110 245 Z" fill="#facc15" stroke="#fef08a" stroke-width="1"/>
                                 <path d="M105 246 Q125 218 145 246 Z" fill="#fde047" stroke="#fef08a" stroke-width="1"/>
                                 <path d="M155 246 Q175 218 195 246 Z" fill="#fde047" stroke="#fef08a" stroke-width="1"/>
                                 <path d="M190 245 Q208 222 225 245 Z" fill="#facc15" stroke="#fef08a" stroke-width="1"/>
                                 <path d="M128 248 Q150 212 172 248 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="1.2"/>
                             </g>
-
-                            <!-- Water Basin Ripples at Bottom -->
                             <ellipse id="waterRipple1" cx="150" cy="292" rx="85" ry="10" stroke="#7dd3fc" stroke-opacity="0.4" stroke-width="1.5" fill="none"/>
                             <ellipse id="waterRipple2" cx="150" cy="292" rx="55" ry="6" stroke="#bae6fd" stroke-opacity="0.6" stroke-width="1" fill="none"/>
                         </svg>
 
-                        <div class="absolute bottom-3 inset-x-0 text-center text-xs text-sky-200/70 pointer-events-none">
-                            點擊上方佛像或左側按鈕，親自舀水浴佛
-                        </div>
-                    </div>
-                </div>
                         <div class="absolute bottom-3.5 inset-x-0 text-center text-xs text-gold-200/60 font-zen pointer-events-none">
                             點擊上方藥師如來聖像或左側按鈕，親自舀水浴佛
                         </div>
@@ -501,7 +507,6 @@
             </div>
         </section>
 
-        <!-- SECTION 2: LIGHTING THE BLESSING LAMP -->
         <section id="light-lamp" class="scroll-mt-20 zen-card rounded-3xl p-6 sm:p-10 space-y-8">
             <div class="text-center max-w-2xl mx-auto space-y-3">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-400/10 border border-gold-300/30 text-gold-200 text-xs font-zen tracking-widest">
@@ -519,14 +524,12 @@
             <div class="zen-divider"></div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                <!-- Lamp Offering Form -->
                 <div class="lg:col-span-5 zen-subcard rounded-2xl p-5 sm:p-6 space-y-5">
                     <h3 class="font-zen text-lg font-bold text-gold-100 border-b border-gold-400/20 pb-3 flex items-center justify-between">
                         <span>✍️ 題寫祈福蓮燈心願</span>
                         <span class="text-xs font-normal text-gold-300/80">心誠則靈・光明遍照</span>
                     </h3>
 
-                    <!-- Select Lamp Type -->
                     <div class="space-y-2">
                         <label class="text-xs sm:text-sm text-slate-300 font-zen block">選擇祈福燈種：</label>
                         <div class="grid grid-cols-2 gap-2.5" id="lampTypeGroup">
@@ -549,13 +552,11 @@
                         </div>
                     </div>
 
-                    <!-- Name Input -->
                     <div class="space-y-1.5">
                         <label for="lampNameInput" class="text-xs sm:text-sm text-slate-300 font-zen block">祈福信眾芳名（或闔家）：</label>
                         <input id="lampNameInput" type="text" maxlength="20" placeholder="例如：陳善信 闔家" class="w-full px-4 py-2.5 rounded-xl zen-input placeholder-slate-500 text-sm">
                     </div>
 
-                    <!-- Wish Input -->
                     <div class="space-y-1.5">
                         <label for="lampWishInput" class="text-xs sm:text-sm text-slate-300 font-zen flex justify-between">
                             <span>祈願祝禱文：</span>
@@ -564,13 +565,33 @@
                         <textarea id="lampWishInput" rows="2" maxlength="60" class="w-full px-4 py-2.5 rounded-xl zen-input placeholder-slate-500 text-sm">願藥師如來琉璃淨光護佑，消災延壽，身體安康，萬事隨順。</textarea>
                     </div>
 
-                    <button type="button" onclick="igniteBlessingLamp()" class="w-full py-3.5 rounded-xl btn-gold-luxury font-zen font-bold text-base active:scale-98 transition flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-fire-flame-simple"></i>
-                        <span>親手點燃祈福明燈</span>
-                    </button>
+                    <div class="space-y-2 pt-1">
+                        <div class="relative rounded-xl overflow-hidden select-none">
+                            <div id="igniteHoldProgress" class="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-300 via-yellow-200 to-white opacity-45 pointer-events-none transition-all duration-75" style="width: 0%;"></div>
+                            <button
+                                id="igniteHoldBtn"
+                                type="button"
+                                onmousedown="startHoldIgnite(event)"
+                                onmouseup="endHoldIgnite(event)"
+                                onmouseleave="cancelHoldIgnite(event)"
+                                ontouchstart="startHoldIgnite(event)"
+                                ontouchend="endHoldIgnite(event)"
+                                ontouchcancel="cancelHoldIgnite(event)"
+                                oncontextmenu="return false;"
+                                onclick="handleQuickClickIgnite(event)"
+                                style="-webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: manipulation;"
+                                class="w-full py-3.5 px-4 rounded-xl btn-gold-luxury font-zen font-bold text-base transition flex items-center justify-center gap-2.5 cursor-pointer relative z-10 active:scale-[0.99]"
+                            >
+                                <i class="fa-solid fa-fire-flame-curved text-amber-900"></i>
+                                <span id="igniteBtnText">長按引火點燈（或點擊直接點亮）</span>
+                            </button>
+                        </div>
+                        <p class="text-[11px] text-center text-gold-300/75 font-zen">
+                            🕯️ 按住按鈕蓄力引火，或輕點一下直接點亮祈福明燈
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Right Column: Exclusive Personal Glowing Altar of Lamps -->
                 <div class="lg:col-span-7 space-y-4">
                     <div class="flex flex-wrap items-center justify-between gap-2 px-1">
                         <div>
@@ -582,28 +603,20 @@
                         </div>
                     </div>
 
-                    <!-- Main Interactive Personal Lotus Lamp Stage -->
                     <div id="personalLampStage" class="relative zen-subcard rounded-3xl p-6 sm:p-8 min-h-[370px] flex flex-col items-center justify-center text-center overflow-hidden border border-gold-300/25 transition-all duration-700">
-                        <!-- Subtle Inner Sanctuary Frame -->
                         <div class="absolute inset-3 border border-gold-300/15 rounded-2xl pointer-events-none"></div>
 
-                        <!-- Dynamic Rising Sparks Layer -->
                         <div id="lampSparksLayer" class="absolute inset-0 pointer-events-none z-20 overflow-hidden"></div>
 
-                        <!-- STATE A: Unlit Waiting Sanctuary -->
                         <div id="unlitLampPlaceholder" class="relative z-10 flex flex-col items-center max-w-sm space-y-4 py-4">
                             <div class="relative w-36 h-36 flex items-center justify-center">
                                 <div class="absolute inset-2 rounded-full bg-sky-400/5 border border-gold-300/15"></div>
-                                <!-- Unlit Crystal Lotus Lamp SVG -->
                                 <svg class="w-28 h-28 opacity-65 transition-transform duration-700 hover:scale-105" viewBox="0 0 160 160" fill="none">
-                                    <!-- Dim Wick -->
                                     <line x1="80" y1="48" x2="80" y2="62" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
-                                    <!-- Lotus Cup & Petals -->
                                     <path d="M80 62 C64 62, 54 78, 56 96 C66 104, 94 104, 104 96 C106 78, 96 62, 80 62 Z" fill="#0d213f" stroke="#deb665" stroke-opacity="0.45" stroke-width="1.5"/>
                                     <path d="M40 88 Q58 68 74 96 Z" fill="#153563" fill-opacity="0.7" stroke="#deb665" stroke-opacity="0.4" stroke-width="1.2"/>
                                     <path d="M120 88 Q102 68 86 96 Z" fill="#153563" fill-opacity="0.7" stroke="#deb665" stroke-opacity="0.4" stroke-width="1.2"/>
                                     <path d="M62 98 Q80 65 98 98 Z" fill="#1e3a8a" fill-opacity="0.75" stroke="#ebd095" stroke-opacity="0.5" stroke-width="1.2"/>
-                                    <!-- Golden Base -->
                                     <ellipse cx="80" cy="104" rx="34" ry="7" fill="#9e711f" fill-opacity="0.6" stroke="#deb665" stroke-opacity="0.5" stroke-width="1.2"/>
                                     <path d="M54 110 L106 110 L96 122 L64 122 Z" fill="#5c4012" stroke="#deb665" stroke-opacity="0.4" stroke-width="1"/>
                                 </svg>
@@ -617,16 +630,12 @@
                             </div>
                         </div>
 
-                        <!-- STATE B: Lit Animated Personal Blessing Lamp Display -->
                         <div id="litLampShowcase" class="hidden relative z-10 w-full flex-col items-center justify-between space-y-5">
-                            <!-- Animated Glowing Lotus Lamp Visual -->
                             <div id="litLampVisualWrapper" class="relative w-44 h-44 flex items-center justify-center">
-                                <!-- Expanding Golden Aura Ripples -->
                                 <div class="absolute inset-3 rounded-full border border-gold-300/45 aura-ripple-ring pointer-events-none"></div>
                                 <div class="absolute inset-6 rounded-full border border-sky-300/35 aura-ripple-ring pointer-events-none" style="animation-delay: 1.2s;"></div>
                                 <div class="absolute inset-2 rounded-full bg-gradient-to-b from-gold-300/25 via-sky-400/15 to-transparent blur-xl halo-glow pointer-events-none"></div>
 
-                                <!-- Illuminated Lotus Lamp SVG -->
                                 <svg class="w-40 h-40 relative z-10 drop-shadow-[0_0_20px_rgba(245,230,196,0.45)]" viewBox="0 0 160 160" fill="none">
                                     <defs>
                                         <radialGradient id="activeFlameGlow" cx="50%" cy="50%" r="50%">
@@ -646,30 +655,25 @@
                                         </linearGradient>
                                     </defs>
 
-                                    <!-- Flame Halo -->
                                     <circle cx="80" cy="44" r="34" fill="url(#activeFlameGlow)" class="halo-glow"/>
 
-                                    <!-- Flickering Sacred Flame -->
                                     <g class="flame-anim">
                                         <path d="M80 16 C70 32, 66 46, 80 56 C94 46, 90 32, 80 16 Z" fill="#f59e0b"/>
                                         <path d="M80 23 C73 35, 71 45, 80 53 C89 45, 87 35, 80 23 Z" fill="#fef08a"/>
                                         <path d="M80 33 C77 40, 76 46, 80 51 C84 46, 83 40, 80 33 Z" fill="#ffffff"/>
                                     </g>
 
-                                    <!-- Glowing Lotus Petals -->
                                     <path d="M36 86 Q56 60 74 96 Z" fill="url(#lapisLotusBody)" stroke="#fde047" stroke-width="1.3"/>
                                     <path d="M124 86 Q104 60 86 96 Z" fill="url(#lapisLotusBody)" stroke="#fde047" stroke-width="1.3"/>
                                     <path d="M48 94 Q64 62 80 96 Z" fill="url(#litLotusPetal)" stroke="#fef9c3" stroke-width="1.3"/>
                                     <path d="M112 94 Q96 62 80 96 Z" fill="url(#litLotusPetal)" stroke="#fef9c3" stroke-width="1.3"/>
                                     <path d="M60 98 Q80 56 100 98 Z" fill="url(#litLotusPetal)" stroke="#ffffff" stroke-width="1.5"/>
 
-                                    <!-- Pedestal -->
                                     <ellipse cx="80" cy="102" rx="38" ry="8" fill="#eab308" stroke="#fef08a" stroke-width="1.4"/>
                                     <path d="M50 108 L110 108 L98 124 L62 124 Z" fill="#9e711f" stroke="#f5e6c4" stroke-width="1.2"/>
                                 </svg>
                             </div>
 
-                            <!-- Personal Lit Lamp Information Plaque -->
                             <div id="personalLampPlaque" class="w-full max-w-lg rounded-2xl bg-lapis-950/90 border border-gold-300/45 p-5 space-y-3 shadow-xl">
                                 <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gold-400/20 pb-2.5">
                                     <span id="detailLampType" class="text-xs px-3 py-1 rounded-full bg-gold-400/15 text-gold-200 border border-gold-300/35 font-zen tracking-wider">
@@ -697,13 +701,12 @@
                                 <div class="pt-2 flex flex-wrap items-center justify-between gap-2">
                                     <span class="text-[11px] text-emerald-300/90 font-zen">🪷 願藥師琉璃淨光護佑，所求滿願</span>
                                     <button type="button" onclick="openBlessingCardModal()" class="px-4 py-2 rounded-xl btn-gold-luxury text-xs font-zen font-bold transition flex items-center gap-1.5 cursor-pointer">
-                                        <i class="fa-solid fa-scroll"></i>
-                                        <span>展開祈福蓮卡 & 分享</span>
+                                        <i class="fa-solid fa-image"></i>
+                                        <span>生成直式祈福蓮卡圖片 & 分享</span>
                                     </button>
                                 </div>
                             </div>
 
-                            <!-- Personal Lit Lamps Switcher (Only shows lamps lit by the user themselves) -->
                             <div id="myLitLampsHistoryWrap" class="hidden w-full max-w-lg pt-1 space-y-2 text-left">
                                 <div class="text-xs font-zen text-gold-300/85 flex items-center justify-between px-1">
                                     <span>🕯️ 您親手點燃的祈福明燈紀錄（點擊可切換檢視）：</span>
@@ -716,9 +719,280 @@
             </div>
         </section>
 
-        <!-- SECTION 4: LOCATION & CONTACT DETAILS -->
+        <section id="twelve-vows" class="scroll-mt-20 zen-card rounded-3xl p-6 sm:p-10 space-y-8 relative overflow-hidden">
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-400/10 border border-purple-300/30 text-purple-200 text-xs font-zen tracking-widest">
+                    <span>第三重法語加持儀軌</span>
+                </div>
+                <h2 class="font-zen text-2xl sm:text-3xl md:text-4xl font-bold text-gold-100 tracking-wide">
+                    📜 藥師佛十二大願｜求取守護靈籤
+                </h2>
+                <p class="text-slate-300 leading-relaxed text-sm sm:text-base font-light">
+                    藥師琉璃光如來因地修菩薩道時，曾發十二大願，令諸有情所求皆得。<br>
+                    請於心中默念您的祈願，誠心搖動琉璃籤筒，求取今日專屬的藥師如來法語守護籤。
+                </p>
+            </div>
+
+            <div class="zen-divider"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-5 flex flex-col items-center justify-center space-y-5 zen-subcard rounded-3xl p-6 sm:p-8 text-center">
+                    <div id="oracleCylinderWrap" onclick="drawTwelveVowLot()" class="relative w-44 h-48 flex items-center justify-center cursor-pointer select-none group" title="點擊搖動琉璃籤筒">
+                        <div class="absolute inset-2 rounded-full bg-gold-400/10 blur-xl group-hover:bg-gold-400/20 transition"></div>
+                        <svg class="w-40 h-44 relative z-10" viewBox="0 0 160 180" fill="none">
+                            <g id="oracleSticksGroup">
+                                <rect x="58" y="18" width="7" height="65" rx="3" transform="rotate(-8 58 18)" fill="#f5e6c4" stroke="#9e711f" stroke-width="1"/>
+                                <rect x="70" y="12" width="7" height="70" rx="3" transform="rotate(-2 70 12)" fill="#fde047" stroke="#9e711f" stroke-width="1"/>
+                                <rect x="82" y="10" width="8" height="72" rx="3" transform="rotate(3 82 10)" fill="#fef08a" stroke="#b45309" stroke-width="1.2"/>
+                                <rect x="94" y="16" width="7" height="68" rx="3" transform="rotate(9 94 16)" fill="#f5e6c4" stroke="#9e711f" stroke-width="1"/>
+                                <rect x="82" y="10" width="8" height="12" rx="2" transform="rotate(3 82 10)" fill="#e11d48"/>
+                                <rect x="70" y="12" width="7" height="10" rx="2" transform="rotate(-2 70 12)" fill="#e11d48"/>
+                            </g>
+                            <ellipse cx="80" cy="64" rx="38" ry="10" fill="#081326" stroke="#deb665" stroke-width="2"/>
+                            <path d="M42 64 L48 152 C48 162, 112 162, 112 152 L118 64 Z" fill="url(#lapisLotusBody)" stroke="#ebd095" stroke-width="2"/>
+                            <rect x="64" y="84" width="32" height="54" rx="4" fill="#040914" stroke="#deb665" stroke-width="1.5"/>
+                            <text x="80" y="104" text-anchor="middle" fill="#f5e6c4" font-size="11" font-family="Noto Serif TC" font-weight="bold">十二</text>
+                            <text x="80" y="120" text-anchor="middle" fill="#f5e6c4" font-size="11" font-family="Noto Serif TC" font-weight="bold">大願</text>
+                            <text x="80" y="133" text-anchor="middle" fill="#7dd3fc" font-size="8" font-family="Noto Serif TC">靈籤</text>
+                        </svg>
+                    </div>
+
+                    <button id="drawVowBtn" type="button" onclick="drawTwelveVowLot()" class="w-full py-3.5 px-6 rounded-xl btn-gold-luxury font-zen font-bold text-base flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span id="drawVowBtnLabel">誠心搖筒・求取十二大願靈籤</span>
+                    </button>
+                </div>
+
+                <div class="lg:col-span-7 zen-subcard rounded-3xl p-6 sm:p-8 min-h-[300px] flex flex-col justify-between relative overflow-hidden border border-gold-300/30">
+                    <div class="absolute inset-3 border border-gold-300/15 rounded-2xl pointer-events-none"></div>
+
+                    <div id="vowEmptyState" class="my-auto text-center space-y-3 py-8">
+                        <div class="text-3xl">🪷</div>
+                        <div class="font-zen text-lg font-bold text-gold-200">靜候法語開示</div>
+                        <p class="text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
+                            合掌默念「南無藥師琉璃光如來」，點擊左側籤筒求取今日與您相應的藥師佛本願法語。
+                        </p>
+                    </div>
+
+                    <div id="vowResultContent" class="hidden relative z-10 space-y-4">
+                        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gold-400/20 pb-3">
+                            <span id="vowNumberBadge" class="px-3.5 py-1 rounded-full bg-gold-400/20 border border-gold-300/50 text-gold-100 font-zen text-xs font-bold tracking-widest">
+                                藥師如來・第一大願
+                            </span>
+                            <span id="vowAuspiciousTag" class="text-xs font-zen text-emerald-300">
+                                ✦ 大吉大利・琉璃加被
+                            </span>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h3 id="vowTitleText" class="font-zen text-xl sm:text-2xl font-bold text-gold-100 tracking-wide">
+                                光明普照・相好莊嚴願
+                            </h3>
+                            <p id="vowOriginalText" class="text-xs sm:text-sm text-sky-200/90 font-zen bg-lapis-950/80 p-3.5 rounded-xl border border-sky-400/20 leading-relaxed">
+                                「願我來世得阿耨多羅三藐三菩提時，自身光明熾然，照曜無量無數無邊世界...」
+                            </p>
+                        </div>
+
+                        <div class="space-y-1.5 pt-1">
+                            <div class="text-xs text-gold-300 font-zen font-semibold">🌿 明王殿靜心解籤與祝禱：</div>
+                            <p id="vowModernMeaning" class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                                —
+                            </p>
+                        </div>
+
+                        <div class="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-gold-400/15">
+                            <span class="text-[11px] text-slate-400 font-zen">💡 籤詩已自動同步至您的祈福蓮卡與迴向疏文</span>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="copyCurrentVowOracle()" class="px-3.5 py-2 rounded-xl bg-gold-400/15 hover:bg-gold-400/25 border border-gold-300/40 text-gold-200 text-xs font-zen transition cursor-pointer">
+                                    複製法語分享
+                                </button>
+                                <button type="button" onclick="openBlessingCardModal()" class="px-3.5 py-2 rounded-xl btn-gold-luxury text-xs font-zen font-bold transition cursor-pointer">
+                                    合成祈福蓮卡圖
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="merit-box" class="scroll-mt-20 zen-card rounded-3xl p-6 sm:p-10 space-y-8 relative overflow-hidden">
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-400/10 border border-emerald-300/30 text-emerald-200 text-xs font-zen tracking-widest">
+                    <span>第三重結緣儀軌</span>
+                </div>
+                <h2 class="font-zen text-2xl sm:text-3xl md:text-4xl font-bold text-gold-100 tracking-wide">
+                    🌱 隨喜護持｜同沐善緣
+                </h2>
+                <p class="text-slate-300 leading-relaxed text-sm sm:text-base font-light">
+                    法雨的滋潤，仰賴每一份善念的匯聚。<br>
+                    若您願與明王殿結緣，護持這方清淨壇城，歡迎將您的名字與心意，隨喜投入功德箱中。<br class="hidden sm:inline">
+                    一念發心，即是無量菩提；您的涓滴護持，將化作廣渡眾生的慈悲力量。
+                </p>
+            </div>
+
+            <div class="zen-divider"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-6 zen-subcard rounded-2xl p-5 sm:p-6 space-y-5">
+                    <div class="flex items-center justify-between border-b border-gold-400/20 pb-3">
+                        <h3 class="font-zen text-lg font-bold text-gold-100">🙏 填寫護持結緣發心單</h3>
+                        <span class="text-xs text-emerald-300/90 font-zen">一念善心・萬德莊嚴</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="space-y-1.5">
+                            <label for="meritName" class="text-xs sm:text-sm text-slate-300 font-zen block">護持善信芳名（或闔家）：</label>
+                            <input id="meritName" type="text" maxlength="25" placeholder="例如：林善信 闔家（若已點燈將自動帶入）" class="w-full px-4 py-2.5 rounded-xl zen-input placeholder-slate-500 text-sm">
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label for="meritCategory" class="text-xs sm:text-sm text-slate-300 font-zen block">發心結緣項目：</label>
+                            <select id="meritCategory" class="w-full px-4 py-2.5 rounded-xl zen-input text-sm font-zen">
+                                <option value="消災延壽・點燈祈福護持">🕯️ 消災延壽・點燈祈福護持</option>
+                                <option value="渡拔超薦・蓮位牌位護持">🪷 渡拔超薦・蓮位牌位護持</option>
+                                <option value="隨喜護持法會道場・供佛齋僧">🌱 隨喜護持法會道場・供佛齋僧</option>
+                                <option value="闔家祈福・全項目圓滿護持">✨ 闔家祈福・全項目圓滿護持</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label for="meritPledge" class="text-xs sm:text-sm text-slate-300 font-zen block">隨喜發心與迴向心意：</label>
+                            <textarea id="meritPledge" rows="2" maxlength="80" placeholder="可填寫欲迴向之親友、先人或祈願事項..." class="w-full px-4 py-2.5 rounded-xl zen-input placeholder-slate-500 text-sm">願以此隨喜護持功德，迴向法界眾生離苦得樂，闔家平安順遂。</textarea>
+                        </div>
+
+                        <button type="button" onclick="dropIntoMeritBox()" class="w-full py-3.5 rounded-xl btn-gold-luxury font-zen font-bold text-base active:scale-98 transition flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-box-archive"></i>
+                            <span>隨喜投入功德箱・結緣迴向</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6 flex flex-col items-center justify-center space-y-5">
+                    <div class="relative w-full max-w-md zen-subcard rounded-3xl p-6 flex flex-col items-center justify-center text-center overflow-hidden min-h-[270px]">
+                        <div class="absolute inset-3 border border-gold-300/15 rounded-2xl pointer-events-none"></div>
+
+                        <div id="meritSlipAnim" class="hidden absolute top-10 z-20 px-4 py-2 rounded-lg bg-gradient-to-b from-amber-100 to-gold-300 text-lapis-950 font-zen font-bold text-xs shadow-lg border border-white">
+                            <span>📜 功德疏文：</span><span id="slipNamePreview">善信</span>
+                        </div>
+
+                        <svg class="w-36 h-36 relative z-10 cursor-pointer transition-transform duration-500 hover:scale-105" onclick="dropIntoMeritBox()" viewBox="0 0 180 180" fill="none" title="點擊投入功德箱">
+                            <defs>
+                                <linearGradient id="woodBoxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#78350f"/>
+                                    <stop offset="50%" stop-color="#451a03"/>
+                                    <stop offset="100%" stop-color="#270e02"/>
+                                </linearGradient>
+                                <linearGradient id="goldTrim" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#ebd095"/>
+                                    <stop offset="50%" stop-color="#c99738"/>
+                                    <stop offset="100%" stop-color="#ebd095"/>
+                                </linearGradient>
+                            </defs>
+                            <circle cx="90" cy="95" r="68" fill="#deb665" fill-opacity="0.1" class="halo-glow"/>
+                            <polygon points="32,60 148,60 162,78 18,78" fill="#5c2808" stroke="url(#goldTrim)" stroke-width="2"/>
+                            <rect x="62" y="66" width="56" height="6" rx="3" fill="#040914" stroke="#f5e6c4" stroke-width="1.2"/>
+                            <rect x="26" y="78" width="128" height="78" rx="6" fill="url(#woodBoxGrad)" stroke="url(#goldTrim)" stroke-width="2.2"/>
+                            <rect x="58" y="92" width="64" height="50" rx="4" fill="#081326" stroke="#deb665" stroke-width="1.5"/>
+                            <text x="90" y="114" text-anchor="middle" fill="#f5e6c4" font-size="13" font-family="Noto Serif TC" font-weight="bold">隨喜功德</text>
+                            <text x="90" y="132" text-anchor="middle" fill="#7dd3fc" font-size="10" font-family="Noto Serif TC">廣種福田</text>
+                        </svg>
+
+                        <div id="meritBoxStatus" class="mt-2 text-xs sm:text-sm text-slate-300 font-zen">
+                            感恩您的善念，阿彌陀佛 🙏
+                        </div>
+                    </div>
+
+                    <div id="meritSummaryCard" class="hidden w-full max-w-md zen-subcard rounded-2xl p-5 border border-emerald-400/40 space-y-3">
+                        <div class="flex items-center justify-between text-xs text-emerald-300 font-zen">
+                            <span>✅ 已為您備妥【致明真師姐・結緣報名訊息】</span>
+                            <span>LINE ID: 0915535588</span>
+                        </div>
+                        <pre id="meritCopyText" class="text-xs text-slate-200 bg-lapis-950/90 p-3.5 rounded-xl border border-gold-400/20 whitespace-pre-wrap font-sans leading-relaxed"></pre>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <button type="button" onclick="copyMeritRegistration()" class="py-2.5 px-4 rounded-xl btn-gold-luxury font-zen font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>複製報名訊息</span>
+                            </button>
+                            <a href="https://line.me/ti/p/~0915535588" target="_blank" rel="noopener noreferrer" onclick="copyMeritRegistration()" class="py-2.5 px-4 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-white font-zen font-bold text-xs flex items-center justify-center gap-1.5 transition">
+                                <i class="fa-brands fa-line text-sm"></i>
+                                <span>複製並加明真師姐 LINE</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dedication-scroll" class="scroll-mt-20 zen-card rounded-3xl p-6 sm:p-10 space-y-8 relative overflow-hidden">
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-400/10 border border-rose-300/30 text-rose-200 text-xs font-zen tracking-widest">
+                    <span>圓滿迴向儀軌</span>
+                </div>
+                <h2 class="font-zen text-2xl sm:text-3xl md:text-4xl font-bold text-gold-100 tracking-wide">
+                    💮 功德圓滿｜蓋下明王殿琉璃寶印
+                </h2>
+                <p class="text-slate-300 leading-relaxed text-sm sm:text-base font-light">
+                    凡有所作功德，皆當至誠迴向。<br>
+                    完成雲端浴佛、點燈或隨喜護持後，請於下方《藥師法會功德迴向疏文》親手蓋下寶印，祈願功德入疏、所求滿願。
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto zen-subcard rounded-3xl p-6 sm:p-10 border-2 border-gold-300/35 relative overflow-hidden">
+                <div class="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-gold-400/50"></div>
+                <div class="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-gold-400/50"></div>
+                <div class="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-gold-400/50"></div>
+                <div class="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-gold-400/50"></div>
+
+                <div class="space-y-6 text-center relative z-10">
+                    <div class="text-xs tracking-[0.35em] text-gold-300 font-zen">台南善化・明王殿 藥師琉璃光壇城</div>
+                    <h3 class="font-zen text-2xl sm:text-3xl font-bold text-gold-100 tracking-widest">
+                        《藥師法會・雲端祈福功德迴向疏文》
+                    </h3>
+
+                    <div class="bg-lapis-950/85 rounded-2xl p-5 border border-gold-400/20 text-left space-y-3 font-zen text-sm sm:text-base leading-loose text-slate-200">
+                        <p>
+                            伏以 琉璃光現，照破世間塵勞；甘露門開，撫平眾生憂患。<br>
+                            今有祈福信眾 <strong id="scrollUserName" class="text-gold-200 underline decoration-gold-400/50 underline-offset-4">十方善信 闔家</strong>，至誠於雲端壇城修持善法：
+                        </p>
+                        <ul class="text-xs sm:text-sm text-sky-200/90 space-y-1.5 pl-2 border-l-2 border-gold-400/40">
+                            <li id="scrollBathRecord">・浴佛持咒：清泉滌心，持誦藥師如來聖號</li>
+                            <li id="scrollLampRecord">・燃燈供佛：點燃琉璃明燈，祈求消災延壽、萬事隨順</li>
+                            <li id="scrollVowRecord">・十二大願：領受藥師如來本願法語加持</li>
+                        </ul>
+                        <p class="text-gold-100 pt-2">
+                            「願以此功德，莊嚴佛淨土；上報四重恩，下濟三途苦。<br>
+                            若有見聞者，悉發菩提心；盡此一報身，同生琉璃國。」
+                        </p>
+                    </div>
+
+                    <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-6">
+                        <div class="text-left text-xs text-slate-400 font-zen space-y-1">
+                            <div>🗓️ 法會啟建吉日：中華民國 115 年 10 月 31 日</div>
+                            <div>📍 尋靜之所：台南市善化區中山路377號店面22號</div>
+                        </div>
+
+                        <div class="relative flex items-center gap-4">
+                            <div id="vermilionSealBox" class="hidden w-24 h-24 rounded-xl border-4 border-rose-600/90 bg-rose-950/40 p-1.5 shadow-[0_0_25px_rgba(225,29,72,0.45)] flex items-center justify-center select-none">
+                                <div class="w-full h-full border border-rose-500/80 rounded-lg grid grid-cols-2 items-center justify-items-center font-zen font-black text-rose-400 text-sm leading-none tracking-tighter">
+                                    <span>明王</span>
+                                    <span>藥師</span>
+                                    <span>琉璃</span>
+                                    <span>寶印</span>
+                                </div>
+                            </div>
+
+                            <button id="stampSealBtn" type="button" onclick="stampDedicationScroll()" class="px-6 py-4 rounded-2xl btn-gold-luxury font-zen font-bold text-sm sm:text-base flex items-center gap-2.5 cursor-pointer active:scale-95 transition">
+                                <i class="fa-solid fa-stamp"></i>
+                                <span id="stampSealBtnText">蓋下明王殿琉璃寶印・圓滿迴向</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="sanctuary-info" class="scroll-mt-20 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Left Card: 留心駐足之處 -->
             <div class="zen-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6">
                 <div class="space-y-4">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-400/30 text-gold-300 text-xs tracking-widest">
@@ -765,7 +1039,6 @@
                 </div>
             </div>
 
-            <!-- Right Card: 結緣引路人 -->
             <div class="zen-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6">
                 <div class="space-y-4">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs tracking-widest">
@@ -776,7 +1049,6 @@
                     </h3>
 
                     <div class="space-y-3.5 pt-2">
-                        <!-- Phone -->
                         <div class="flex items-center justify-between p-3 rounded-2xl bg-lapis-950/70 border border-white/10">
                             <div class="flex items-center gap-3">
                                 <span class="w-9 h-9 rounded-xl bg-gold-500/15 flex items-center justify-center text-base">📞</span>
@@ -790,7 +1062,6 @@
                             </a>
                         </div>
 
-                        <!-- LINE -->
                         <div class="flex items-center justify-between p-3 rounded-2xl bg-lapis-950/70 border border-white/10">
                             <div class="flex items-center gap-3">
                                 <span class="w-9 h-9 rounded-xl bg-emerald-500/15 flex items-center justify-center text-base">💬</span>
@@ -804,7 +1075,6 @@
                             </button>
                         </div>
 
-                        <!-- Facebook Group -->
                         <div class="flex items-center justify-between p-3 rounded-2xl bg-lapis-950/70 border border-white/10">
                             <div class="flex items-center gap-3">
                                 <span class="w-9 h-9 rounded-xl bg-sky-500/15 flex items-center justify-center text-base">🔗</span>
@@ -827,42 +1097,45 @@
         </section>
     </main>
 
-    <!-- BLESSING CARD MODAL (琉璃光祈福籤卡) -->
-    <div id="blessingModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4">
-        <div class="relative w-full max-w-md rounded-3xl bg-gradient-to-b from-lapis-800 via-lapis-900 to-lapis-950 border-2 border-gold-400/60 p-6 sm:p-8 text-center shadow-2xl space-y-5">
-            <button onclick="closeBlessingCardModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 flex items-center justify-center">
+    <!-- BLESSING CARD MODAL -->
+    <div id="blessingModal" onclick="if(event.target === this) closeBlessingCardModal()" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-4 overflow-y-auto">
+        <div class="relative w-full max-w-md rounded-3xl bg-gradient-to-b from-lapis-800 via-lapis-900 to-lapis-950 border-2 border-gold-400/60 p-5 sm:p-6 text-center shadow-2xl space-y-4 my-auto">
+            <button type="button" onclick="closeBlessingCardModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-slate-200 flex items-center justify-center cursor-pointer transition">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 border border-gold-300/40 text-gold-200 text-xs font-zen">
-                <span>🪷 明王殿・藥師琉璃光祈福蓮卡</span>
+            <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gold-500/20 border border-gold-300/40 text-gold-200 text-xs font-zen">
+                <span>🪷 明王殿・直式藥師琉璃光祈福蓮卡</span>
             </div>
 
-            <div class="py-4 px-5 rounded-2xl bg-lapis-950/70 border border-gold-400/30 space-y-3">
-                <div class="text-3xl">🕯️</div>
-                <div id="modalCardType" class="text-xs tracking-widest text-sky-300">消災延壽琉璃燈</div>
-                <div id="modalCardName" class="font-zen text-2xl font-bold text-gold-200">十方善信 闔家</div>
-                <p id="modalCardWish" class="font-zen text-sm text-slate-200 leading-relaxed pt-1">
-                    「願藥師如來的琉璃淨光，撫平一切憂患。祈願光影所及之處，皆能消災延壽；身體安康，萬事隨順。」
-                </p>
-                <div class="pt-3 border-t border-white/10 text-[11px] text-slate-400 flex items-center justify-between">
-                    <span>歲次 115 年 10 月 31 日</span>
-                    <span>台南善化・明王殿</span>
-                </div>
+            <div class="hidden">
+                <span id="modalCardType">消災延壽琉璃燈</span>
+                <span id="modalCardName">十方善信 闔家</span>
+                <span id="modalCardWish">願藥師如來的琉璃淨光，撫平一切憂患。</span>
             </div>
 
-            <div class="flex gap-3">
-                <button onclick="shareBlessingText()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-gold-500 to-amber-400 text-lapis-950 font-zen font-bold text-sm hover:brightness-110 transition">
-                    複製祈福祝禱文分享
+            <div class="relative mx-auto w-full max-w-[290px] rounded-2xl overflow-hidden border border-gold-300/50 shadow-2xl bg-lapis-950">
+                <canvas id="blessingCardCanvas" width="720" height="1080" class="hidden w-full h-auto"></canvas>
+                <img id="blessingCardPreviewImg" alt="明王殿藥師佛祈福蓮卡" class="w-full h-auto block select-auto" />
+            </div>
+
+            <p class="text-[11px] text-gold-300/85 font-zen leading-relaxed">
+                ✨ 已為您繪製專屬高畫質祈福圖片卡，可點擊下方按鈕下載，或直接「長按上方圖片」儲存至手機相簿
+            </p>
+
+            <div class="grid grid-cols-2 gap-2.5">
+                <button type="button" onclick="downloadBlessingCardImage()" class="py-3 px-4 rounded-xl btn-gold-luxury font-zen font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-download"></i>
+                    <span>下載祈福圖卡(PNG)</span>
                 </button>
-                <button onclick="closeBlessingCardModal()" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-slate-200 text-sm transition">
-                    圓滿收存
+                <button type="button" onclick="shareBlessingText()" class="py-3 px-4 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-white font-zen font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition cursor-pointer">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>複製祝禱文分享</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Custom Zen Toast Notification -->
     <div id="zenToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 transform translate-y-3">
         <div class="px-5 py-3 rounded-2xl bg-lapis-900/95 border border-gold-400/60 text-gold-200 text-xs sm:text-sm font-zen shadow-2xl flex items-center gap-2.5">
             <span>🪷</span>
@@ -870,7 +1143,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="border-t border-gold-400/15 py-8 text-center text-xs text-slate-400 space-y-2 relative z-10">
         <div class="font-zen text-gold-200/90 text-sm">🌿 明王殿｜藥師佛菩薩 消災延壽・點燈祈福・渡拔超薦 主題科儀法會</div>
         <div>📍 台南市善化區中山路377號店面22號 ｜ 📞 聆聽專線：0915-535-588（明真師姐）</div>
@@ -878,9 +1150,6 @@
     </footer>
 
     <script>
-        // ==========================================
-        // 1. WEB AUDIO SYNTHESIZER (Singing Bowl & Water Pouring)
-        // ==========================================
         let audioCtx = null;
 
         function getAudioContext() {
@@ -896,14 +1165,11 @@
             return audioCtx;
         }
 
-        // Synthesize soothing Tibetan/Temple Singing Bowl (頌缽音)
         function playZenBowl(baseFreq = 432) {
             try {
                 const ctx = getAudioContext();
                 if (!ctx) return;
                 const now = ctx.currentTime;
-
-                // Harmonic partials of a singing bowl
                 const freqs = [baseFreq, baseFreq * 2.756, baseFreq * 5.404];
                 const gains = [0.22, 0.08, 0.03];
                 const durations = [4.2, 2.8, 1.6];
@@ -913,40 +1179,31 @@
                     const gain = ctx.createGain();
                     osc.type = 'sine';
                     osc.frequency.setValueAtTime(f, now);
-
                     gain.gain.setValueAtTime(0.0001, now);
                     gain.gain.linearRampToValueAtTime(gains[idx], now + 0.04);
                     gain.gain.exponentialRampToValueAtTime(0.0001, now + durations[idx]);
-
                     osc.connect(gain);
                     gain.connect(ctx.destination);
                     osc.start(now);
                     osc.stop(now + durations[idx] + 0.05);
                 });
-            } catch (e) {
-                // Silent fallback if audio blocked
-            }
+            } catch (e) {}
         }
 
-        // Synthesize gentle spring water chime sound
         function playWaterSplashSound() {
             try {
                 const ctx = getAudioContext();
                 if (!ctx) return;
                 const now = ctx.currentTime;
-
-                // Gentle pentatonic water droplet notes
                 const notes = [528, 660, 792, 1056];
                 notes.forEach((freq, i) => {
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
                     osc.type = 'sine';
                     osc.frequency.setValueAtTime(freq, now + i * 0.14);
-
                     gain.gain.setValueAtTime(0.001, now + i * 0.14);
                     gain.gain.linearRampToValueAtTime(0.11, now + i * 0.14 + 0.03);
                     gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.14 + 1.1);
-
                     osc.connect(gain);
                     gain.connect(ctx.destination);
                     osc.start(now + i * 0.14);
@@ -955,10 +1212,29 @@
             } catch (e) {}
         }
 
-        // ==========================================
-        // 2. RITUAL 1: BATHING THE BUDDHA (浴佛淨心)
-        // ==========================================
+        function playWoodenFishSound() {
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(760, now);
+                osc.frequency.exponentialRampToValueAtTime(520, now + 0.09);
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(0.28, now + 0.008);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.16);
+            } catch (e) {}
+        }
+
         let bathCount = 0;
+        let totalBathScoops = 0;
+        let malaCount = 0;
         let isPouring = false;
         const mantras = [
             "南無藥師琉璃光如來 🙏",
@@ -968,6 +1244,21 @@
         ];
         let mantraIndex = 0;
 
+        function renderMalaBeads() {
+            const track = document.getElementById('malaBeadsTrack');
+            if (!track) return;
+            track.innerHTML = '';
+            for (let i = 0; i < 11; i++) {
+                const isGuruBead = i === 5;
+                const bead = document.createElement('div');
+                bead.className = isGuruBead
+                    ? 'w-6 h-6 rounded-full bg-gradient-to-br from-gold-200 via-gold-400 to-amber-600 border border-white shadow-md flex items-center justify-center text-[10px] text-lapis-950 font-bold shrink-0 bead-active-pulse'
+                    : 'w-4 h-4 rounded-full bg-gradient-to-br from-sky-300 via-blue-600 to-lapis-900 border border-sky-200/50 shadow-inner shrink-0 transition-transform duration-300';
+                if (isGuruBead) bead.textContent = '佛';
+                track.appendChild(bead);
+            }
+        }
+
         function performBathBuddha() {
             if (isPouring) return;
             isPouring = true;
@@ -975,27 +1266,24 @@
             playWaterSplashSound();
             setTimeout(() => playZenBowl(528), 350);
 
-            // Trigger Ladle SVG Pour Animation
             const ladle = document.getElementById('ladleContainer');
             ladle.classList.remove('pouring-ladle');
-            void ladle.offsetWidth; // reflow
+            void ladle.offsetWidth;
             ladle.classList.add('pouring-ladle');
 
-            // Spawn animated water droplets falling on Buddha statue
             spawnWaterDroplets();
 
             bathCount = Math.min(3, bathCount + 1);
+            totalBathScoops += 1;
             document.getElementById('bathCountText').textContent = `${bathCount} / 3 瓢`;
             document.getElementById('bathProgressBar').style.width = `${(bathCount / 3) * 100}%`;
 
-            // Highlight vow item
             const vowEl = document.getElementById(`vow-${bathCount}`);
             if (vowEl) {
                 vowEl.classList.remove('text-slate-400');
                 vowEl.classList.add('text-gold-300', 'font-medium');
             }
 
-            // Enhance Buddha Aura brightness
             const buddhaSvg = document.getElementById('buddhaSvg');
             buddhaSvg.style.filter = `drop-shadow(0 0 ${12 + bathCount * 10}px rgba(125, 211, 252, ${0.25 + bathCount * 0.18}))`;
 
@@ -1011,13 +1299,23 @@
             } else if (bathCount === 3) {
                 feedback.innerHTML = "🪷 <strong>三瓢浴佛圓滿：</strong>還原靈魂深處的澄澈！願藥師如來琉璃淨光護佑您消災延壽、身體安康。";
                 document.getElementById('bathBtnLabel').textContent = "浴佛圓滿・再次沐浴淨心";
+                markStepCompleted(1);
                 showZenToast("🪷 浴佛淨心三瓢圓滿！功德無量，身心澄澈。");
                 setTimeout(() => { bathCount = 0; }, 1200);
             }
 
+            updateDedicationScrollSummary();
+
             setTimeout(() => {
                 isPouring = false;
             }, 1800);
+        }
+
+        function markStepCompleted(stepNum) {
+            const badge = document.getElementById(`step-badge-${stepNum}`);
+            if (badge) {
+                badge.classList.add('zen-card-active');
+            }
         }
 
         function spawnWaterDroplets() {
@@ -1041,18 +1339,36 @@
         }
 
         function chantMantraOnce() {
-            playZenBowl(432);
+            malaCount += 1;
+            playWoodenFishSound();
+
+            const badge = document.getElementById('malaCounterBadge');
+            if (badge) {
+                badge.textContent = `已持誦 ${malaCount} / 108 聲`;
+            }
+
+            renderMalaBeads();
             mantraIndex = (mantraIndex + 1) % mantras.length;
             const banner = document.getElementById('floatingMantra');
             banner.innerHTML = `<span class="px-3.5 py-1.5 rounded-full bg-lapis-950/90 border border-gold-300/60 text-gold-200 font-zen text-xs sm:text-sm tracking-widest shadow-lg">${mantras[mantraIndex]}</span>`;
-            showZenToast(mantras[mantraIndex]);
+
+            if (malaCount % 7 === 0) {
+                playZenBowl(528);
+                spawnWaterDroplets();
+                markStepCompleted(1);
+                showZenToast(`📿 恭誦藥師佛號滿 ${malaCount} 聲，甘露法雨加持圓滿！`);
+            } else {
+                showZenToast(`📿 第 ${malaCount} 聲：${mantras[mantraIndex]}`);
+            }
+            updateDedicationScrollSummary();
         }
 
-        // ==========================================
-        // 3. RITUAL 2: LIGHTING BLESSING LAMPS (以燈供佛)
-        // ==========================================
         let currentLampType = "消災延壽琉璃燈";
         let activeLampIndex = 0;
+        let holdTimer = null;
+        let holdProgressVal = 0;
+        let holdCompletedRecently = false;
+
         const presetWishes = [
             "願藥師如來琉璃淨光護佑，消災延壽，身體安康，萬事隨順。",
             "祈願光影所及之處，撫平一切憂患，闔家出入平安、吉祥如意。",
@@ -1060,9 +1376,87 @@
             "祈求藥師佛慈悲加被，渡拔累世冤親與先人，離苦得樂，往生善處。"
         ];
         let presetWishIdx = 0;
-
-        // Only stores lamps personally lit by the user in this session
         const myPersonalLamps = [];
+        let lastIgniteTimestamp = 0;
+
+        function scrollToRegistration() {
+            playZenBowl(528);
+            const target = document.getElementById('merit-box') || document.getElementById('sanctuary-info');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setTimeout(() => {
+                    const nameInput = document.getElementById('meritName');
+                    if (nameInput) nameInput.focus({ preventScroll: true });
+                }, 650);
+            }
+        }
+
+        function triggerIgniteSafely() {
+            const now = Date.now();
+            if (now - lastIgniteTimestamp < 450) return;
+            lastIgniteTimestamp = now;
+            igniteBlessingLamp();
+        }
+
+        function startHoldIgnite(e) {
+            if (e && e.type === 'mousedown' && e.button !== 0) return;
+            if (holdTimer) clearInterval(holdTimer);
+            holdProgressVal = 0;
+            holdCompletedRecently = false;
+            const bar = document.getElementById('igniteHoldProgress');
+            const label = document.getElementById('igniteBtnText');
+            if (label) label.textContent = '🔥 正在引火蓄力中...';
+            playWoodenFishSound();
+
+            holdTimer = setInterval(() => {
+                holdProgressVal += 10;
+                if (bar) bar.style.width = `${Math.min(100, holdProgressVal)}%`;
+                if (holdProgressVal >= 100) {
+                    clearInterval(holdTimer);
+                    holdTimer = null;
+                    holdCompletedRecently = true;
+                    if (bar) bar.style.width = '0%';
+                    if (label) label.textContent = '長按引火點燈（或點擊直接點亮）';
+                    triggerIgniteSafely();
+                }
+            }, 50);
+        }
+
+        function endHoldIgnite(e) {
+            if (holdTimer) {
+                clearInterval(holdTimer);
+                holdTimer = null;
+                const bar = document.getElementById('igniteHoldProgress');
+                const label = document.getElementById('igniteBtnText');
+                if (bar) bar.style.width = '0%';
+                if (label) label.textContent = '長按引火點燈（或點擊直接點亮）';
+
+                // 若在手機或電腦上屬於短按（未滿蓄力），放開時立即點燈
+                if (!holdCompletedRecently) {
+                    holdCompletedRecently = true;
+                    triggerIgniteSafely();
+                }
+            }
+        }
+
+        function cancelHoldIgnite(e) {
+            if (holdTimer) {
+                clearInterval(holdTimer);
+                holdTimer = null;
+                const bar = document.getElementById('igniteHoldProgress');
+                const label = document.getElementById('igniteBtnText');
+                if (bar) bar.style.width = '0%';
+                if (label) label.textContent = '長按引火點燈（或點擊直接點亮）';
+            }
+        }
+
+        function handleQuickClickIgnite(e) {
+            if (holdCompletedRecently) {
+                holdCompletedRecently = false;
+                return;
+            }
+            triggerIgniteSafely();
+        }
 
         function selectLampType(typeName, defaultWish) {
             currentLampType = typeName;
@@ -1093,7 +1487,7 @@
                 const left = 12 + Math.random() * 76;
                 const top = 35 + Math.random() * 45;
                 const delay = (Math.random() * 0.7).toFixed(2);
-                spark.className = ' absolute text-xs sm:text-sm pointer-events-none blessing-spark select-none';
+                spark.className = 'absolute text-xs sm:text-sm pointer-events-none blessing-spark select-none';
                 spark.style.left = `${left}%`;
                 spark.style.top = `${top}%`;
                 spark.style.animationDelay = `${delay}s`;
@@ -1116,7 +1510,6 @@
                 return;
             }
 
-            // Switch from unlit state to illuminated personal altar
             unlitEl.classList.add('hidden');
             litShowcaseEl.classList.remove('hidden');
             litShowcaseEl.classList.add('flex');
@@ -1127,7 +1520,6 @@
             const currentLamp = myPersonalLamps[activeLampIndex] || myPersonalLamps[0];
             inspectLamp(currentLamp, triggerBurst);
 
-            // Render switcher pills if user lit multiple lamps
             const historyWrap = document.getElementById('myLitLampsHistoryWrap');
             const listEl = document.getElementById('myLitLampsList');
             if (myPersonalLamps.length > 1) {
@@ -1161,7 +1553,6 @@
             document.getElementById('detailLampWish').textContent = lamp.wish;
             document.getElementById('detailLampTime').textContent = `✨ 點燈吉時：${lamp.time || '剛剛點亮'}`;
 
-            // Trigger burst animation on lamp visual & plaque
             if (triggerBurst) {
                 const visualWrap = document.getElementById('litLampVisualWrapper');
                 const plaque = document.getElementById('personalLampPlaque');
@@ -1173,10 +1564,9 @@
                 spawnLampBlessingSparks();
             }
 
-            // Also sync modal content
             document.getElementById('modalCardType').textContent = lamp.type;
             document.getElementById('modalCardName').textContent = lamp.name;
-            document.getElementById('modalCardWish').textContent = `「${lamp.wish}」`;
+            document.getElementById('modalCardWish').textContent = lamp.wish;
         }
 
         function igniteBlessingLamp() {
@@ -1198,16 +1588,363 @@
             myPersonalLamps.unshift(newLamp);
             activeLampIndex = 0;
 
+            const meritNameEl = document.getElementById('meritName');
+            if (meritNameEl && !meritNameEl.value.trim()) {
+                meritNameEl.value = userName;
+            }
+            const meritPledgeEl = document.getElementById('meritPledge');
+            if (meritPledgeEl) {
+                meritPledgeEl.value = `已於雲端點燃【${currentLampType}】，祈願：${userWish}`;
+            }
+
             playZenBowl(639);
             renderLampAltar(true);
-            showZenToast(`🕯️ 已為【${userName}】親手點燃${currentLampType}！`);
+            markStepCompleted(2);
+            updateDedicationScrollSummary();
+            showZenToast(`🕯️ 已為【${userName}】親手引火點燃${currentLampType}！`);
             nameInput.value = '';
         }
 
+        const twelveGreatVows = [
+            { num: "第一大願", title: "光明普照・相好莊嚴願", original: "願我來世得菩提時，自身光明熾然，照曜無量無數無邊世界，令一切眾生如我無異。", meaning: "此籤象徵「破暗迎光」。近期心中的迷惘與不安將隨著善念生起而煙消雲散，保持正念，貴人與光明就在前方。" },
+            { num: "第二大願", title: "身如琉璃・內外明徹願", original: "願我來世得菩提時，身如琉璃，內外明徹，淨無瑕穢，光明廣大，幽冥眾生悉蒙開曉。", meaning: "此籤象徵「澄澈見性」。放下過往的執著與煩憂，當您的心如琉璃般清淨透明，人際與家運自然圓融順遂。" },
+            { num: "第三大願", title: "無盡資生・所求不乏願", original: "願我來世得菩提時，以無量無邊智慧方便，令諸有情皆得無盡所受用物，莫令眾生有所乏少。", meaning: "此籤象徵「福慧豐足」。您的善心與辛勤耕耘即將結出善果，家庭資糧充裕，切記廣結善緣、知足常樂。" },
+            { num: "第六大願", title: "諸根完具・眾病悉除願", original: "願我來世得菩提時，若諸有情諸根不具、醜陋頑愚、盲聾瘖痖，聞我名已，一切皆得端正黠慧，眾病悉除。", meaning: "此籤象徵「消災安康」。藥師如來慈悲護佑，身心疲勞將漸獲調養，宜放慢步伐、安心休養，必得平安吉慶。" },
+            { num: "第七大願", title: "身心安樂・家屬資具悉皆豐足願", original: "願我來世得菩提時，若諸有情眾病逼切，無救無歸，我之名號一經其耳，眾病悉得除身心安樂。", meaning: "此籤象徵「轉危為安、闔家康泰」。一切憂患終將撫平，所祈求之家人健康與平安事項，皆蒙琉璃淨光護持。" },
+            { num: "第十大願", title: "解脫憂苦・離諸怖畏願", original: "願我來世得菩提時，若諸有情王法所錄，悲愁煎迫，聞我名已，皆得解脫一切憂苦。", meaning: "此籤象徵「心開意解」。困擾已久的壓力或瓶頸即將迎刃而解，放下焦慮，自有慈悲善緣為您引路。" },
+            { num: "第十二大願", title: "妙衣莊嚴・隨心滿願", original: "願我來世得菩提時，若諸有情貧無衣服，聞我名已，隨心所樂，即得種種上妙衣服，一切寶莊嚴具，悉皆滿足。", meaning: "此籤象徵「所求如意、圓滿吉祥」。您真誠的祈願已上達天聽，維持布施與感恩之心，萬事皆能隨順圓滿。" }
+        ];
+        let currentDrawnVow = null;
+        let isDrawingVow = false;
+
+        function drawTwelveVowLot() {
+            if (isDrawingVow) return;
+            isDrawingVow = true;
+
+            const cyl = document.getElementById('oracleCylinderWrap');
+            const btnLabel = document.getElementById('drawVowBtnLabel');
+            cyl.classList.add('shake-cylinder');
+            btnLabel.textContent = '誠心感應藥師如來本願中...';
+
+            playWoodenFishSound();
+            setTimeout(playWoodenFishSound, 180);
+            setTimeout(playWoodenFishSound, 360);
+
+            setTimeout(() => {
+                cyl.classList.remove('shake-cylinder');
+                playZenBowl(528);
+
+                const randomIndex = Math.floor(Math.random() * twelveGreatVows.length);
+                currentDrawnVow = twelveGreatVows[randomIndex];
+
+                document.getElementById('vowEmptyState').classList.add('hidden');
+                const resEl = document.getElementById('vowResultContent');
+                resEl.classList.remove('hidden');
+
+                document.getElementById('vowNumberBadge').textContent = `藥師如來・${currentDrawnVow.num}`;
+                document.getElementById('vowTitleText').textContent = currentDrawnVow.title;
+                document.getElementById('vowOriginalText').textContent = `「${currentDrawnVow.original}」`;
+                document.getElementById('vowModernMeaning').textContent = currentDrawnVow.meaning;
+
+                btnLabel.textContent = '再次求取藥師佛本願法語';
+                markStepCompleted(4);
+                updateDedicationScrollSummary();
+                showZenToast(`📜 求得【藥師如來・${currentDrawnVow.num}】大吉守護籤！`);
+                isDrawingVow = false;
+            }, 950);
+        }
+
+        function copyCurrentVowOracle() {
+            if (!currentDrawnVow) return;
+            const text = `📜【明王殿・藥師如來十二大願靈籤】\n✦ ${currentDrawnVow.num}：${currentDrawnVow.title}\n🪷 經文：「${currentDrawnVow.original}」\n🌿 解籤：${currentDrawnVow.meaning}\n🗓️ 115年10月31日 台南善化明王殿法會`;
+            copyTextToClipboard(text, "已複製十二大願法語籤詩！");
+        }
+
+        // ==========================================
+        // 4. ROBUST HIGH-RES BLESSING CARD GENERATOR
+        // ==========================================
+        function drawRoundedRect(ctx, x, y, w, h, r) {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.lineTo(x + w - r, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+            ctx.lineTo(x + w, y + h - r);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+            ctx.lineTo(x + r, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+            ctx.lineTo(x, y + r);
+            ctx.quadraticCurveTo(x, y, x + r, y);
+            ctx.closePath();
+        }
+
+        function syncBlessingCardDataFromInputs() {
+            const activeLamp = myPersonalLamps[activeLampIndex] || myPersonalLamps[0];
+            const lampNameInputVal = document.getElementById('lampNameInput') ? document.getElementById('lampNameInput').value.trim() : '';
+            const meritNameInputVal = document.getElementById('meritName') ? document.getElementById('meritName').value.trim() : '';
+            const lampWishInputVal = document.getElementById('lampWishInput') ? document.getElementById('lampWishInput').value.trim() : '';
+
+            const finalName = (activeLamp && activeLamp.name) || lampNameInputVal || meritNameInputVal || '十方善信 闔家';
+            const finalType = (activeLamp && activeLamp.type) || currentLampType || '消災延壽琉璃燈';
+            const finalWish = (activeLamp && activeLamp.wish) || lampWishInputVal || '願藥師如來的琉璃淨光，撫平一切憂患；身體安康，萬事隨順。';
+
+            document.getElementById('modalCardName').textContent = finalName;
+            document.getElementById('modalCardType').textContent = finalType;
+            document.getElementById('modalCardWish').textContent = finalWish;
+
+            return { name: finalName, type: finalType, wish: finalWish };
+        }
+
+        function drawSacredLotusEmblem(ctx, cx, cy) {
+            ctx.save();
+            // Outer Halo Glow
+            const haloGrad = ctx.createRadialGradient(cx, cy, 4, cx, cy, 78);
+            haloGrad.addColorStop(0, 'rgba(254, 240, 138, 0.75)');
+            haloGrad.addColorStop(0.55, 'rgba(56, 189, 248, 0.28)');
+            haloGrad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+            ctx.fillStyle = haloGrad;
+            ctx.beginPath();
+            ctx.arc(cx, cy, 78, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Sacred Flame
+            ctx.fillStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - 42);
+            ctx.quadraticCurveTo(cx - 16, cy - 18, cx, cy - 4);
+            ctx.quadraticCurveTo(cx + 16, cy - 18, cx, cy - 42);
+            ctx.fill();
+
+            ctx.fillStyle = '#fef08a';
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - 34);
+            ctx.quadraticCurveTo(cx - 9, cy - 18, cx, cy - 8);
+            ctx.quadraticCurveTo(cx + 9, cy - 18, cx, cy - 34);
+            ctx.fill();
+
+            // Lotus Petals
+            ctx.fillStyle = '#38bdf8';
+            ctx.strokeStyle = '#fde68a';
+            ctx.lineWidth = 2;
+            [-1, 1].forEach(dir => {
+                ctx.beginPath();
+                ctx.moveTo(cx, cy + 18);
+                ctx.quadraticCurveTo(cx + dir * 28, cy - 10, cx + dir * 42, cy + 12);
+                ctx.quadraticCurveTo(cx + dir * 24, cy + 26, cx, cy + 18);
+                ctx.fill();
+                ctx.stroke();
+            });
+
+            ctx.fillStyle = '#eab308';
+            [-1, 1].forEach(dir => {
+                ctx.beginPath();
+                ctx.moveTo(cx, cy + 20);
+                ctx.quadraticCurveTo(cx + dir * 18, cy - 14, cx + dir * 24, cy + 14);
+                ctx.quadraticCurveTo(cx + dir * 12, cy + 24, cx, cy + 20);
+                ctx.fill();
+                ctx.stroke();
+            });
+
+            ctx.fillStyle = '#fef08a';
+            ctx.beginPath();
+            ctx.moveTo(cx - 14, cy + 18);
+            ctx.quadraticCurveTo(cx, cy - 18, cx + 14, cy + 18);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Pedestal
+            ctx.fillStyle = '#ca8a04';
+            ctx.beginPath();
+            ctx.ellipse(cx, cy + 22, 34, 6, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function drawVerticalBlessingCardCanvas() {
+            const canvas = document.getElementById('blessingCardCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width;
+            const H = canvas.height;
+
+            const cardData = syncBlessingCardDataFromInputs();
+            const name = cardData.name;
+            const type = cardData.type;
+            const wish = cardData.wish.replace(/[「」]/g, '');
+            const vowText = currentDrawnVow ? `${currentDrawnVow.num}・${currentDrawnVow.title}` : '藥師琉璃淨光・消災延壽祈福';
+
+            // Background
+            const bgGrad = ctx.createRadialGradient(W / 2, H * 0.22, 30, W / 2, H * 0.5, H * 0.85);
+            bgGrad.addColorStop(0, '#163a6c');
+            bgGrad.addColorStop(0.55, '#08152c');
+            bgGrad.addColorStop(1, '#040914');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, W, H);
+
+            // Gold Borders
+            ctx.strokeStyle = 'rgba(235, 208, 149, 0.85)';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(32, 32, W - 64, H - 64);
+
+            ctx.strokeStyle = 'rgba(222, 182, 101, 0.4)';
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(46, 46, W - 92, H - 92);
+
+            // Title
+            ctx.fillStyle = '#f5e6c4';
+            ctx.font = 'bold 26px "Noto Serif TC", serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('台南善化・明王殿 藥師琉璃光壇城', W / 2, 96);
+
+            // Lotus Emblem
+            drawSacredLotusEmblem(ctx, W / 2, 172);
+
+            // Lamp Type Pill Box
+            ctx.fillStyle = 'rgba(222, 182, 101, 0.2)';
+            ctx.strokeStyle = '#deb665';
+            ctx.lineWidth = 2;
+            drawRoundedRect(ctx, W / 2 - 185, 236, 370, 54, 27);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#fde68a';
+            ctx.font = 'bold 25px "Noto Serif TC", serif';
+            ctx.fillText(`✦ ${type} ✦`, W / 2, 272);
+
+            // Name
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '21px "Noto Sans TC", sans-serif';
+            ctx.fillText('祈福信眾芳名', W / 2, 345);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 44px "Noto Serif TC", serif';
+            ctx.fillText(name, W / 2, 405);
+
+            // Divider
+            ctx.strokeStyle = 'rgba(222, 182, 101, 0.45)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(110, 448);
+            ctx.lineTo(W - 110, 448);
+            ctx.stroke();
+
+            // Wish Text Lines
+            ctx.fillStyle = '#f8fafc';
+            ctx.font = '27px "Noto Serif TC", serif';
+            const maxCharsPerLine = 15;
+            const cleanWish = `「${wish}」`;
+            const lines = [];
+            for (let i = 0; i < cleanWish.length; i += maxCharsPerLine) {
+                lines.push(cleanWish.slice(i, i + maxCharsPerLine));
+            }
+            lines.slice(0, 4).forEach((line, idx) => {
+                ctx.fillText(line, W / 2, 515 + idx * 48);
+            });
+
+            // Twelve Vow Box
+            ctx.fillStyle = 'rgba(13, 33, 63, 0.88)';
+            ctx.strokeStyle = 'rgba(125, 211, 252, 0.5)';
+            ctx.lineWidth = 1.8;
+            drawRoundedRect(ctx, 75, 725, W - 150, 96, 18);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#7dd3fc';
+            ctx.font = '20px "Noto Serif TC", serif';
+            ctx.fillText('✦ 藥師琉璃光如來本願加持 ✦', W / 2, 764);
+            ctx.fillStyle = '#f5e6c4';
+            ctx.font = 'bold 23px "Noto Serif TC", serif';
+            ctx.fillText(vowText, W / 2, 802);
+
+            // Vermilion Seal Stamp
+            ctx.save();
+            ctx.translate(W - 140, 920);
+            ctx.rotate(-0.06);
+            ctx.strokeStyle = '#e11d48';
+            ctx.lineWidth = 3.5;
+            ctx.strokeRect(-45, -45, 90, 90);
+            ctx.strokeStyle = 'rgba(253, 164, 175, 0.6)';
+            ctx.lineWidth = 1.2;
+            ctx.strokeRect(-39, -39, 78, 78);
+            ctx.fillStyle = 'rgba(225, 29, 72, 0.2)';
+            ctx.fillRect(-45, -45, 90, 90);
+            ctx.fillStyle = '#fda4af';
+            ctx.font = 'bold 20px "Noto Serif TC", serif';
+            ctx.fillText('明王寶印', 0, -8);
+            ctx.fillText('琉璃光明', 0, 22);
+            ctx.restore();
+
+            // Footer Info
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#ebd095';
+            ctx.font = 'bold 21px "Noto Serif TC", serif';
+            ctx.fillText('歲次時光｜115 年 10 月 31 日 藥師佛祈福法會', 75, 895);
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = '19px "Noto Sans TC", sans-serif';
+            ctx.fillText('尋靜之所｜台南市善化區中山路377號店面22號', 75, 935);
+            ctx.fillText('結緣專線｜0915-535-588（明真師姐）', 75, 972);
+
+            // Sync to Single Preview Image for mobile long-press saving (keep canvas hidden so it never duplicates)
+            try {
+                const previewImg = document.getElementById('blessingCardPreviewImg');
+                if (previewImg) {
+                    const dataUrl = canvas.toDataURL('image/png');
+                    previewImg.src = dataUrl;
+                    previewImg.classList.remove('hidden');
+                    canvas.classList.add('hidden');
+                }
+            } catch (err) {
+                canvas.classList.remove('hidden');
+            }
+        }
+
+        function downloadBlessingCardImage() {
+            drawVerticalBlessingCardCanvas();
+            const canvas = document.getElementById('blessingCardCanvas');
+            if (!canvas) return;
+
+            const rawName = document.getElementById('modalCardName').textContent || '祈福蓮卡';
+            const safeName = rawName.replace(/[\\/:*?"<>|\s]+/g, '_');
+            const fileName = `明王殿_藥師佛祈福蓮卡_${safeName}.png`;
+
+            if (canvas.toBlob) {
+                canvas.toBlob(function(blob) {
+                    if (!blob) {
+                        showZenToast("請長按上方祈福圖片直接儲存至相簿！");
+                        return;
+                    }
+                    const blobUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.download = fileName;
+                    link.href = blobUrl;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    setTimeout(() => URL.revokeObjectURL(blobUrl), 3000);
+                    showZenToast("🖼️ 已下載高畫質直式祈福蓮卡圖片（PNG）！");
+                }, 'image/png');
+            } else {
+                try {
+                    const link = document.createElement('a');
+                    link.download = fileName;
+                    link.href = canvas.toDataURL('image/png');
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    showZenToast("🖼️ 已下載高畫質直式祈福蓮卡圖片（PNG）！");
+                } catch (e) {
+                    showZenToast("請直接長按上方預覽圖片儲存至手機相簿！");
+                }
+            }
+        }
+
         function openBlessingCardModal() {
+            drawVerticalBlessingCardCanvas();
             const modal = document.getElementById('blessingModal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
+            playZenBowl(528);
         }
 
         function closeBlessingCardModal() {
@@ -1217,28 +1954,67 @@
         }
 
         function shareBlessingText() {
-            const name = document.getElementById('modalCardName').textContent;
-            const type = document.getElementById('modalCardType').textContent;
-            const wish = document.getElementById('modalCardWish').textContent;
-            const shareStr = `🌿【明王殿・藥師佛菩薩祈福法會】\n🕯️ 祈福燈種：${type}\n🙏 祈福芳名：${name}\n✨ 祝禱心願：${wish}\n🗓️ 115年10月31日 台南市善化區中山路377號店面22號`;
+            const cardData = syncBlessingCardDataFromInputs();
+            const vowLine = currentDrawnVow ? `\n📜 守護靈籤：${currentDrawnVow.num}（${currentDrawnVow.title}）` : '';
+            const shareStr = `🌿【明王殿・藥師佛菩薩祈福法會】\n🕯️ 祈福燈種：${cardData.type}\n🙏 祈福芳名：${cardData.name}\n✨ 祝禱心願：「${cardData.wish}」${vowLine}\n🗓️ 115年10月31日 台南市善化區中山路377號店面22號`;
             copyTextToClipboard(shareStr, "已複製祈福蓮卡祝禱文，可貼上分享予親友！");
         }
 
-        // ==========================================
-        // 4. RITUAL 3: MERIT BOX (隨喜護持・雲端功德箱)
-        // ==========================================
+        function updateDedicationScrollSummary() {
+            const latestLamp = myPersonalLamps[0];
+            const meritNameVal = document.getElementById('meritName') ? document.getElementById('meritName').value.trim() : '';
+            const displayUser = (latestLamp && latestLamp.name) || meritNameVal || '十方善信 闔家';
+
+            const userEl = document.getElementById('scrollUserName');
+            if (userEl) userEl.textContent = displayUser;
+
+            const bathEl = document.getElementById('scrollBathRecord');
+            if (bathEl) {
+                bathEl.textContent = `・浴佛持咒：已舀水浴佛 ${totalBathScoops} 瓢，撥珠持誦藥師佛號 ${malaCount} 聲`;
+            }
+
+            const lampEl = document.getElementById('scrollLampRecord');
+            if (lampEl) {
+                lampEl.textContent = latestLamp
+                    ? `・燃燈供佛：已親手點燃【${latestLamp.type}】（共 ${myPersonalLamps.length} 盞）`
+                    : '・燃燈供佛：至誠發心，祈求消災延壽、身體安康';
+            }
+
+            const vowEl = document.getElementById('scrollVowRecord');
+            if (vowEl && currentDrawnVow) {
+                vowEl.textContent = `・十二大願：求得【${currentDrawnVow.num}・${currentDrawnVow.title}】`;
+            }
+        }
+
+        function stampDedicationScroll() {
+            updateDedicationScrollSummary();
+            playZenBowl(432);
+            setTimeout(() => playZenBowl(639), 260);
+
+            const sealBox = document.getElementById('vermilionSealBox');
+            sealBox.classList.remove('hidden', 'seal-stamp-anim');
+            void sealBox.offsetWidth;
+            sealBox.classList.add('seal-stamp-anim');
+
+            const btnText = document.getElementById('stampSealBtnText');
+            btnText.textContent = '寶印已落款・查看祈福蓮卡';
+            document.getElementById('stampSealBtn').onclick = openBlessingCardModal;
+
+            markStepCompleted(5);
+            showZenToast("💮 已蓋下【明王殿琉璃寶印】，今日雲端法會功德圓滿迴向！");
+        }
+
         function dropIntoMeritBox() {
             const nameEl = document.getElementById('meritName');
             const catEl = document.getElementById('meritCategory');
             const pledgeEl = document.getElementById('meritPledge');
 
-            const name = nameEl.value.trim() || "隨喜善信";
+            const name = nameEl.value.trim() || (myPersonalLamps[0] && myPersonalLamps[0].name) || "隨喜善信";
             const category = catEl.value;
             const pledge = pledgeEl.value.trim() || "隨喜護持明王殿清淨壇城，同沐善緣";
 
             playZenBowl(528);
 
-            // Animate slip dropping into wooden box
             const slipAnim = document.getElementById('meritSlipAnim');
             document.getElementById('slipNamePreview').textContent = name;
             slipAnim.classList.remove('hidden', 'slip-drop-anim');
@@ -1247,13 +2023,17 @@
 
             document.getElementById('meritBoxStatus').innerHTML = `<span class="text-gold-200 font-zen">✨ 感恩【${escapeHtml(name)}】發心護持，一念發心即是無量菩提！</span>`;
 
-            // Show copyable summary card for contacting Ming-Zhen Sister
             const summaryCard = document.getElementById('meritSummaryCard');
             const copyTextEl = document.getElementById('meritCopyText');
-            const messageText = `明真師姐您好，阿彌陀佛🙏 我想報名參與明王殿10月31日【藥師佛菩薩主題科儀法會】\n・護持芳名：${name}\n・參與項目：${category}\n・祈願心意：${pledge}`;
+            const lampSummary = myPersonalLamps.length > 0
+                ? `\n・雲端已點燈種：${myPersonalLamps.map(l => `${l.name}(${l.type})`).join('、')}`
+                : '';
+            const messageText = `明真師姐您好，阿彌陀佛🙏 我想報名參與明王殿10月31日【藥師佛菩薩主題科儀法會】\n・護持芳名：${name}\n・參與項目：${category}${lampSummary}\n・祈願心意：${pledge}`;
             copyTextEl.textContent = messageText;
             summaryCard.classList.remove('hidden');
 
+            markStepCompleted(3);
+            updateDedicationScrollSummary();
             showZenToast(`🌱 感恩【${name}】隨喜投入功德箱，阿彌陀佛！`);
         }
 
@@ -1262,9 +2042,6 @@
             copyTextToClipboard(msg, "已複製結緣報名訊息！請開啟 LINE 搜尋 0915535588 傳送給明真師姐。");
         }
 
-        // ==========================================
-        // 5. UTILITIES: CLIPBOARD, TOAST, COUNTDOWN & CANVAS
-        // ==========================================
         function copyTextToClipboard(text, toastMessage) {
             const tempInput = document.createElement('textarea');
             tempInput.value = text;
@@ -1299,7 +2076,6 @@
             });
         }
 
-        // Countdown to ROC 115 / 2026-10-31 09:00:00 CST
         function updateCountdown() {
             const eventDate = new Date('2026-10-31T09:00:00+08:00').getTime();
             const now = new Date().getTime();
@@ -1324,7 +2100,6 @@
             document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
         }
 
-        // Ambient Floating Golden & Lapis Lazuli Particles Canvas
         function initParticleCanvas() {
             const canvas = document.getElementById('particleCanvas');
             const ctx = canvas.getContext('2d');
@@ -1372,7 +2147,9 @@
         }
 
         window.onload = function () {
+            renderMalaBeads();
             renderLampAltar(false);
+            updateDedicationScrollSummary();
             updateCountdown();
             setInterval(updateCountdown, 1000);
             initParticleCanvas();
