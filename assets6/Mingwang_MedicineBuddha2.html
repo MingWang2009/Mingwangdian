@@ -5,23 +5,6 @@
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="theme-color" content="#0b3154" />
         <title>藥師琉璃光如來｜十二大願</title>
-
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="藥師琉璃光如來｜十二大願" />
-        <meta property="og:description" content="東方淨琉璃世界・逐願靜心閱讀・經文朗讀・發願實踐" />
-        <meta
-            property="og:url"
-            content="https://mingwang2009.github.io/Mingwangdian/assets6/Mingwang_MedicineBuddha2.html"
-        />
-        <meta
-            property="og:image"
-            content="https://mingwang2009.github.io/Mingwangdian/assets6/Mingwang_MedicineBuddha2_og_1200x630.png"
-        />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:type" content="image/png" />
-        <meta name="twitter:card" content="summary_large_image" />
-
         <style>
             :root {
                 --navy: #082b4c;
@@ -367,16 +350,17 @@
             }
             .controls button {
                 white-space: nowrap;
-            }
-            #speak {
-                min-width: 7.6em;
+                flex: 1 1 0;
+                min-width: 0;
+                padding: 11px clamp(6px, 1.2vw, 14px);
+                font-size: clamp(0.82rem, 0.9rem, 1rem);
             }
             .controls button:disabled {
                 opacity: 0.35;
                 cursor: not-allowed;
             }
             .controls .next {
-                margin-left: auto;
+                margin-left: 0;
                 background: #b88a38;
                 color: #fff;
             }
@@ -521,6 +505,18 @@
                 }
                 .footer {
                     letter-spacing: 0.05em;
+                }
+            }
+            @media (max-width: 360px) {
+                .controls {
+                    gap: 5px;
+                }
+                .controls button {
+                    padding: 10px 3px;
+                    font-size: 0.78rem;
+                }
+                .detail {
+                    padding: 16px;
                 }
             }
             @media (prefers-reduced-motion: reduce) {
