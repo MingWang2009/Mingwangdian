@@ -250,6 +250,7 @@
                 color: #123654;
             }
             .detail {
+                scroll-margin-top: 12px;
                 background: var(--cream);
                 color: var(--ink);
                 border: 2px solid #d6b86e;
@@ -680,6 +681,13 @@
                     b.setAttribute("aria-pressed", j === current ? "true" : "false");
                 });
             }
+            // 點選圓圈後，若詳細區塊未完整顯示在視窗內，平滑捲動到該區塊頂端
+            function focusDetail() {
+                const d = document.querySelector(".detail");
+                const r = d.getBoundingClientRect();
+                if (r.top < 0 || r.bottom > window.innerHeight)
+                    d.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
             vows.forEach((v, i) => {
                 const b = document.createElement("button");
                 b.type = "button";
@@ -696,7 +704,10 @@
                     ] +
                     "</span>";
                 b.setAttribute("aria-label", v[0]);
-                b.addEventListener("click", () => selectVow(i));
+                b.addEventListener("click", () => {
+                    selectVow(i);
+                    focusDetail();
+                });
                 dots.appendChild(b);
                 const item = document.createElement("button");
                 item.type = "button";
