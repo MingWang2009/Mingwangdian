@@ -681,12 +681,27 @@
                     b.setAttribute("aria-pressed", j === current ? "true" : "false");
                 });
             }
-            // 點選圓圈後，若詳細區塊未完整顯示在視窗內，平滑捲動到該區塊頂端
+            // 點選圓圈後捲動到詳細區塊（手機直向排列時一律捲動；桌面僅在未完整可見時捲動）
             function focusDetail() {
                 const d = document.querySelector(".detail");
+                const m = document.querySelector(".mandala");
                 const r = d.getBoundingClientRect();
-                if (r.top < 0 || r.bottom > window.innerHeight)
-                    d.scrollIntoView({ behavior: "smooth", block: "start" });
+                const stacked = r.top >= m.getBoundingClientRect().bottom - 2;
+                if (!stacked && r.top >= 0 && r.bottom <= window.innerHeight) return;
+                const maxY = document.documentElement.scrollHeight - window.innerHeight;
+                const target = Math.max(0, Math.min(maxY, r.top + window.pageYOffset - 12));
+                const go = () => {
+                    try {
+                        window.scrollTo({ top: target, behavior: "smooth" });
+                    } catch (e) {
+                        window.scrollTo(0, target);
+                    }
+                    // 備援：部分手機瀏覽器不支援平滑捲動或被忽略，稍後若仍未到位則直接定位
+                    setTimeout(() => {
+                        if (Math.abs(window.pageYOffset - target) > 4) window.scrollTo(0, target);
+                    }, 900);
+                };
+                requestAnimationFrame(() => requestAnimationFrame(go));
             }
             vows.forEach((v, i) => {
                 const b = document.createElement("button");
